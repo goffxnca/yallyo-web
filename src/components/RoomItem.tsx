@@ -5,7 +5,7 @@ interface Props extends Room {}
 
 const RoomItem = ({ desc, id, language, level, joiners }: Props) => {
   return (
-    <li className="p-4 rounded-md bg-[#1E272C] gap-y-4 grid">
+    <li className="p-4 rounded-md bg-[#1E272C] gap-y-4 grid hover:shadow-2xl">
       <div className="text-white">
         {language} <span className="text-gray-500">{level}</span>
       </div>
@@ -16,6 +16,9 @@ const RoomItem = ({ desc, id, language, level, joiners }: Props) => {
           <Avatar key={joiner} name={joiner} />
         ))}
       </ul>
+      <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-[#2f94e9]">
+        Join Now
+      </div>
     </li>
   );
 };
