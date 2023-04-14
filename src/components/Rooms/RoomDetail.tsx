@@ -10,7 +10,9 @@ import {
   PhoneIcon,
   RocketLaunchIcon,
   ComputerDesktopIcon,
+  LanguageIcon,
 } from "@heroicons/react/24/outline";
+import Button from "../Uis/Button";
 
 const RoomDetail = () => {
   const [room, setRoom] = useState<Room>();
@@ -24,7 +26,9 @@ const RoomDetail = () => {
 
   return (
     <div className="flex h-full">
-      <div className="w-2/3 p-5 relative border-r border-solid border-gray-200 bg-gray-700">
+      {/* Main Content */}
+      <div className="w-2/3 p-5 relative border-r border-solid border-gray-200 bg-primary">
+        <Button text="Back" emitClick={() => {}} />
         <div className="flex justify-center">
           <div className="bg-blue-300 p-2 mx-1 rounded-md">
             <MicrophoneIcon className="w-6 h-6" />
@@ -34,6 +38,9 @@ const RoomDetail = () => {
           </div>
           <div className="bg-[#1E272C] p-2 mx-1 rounded-md">
             <ComputerDesktopIcon className="w-6 h-6 text-white" />
+          </div>
+          <div className="bg-[#1E272C] p-2 mx-1 rounded-md">
+            <LanguageIcon className="w-6 h-6 text-red-500" />
           </div>
           <div className="bg-[#1E272C] p-2 mx-1 rounded-md">
             <PhoneIcon className="w-6 h-6 text-red-500" />
@@ -57,7 +64,7 @@ const RoomDetail = () => {
               className="w-full outline-none border-none"
               placeholder="Type a new message"
             />
-            <div className="bg-blue-300 p-2 flex items-center cursor-pointer">
+            <div className="bg-accent1 p-2 flex items-center cursor-pointer">
               <RocketLaunchIcon className="w-6 h-6" />
             </div>
           </div>
