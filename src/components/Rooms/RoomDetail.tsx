@@ -63,6 +63,7 @@ const RoomDetail = () => {
             <textarea
               className="w-full outline-none border-none"
               placeholder="Type a new message"
+              spellCheck={false}
             />
             <div className="bg-accent1 p-2 flex items-center cursor-pointer">
               <RocketLaunchIcon className="w-6 h-6" />

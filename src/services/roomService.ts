@@ -88,4 +88,8 @@ const fetchRoomById = (roomId: string) => {
   return ROOMS.find((room) => room.id === roomId);
 };
 
+const addRoom = (room: Room) => {
+  return ROOMS.push(room);
+};
+
 export { fetchRooms, fetchRoomById };
