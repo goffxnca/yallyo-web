@@ -13,7 +13,7 @@ const people = [
   { id: 10, name: "10" },
 ];
 
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
