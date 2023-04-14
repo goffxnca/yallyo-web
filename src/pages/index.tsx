@@ -12,7 +12,7 @@ import NewRoomForm from "@/components/Forms/NewRoomForm";
 const Home = () => {
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
 
@@ -53,7 +53,7 @@ const Home = () => {
   return (
     <main className="p-10 grid gap-y-6 bg-primary">
       <div>
-        <div className="flex items-center">
+        <div className="flex flex-wrap items-center">
           {/* <div className="text-white">
           {currentLang} {currentLevel}
         </div> */}
