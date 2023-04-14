@@ -1,4 +1,3 @@
-import { Room } from "@/models/types";
 import { getRandomColor } from "@/utils/color-utils";
 import { convertFullnameToAbbr } from "@/utils/string-utils";
 import { useEffect, useState } from "react";

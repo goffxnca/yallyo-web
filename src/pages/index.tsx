@@ -1,49 +1,20 @@
+import Friends from "@/components/Friends/Friends";
 import RoomList from "@/components/RoomList";
-import { Room } from "@/models/types";
+import { fetchRooms } from "@/services/roomService";
 import Image from "next/image";
+import { useState } from "react";
 
 const Home = () => {
-  const ROOMS: Room[] = [
-    {
-      id: "r1",
-      desc: "cool1",
-      language: "Thai",
-      level: "Beginner",
-      joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-    },
-    {
-      id: "r2",
-      desc: "cool2",
-      language: "English",
-      level: "Intermediate",
-      joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-    },
-    {
-      id: "r3",
-      desc: "cool3",
-      language: "English",
-      level: "Intermediate",
-      joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-    },
-    {
-      id: "r4",
-      desc: "cool4",
-      language: "English",
-      level: "Intermediate",
-      joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-    },
-    {
-      id: "r5",
-      desc: "cool5",
-      language: "English",
-      level: "Advanced",
-      joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-    },
-  ];
+  const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
+  const rooms = fetchRooms();
 
   return (
-    <main>
-      <RoomList rooms={ROOMS}></RoomList>
+    <main className="p-10">
+      <RoomList rooms={rooms}></RoomList>
+      {showFriendPopup && (
+        <Friends onEmitClose={() => setShowFriendPopup(false)} />
+      )}
+      <button onClick={() => setShowFriendPopup(true)}>Show Friend</button>
     </main>
   );
 };

@@ -1,5 +1,6 @@
 import { Room } from "@/models/types";
 import Avatar from "./Avatar";
+import Link from "next/link";
 
 interface Props extends Room {}
 
@@ -16,9 +17,13 @@ const RoomItem = ({ desc, id, language, level, joiners }: Props) => {
           <Avatar key={joiner} name={joiner} />
         ))}
       </ul>
-      <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-[#2f94e9]">
+      <Link
+        href={`/rooms/${id}`}
+        target="_blank"
+        className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-[#2f94e9]"
+      >
         Join Now
-      </div>
+      </Link>
     </li>
   );
 };

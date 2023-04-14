@@ -1,8 +1,6 @@
 import { Room } from "@/models/types";
 import RoomItem from "./RoomItem";
 
-const ROOMS = [{}];
-
 interface Props {
   rooms: Room[];
 }
@@ -13,7 +11,7 @@ const RoomList = ({ rooms }: Props) => {
       {rooms.map((room) => (
         <RoomItem
           key={room.id}
-          id="dd"
+          id={room.id}
           language={room.language}
           level={room.level}
           desc={room.desc}
