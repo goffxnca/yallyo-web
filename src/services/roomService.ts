@@ -92,4 +92,4 @@ const addRoom = (room: Room) => {
   return ROOMS.push(room);
 };
 
-export { fetchRooms, fetchRoomById };
+export { fetchRooms, fetchRoomById, addRoom };

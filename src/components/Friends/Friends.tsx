@@ -21,7 +21,7 @@ const Friends = ({ onEmitClose }: Props) => {
   ];
 
   return (
-    <div className=" fixed right-0 bottom-0 bg-white w-[400px] h-[600px] overflow-y-scroll p-2 border-2 border-gray-500 ">
+    <div className=" fixed right-10 bottom-0 bg-secondary w-[400px] h-[600px] overflow-y-scroll p-2 border  rounded-lg shadow-2xl ">
       {/* Top Controls */}
       <div className="flex">
         <div>People</div>

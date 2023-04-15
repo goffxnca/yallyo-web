@@ -6,6 +6,7 @@ import {
 import Dropdown from "../Uis/Inputs/DropdownInput2";
 import TextInput from "../Uis/Inputs/TextInput";
 import DropdownInput from "../Uis/Inputs/DropodownInput";
+import { FormEventHandler } from "react";
 
 /*
   This example requires some changes to your config:
@@ -23,9 +24,11 @@ import DropdownInput from "../Uis/Inputs/DropodownInput";
 */
 
 interface Props {
+  onSubmit: Function;
   emitClose: Function;
 }
-const NewRoomForm = () => {
+
+const NewRoomForm = ({ onSubmit }: Props) => {
   return (
     <div className="p-10 w-[400px]">
       <h2 className="text-2xl my-4 text-accent2 text-center">
@@ -33,7 +36,14 @@ const NewRoomForm = () => {
       </h2>
 
       <div>
-        <form className="space-y-6" action="#" method="POST">
+        <form
+          className="space-y-6"
+          onSubmit={(e: any) => {
+            e.preventDefault();
+            const topic = e.target.topic.value || "";
+            onSubmit(topic);
+          }}
+        >
           <TextInput
             id="topic"
             label="Room Description"

@@ -14,7 +14,7 @@ const RoomItem = ({ desc, id, language, level, joiners }: Props) => {
       <div className=" text-accent2 text-sm italic">{desc}</div>
       <ul className="flex justify-center gap-2">
         {joiners.map((joiner) => (
-          <Avatar key={joiner} name={joiner} />
+          <Avatar key={joiner} name={joiner} size="lg" />
         ))}
       </ul>
       <Link

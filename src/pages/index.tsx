@@ -1,13 +1,14 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-import { fetchRooms } from "@/services/roomService";
-import Image from "next/image";
+import { fetchRooms, addRoom } from "@/services/roomService";
 import { useState } from "react";
 import * as _ from "lodash";
 import Header from "@/components/Layouts/Header";
 import Modal from "@/components/Modals/Modal";
 import NewRoomForm from "@/components/Forms/NewRoomForm";
+import HeaderControls from "@/components/Layouts/HeaderControls";
+import { UsersIcon } from "@heroicons/react/20/solid";
 
 const Home = () => {
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
@@ -50,8 +51,18 @@ const Home = () => {
     { id: "t19", name: "Nature" },
   ];
 
+  const toggleFriendsPopup = () => {
+    setShowFriendPopup(!showFriendPopup);
+  };
+
   return (
     <main className="p-10 grid gap-y-6 bg-primary">
+      <HeaderControls
+        onClickCreateRoom={() => {
+          setShowNewRoomFormModal(true);
+        }}
+      />
+      {/* <hr /> */}
       <div>
         <div className="flex flex-wrap items-center">
           {/* <div className="text-white">
@@ -94,16 +105,20 @@ const Home = () => {
         </div>
       </div>
 
+      {/* <hr /> */}
       <RoomList rooms={rooms}></RoomList>
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
-      <button
-        className=" fixed bottom-0 right-0 text-white"
-        onClick={() => setShowFriendPopup(true)}
+      <div
+        className="fixed bottom-0 right-10 bg-secondary px-4 py-1 rounded-t-lg  text-accent1 hover:text-accent2 border border-b-0 cursor-pointer select-none"
+        onClick={toggleFriendsPopup}
       >
-        Show Friend
-      </button>
+        <div className="flex gap-x-2 justify-center items-center">
+          <UsersIcon className="h-5 w-5" />
+          <span className="text-md">My Friends</span>
+        </div>
+      </div>
 
       {showNewRoomFormModal && (
         <Modal
@@ -112,7 +127,17 @@ const Home = () => {
             setShowNewRoomFormModal(false);
           }}
         >
-          <NewRoomForm />
+          <NewRoomForm
+            onSubmit={(topic) => {
+              addRoom({
+                id: "cokwf",
+                desc: "topic",
+                language: "Frence",
+                level: "",
+                joiners: [],
+              });
+            }}
+          />
         </Modal>
       )}
     </main>

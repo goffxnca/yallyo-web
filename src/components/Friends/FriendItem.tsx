@@ -9,8 +9,8 @@ interface Props {
 const FriendItem = ({ id, name, online }: Props) => {
   return (
     <div className="flex items-center m-2">
-      <Avatar name={name} />
-      <div className="ml-4">{name}</div>
+      <Avatar name={name} size="md" />
+      <div className="ml-4 text-white">{name}</div>
     </div>
   );
 };
