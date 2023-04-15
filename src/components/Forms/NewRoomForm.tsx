@@ -25,7 +25,6 @@ import { FormEventHandler } from "react";
 
 interface Props {
   onSubmit: Function;
-  emitClose: Function;
 }
 
 const NewRoomForm = ({ onSubmit }: Props) => {

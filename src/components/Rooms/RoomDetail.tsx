@@ -50,7 +50,7 @@ const RoomDetail = () => {
           <div className="flex justify-center">
             <ul className="flex gap-2">
               {room?.joiners.map((joiner) => (
-                <Avatar key={joiner} name={joiner} />
+                <Avatar key={joiner} name={joiner} size="lg" />
               ))}
             </ul>
           </div>

@@ -128,10 +128,10 @@ const Home = () => {
           }}
         >
           <NewRoomForm
-            onSubmit={(topic) => {
+            onSubmit={(topic: string) => {
               addRoom({
                 id: "cokwf",
-                desc: "topic",
+                desc: topic,
                 language: "Frence",
                 level: "",
                 joiners: [],
