@@ -3,13 +3,13 @@ import ButtonLong from "../Uis/ButtonLong";
 
 const UserProfile = () => {
   return (
-    <div className="p-10 w-[800px]">
-      <div className="flex gap-x-4 items-center">
+    <div className="p-10 md:w-[800px]">
+      <div className="md:flex gap-x-4 items-center text-center md:text-left">
         <Image
           src={
             "https://d31wcbk3iidrjq.cloudfront.net/c6Gs3-B42_avatar-iZbXPK3np.jpg?h=332&w=332&q=100"
           }
-          className="rounded-full border-4 border-accent2 w-40 h-40 p-1"
+          className="rounded-full border-4 border-accent2 w-40 h-40 p-1 mx-auto"
           width={100}
           height={100}
           alt="cool"
