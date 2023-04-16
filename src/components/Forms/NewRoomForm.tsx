@@ -30,8 +30,8 @@ interface Props {
 const NewRoomForm = ({ onSubmit }: Props) => {
   return (
     <div className="p-10 w-[400px]">
-      <h2 className="text-2xl my-4 text-accent2 text-center">
-        Create new chat room
+      <h2 className="text-accent2 text-3xl text-center mb-6">
+        Create Chat Room
       </h2>
 
       <div>

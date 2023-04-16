@@ -25,9 +25,9 @@ const RoomDetail = () => {
   }, [router]);
 
   return (
-    <div className="flex h-full">
+    <div className="md:flex h-full">
       {/* Main Content */}
-      <div className="w-2/3 p-5 relative border-r border-solid border-gray-200 bg-primary">
+      <div className="md:w-2/3 p-5 md:relative border-r border-solid border-gray-200 bg-primary h-full">
         <Button text="Back" emitClick={() => {}} />
         <div className="flex justify-center">
           <div className="bg-blue-300 p-2 mx-1 rounded-md">
@@ -46,7 +46,7 @@ const RoomDetail = () => {
             <PhoneIcon className="w-6 h-6 text-red-500" />
           </div>
         </div>
-        <div className="absolute bottom-10 w-full">
+        <div className="absolute bottom-32 md:bottom-10 w-full">
           <div className="flex justify-center">
             <ul className="flex gap-2">
               {room?.joiners.map((joiner) => (
@@ -57,15 +57,15 @@ const RoomDetail = () => {
         </div>
       </div>
       {/* Sidebar */}
-      <div className="w-1/3 relative">
-        <div className="absolute bottom-10 w-full p-2 border">
-          <div className="flex w-full bg-red-200">
+      <div className="md:w-1/3 md:relative bg-gray-300">
+        <div className="absolute bottom-0 w-full">
+          <div className="flex w-ful">
             <textarea
-              className="w-full outline-none border-none"
+              className="w-full outline-none border-none text-sm "
               placeholder="Type a new message"
               spellCheck={false}
             />
-            <div className="bg-accent1 p-2 flex items-center cursor-pointer">
+            <div className="bg-secondary px-4 flex items-center cursor-pointer text-accent2">
               <RocketLaunchIcon className="w-6 h-6" />
             </div>
           </div>

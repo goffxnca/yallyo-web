@@ -5,9 +5,10 @@ import {
 
 interface Props {
   onClickCreateRoom: Function;
+  onClickShowRules: Function;
 }
 
-const HeaderControls = ({ onClickCreateRoom }: Props) => {
+const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
   return (
     <div className="flex gap-x-4 justify-center md:justify-end">
       <div
@@ -23,7 +24,7 @@ const HeaderControls = ({ onClickCreateRoom }: Props) => {
       <div
         className="flex items-center text-white group cursor-pointer bg-secondary p-2 rounded-lg"
         onClick={() => {
-          onClickCreateRoom();
+          onClickShowRules();
         }}
       >
         <InformationCircleIcon className="h-10 w-10 group-hover:text-accent2" />

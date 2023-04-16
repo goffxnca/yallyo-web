@@ -1,11 +1,7 @@
 import RoomDetail from "@/components/Rooms/RoomDetail";
 
 const RoomSession = () => {
-  return (
-    <div className="h-screen">
-      <RoomDetail />
-    </div>
-  );
+  return <RoomDetail />;
 };
 
 export default RoomSession;

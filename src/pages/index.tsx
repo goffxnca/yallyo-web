@@ -9,11 +9,14 @@ import Modal from "@/components/Modals/Modal";
 import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
 import { UsersIcon } from "@heroicons/react/20/solid";
+import Rules from "@/components/Rules";
 
 const Home = () => {
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
     useState<boolean>(false);
+  const [showRules, setShowRules] = useState<boolean>(false);
+
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
 
@@ -60,6 +63,9 @@ const Home = () => {
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);
+        }}
+        onClickShowRules={() => {
+          setShowRules(true);
         }}
       />
       {/* <hr /> */}
@@ -138,6 +144,17 @@ const Home = () => {
               });
             }}
           />
+        </Modal>
+      )}
+
+      {showRules && (
+        <Modal
+          showCloseButton={true}
+          emitClose={() => {
+            setShowRules(false);
+          }}
+        >
+          <Rules />
         </Modal>
       )}
     </main>
