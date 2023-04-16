@@ -56,7 +56,7 @@ const Home = () => {
   };
 
   return (
-    <main className="p-10 grid gap-y-6 bg-primary">
+    <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);
@@ -111,7 +111,7 @@ const Home = () => {
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
       <div
-        className="fixed bottom-0 right-10 bg-secondary px-4 py-1 rounded-t-lg  text-accent1 hover:text-accent2 border border-b-0 cursor-pointer select-none"
+        className="fixed bottom-0 right-2 md:right-10 bg-secondary px-4 py-1 rounded-t-lg  text-accent1 hover:text-accent2 border border-b-0 cursor-pointer select-none"
         onClick={toggleFriendsPopup}
       >
         <div className="flex gap-x-2 justify-center items-center">

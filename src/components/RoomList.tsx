@@ -7,7 +7,7 @@ interface Props {
 
 const RoomList = ({ rooms }: Props) => {
   return (
-    <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {rooms.map((room) => (
         <RoomItem
           key={room.id}

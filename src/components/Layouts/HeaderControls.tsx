@@ -9,7 +9,7 @@ interface Props {
 
 const HeaderControls = ({ onClickCreateRoom }: Props) => {
   return (
-    <div className="flex gap-x-4 justify-end">
+    <div className="flex gap-x-4 justify-center md:justify-end">
       <div
         className="flex items-center text-white group cursor-pointer bg-secondary p-2 rounded-lg"
         onClick={() => {
