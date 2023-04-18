@@ -1,8 +1,12 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-import { fetchRooms, addRoom } from "@/services/roomService";
-import { useState } from "react";
+import {
+  addRooms,
+  fetchRooms,
+  subscribeRoomsChanges,
+} from "@/services/roomService";
+import { useEffect, useState } from "react";
 import * as _ from "lodash";
 import Header from "@/components/Layouts/Header";
 import Modal from "@/components/Modals/Modal";
@@ -10,8 +14,14 @@ import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
 import { UsersIcon } from "@heroicons/react/20/solid";
 import Rules from "@/components/Rules";
+import db from "../../firebase";
+import { Room } from "@/models/types";
+import { getRandomItem } from "@/utils/array-utils";
+import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 
 const Home = () => {
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
     useState<boolean>(false);
@@ -19,8 +29,9 @@ const Home = () => {
 
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
+  const [currentTopic, setCurrentTopic] = useState("");
 
-  const rooms = fetchRooms();
+  // const rooms = fetchRooms();
   const languageGrouped = _.countBy(rooms, "language");
   const languagesList = Object.entries(languageGrouped);
   const levels = [
@@ -32,36 +43,62 @@ const Home = () => {
     { id: "l6", name: "Proficient" },
   ];
 
-  const topics = [
-    { id: "t1", name: "Football" },
-    { id: "t2", name: "K-Pop" },
-    { id: "t3", name: "Politics" },
-    { id: "t4", name: "T-POP" },
-    { id: "t5", name: "Series" },
-    { id: "t6", name: "Art" },
-    { id: "t7", name: "Football" },
-    { id: "t8", name: "Tiktok" },
-    { id: "t9", name: "Shorts" },
-    { id: "t10", name: "Relax" },
-    { id: "t11", name: "English" },
-    { id: "t12", name: "Travel" },
-    { id: "t13", name: "Technology" },
-    { id: "t14", name: "Blockchai" },
-    { id: "t15", name: "Web Devs" },
-    { id: "t16", name: "Gadgets" },
-    { id: "t17", name: "Movies" },
-    { id: "t18", name: "Celebrities" },
-    { id: "t19", name: "Nature" },
-  ];
-
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
   };
+
+  // useEffect(() => {
+  //   async function getRooms() {
+  //     const fetchedRooms = await fetchRooms();
+  //     setRooms(fetchedRooms);
+  //     setFilteredRooms(fetchedRooms);
+  //   }
+
+  //   getRooms();
+  // }, []);
+
+  useEffect(() => {
+    // set up the subscription
+    const unsubscribe = subscribeRoomsChanges((rooms: Room[]) => {
+      setRooms(rooms);
+      setFilteredRooms(rooms);
+      console.log("ROOMS RE-READ");
+    });
+
+    // return a cleanup function to unsubscribe when the component unmounts
+    return () => {
+      alert("hey");
+      unsubscribe();
+    };
+  }, []);
+
+  const filterLanguage = () => {
+    let filtered = rooms;
+
+    if (currentLang) {
+      filtered = filtered.filter((room) => room.language === currentLang);
+    }
+
+    if (currentLevel) {
+      filtered = filtered.filter((room) => room.level === currentLevel);
+    }
+
+    if (currentTopic) {
+      filtered = filtered.filter((room) => room.topic === currentTopic);
+    }
+
+    setFilteredRooms(filtered);
+  };
+
+  useEffect(() => {
+    filterLanguage();
+  }, [currentLang, currentLevel, currentTopic, rooms]);
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
       <HeaderControls
         onClickCreateRoom={() => {
+          addRooms();
           setShowNewRoomFormModal(true);
         }}
         onClickShowRules={() => {
@@ -88,11 +125,11 @@ const Home = () => {
 
         <div className="flex items-center flex-wrap">
           <div className="text-white mr-2">Levels:</div>
-          {levels.map((level) => (
+          {LANGAUGE_LEVEL.map((level, index) => (
             <PillItem
-              key={level.id}
-              title={level.name}
-              active={level.name === currentLevel}
+              key={index}
+              title={level}
+              active={level === currentLevel}
               onEmitSelect={setCurrentLevel}
             />
           ))}
@@ -100,19 +137,19 @@ const Home = () => {
 
         <div className="flex items-center flex-wrap">
           <div className="text-white mr-2">Topics:</div>
-          {topics.map((topic) => (
+          {TOPICS.map((topic, index) => (
             <PillItem
-              key={topic.id}
-              title={topic.name}
-              active={topic.name === currentLevel}
-              onEmitSelect={setCurrentLevel}
+              key={index}
+              title={topic}
+              active={topic === currentTopic}
+              onEmitSelect={setCurrentTopic}
             />
           ))}
         </div>
       </div>
 
       {/* <hr /> */}
-      <RoomList rooms={rooms}></RoomList>
+      <RoomList rooms={filteredRooms}></RoomList>
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
@@ -135,13 +172,14 @@ const Home = () => {
         >
           <NewRoomForm
             onSubmit={(topic: string) => {
-              addRoom({
-                id: "cokwf",
-                desc: topic,
-                language: "Frence",
-                level: "",
-                joiners: [],
-              });
+              // addRoom({
+              //   id: "cokwf",
+              //   desc: topic,
+              //   language: "Frence",
+              //   level: "",
+              //   joiners: [],
+              //   active: true,
+              // });
             }}
           />
         </Modal>

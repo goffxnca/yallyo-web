@@ -11,7 +11,11 @@ const PillItem = ({ title, count, active, onEmitSelect }: Props) => {
         active && "bg-accent1 scale-105"
       }`}
       onClick={() => {
-        onEmitSelect(title);
+        if (active) {
+          onEmitSelect("");
+        } else {
+          onEmitSelect(title);
+        }
       }}
     >
       {title}

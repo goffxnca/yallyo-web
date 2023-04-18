@@ -4,17 +4,19 @@ import Link from "next/link";
 
 interface Props extends Room {}
 
-const RoomItem = ({ desc, id, language, level, joiners }: Props) => {
+const RoomItem = ({ desc, id, topic, language, level, joiners }: Props) => {
   return (
     <li className="p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl">
       <div className="text-white">
         {language} <span className="text-gray-500">{level}</span>
       </div>
 
-      <div className=" text-accent2 text-sm italic">{desc}</div>
+      <div className=" text-accent2 text-sm italic">
+        ({topic}) {desc}
+      </div>
       <ul className="flex flex-wrap justify-center gap-2">
-        {joiners.map((joiner) => (
-          <Avatar key={joiner} name={joiner} size="lg" />
+        {joiners.map((joiner, index) => (
+          <Avatar key={index} name={joiner} size="lg" />
         ))}
       </ul>
       <Link

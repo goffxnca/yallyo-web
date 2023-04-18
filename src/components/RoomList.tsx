@@ -16,6 +16,9 @@ const RoomList = ({ rooms }: Props) => {
           level={room.level}
           desc={room.desc}
           joiners={room.joiners}
+          active={room.active}
+          topic={room.topic}
+          createdAt={room.createdAt}
         ></RoomItem>
       ))}
     </ul>

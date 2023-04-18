@@ -3,5 +3,8 @@ export interface Room {
   language: string;
   level: string;
   desc: string;
+  topic: string;
   joiners: string[];
+  active: boolean;
+  createdAt: string;
 }

@@ -15,13 +15,17 @@ import {
 import Button from "../Uis/Button";
 
 const RoomDetail = () => {
-  const [room, setRoom] = useState<Room>();
+  const [room, setRoom] = useState<Room | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const roomId = router.query?.id?.toString() || "";
-    const fetchedRoom = fetchRoomById(roomId);
-    setRoom(fetchedRoom);
+    const getRoom = async () => {
+      const roomId = router.query?.id?.toString() || "";
+      const fetchedRoom = await fetchRoomById(roomId);
+      setRoom(fetchedRoom);
+    };
+
+    getRoom();
   }, [router]);
 
   return (
