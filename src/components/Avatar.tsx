@@ -3,6 +3,7 @@ import { convertFullnameToAbbr } from "@/utils/string-utils";
 import { useEffect, useState } from "react";
 import UserProfile from "./Users/UserProfile";
 import Modal from "./Modals/Modal";
+import { MicrophoneIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   name: string;
@@ -23,13 +24,17 @@ const Avatar = ({ name, size }: Props) => {
   }, []);
   return (
     <li
-      className={`flex justify-center items-center text-white ${avatarSize} rounded-full border border-dashed border-gray-600 hover:scale-105 select-none cursor-pointer`}
+      className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full border border-dashed border-gray-600 hover:scale-105 select-none cursor-pointer`}
       style={{ color: bgColor }}
       onClick={() => {
         setShowProfile(true);
       }}
     >
       <div>{nameAbbr}</div>
+      <div className="absolute right-2 bottom-2 p-2 mx-1 rounded-md ">
+        <MicrophoneIcon className="w-6 h-6 " />
+      </div>
+
       {showProfile && (
         <Modal
           showCloseButton={true}
@@ -37,7 +42,7 @@ const Avatar = ({ name, size }: Props) => {
             setShowProfile(false);
           }}
         >
-          <UserProfile />
+          <UserProfile name={name} bio="" />
         </Modal>
       )}
     </li>

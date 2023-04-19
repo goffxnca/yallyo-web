@@ -1,7 +1,12 @@
 import Image from "next/image";
 import ButtonLong from "../Uis/ButtonLong";
 
-const UserProfile = () => {
+interface Props {
+  name: string;
+  bio: string;
+}
+
+const UserProfile = ({ name, bio }: Props) => {
   return (
     <div className="p-10 md:w-[800px]">
       <div className="md:flex gap-x-4 items-center text-center md:text-left">
@@ -15,7 +20,7 @@ const UserProfile = () => {
           alt="cool"
         />
         <div className="text-white">
-          <h2 className="text-4xl my-2">Rosie ODonnell</h2>
+          <h2 className="text-4xl my-2">{name}</h2>
           <p>
             Hes been on Friends, Seinfeld and That 70 Show. Has been in cartoons
             like Lilo and Stitch and Invader Zim. In movies like Galaxy Quest

@@ -18,7 +18,9 @@ const RoomList = ({ rooms }: Props) => {
           joiners={room.joiners}
           active={room.active}
           topic={room.topic}
-          createdAt={room.createdAt}
+          createdDate={room.createdDate}
+          createdDateISO={room.createdDateISO}
+          createdBy={room.createdBy}
         ></RoomItem>
       ))}
     </ul>

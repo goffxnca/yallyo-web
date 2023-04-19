@@ -1,11 +1,7 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-import {
-  addRooms,
-  fetchRooms,
-  subscribeRoomsChanges,
-} from "@/services/roomService";
+import { addRooms, fetchRooms, subscribeRooms } from "@/services/roomService";
 import { useEffect, useState } from "react";
 import * as _ from "lodash";
 import Header from "@/components/Layouts/Header";
@@ -34,14 +30,6 @@ const Home = () => {
   // const rooms = fetchRooms();
   const languageGrouped = _.countBy(rooms, "language");
   const languagesList = Object.entries(languageGrouped);
-  const levels = [
-    { id: "l1", name: "Beginner" },
-    { id: "l2", name: "Pre-Intermediate" },
-    { id: "l3", name: "Intermediate" },
-    { id: "l4", name: "Upper Intermediate" },
-    { id: "l5", name: "Advanced" },
-    { id: "l6", name: "Proficient" },
-  ];
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
@@ -59,7 +47,7 @@ const Home = () => {
 
   useEffect(() => {
     // set up the subscription
-    const unsubscribe = subscribeRoomsChanges((rooms: Room[]) => {
+    const unsubscribe = subscribeRooms((rooms: Room[]) => {
       setRooms(rooms);
       setFilteredRooms(rooms);
       console.log("ROOMS RE-READ");
@@ -67,7 +55,7 @@ const Home = () => {
 
     // return a cleanup function to unsubscribe when the component unmounts
     return () => {
-      alert("hey");
+      alert("unsub rooms");
       unsubscribe();
     };
   }, []);

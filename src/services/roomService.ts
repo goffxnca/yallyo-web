@@ -1,20 +1,7 @@
-// import { Room } from "@/models/types";
-
 import { Room } from "@/models/types";
-// import {
-//   Firestore,
-//   collection,
-//   doc,
-//   getDoc,
-//   getDocs,
-//   orderBy,
-//   query,
-//   setDoc,
-// } from "firebase/firestore/lite";
 import {
   Unsubscribe,
   onSnapshot,
-  Firestore,
   collection,
   doc,
   getDoc,
@@ -22,109 +9,19 @@ import {
   orderBy,
   query,
   setDoc,
+  Timestamp,
+  where,
+  limit,
 } from "firebase/firestore";
 import db from "../../firebase";
 import { getRandomItem } from "@/utils/array-utils";
 import { JOINERS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
-
-// const ROOMS: Room[] = [
-//   {
-//     id: "xkeif222oektksikefef",
-//     desc: "Talking about footbal & sport in general",
-//     language: "Thai",
-//     level: "Beginner",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r2",
-//     desc: "Music and cool stuff",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r3",
-//     desc: "Movie",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r4",
-//     desc: "cool4",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r5",
-//     desc: "cool5",
-//     language: "English",
-//     level: "Advanced",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r3e",
-//     desc: "cool3",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r4efe",
-//     desc: "cool4",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r54et",
-//     desc: "cool5",
-//     language: "English",
-//     level: "Advanced",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r3et",
-//     desc: "IEFT and Egnlish grammar",
-//     language: "English",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r4et",
-//     desc: "cool4",
-//     language: "French",
-//     level: "Intermediate",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-//   {
-//     id: "r5tyew",
-//     desc: "cool5",
-//     language: "English",
-//     level: "Advanced",
-//     joiners: ["Phattharawit Som", "Bowon Rattana", "Apichet Puta"],
-//   },
-// ];
-
-// const fetchRooms = () => {
-//   return ROOMS;
-// };
-
-// const fetchRoomById = (roomId: string) => {
-//   return ROOMS.find((room) => room.id === roomId);
-// };
-
-// const addRoom = (room: Room) => {
-//   return ROOMS.push(room);
-// };
-
-// export { fetchRooms, fetchRoomById, addRoom };
+import firebase from "firebase/app";
 
 const fetchRooms = async (): Promise<Room[]> => {
   const roomsCollection = collection(db, "rooms");
-  const q = query(roomsCollection, orderBy("createdAt", "desc"));
+  const q = query(roomsCollection, orderBy("createdDate", "desc"));
   const snapshot = await getDocs(q);
   const rooms: Room[] = [];
   snapshot.forEach((doc) => {
@@ -133,39 +30,27 @@ const fetchRooms = async (): Promise<Room[]> => {
   return rooms;
 };
 
-const subscribeRoomsChanges = (callback: Function): Unsubscribe => {
+const subscribeRooms = (callback: Function): Unsubscribe => {
   const roomsCollection = collection(db, "rooms");
-  // const q = query(roomsCollection, orderBy("createdAt", "desc"));
+  const q = query(
+    roomsCollection,
+    where("active", "==", true),
+    orderBy("createdDate", "desc"),
+    limit(5)
+  );
 
-  const unsubscribe = onSnapshot(roomsCollection, (snapshot) => {
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    // debugger;
     console.log("1");
     const rooms: Room[] = [];
     snapshot.forEach((doc) => {
       rooms.push(doc.data() as Room);
     });
+    console.log(rooms.length);
     callback(rooms);
   });
 
   return unsubscribe;
-
-  // return new Promise<Room[]>((resolve, reject): Unsubscribe => {
-  //   const unsubscribe = onSnapshot(
-  //     q,
-  //     (snapshot) => {
-  //       const rooms: Room[] = [];
-  //       snapshot.forEach((doc) => {
-  //         rooms.push(doc.data() as Room);
-  //       });
-  //       resolve(rooms);
-  //     },
-  //     (error) => {
-  //       reject(error);
-  //     }
-  //   );
-
-  //   // return a function that can be called to unsubscribe from the listener
-  //   return unsubscribe;
-  // });
 };
 
 const fetchRoomById = async (roomId: string): Promise<Room | null> => {
@@ -185,17 +70,18 @@ const addRooms = async (room?: Room) => {
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
     joiners: [
-      getRandomItem(JOINERS),
-      getRandomItem(JOINERS),
-      getRandomItem(JOINERS),
+      faker.name.fullName(),
+      faker.name.fullName(),
+      faker.name.fullName(),
     ],
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
     active: true,
-    createdAt: Date.now().toString(),
+    createdDate: Timestamp.now(),
+    createdBy: faker.name.fullName(),
   };
 
   setDoc(postRef, postData);
 };
 
-export { fetchRooms, subscribeRoomsChanges, addRooms, fetchRoomById };
+export { fetchRooms, subscribeRooms, addRooms, fetchRoomById };

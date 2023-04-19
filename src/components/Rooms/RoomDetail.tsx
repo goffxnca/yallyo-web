@@ -1,4 +1,4 @@
-import { Room } from "@/models/types";
+import { Room, RoomMessage } from "@/models/types";
 import { fetchRoomById } from "@/services/roomService";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -13,20 +13,47 @@ import {
   LanguageIcon,
 } from "@heroicons/react/24/outline";
 import Button from "../Uis/Button";
+import {
+  createRoomMessage,
+  subscribeRoomMessages,
+} from "@/services/roomMessageService";
 
 const RoomDetail = () => {
   const [room, setRoom] = useState<Room | null>(null);
+  const [roomId, setRoomId] = useState<string>("");
+  const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
+
   const router = useRouter();
 
   useEffect(() => {
     const getRoom = async () => {
       const roomId = router.query?.id?.toString() || "";
-      const fetchedRoom = await fetchRoomById(roomId);
-      setRoom(fetchedRoom);
+      if (roomId) {
+        setRoomId(roomId);
+        const fetchedRoom = await fetchRoomById(roomId);
+        setRoom(fetchedRoom);
+      }
     };
 
     getRoom();
   }, [router]);
+
+  useEffect(() => {
+    let unsubscribe = () => {};
+    // set up the subscription
+    if (roomId) {
+      unsubscribe = subscribeRoomMessages(roomId, (messagse: RoomMessage[]) => {
+        setRoomMessages(messagse);
+        console.log("ROOMS MESSAGES RE-READ");
+      });
+    }
+
+    // return a cleanup function to unsubscribe when the component unmounts
+    return () => {
+      alert("unsub ROOMS MESSAGES");
+      unsubscribe();
+    };
+  }, [roomId]);
 
   return (
     <div className="md:flex h-full">
@@ -62,6 +89,11 @@ const RoomDetail = () => {
       </div>
       {/* Sidebar */}
       <div className="md:w-1/3 md:relative bg-gray-300">
+        <div>
+          {roomMessages.map((message: RoomMessage, index: number) => (
+            <div key={index}>{message.message}</div>
+          ))}
+        </div>
         <div className="absolute bottom-0 w-full">
           <div className="flex w-ful">
             <textarea
@@ -69,7 +101,12 @@ const RoomDetail = () => {
               placeholder="Type a new message"
               spellCheck={false}
             />
-            <div className="bg-secondary px-4 flex items-center cursor-pointer text-accent2">
+            <div
+              className="bg-secondary px-4 flex items-center cursor-pointer text-accent2"
+              onClick={() => {
+                createRoomMessage(roomId);
+              }}
+            >
               <RocketLaunchIcon className="w-6 h-6" />
             </div>
           </div>
