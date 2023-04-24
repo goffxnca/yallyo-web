@@ -1,7 +1,12 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-import { addRooms, fetchRooms, subscribeRooms } from "@/services/roomService";
+import {
+  addRooms,
+  fetchRooms,
+  fetchRooms2,
+  subscribeRooms,
+} from "@/services/roomService";
 import { useEffect, useState } from "react";
 import * as _ from "lodash";
 import Header from "@/components/Layouts/Header";
@@ -25,39 +30,53 @@ const Home = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
+  const [currentPage, setCurrentPage] = useState("1");
+  const [lastRoomId, setLastRoomId] = useState("");
 
   // const rooms = fetchRooms();
   const languageGrouped = _.countBy(rooms, "language");
   const languagesList = Object.entries(languageGrouped);
+  const [counter, setCounter] = useState(1);
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
-  // useEffect(() => {
-  //   async function getRooms() {
-  //     const fetchedRooms = await fetchRooms();
-  //     setRooms(fetchedRooms);
-  //     setFilteredRooms(fetchedRooms);
-  //   }
-
-  //   getRooms();
-  // }, []);
+  const getRooms = async function getRooms() {
+    const fetchedRooms = await fetchRooms2(lastRoomId);
+    const combinedRooms = rooms.concat(fetchedRooms);
+    setRooms(combinedRooms);
+    setFilteredRooms(combinedRooms);
+    setLastRoomId(fetchedRooms[fetchedRooms.length - 1]?._id || "");
+    console.log("fetchRooms", fetchedRooms.length);
+  };
 
   useEffect(() => {
-    // set up the subscription
-    const unsubscribe = subscribeRooms((rooms: Room[]) => {
-      setRooms(rooms);
-      setFilteredRooms(rooms);
-      // console.log("ROOMS RE-READ");
-    });
+    getRooms();
 
-    // return a cleanup function to unsubscribe when the component unmounts
+    const interval = setInterval(() => {
+      getRooms();
+    }, 20000);
+
     return () => {
-      alert("unsub rooms");
-      unsubscribe();
+      clearInterval(interval);
     };
   }, []);
+
+  // useEffect(() => {
+  //   // set up the subscription
+  //   const unsubscribe = subscribeRooms((rooms: Room[]) => {
+  //     setRooms(rooms);
+  //     setFilteredRooms(rooms);
+  //     // console.log("ROOMS RE-READ");
+  //   });
+
+  //   // return a cleanup function to unsubscribe when the component unmounts
+  //   return () => {
+  //     alert("unsub rooms");
+  //     unsubscribe();
+  //   };
+  // }, []);
 
   const filterLanguage = () => {
     let filtered = rooms;
@@ -85,8 +104,9 @@ const Home = () => {
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
       <HeaderControls
         onClickCreateRoom={() => {
-          addRooms();
+          addRooms(counter);
           setShowNewRoomFormModal(true);
+          setCounter(counter + 1);
         }}
         onClickShowRules={() => {
           setShowRules(true);
@@ -140,7 +160,7 @@ const Home = () => {
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
-      <div
+      {/* <div
         className="fixed bottom-0 right-2 md:right-10 bg-secondary px-4 py-1 rounded-t-lg  text-accent1 hover:text-accent2 border border-b-0 cursor-pointer select-none"
         onClick={toggleFriendsPopup}
       >
@@ -148,7 +168,7 @@ const Home = () => {
           <UsersIcon className="h-5 w-5" />
           <span className="text-md">My Friends</span>
         </div>
-      </div>
+      </div> */}
 
       {showNewRoomFormModal && (
         <Modal
@@ -182,6 +202,12 @@ const Home = () => {
           <Rules />
         </Modal>
       )}
+      <div className="text-white mx-auto">
+        {/* CurrentPage: {counter} */}
+        <div className="cursor-pointer" onClick={() => getRooms()}>
+          Load More...
+        </div>
+      </div>
     </main>
   );
 };

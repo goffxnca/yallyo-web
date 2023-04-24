@@ -8,6 +8,7 @@ const Header = () => {
   const handleGoogleSignin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
+      console.log(result);
     } catch (error) {}
   };
 
@@ -17,7 +18,10 @@ const Header = () => {
         <Image src={"/images/yobro2.png"} width={60} height={60} alt="yeh" />
       </div>
       <div className="text-accent1 font-bold text-xl text-center">
-        <div>YOBRO.fun</div>
+        <div>
+          Hey<span className="text-accent2">Guyz</span>
+          <span className="text-accent2 text-white text-sm">.com</span>
+        </div>
         <div className="text-white">
           Practice English - Meet friends - Enjoy
         </div>

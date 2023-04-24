@@ -1,22 +1,23 @@
 import { Timestamp } from "firebase/firestore";
 
-interface FirebaseDocBase {
-  id: string;
+interface MetaDataBase {
+  _id?: string;
   createdBy: string;
-  createdDate: Timestamp;
-  createdDateISO?: string;
+  // createdDate: Timestamp;
+  // createdDateISO?: string;
 }
 
-export interface Room extends FirebaseDocBase {
+export interface Room extends MetaDataBase {
   language: string;
   level: string;
   desc: string;
   topic: string;
   joiners: string[];
   active: boolean;
+  count: string;
 }
 
-export interface RoomMessage extends FirebaseDocBase {
+export interface RoomMessage extends MetaDataBase {
   roomId: string;
   message: string;
 }

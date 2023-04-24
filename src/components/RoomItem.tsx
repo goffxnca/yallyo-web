@@ -4,7 +4,15 @@ import Link from "next/link";
 
 interface Props extends Room {}
 
-const RoomItem = ({ desc, id, topic, language, level, joiners }: Props) => {
+const RoomItem = ({
+  desc,
+  _id,
+  topic,
+  language,
+  level,
+  joiners,
+  count,
+}: Props) => {
   return (
     <li className="p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl">
       <div className="text-white">
@@ -20,10 +28,10 @@ const RoomItem = ({ desc, id, topic, language, level, joiners }: Props) => {
         ))}
       </ul>
       <Link
-        href={`/rooms/${id}`}
+        href={`/rooms/${_id}`}
         className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
       >
-        Join Now
+        Join Now {count}
       </Link>
     </li>
   );

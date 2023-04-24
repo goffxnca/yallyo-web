@@ -12,18 +12,47 @@ import {
   Timestamp,
   where,
   limit,
+  startAt,
+  startAfter,
+  DocumentData,
+  Query,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { getRandomItem } from "@/utils/array-utils";
-import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
 
-const fetchRooms = async (): Promise<Room[]> => {
+const fetchRooms2 = async (roomId: string): Promise<Room[]> => {
+  const response = await fetch(ENVS.API_URL);
+  const data = await response.json();
+  return data as Room[];
+};
+
+const fetchRooms = async (roomId: string): Promise<Room[]> => {
   const roomsCollection = collection(db, "rooms");
-  const q = query(roomsCollection, orderBy("createdDate", "desc"));
-  const snapshot = await getDocs(q);
+  let q: Query<DocumentData>;
+  if (roomId) {
+    const docRef = doc(db, "rooms", roomId);
+    const docSnap = await getDoc(docRef);
+    q = query(
+      roomsCollection,
+      where("active", "==", true),
+      orderBy("createdDate", "desc"),
+      startAfter(docSnap),
+      limit(5)
+    );
+  } else {
+    q = query(
+      roomsCollection,
+      where("active", "==", true),
+      orderBy("createdDate", "desc"),
+      limit(5)
+    );
+  }
+
+  const docsSnap = await getDocs(q);
   const rooms: Room[] = [];
-  snapshot.forEach((doc) => {
+  docsSnap.forEach((doc) => {
     rooms.push(doc.data() as Room);
   });
   return rooms;
@@ -61,10 +90,9 @@ const fetchRoomById = async (roomId: string): Promise<Room | null> => {
   }
 };
 
-const addRooms = async (room?: Room) => {
+const addRooms = async (count: number) => {
   const docRef = doc(db, "rooms", Math.random().toString());
-  const postData: Room = {
-    id: docRef.id,
+  const newRoom: Room = {
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
     joiners: [
@@ -75,11 +103,18 @@ const addRooms = async (room?: Room) => {
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
     active: true,
-    createdDate: Timestamp.now(),
+    // createdDate: Timestamp.now(),
     createdBy: faker.name.fullName(),
+    count: "20",
   };
 
-  setDoc(docRef, postData);
+  const response = await fetch(ENVS.API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newRoom),
+  });
+  const data = await response.json();
+  console.log(data); // Log the response from the server
 };
 
-export { fetchRooms, subscribeRooms, addRooms, fetchRoomById };
+export { fetchRooms, subscribeRooms, addRooms, fetchRoomById, fetchRooms2 };

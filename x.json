@@ -1,0 +1,205 @@
+{
+  "success": true,
+  "error": null,
+  "data": {
+    "64469cd37d3dc300142bd419": {
+      "id": "64469cd37d3dc300142bd419",
+      "platform": "Free4Talk",
+      "topic": "",
+      "maxPeople": 3,
+      "language": "English",
+      "level": "Any Level",
+      "url": "https://www.free4talk.com/room/mGfac",
+      "isVip": false,
+      "userId": "b282197547",
+      "creator": {
+        "id": "b282197547",
+        "name": "Falcon",
+        "avatar": "https://lh3.googleusercontent.com/a/AGNmyxbS0B_vbNQErGq6hC-MeHA0c_8M2FHgJyLCKTvc3Q",
+        "supporter": 0,
+        "ss": "bc4bda1c543d2055a673200c9ce70441:d2edb718690393a11b74809766118f2debc07ec620a2256d634d923bfeecd04c679270243404a772ebd77f2068e75cf9c1012fa58af2adfb042b270e8f4abb825d08d4417a04a96fa238125c42004c87723c947f2167befd47f2dfe0cf878d89f7cdf39cc6ac063ed498babd08151696af5aba253e9b24b70170ce43a0c4f3c9e36c368e0a18bc6b113c6cb138ccd8be",
+        "isVerified": true
+      },
+      "updatedAt": "2023-04-24T15:14:27.135Z",
+      "createdAt": "2023-04-24T15:14:27.135Z",
+      "clients": [],
+      "settings": { "noMic": false },
+      "groupUpdatedAt": 1682349268168
+    },
+    "64469cd37d3dc300142bd41b": {
+      "id": "64469cd37d3dc300142bd41b",
+      "platform": "Free4Talk",
+      "topic": ".....",
+      "maxPeople": 2,
+      "language": "English",
+      "level": "Any Level",
+      "url": "https://www.free4talk.com/room/g256a",
+      "isVip": false,
+      "userId": "ad26784429",
+      "creator": {
+        "id": "ad26784429",
+        "name": "Pallavi Upadhayay",
+        "avatar": "https://lh3.googleusercontent.com/a/AGNmyxb6XkdL1aZ-EZU76lFSHR5x-sAnGLugaIMFudZt",
+        "supporter": 0,
+        "ss": "28c13da4382b7d355ebf0a4f66564185:910a6ed129038bae4995a3123d786b65db4b943ea4a0e1a0ce5a9eb2496a654cb3732fbd01626fff81a4c862b9890b1f9398a67229ca95a5d62978eb7fb150c62721408aa97280b7019471b5d1375bf6e189ced50a6ab38b16d6325fa47de0be21d4aa5b0b3d4886ae446ed6fffa28b9aeedcd0dbfe1f531261cbff5c4378882ecf5ee3f359af36e8a7d09514958c68c",
+        "isVerified": true
+      },
+      "updatedAt": "2023-04-24T15:14:27.347Z",
+      "createdAt": "2023-04-24T15:14:27.347Z",
+      "clients": [],
+      "settings": { "noMic": false },
+      "groupUpdatedAt": 1682349268168
+    },
+    "64469cd47d3dc300142bd41e": {
+      "id": "64469cd47d3dc300142bd41e",
+      "platform": "Free4Talk",
+      "topic": "is it ..",
+      "maxPeople": 2,
+      "language": "AkanTwi",
+      "level": "Any Level",
+      "url": "https://www.free4talk.com/room/xo891",
+      "isVip": false,
+      "userId": "a29c456095",
+      "creator": {
+        "id": "a29c456095",
+        "name": "Kai",
+        "avatar": "https://lh3.googleusercontent.com/a/AGNmyxamKvKO4333v5wlaPmynhDSwVT3-tdJ9MiYeUMj9A",
+        "supporter": 0,
+        "ss": "a55706523299acbf517bc8c0aff5bdd1:b110fe5343e4bc8450b52336ba5646f67b5cbd8a4d723e3311db094901af635b69df9b159b51594819f8907ba676ee3d2b412a25b12f22eb33b7941f351fc5fa59e8244d15ceed40bd7a1aa88e8cc0c5cb502ba0c70e7f998c40c4fbfe09e85482fcaa904bcdc08c0f82f13084575032a9b8e668948512d0849610520186a36e233c5781969b799b55fe146a12067bdda7d37951e7f1bb721d2d54b75d8f6f26",
+        "isVerified": true
+      },
+      "updatedAt": "2023-04-24T15:14:28.486Z",
+      "createdAt": "2023-04-24T15:14:28.486Z",
+      "clients": [],
+      "settings": { "noMic": false },
+      "groupUpdatedAt": 1682349269327
+    },
+    "6446932a7d3dc300142bcf2b": {
+      "id": "6446932a7d3dc300142bcf2b",
+      "platform": "Free4Talk",
+      "topic": "",
+      "maxPeople": 2,
+      "language": "Vietnamese",
+      "level": "Any Level",
+      "url": "https://www.free4talk.com/room/8T7c4",
+      "isVip": false,
+      "userId": "08eec34465",
+      "creator": {
+        "id": "08eec34465",
+        "name": "Neo",
+        "avatar": "https://lh3.googleusercontent.com/a/AGNmyxauL74cbON_ASNY_xbZjGvuateKmoNXMUaeaKmHXA",
+        "supporter": 0,
+        "ss": "39c2f12ac171de5dd2ed85348bf16ad4:0c0cd9cbeeb53cbb899ce6ebbc39cfd4f18aeac8ce4ddaf4d7b13270e76a01ff4c6ae8db563171f08db3870f36cd9724ccaa76f03f2b1313f2b3bbd39a939a1a69b80e10018ce2d75847c34b606f45c8dc50b6a748b293eef89d977433e1eac9f32f32c6c9743fef921b0fb6f3fe04adcf4d8c8f058d71c7851b00e331b3b7c78221ea7a18775ad9208f90db48c8de11",
+        "isVerified": true
+      },
+      "updatedAt": "2023-04-24T14:53:57.652Z",
+      "createdAt": "2023-04-24T14:33:14.963Z",
+      "clients": [
+        {
+          "id": "08eec34465",
+          "name": "Neo",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxauL74cbON_ASNY_xbZjGvuateKmoNXMUaeaKmHXA",
+          "followers": 38,
+          "following": 25,
+          "friends": 24,
+          "supporter": 0,
+          "ss": "39c2f12ac171de5dd2ed85348bf16ad4:0c0cd9cbeeb53cbb899ce6ebbc39cfd4f18aeac8ce4ddaf4d7b13270e76a01ff4c6ae8db563171f08db3870f36cd9724ccaa76f03f2b1313f2b3bbd39a939a1a69b80e10018ce2d75847c34b606f45c8dc50b6a748b293eef89d977433e1eac9f32f32c6c9743fef921b0fb6f3fe04adcf4d8c8f058d71c7851b00e331b3b7c78221ea7a18775ad9208f90db48c8de11",
+          "checked": 1682337244729
+        },
+        {
+          "id": "7b17a37719",
+          "name": "Trọng Bình",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxb8KaHYLccmnVSMMGZGjwjdmMfknctyiIhLpy5Z3A",
+          "followers": 28,
+          "following": 32,
+          "friends": 13,
+          "supporter": 0,
+          "ss": "2c802a7fa9807ac9b73cfdbfaf3461f4:5bb01072818f170fece3f64ede9f2660d5a1eed97c18c36f794f8d44cef9e6ba1a32bb1f123a8a9a41bd5deea2ce4bbb6b0a682f42885f4bf1989e4a8d0b4afe5b123d3f6d3895ef5716c3b27199e5dd86ab1a9e77035393cc7f3f933ee95b6e55a5a09e68e39ca79297897d8681ac94e5f014b190f0bfcffa55e8be961632e7fb362a381dd6c56e7c9648d2942d213a",
+          "checked": 1682348876824
+        }
+      ],
+      "settings": { "noMic": false },
+      "groupUpdatedAt": 1682349266877
+    },
+    "64464f4ea85cfe0014df3237": {
+      "id": "64464f4ea85cfe0014df3237",
+      "platform": "Free4Talk",
+      "topic": "Study / Work / Sleep / Music ",
+      "maxPeople": 0,
+      "language": "English",
+      "level": "Any Level",
+      "url": "https://www.free4talk.com/room/Kzbcb",
+      "isVip": false,
+      "userId": "f6a6f59382",
+      "creator": {
+        "id": "f6a6f59382",
+        "name": "G",
+        "avatar": "https://lh3.googleusercontent.com/a/AGNmyxYHi1DEHH-16IcZORk8qWWhfT44t7MsQRC2DXMk",
+        "supporter": 0,
+        "ss": "b8bd80c2d1a877e3943423fd74984af5:e5c8879fc0ba9a4ccf7ab2550be68c8635038179c43a97a560c16c19f74a3f74cac752d84e93469b2e4e9c6d31644cffdf8289759573a2b6cdc903de2ced350e21f31265f2e8732c1fdd6cbca8abdbf951448d1d284388e9ce70158a10b630526e49788fef4b96deb845775696d2b5ebbf00940ef0b0f500730f9da825d87637a8b3b9c57062d8c6b2492c9db8dde369",
+        "isVerified": true
+      },
+      "updatedAt": "2023-04-24T14:50:14.889Z",
+      "createdAt": "2023-04-24T09:43:42.066Z",
+      "clients": [
+        {
+          "id": "d6d3e18468",
+          "name": "A Shaikh",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxZ8pZrwqTY1uty_MGxI_MZbgArnspsqZjKTXBNBQA",
+          "followers": 57,
+          "following": 17,
+          "friends": 17,
+          "supporter": 0,
+          "ss": "93ff29a2679206a73666b9de5284b624:17c0880203477c956c841be5b357e4282625d80df2af0be0673aba3bf341c08fd5b50a46c669982581cc6b3d8f305600acec25d4c56a54430622360269102b8e69c301bcd74b407df62326648eaabbfd8b5768300cb1a2c34227a05e53052cda3dab9c0d4f1c96a587c7e3cf49e0fdb4ed87a4343b9d76b6fb66660c0570c96bc4f6e19d00f9fbb5f8a7c40accef05a0",
+          "checked": 1682330773888
+        },
+        {
+          "id": "d9ed451061",
+          "name": "Osama",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxa6wCyij0nBK3LnejjtNag_ZHaANkZVHun7DqCMjg",
+          "followers": 20,
+          "following": 35,
+          "friends": 6,
+          "supporter": 1678082731539,
+          "ss": "c461a32c2012ffcf034ad41c3a7c59b8:3e0e83ae54878fe62b4852403fb84b383cd9666d381a6ffaa278c6ddc755d17dbf28b46553078392c2ff8203b2c502b02fd4a6c28ea4b8ff5853afc1d7ffd021932f5f96b02213642437562d73f65eba29a2c66c5af167ceec2aacd734552cbcd87ed0d1450b90c4298e977daf01339c27d4504869f0ac6d1859a6ed31822967c2b8df9f0451d3787ad34e70557d0c7ab5e3267838e6f2556fe5938149915a54",
+          "checked": 1682338756741
+        },
+        {
+          "id": "f5a2292409",
+          "name": "Toni Priatna",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxY9eL9m_Xy8py1Vdhj8Sgs2Iql4MIYgaZGblNKOCg",
+          "followers": 115,
+          "following": 100,
+          "friends": 97,
+          "supporter": 0,
+          "ss": "dfcbd306f97f3bacf822f5dfa7f19543:794f8efa0f621b5beb766beab910f83f5576280882d22252e42022a16cf6cabab435438ef803767e047a3d285449cbd24dfb7cfa917cd211f4cea3ba4b054ae5d7a932692f4658bc1e2ed96bed924e9c3d5b5f4c146b9c0e3741c9f8bfd94162f5034fcd72bb047677fb9c1c865c5b0a886ded3827d23c12b250601ffe9177ba7f70a4b6626daa7696ad5f7ba80cdcb2",
+          "checked": 1682330772865
+        },
+        {
+          "id": "3f64e38236",
+          "name": "luna lovegood",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxaYtPKllbct9PDegLXqIOP10Sr1x2UhpPWNnaFekg",
+          "followers": 193,
+          "following": 65,
+          "friends": 65,
+          "supporter": 0,
+          "ss": "d9399022f77a8e7dc7f10ed78cee2370:476ae038d1ad41cf29f625294df5c62688e27413d4e3acba80db90830600efcec963fc72b5960c46cc1c3eafb018b759a9658819b1e92f508af8a88db0fcf4cbdd0baf8b593949d4f0050462ec5fd1e28e38a31cbfc0703ef5337118becd1515872791129f32b5ae1e2136136d65be763ba59946a22df9cdff27285e66f472ca6d33105311a52185cd7baea3498e2c69",
+          "checked": 1682330771097
+        },
+        {
+          "id": "f6a6f59382",
+          "name": "G",
+          "avatar": "https://lh3.googleusercontent.com/a/AGNmyxYHi1DEHH-16IcZORk8qWWhfT44t7MsQRC2DXMk",
+          "followers": 43,
+          "following": 26,
+          "friends": 26,
+          "supporter": 0,
+          "ss": "b8bd80c2d1a877e3943423fd74984af5:e5c8879fc0ba9a4ccf7ab2550be68c8635038179c43a97a560c16c19f74a3f74cac752d84e93469b2e4e9c6d31644cffdf8289759573a2b6cdc903de2ced350e21f31265f2e8732c1fdd6cbca8abdbf951448d1d284388e9ce70158a10b630526e49788fef4b96deb845775696d2b5ebbf00940ef0b0f500730f9da825d87637a8b3b9c57062d8c6b2492c9db8dde369",
+          "checked": 1682330773178
+        }
+      ],
+      "settings": { "noMic": true },
+      "groupUpdatedAt": 1682349267974
+    }
+  }
+}

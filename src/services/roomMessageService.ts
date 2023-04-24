@@ -55,11 +55,11 @@ const subscribeRoomMessages = (
 const createRoomMessage = async (roomId: string, roomMessage?: RoomMessage) => {
   const docRef = doc(db, "roomMessages", Math.random().toString());
   const postData: RoomMessage = {
-    id: docRef.id,
+    _id: docRef.id,
     roomId: roomId,
     message: faker.lorem.sentence(),
     createdBy: faker.name.fullName(),
-    createdDate: Timestamp.now(),
+    // createdDate: Timestamp.now(),
   };
 
   setDoc(docRef, postData);

@@ -168,4 +168,8 @@ const TOPICS = [
   "Space Exploration",
 ];
 
-export { LANGUAGES, JOINERS, LANGAUGE_LEVEL, TOPICS };
+const ENVS = {
+  API_URL: process.env.NEXT_PUBLIC_API_URL!,
+};
+
+export { LANGUAGES, JOINERS, LANGAUGE_LEVEL, TOPICS, ENVS };
