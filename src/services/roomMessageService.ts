@@ -42,9 +42,9 @@ const subscribeRoomMessages = (
   const unsubscribe = onSnapshot(q, (snapshot) => {
     console.log("1");
     const roomMessages: RoomMessage[] = [];
-    snapshot.forEach((doc) => {
-      roomMessages.push(doc.data() as RoomMessage);
-    });
+    // snapshot.forEach((doc) => {
+    //   roomMessages.push(doc.data() as RoomMessage);
+    // });
     console.log(roomMessages.length);
     callback(roomMessages);
   });

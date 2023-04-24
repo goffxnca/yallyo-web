@@ -15,9 +15,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { getRandomItem } from "@/utils/array-utils";
-import { JOINERS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
-import firebase from "firebase/app";
 
 const fetchRooms = async (): Promise<Room[]> => {
   const roomsCollection = collection(db, "rooms");
@@ -36,16 +35,16 @@ const subscribeRooms = (callback: Function): Unsubscribe => {
     roomsCollection,
     where("active", "==", true),
     orderBy("createdDate", "desc"),
-    limit(10)
+    limit(5)
   );
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
-    console.log("1");
     const rooms: Room[] = [];
     snapshot.forEach((doc) => {
       rooms.push(doc.data() as Room);
     });
-    console.log(rooms.length);
+    console.log("onSnapshot", rooms.length);
+
     callback(rooms);
   });
 
@@ -53,8 +52,8 @@ const subscribeRooms = (callback: Function): Unsubscribe => {
 };
 
 const fetchRoomById = async (roomId: string): Promise<Room | null> => {
-  const roomDoc = doc(db, "rooms", roomId);
-  const roomSnap = await getDoc(roomDoc);
+  const docRef = doc(db, "rooms", roomId);
+  const roomSnap = await getDoc(docRef);
   if (roomSnap.exists()) {
     return roomSnap.data() as Room;
   } else {
@@ -63,9 +62,9 @@ const fetchRoomById = async (roomId: string): Promise<Room | null> => {
 };
 
 const addRooms = async (room?: Room) => {
-  const postRef = doc(db, "rooms", Math.random().toString());
+  const docRef = doc(db, "rooms", Math.random().toString());
   const postData: Room = {
-    id: postRef.id,
+    id: docRef.id,
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
     joiners: [
@@ -80,7 +79,7 @@ const addRooms = async (room?: Room) => {
     createdBy: faker.name.fullName(),
   };
 
-  setDoc(postRef, postData);
+  setDoc(docRef, postData);
 };
 
 export { fetchRooms, subscribeRooms, addRooms, fetchRoomById };

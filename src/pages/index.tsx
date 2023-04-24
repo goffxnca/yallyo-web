@@ -10,7 +10,6 @@ import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
 import { UsersIcon } from "@heroicons/react/20/solid";
 import Rules from "@/components/Rules";
-import db from "../../firebase";
 import { Room } from "@/models/types";
 import { getRandomItem } from "@/utils/array-utils";
 import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
@@ -50,7 +49,7 @@ const Home = () => {
     const unsubscribe = subscribeRooms((rooms: Room[]) => {
       setRooms(rooms);
       setFilteredRooms(rooms);
-      console.log("ROOMS RE-READ");
+      // console.log("ROOMS RE-READ");
     });
 
     // return a cleanup function to unsubscribe when the component unmounts
