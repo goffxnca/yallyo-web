@@ -1,8 +1,16 @@
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Head from "next/head";
 import Image from "next/image";
+import { auth, provider } from "../../../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const Header = () => {
+  const handleGoogleSignin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+    } catch (error) {}
+  };
+
   return (
     <div className="flex items-center justify-between p-2 bg-secondary shadow-2xl">
       <div className="text-accent1 text-3xl">
@@ -14,7 +22,10 @@ const Header = () => {
           Practice English - Meet friends - Enjoy
         </div>
       </div>
-      <UserCircleIcon className="w-10 h-10 text-white" />
+      <UserCircleIcon
+        onClick={handleGoogleSignin}
+        className="w-10 h-10 text-white"
+      />
     </div>
   );
 };

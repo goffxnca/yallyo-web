@@ -13,7 +13,7 @@ import {
   where,
   limit,
 } from "firebase/firestore";
-import db from "../../firebase";
+import { db } from "../../firebase";
 import { getRandomItem } from "@/utils/array-utils";
 import { JOINERS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
@@ -36,11 +36,10 @@ const subscribeRooms = (callback: Function): Unsubscribe => {
     roomsCollection,
     where("active", "==", true),
     orderBy("createdDate", "desc"),
-    limit(5)
+    limit(10)
   );
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
-    // debugger;
     console.log("1");
     const rooms: Room[] = [];
     snapshot.forEach((doc) => {
