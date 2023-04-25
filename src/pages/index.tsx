@@ -17,7 +17,7 @@ import { UsersIcon } from "@heroicons/react/20/solid";
 import Rules from "@/components/Rules";
 import { Room } from "@/models/types";
 import { getRandomItem } from "@/utils/array-utils";
-import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 
 const Home = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -56,7 +56,7 @@ const Home = () => {
 
     const interval = setInterval(() => {
       getRooms();
-    }, 20000);
+    }, ENVS.ROOMS_REFRESH);
 
     return () => {
       clearInterval(interval);

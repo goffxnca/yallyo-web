@@ -170,6 +170,7 @@ const TOPICS = [
 
 const ENVS = {
   API_URL: process.env.NEXT_PUBLIC_API_URL!,
+  ROOMS_REFRESH: +(process.env.NEXT_PUBLIC_ROOMS_REFRESH || 60000),
 };
 
 export { LANGUAGES, JOINERS, LANGAUGE_LEVEL, TOPICS, ENVS };
