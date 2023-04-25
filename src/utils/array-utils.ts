@@ -3,4 +3,8 @@ function getRandomItem<T>(arr: T[]): T {
   return arr[randomIndex];
 }
 
-export { getRandomItem };
+const createNArray = (length: number): number[] => {
+  return Array.from({ length }, (v, k) => k + 1);
+};
+
+export { getRandomItem, createNArray };

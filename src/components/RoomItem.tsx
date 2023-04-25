@@ -1,6 +1,7 @@
 import { Room } from "@/models/types";
 import Avatar from "./Avatar";
 import Link from "next/link";
+import { createNArray } from "@/utils/array-utils";
 
 interface Props extends Room {}
 
@@ -12,6 +13,7 @@ const RoomItem = ({
   level,
   joiners,
   count,
+  size,
 }: Props) => {
   return (
     <li className="p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl">
@@ -23,15 +25,29 @@ const RoomItem = ({
         ({topic}) {desc}
       </div>
       <ul className="flex flex-wrap justify-center gap-2">
-        {joiners.map((joiner, index) => (
-          <Avatar key={index} name={joiner} size="lg" />
+        {createNArray(size).map((item, index) => (
+          <Avatar
+            key={item}
+            name={joiners[index]?.name || ""}
+            url={joiners[index]?.profileUrl || ""}
+            size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
+            showMic={false}
+          />
         ))}
+        {/* {joiners.map((joiner, index) => (
+          <Avatar
+            key={index}
+            name={joiner}
+            size={joiners.length > 6 ? "sm" : joiners.length > 3 ? "md" : "lg"}
+            showMic={false}
+          />
+        ))} */}
       </ul>
       <Link
         href={`/rooms/${_id}`}
         className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
       >
-        Join Now {count}
+        Join Now {size}
       </Link>
     </li>
   );

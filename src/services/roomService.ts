@@ -18,9 +18,10 @@ import {
   Query,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { getRandomItem } from "@/utils/array-utils";
+import { createNArray, getRandomItem } from "@/utils/array-utils";
 import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
+import { randomBoolean } from "@/utils/bool-utils";
 
 const fetchRooms2 = async (roomId: string): Promise<Room[]> => {
   const response = await fetch(ENVS.API_URL);
@@ -92,20 +93,26 @@ const fetchRoomById = async (roomId: string): Promise<Room | null> => {
 
 const addRooms = async (count: number) => {
   const docRef = doc(db, "rooms", Math.random().toString());
+
+  const randomRoomSize = Math.floor(Math.random() * 8) + 3;
+  const randomRoomJoiners = Math.floor(Math.random() * randomRoomSize) + 1;
+  const roomJoinerArray = createNArray(randomRoomJoiners);
+
   const newRoom: Room = {
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
-    joiners: [
-      faker.name.fullName(),
-      faker.name.fullName(),
-      faker.name.fullName(),
-    ],
+    joiners: roomJoinerArray.map((x) => ({
+      id: Math.random().toString(),
+      name: faker.name.fullName(),
+      profileUrl: randomBoolean() ? faker.image.people() : "",
+    })),
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
     active: true,
     // createdDate: Timestamp.now(),
     createdBy: faker.name.fullName(),
     count: "20",
+    size: randomRoomSize,
   };
 
   const response = await fetch(ENVS.API_URL, {

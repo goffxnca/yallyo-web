@@ -4,14 +4,18 @@ import { useEffect, useState } from "react";
 import UserProfile from "./Users/UserProfile";
 import Modal from "./Modals/Modal";
 import { MicrophoneIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { random } from "lodash";
 
 interface Props {
   name: string;
   size: "sm" | "md" | "lg";
+  showMic: boolean;
+  url: string;
 }
 
-const Avatar = ({ name, size }: Props) => {
-  const nameAbbr = convertFullnameToAbbr(name);
+const Avatar = ({ name, size, showMic, url }: Props) => {
+  const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
@@ -24,16 +28,32 @@ const Avatar = ({ name, size }: Props) => {
   }, []);
   return (
     <li
-      className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full border border-dashed border-gray-600 hover:scale-105 select-none cursor-pointer`}
-      style={{ color: bgColor }}
+      className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full ${
+        name ? "" : "border border-dashed border-gray-600"
+      }
+       hover:scale-105 select-none cursor-pointer`}
       onClick={() => {
         setShowProfile(true);
       }}
+      style={{
+        backgroundColor: !url && name ? getRandomColor() : "",
+        backgroundImage: url
+          ? `url(https://i.pravatar.cc/100?v=${Math.random()})`
+          : "",
+        backgroundPosition: "center",
+      }}
     >
-      <div>{nameAbbr}</div>
-      <div className="absolute right-2 bottom-2 p-2 mx-1 rounded-md ">
-        <MicrophoneIcon className="w-6 h-6 " />
-      </div>
+      {/* Image */}
+      <div></div>
+
+      {/* Black Circle */}
+      {name && !url && <div>{nameAbbr && <div>{nameAbbr}</div>}</div>}
+
+      {showMic && (
+        <div className="absolute right-2 bottom-2 p-2 mx-1 rounded-md ">
+          <MicrophoneIcon className="w-6 h-6 " />
+        </div>
+      )}
 
       {showProfile && (
         <Modal

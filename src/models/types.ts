@@ -12,9 +12,16 @@ export interface Room extends MetaDataBase {
   level: string;
   desc: string;
   topic: string;
-  joiners: string[];
+  joiners: UserShort[];
   active: boolean;
   count: string;
+  size: number;
+}
+
+interface UserShort {
+  id: string;
+  name: string;
+  profileUrl: string;
 }
 
 export interface RoomMessage extends MetaDataBase {

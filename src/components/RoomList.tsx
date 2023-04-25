@@ -22,6 +22,7 @@ const RoomList = ({ rooms }: Props) => {
           // createdDateISO={room.createdDateISO}
           createdBy={room.createdBy}
           count={room.count}
+          size={room.size}
         ></RoomItem>
       ))}
     </ul>

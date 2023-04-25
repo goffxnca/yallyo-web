@@ -18,6 +18,7 @@ import Rules from "@/components/Rules";
 import { Room } from "@/models/types";
 import { getRandomItem } from "@/utils/array-utils";
 import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import Head from "next/head";
 
 const Home = () => {
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -102,6 +103,10 @@ const Home = () => {
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
+      <Head>
+        <title>Practice English Online - HeyGuyz.com</title>
+      </Head>
+
       <HeaderControls
         onClickCreateRoom={() => {
           addRooms(counter);

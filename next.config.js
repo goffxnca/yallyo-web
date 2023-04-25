@@ -7,6 +7,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "d31wcbk3iidrjq.cloudfront.net",
       },
+      { protocol: "https", hostname: "loremflickr.com" },
     ],
   },
 };
