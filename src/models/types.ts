@@ -18,6 +18,11 @@ export interface Room extends MetaDataBase {
   size: number;
 }
 
+export interface Pagination {
+  pageNumber: number;
+  pageSize: number;
+}
+
 interface UserShort {
   id: string;
   name: string;

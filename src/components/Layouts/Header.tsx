@@ -18,11 +18,11 @@ const Header = () => {
         <Image src={"/images/yobro2.png"} width={60} height={60} alt="yeh" />
       </div>
       <div className="text-accent1 font-bold text-xl text-center">
-        <div>
+        <div className="text-2xl">
           Hey<span className="text-accent2">Guyz</span>
           <span className="text-accent2 text-white text-sm">.com</span>
         </div>
-        <div className="text-white">
+        <div className="text-white text-md mb-2">
           Practice English - Meet friends - Enjoy
         </div>
       </div>

@@ -31,8 +31,7 @@ const Home = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
-  const [currentPage, setCurrentPage] = useState("1");
-  const [lastRoomId, setLastRoomId] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // const rooms = fetchRooms();
   const languageGrouped = _.countBy(rooms, "language");
@@ -43,26 +42,34 @@ const Home = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
-  const getRooms = async function getRooms() {
-    const fetchedRooms = await fetchRooms2(lastRoomId);
-    const combinedRooms = rooms.concat(fetchedRooms);
-    setRooms(combinedRooms);
-    setFilteredRooms(combinedRooms);
-    setLastRoomId(fetchedRooms[fetchedRooms.length - 1]?._id || "");
-    console.log("fetchRooms", fetchedRooms.length);
-  };
-
   useEffect(() => {
-    getRooms();
-
-    const interval = setInterval(() => {
-      getRooms();
-    }, ENVS.ROOMS_REFRESH);
-
-    return () => {
-      clearInterval(interval);
+    const getRooms = async function getRooms() {
+      const fetchedRooms = await fetchRooms2({
+        pageNumber: currentPage,
+        pageSize: 10,
+      });
+      const combinedRooms = rooms.concat(fetchedRooms);
+      if (combinedRooms.length) {
+        setRooms(combinedRooms);
+        setFilteredRooms(combinedRooms);
+        console.log("fetchRooms", fetchedRooms.length);
+      }
     };
-  }, []);
+
+    getRooms();
+  }, [currentPage]);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log("ranInterval")
+  //     // getRooms();
+  //   }, ENVS.ROOMS_REFRESH);
+
+  //   return () => {
+  //     console.log("clearInterval")
+  //     clearInterval(interval);
+  //   };
+  // }, [])
 
   // useEffect(() => {
   //   // set up the subscription
@@ -110,7 +117,7 @@ const Home = () => {
       <HeaderControls
         onClickCreateRoom={() => {
           addRooms(counter);
-          setShowNewRoomFormModal(true);
+          // setShowNewRoomFormModal(true);
           setCounter(counter + 1);
         }}
         onClickShowRules={() => {
@@ -182,18 +189,7 @@ const Home = () => {
             setShowNewRoomFormModal(false);
           }}
         >
-          <NewRoomForm
-            onSubmit={(topic: string) => {
-              // addRoom({
-              //   id: "cokwf",
-              //   desc: topic,
-              //   language: "Frence",
-              //   level: "",
-              //   joiners: [],
-              //   active: true,
-              // });
-            }}
-          />
+          <NewRoomForm onSubmit={(topic: string) => {}} />
         </Modal>
       )}
 
@@ -208,8 +204,11 @@ const Home = () => {
         </Modal>
       )}
       <div className="text-white mx-auto">
-        {/* CurrentPage: {counter} */}
-        <div className="cursor-pointer" onClick={() => getRooms()}>
+        CurrentPage: {currentPage}
+        <div
+          className="cursor-pointer"
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
           Load More...
         </div>
       </div>

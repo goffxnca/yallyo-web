@@ -1,4 +1,4 @@
-import { Room } from "@/models/types";
+import { Pagination, Room } from "@/models/types";
 import {
   Unsubscribe,
   onSnapshot,
@@ -23,8 +23,9 @@ import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
 import { randomBoolean } from "@/utils/bool-utils";
 
-const fetchRooms2 = async (roomId: string): Promise<Room[]> => {
-  const response = await fetch(ENVS.API_URL);
+const fetchRooms2 = async (pagination: Pagination): Promise<Room[]> => {
+  const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${pagination.pageNumber}&pageSize=${pagination.pageSize}`;
+  const response = await fetch(endpoint);
   const data = await response.json();
   return data as Room[];
 };
@@ -111,11 +112,11 @@ const addRooms = async (count: number) => {
     active: true,
     // createdDate: Timestamp.now(),
     createdBy: faker.name.fullName(),
-    count: "20",
+    count: count.toString(),
     size: randomRoomSize,
   };
 
-  const response = await fetch(ENVS.API_URL, {
+  const response = await fetch(`${ENVS.API_URL}/rooms`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newRoom),
