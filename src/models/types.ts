@@ -23,6 +23,11 @@ export interface Pagination {
   pageSize: number;
 }
 
+export interface AsyncState {
+  status: "idle" | "loading" | "success" | "error";
+  error: string;
+}
+
 interface UserShort {
   id: string;
   name: string;

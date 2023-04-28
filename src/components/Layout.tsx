@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
 import Header from "./Layouts/Header";
+import DarkOverlay from "./Layouts/Overlay";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 
 interface Props {
   children: ReactNode;

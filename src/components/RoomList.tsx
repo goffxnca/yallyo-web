@@ -1,11 +1,13 @@
 import { Room } from "@/models/types";
 import RoomItem from "./RoomItem";
+import { useEffect, useRef } from "react";
 
 interface Props {
   rooms: Room[];
+  onLoadMoreRooms: Function;
 }
 
-const RoomList = ({ rooms }: Props) => {
+const RoomList = ({ rooms, onLoadMoreRooms }: Props) => {
   return (
     <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {rooms.map((room) => (

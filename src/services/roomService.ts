@@ -125,4 +125,4 @@ const addRooms = async (count: number) => {
   console.log(data); // Log the response from the server
 };
 
-export { fetchRooms, subscribeRooms, addRooms, fetchRoomById, fetchRooms2 };
+// export { fetchRooms, subscribeRooms, addRooms, fetchRoomById, fetchRooms2 };

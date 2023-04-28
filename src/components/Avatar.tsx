@@ -37,9 +37,9 @@ const Avatar = ({ name, size, showMic, url }: Props) => {
       }}
       style={{
         backgroundColor: !url && name ? getRandomColor() : "",
-        backgroundImage: url
-          ? `url(https://i.pravatar.cc/100?v=${Math.random()})`
-          : "",
+        // backgroundImage: url
+        //   ? `url(https://i.pravatar.cc/100?v=${Math.random()})`
+        //   : "",
         backgroundPosition: "center",
       }}
     >

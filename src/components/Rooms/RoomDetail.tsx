@@ -1,5 +1,5 @@
 import { Room, RoomMessage } from "@/models/types";
-import { fetchRoomById } from "@/services/roomService";
+// import { fetchRoomById } from "@/services/roomService";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Avatar from "../Avatar";
@@ -30,8 +30,8 @@ const RoomDetail = () => {
       const roomId = router.query?.id?.toString() || "";
       if (roomId) {
         setRoomId(roomId);
-        const fetchedRoom = await fetchRoomById(roomId);
-        setRoom(fetchedRoom);
+        // const fetchedRoom = await fetchRoomById(roomId);
+        // setRoom(fetchedRoom);
       }
     };
 
@@ -50,7 +50,7 @@ const RoomDetail = () => {
 
     // return a cleanup function to unsubscribe when the component unmounts
     return () => {
-      alert("unsub ROOMS MESSAGES");
+      // alert("unsub ROOMS MESSAGES");
       unsubscribe();
     };
   }, [roomId]);

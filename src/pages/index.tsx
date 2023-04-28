@@ -1,13 +1,13 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-import {
-  addRooms,
-  fetchRooms,
-  fetchRooms2,
-  subscribeRooms,
-} from "@/services/roomService";
-import { useEffect, useState } from "react";
+// import {
+//   addRooms,
+//   fetchRooms,
+//   fetchRooms2,
+//   subscribeRooms,
+// } from "@/services/roomService";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as _ from "lodash";
 import Header from "@/components/Layouts/Header";
 import Modal from "@/components/Modals/Modal";
@@ -19,9 +19,20 @@ import { Room } from "@/models/types";
 import { getRandomItem } from "@/utils/array-utils";
 import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRooms, resetRoom } from "@/store/roomSlice";
+import { showLoading } from "@/store/commonSlice";
+import { AppDispatch, RootState } from "@/store/store";
+import DarkOverlay from "@/components/Layouts/Overlay";
 
 const Home = () => {
-  const [rooms, setRooms] = useState<Room[]>([]);
+  console.log("Home...");
+  const { rooms, status, error } = useSelector(
+    (state: RootState) => state.room
+  );
+
+  const dispatch: AppDispatch = useDispatch();
+
   const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
@@ -33,31 +44,55 @@ const Home = () => {
   const [currentTopic, setCurrentTopic] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // const rooms = fetchRooms();
   const languageGrouped = _.countBy(rooms, "language");
   const languagesList = Object.entries(languageGrouped);
   const [counter, setCounter] = useState(1);
+
+  const roomListRef = useRef<HTMLDivElement>(null);
+
+  const loadMoreRooms = () => {
+    // alert("load more room");
+    setCurrentPage(currentPage + 1);
+  };
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
   useEffect(() => {
-    const getRooms = async function getRooms() {
-      const fetchedRooms = await fetchRooms2({
-        pageNumber: currentPage,
-        pageSize: 10,
-      });
-      const combinedRooms = rooms.concat(fetchedRooms);
-      if (combinedRooms.length) {
-        setRooms(combinedRooms);
-        setFilteredRooms(combinedRooms);
-        console.log("fetchRooms", fetchedRooms.length);
+    dispatch(fetchRooms({ pageNumber: currentPage, pageSize: 20 }));
+  }, [dispatch, currentPage]);
+
+  //Control Room Lazy Load (Pagination)...
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (roomListRef.current && rooms.length > 0) {
+      console.log("ran IntersectionObserver effect");
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+
+      observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && status !== "loading") {
+          // alert("load more..");
+          loadMoreRooms();
+        }
+      }, options);
+
+      // alert("sub");
+
+      observer.observe(roomListRef.current);
+    }
+
+    return () => {
+      // alert("clean");
+      if (roomListRef.current && rooms.length) {
+        observer.unobserve(roomListRef.current);
       }
     };
-
-    getRooms();
-  }, [currentPage]);
+  }, [roomListRef, rooms]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -86,27 +121,27 @@ const Home = () => {
   //   };
   // }, []);
 
-  const filterLanguage = () => {
-    let filtered = rooms;
+  // const filterLanguage = () => {
+  //   let filtered = rooms;
 
-    if (currentLang) {
-      filtered = filtered.filter((room) => room.language === currentLang);
-    }
+  //   if (currentLang) {
+  //     filtered = filtered.filter((room) => room.language === currentLang);
+  //   }
 
-    if (currentLevel) {
-      filtered = filtered.filter((room) => room.level === currentLevel);
-    }
+  //   if (currentLevel) {
+  //     filtered = filtered.filter((room) => room.level === currentLevel);
+  //   }
 
-    if (currentTopic) {
-      filtered = filtered.filter((room) => room.topic === currentTopic);
-    }
+  //   if (currentTopic) {
+  //     filtered = filtered.filter((room) => room.topic === currentTopic);
+  //   }
 
-    setFilteredRooms(filtered);
-  };
+  //   setFilteredRooms(filtered);
+  // };
 
-  useEffect(() => {
-    filterLanguage();
-  }, [currentLang, currentLevel, currentTopic, rooms]);
+  // useEffect(() => {
+  //   filterLanguage();
+  // }, [currentLang, currentLevel, currentTopic, rooms]);
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
@@ -114,9 +149,17 @@ const Home = () => {
         <title>Practice English Online - HeyGuyz.com</title>
       </Head>
 
+      <button
+        className="text-white"
+        onClick={() => {
+          setCounter(counter + 1);
+        }}
+      >
+        Change Counter
+      </button>
       <HeaderControls
         onClickCreateRoom={() => {
-          addRooms(counter);
+          // addRooms(counter);
           // setShowNewRoomFormModal(true);
           setCounter(counter + 1);
         }}
@@ -168,7 +211,16 @@ const Home = () => {
       </div>
 
       {/* <hr /> */}
-      <RoomList rooms={filteredRooms}></RoomList>
+      <div className="text-white">
+        {status} {rooms.length}
+      </div>
+      <RoomList
+        rooms={rooms}
+        onLoadMoreRooms={() => {
+          setCurrentPage(currentPage + 1);
+        }}
+      ></RoomList>
+
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
@@ -203,7 +255,7 @@ const Home = () => {
           <Rules />
         </Modal>
       )}
-      <div className="text-white mx-auto">
+      <div className="text-white mx-auto" ref={roomListRef}>
         CurrentPage: {currentPage}
         <div
           className="cursor-pointer"
@@ -212,6 +264,8 @@ const Home = () => {
           Load More...
         </div>
       </div>
+
+      {status === "loading" && <DarkOverlay />}
     </main>
   );
 };

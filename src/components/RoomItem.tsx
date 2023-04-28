@@ -43,12 +43,12 @@ const RoomItem = ({
           />
         ))} */}
       </ul>
-      <Link
+      <a
         href={`/rooms/${_id}`}
         className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
       >
         Join Now {count}
-      </Link>
+      </a>
     </li>
   );
 };
