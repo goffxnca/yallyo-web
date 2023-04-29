@@ -7,6 +7,7 @@ import {
 } from "@/models/types";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as _ from "lodash";
 
 interface RoomState extends AsyncState {
   rooms: Room[];
@@ -132,7 +133,11 @@ const roomSlice = createSlice({
       })
       .addCase(fetchRoomsGroupedByLanguage.fulfilled, (state, action) => {
         state.status = "success";
-        state.roomsGroupedByLanguage = action.payload;
+        state.roomsGroupedByLanguage = _.orderBy(
+          action.payload,
+          ["count", "language"],
+          ["desc", "asc"]
+        );
       })
       .addCase(fetchRoomsGroupedByLanguage.rejected, (state, action) => {
         state.status = "error";

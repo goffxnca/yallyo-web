@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import DarkOverlay from "@/components/Layouts/Overlay";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 const Home = () => {
   console.log("Home...");
@@ -42,6 +43,9 @@ const Home = () => {
   const [counter, setCounter] = useState(1);
 
   const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
+
+  const [showFullLangs, setShowFullLangs] = useState(false);
+  const [showFullTopics, setShowFullTopics] = useState(false);
 
   const roomListRef = useRef<HTMLDivElement>(null);
 
@@ -207,14 +211,14 @@ const Home = () => {
         <title>Practice English Online - HeyGuyz.com</title>
       </Head>
 
-      <button
+      {/* <button
         className="text-white"
         onClick={() => {
           setCounter(counter + 1);
         }}
       >
         Change Counter
-      </button>
+      </button> */}
       <HeaderControls
         onClickCreateRoom={() => {
           // addRooms(counter);
@@ -227,49 +231,115 @@ const Home = () => {
       />
       {/* <hr /> */}
       <div>
-        <div className="text-white">CurrentPage: {currentPage}</div>
-        <div className="flex flex-wrap items-center">
-          <div className="text-white mr-2">Languages:</div>
-          {roomsGroupedByLanguage.map((lang) => (
-            <PillItem
-              key={lang.language}
-              title={lang.language}
-              count={lang.count}
-              active={lang.language === currentLang}
-              onEmitSelect={setCurrentLang}
-            />
-          ))}
+        {/* <div className="text-white">CurrentPage: {currentPage}</div> */}
+
+        <div>
+          <div className="text-white text-sm">Languages:</div>
+          <div className="flex flex-wrap items-center">
+            {!showFullLangs && currentLang && (
+              <PillItem
+                title={currentLang}
+                count={
+                  roomsGroupedByLanguage.find((l) => l.language === currentLang)
+                    ?.count
+                }
+                active={true}
+                onEmitSelect={setCurrentLang}
+              />
+            )}
+            {roomsGroupedByLanguage
+              .slice(0, showFullLangs ? roomsGroupedByLanguage.length - 1 : 6)
+              .map((lang) => (
+                <PillItem
+                  key={lang.language}
+                  title={lang.language}
+                  count={lang.count}
+                  active={lang.language === currentLang}
+                  onEmitSelect={setCurrentLang}
+                />
+              ))}
+            <div
+              className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
+              onClick={() => {
+                setShowFullLangs(!showFullLangs);
+              }}
+            >
+              <span className="text-xs">
+                {showFullLangs
+                  ? "Collapse"
+                  : `Show All ${roomsGroupedByLanguage.length - 6}+`}
+              </span>
+              {showFullLangs ? (
+                <ChevronUpIcon className=" h-5 w-5" />
+              ) : (
+                <ChevronDownIcon className=" h-5 w-5" />
+              )}
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-center flex-wrap">
-          <div className="text-white mr-2">Levels:</div>
-          {LANGAUGE_LEVEL.map((level, index) => (
-            <PillItem
-              key={index}
-              title={level}
-              active={level === currentLevel}
-              onEmitSelect={setCurrentLevel}
-            />
-          ))}
+        <div className="my-2"></div>
+
+        <div>
+          <div className="text-white text-sm">Levels:</div>
+          <div className="flex items-center flex-wrap">
+            {LANGAUGE_LEVEL.map((level, index) => (
+              <PillItem
+                key={index}
+                title={level}
+                active={level === currentLevel}
+                onEmitSelect={setCurrentLevel}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="flex items-center flex-wrap">
-          <div className="text-white mr-2">Topics:</div>
-          {TOPICS.map((topic, index) => (
-            <PillItem
-              key={index}
-              title={topic}
-              active={topic === currentTopic}
-              onEmitSelect={setCurrentTopic}
-            />
-          ))}
+        <div className="my-2"></div>
+
+        <div>
+          <div className="text-white text-sm">Topics:</div>
+          <div className="flex items-center flex-wrap">
+            {!showFullTopics && currentTopic && (
+              <PillItem
+                title={currentTopic}
+                active={true}
+                onEmitSelect={setCurrentTopic}
+              />
+            )}
+
+            {TOPICS.slice(0, showFullTopics ? TOPICS.length - 1 : 6).map(
+              (topic, index) => (
+                <PillItem
+                  key={index}
+                  title={topic}
+                  active={topic === currentTopic}
+                  onEmitSelect={setCurrentTopic}
+                />
+              )
+            )}
+            <div
+              className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
+              onClick={() => {
+                setShowFullTopics(!showFullTopics);
+              }}
+            >
+              <span className="text-xs">
+                {showFullTopics ? "Collapse" : `Show Al ${TOPICS.length - 6}+`}
+              </span>
+              {showFullTopics ? (
+                <ChevronUpIcon className=" h-5 w-5" />
+              ) : (
+                <ChevronDownIcon className=" h-5 w-5" />
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* <hr /> */}
-      <div className="text-white">
+      {/* <div className="text-white">
         {status} {rooms.length}
-      </div>
+      </div> */}
       <RoomList
         rooms={rooms}
         onLoadMoreRooms={() => {
