@@ -1,24 +1,45 @@
-import { AsyncState, Pagination, Room } from "@/models/types";
+import {
+  AsyncState,
+  Pagination,
+  Room,
+  RoomFetchOptions,
+  RoomsGroupedByLanguage,
+} from "@/models/types";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface RoomState extends AsyncState {
   rooms: Room[];
+  roomsGroupedByLanguage: RoomsGroupedByLanguage[];
+  canLoadMore: boolean;
 }
 
 const initialState: RoomState = {
   rooms: [],
+  roomsGroupedByLanguage: [],
   status: "idle",
   error: "",
+  canLoadMore: true,
 };
 
 export const fetchRooms = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {
-    const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${pagination.pageNumber}&pageSize=${pagination.pageSize}`;
+  async (options: RoomFetchOptions) => {
+    const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${options.pagination.pageNumber}&pageSize=${options.pagination.pageSize}&language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}`;
+    console.log("endpoint");
     const response = await fetch(endpoint);
     const data = await response.json();
     return data as Room[];
+  }
+);
+
+export const fetchRoomsGroupedByLanguage = createAsyncThunk(
+  "room/groupedByLanguage",
+  async () => {
+    const endpoint = `${ENVS.API_URL}/rooms/groupedByLanguage`;
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    return data as RoomsGroupedByLanguage[];
   }
 );
 
@@ -81,17 +102,42 @@ const roomSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchRooms.pending, (state, action) => {
-      state.status = "loading";
-    });
-    builder.addCase(fetchRooms.fulfilled, (state, action) => {
-      state.status = "success";
-      state.rooms = [...state.rooms, ...action.payload];
-    });
-    builder.addCase(fetchRooms.rejected, (state, action) => {
-      state.status = "error";
-      state.error = action.error.message ?? "Failed to fetch rooms";
-    });
+    builder
+      .addCase(fetchRooms.pending, (state, action) => {
+        state.status = "loading";
+        state.canLoadMore = true;
+      })
+      .addCase(fetchRooms.fulfilled, (state, action) => {
+        state.status = "success";
+        if (action.payload.length > 0) {
+          state.rooms =
+            action.meta.arg.resultStrategy === "append"
+              ? [...state.rooms, ...action.payload]
+              : action.payload;
+        } else {
+          state.canLoadMore = false;
+          if (action.meta.arg.pagination.pageNumber === 1) {
+            state.rooms = [];
+          }
+        }
+      })
+      .addCase(fetchRooms.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to fetch rooms";
+      });
+
+    builder
+      .addCase(fetchRoomsGroupedByLanguage.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRoomsGroupedByLanguage.fulfilled, (state, action) => {
+        state.status = "success";
+        state.roomsGroupedByLanguage = action.payload;
+      })
+      .addCase(fetchRoomsGroupedByLanguage.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to fetch rooms";
+      });
   },
 });
 

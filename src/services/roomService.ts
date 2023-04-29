@@ -102,7 +102,7 @@ const addRooms = async (count: number) => {
   const newRoom: Room = {
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
-    joiners: roomJoinerArray.map((x) => ({
+    joiners: roomJoinerArray.map((_) => ({
       id: Math.random().toString(),
       name: faker.name.fullName(),
       profileUrl: randomBoolean() ? faker.image.people() : "",
@@ -110,7 +110,6 @@ const addRooms = async (count: number) => {
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
     active: true,
-    // createdDate: Timestamp.now(),
     createdBy: faker.name.fullName(),
     count: count.toString(),
     size: randomRoomSize,

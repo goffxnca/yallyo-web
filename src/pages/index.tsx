@@ -7,29 +7,24 @@ import RoomList from "@/components/RoomList";
 //   fetchRooms2,
 //   subscribeRooms,
 // } from "@/services/roomService";
-import { useCallback, useEffect, useRef, useState } from "react";
-import * as _ from "lodash";
-import Header from "@/components/Layouts/Header";
+import { useEffect, useRef, useState } from "react";
+
 import Modal from "@/components/Modals/Modal";
 import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
-import { UsersIcon } from "@heroicons/react/20/solid";
 import Rules from "@/components/Rules";
 import { Room } from "@/models/types";
-import { getRandomItem } from "@/utils/array-utils";
-import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import { LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRooms, resetRoom } from "@/store/roomSlice";
-import { showLoading } from "@/store/commonSlice";
+import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import DarkOverlay from "@/components/Layouts/Overlay";
 
 const Home = () => {
   console.log("Home...");
-  const { rooms, status, error } = useSelector(
-    (state: RootState) => state.room
-  );
+  const { rooms, roomsGroupedByLanguage, status, canLoadMore, error } =
+    useSelector((state: RootState) => state.room);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -44,55 +39,118 @@ const Home = () => {
   const [currentTopic, setCurrentTopic] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const languageGrouped = _.countBy(rooms, "language");
-  const languagesList = Object.entries(languageGrouped);
   const [counter, setCounter] = useState(1);
+
+  const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
 
   const roomListRef = useRef<HTMLDivElement>(null);
 
-  const loadMoreRooms = () => {
-    // alert("load more room");
-    setCurrentPage(currentPage + 1);
-  };
+  const isFirstMount = useRef(true);
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
   useEffect(() => {
-    dispatch(fetchRooms({ pageNumber: currentPage, pageSize: 20 }));
-  }, [dispatch, currentPage]);
+    dispatch(fetchRoomsGroupedByLanguage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentLang]);
+
+  //Monitor page changes
+  useEffect(() => {
+    console.log("fetchRooms ran...");
+
+    // alert(currentLang);
+    // dispatch(
+    //   fetchRooms({
+    //     pagination: {
+    //       pageNumber: currentPage,
+    //       pageSize: 10,
+    //     },
+    //     filters: { language: currentLang },
+    //     resultStrategy: currentPage > 1 ? "append" : "replace",
+    //   })
+    // );
+
+    if (
+      (currentLang !== prevFiltersRef.current.prevLang ||
+        currentLevel !== prevFiltersRef.current.prevLevel ||
+        currentTopic !== prevFiltersRef.current.prevTopic) &&
+      currentPage > 1
+    ) {
+      // alert("language change");
+      setCurrentPage(1);
+    } else {
+      dispatch(
+        fetchRooms({
+          pagination: {
+            pageNumber: currentPage,
+            pageSize: 10,
+          },
+          filters: {
+            language: currentLang,
+            level: currentLevel,
+            topic: currentTopic,
+          },
+          resultStrategy: currentPage === 1 ? "replace" : "append",
+        })
+      );
+    }
+    prevFiltersRef.current = {
+      prevLang: currentLang,
+      prevLevel: currentLevel,
+      prevTopic: currentTopic,
+    };
+  }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
+
+  //Monitor filters changes
+  // useEffect(() => {
+  //   if (isFirstMount.current) {
+  //     isFirstMount.current = false;
+  //     return;
+  //   }
+
+  //   console.log("fetchRooms2 ran...");
+  //   dispatch(
+  //     fetchRooms({ pagination: { pageNumber: currentPage, pageSize: 10 } })
+  //   );
+  // }, [currentLang]);
 
   //Control Room Lazy Load (Pagination)...
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    if (roomListRef.current && rooms.length > 0) {
-      console.log("ran IntersectionObserver effect");
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
-      };
+  // useEffect(() => {
+  //   let observer: IntersectionObserver;
+  //   if (roomListRef.current && rooms.length > 0) {
+  //     console.log("ran IntersectionObserver effect");
+  //     const options = {
+  //       root: null,
+  //       rootMargin: "0px",
+  //       threshold: 1.0,
+  //     };
 
-      observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && status !== "loading") {
-          // alert("load more..");
-          loadMoreRooms();
-        }
-      }, options);
+  //     observer = new IntersectionObserver(([entry]) => {
+  //       if (entry.isIntersecting && status === "success" && rooms.length > 0) {
+  //         // alert("load more..");
+  //         // alert("ky");
 
-      // alert("sub");
+  //         loadMoreRooms();
+  //       }
+  //     }, options);
 
-      observer.observe(roomListRef.current);
-    }
+  //     // alert("sub");
 
-    return () => {
-      // alert("clean");
-      if (roomListRef.current && rooms.length) {
-        observer.unobserve(roomListRef.current);
-      }
-    };
-  }, [roomListRef, rooms]);
+  //     observer.observe(roomListRef.current);
+  //   }
+
+  //   return () => {
+  //     // alert("clean");
+  //     if (roomListRef.current && rooms.length) {
+  //       observer.unobserve(roomListRef.current);
+  //     }
+  //   };
+  // }, [roomListRef, rooms]);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -169,17 +227,15 @@ const Home = () => {
       />
       {/* <hr /> */}
       <div>
+        <div className="text-white">CurrentPage: {currentPage}</div>
         <div className="flex flex-wrap items-center">
-          {/* <div className="text-white">
-          {currentLang} {currentLevel}
-        </div> */}
           <div className="text-white mr-2">Languages:</div>
-          {languagesList.map((lang) => (
+          {roomsGroupedByLanguage.map((lang) => (
             <PillItem
-              key={lang[0]}
-              title={lang[0]}
-              count={lang[1]}
-              active={lang[0] === currentLang}
+              key={lang.language}
+              title={lang.language}
+              count={lang.count}
+              active={lang.language === currentLang}
               onEmitSelect={setCurrentLang}
             />
           ))}
@@ -255,15 +311,16 @@ const Home = () => {
           <Rules />
         </Modal>
       )}
-      <div className="text-white mx-auto" ref={roomListRef}>
-        CurrentPage: {currentPage}
-        <div
-          className="cursor-pointer"
-          onClick={() => setCurrentPage(currentPage + 1)}
-        >
-          Load More...
+      {canLoadMore && (
+        <div className="text-white mx-auto" ref={roomListRef}>
+          <div
+            className="cursor-pointer"
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            Load More...
+          </div>
         </div>
-      </div>
+      )}
 
       {status === "loading" && <DarkOverlay />}
     </main>

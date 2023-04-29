@@ -1,13 +1,16 @@
 import { Timestamp } from "firebase/firestore";
 
-interface MetaDataBase {
+interface DbDocumentBase {
   _id?: string;
-  createdBy: string;
+  createdAt?: string;
+  createdBy?: string;
+  updatedAt?: string;
+  updatedBy?: string;
   // createdDate: Timestamp;
   // createdDateISO?: string;
 }
 
-export interface Room extends MetaDataBase {
+export interface Room extends DbDocumentBase {
   language: string;
   level: string;
   desc: string;
@@ -18,9 +21,26 @@ export interface Room extends MetaDataBase {
   size: number;
 }
 
+export interface RoomsGroupedByLanguage {
+  language: string;
+  count: number;
+}
+
 export interface Pagination {
   pageNumber: number;
   pageSize: number;
+}
+
+export interface RoomFilter {
+  language?: string;
+  level?: string;
+  topic?: string;
+}
+
+export interface RoomFetchOptions {
+  pagination: Pagination;
+  filters?: RoomFilter;
+  resultStrategy: "append" | "replace";
 }
 
 export interface AsyncState {
@@ -34,7 +54,7 @@ interface UserShort {
   profileUrl: string;
 }
 
-export interface RoomMessage extends MetaDataBase {
+export interface RoomMessage extends DbDocumentBase {
   roomId: string;
   message: string;
 }
