@@ -12,7 +12,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
   return (
     <div className="flex gap-x-4 justify-center md:justify-end">
       <div
-        className="flex items-center text-white group cursor-pointer bg-secondary p-2 rounded-lg"
+        className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg"
         onClick={() => {
           onClickCreateRoom();
         }}
@@ -22,7 +22,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
       </div>
 
       <div
-        className="flex items-center text-white group cursor-pointer bg-secondary p-2 rounded-lg"
+        className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg"
         onClick={() => {
           onClickShowRules();
         }}

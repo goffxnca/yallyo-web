@@ -19,7 +19,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { createNArray, getRandomItem } from "@/utils/array-utils";
-import { ENVS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import {
+  AVATARS,
+  ENVS,
+  LANGAUGE_LEVEL,
+  LANGUAGES,
+  TOPICS,
+} from "@/utils/constants";
 import { faker } from "@faker-js/faker";
 import { randomBoolean } from "@/utils/bool-utils";
 
@@ -105,7 +111,7 @@ const addRooms = async (count: number) => {
     joiners: roomJoinerArray.map((_) => ({
       id: Math.random().toString(),
       name: faker.name.fullName(),
-      profileUrl: randomBoolean() ? faker.image.people() : "",
+      profileUrl: randomBoolean() ? getRandomItem(AVATARS) : "",
     })),
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
@@ -124,4 +130,4 @@ const addRooms = async (count: number) => {
   console.log(data); // Log the response from the server
 };
 
-// export { fetchRooms, subscribeRooms, addRooms, fetchRoomById, fetchRooms2 };
+export { fetchRooms, subscribeRooms, addRooms, fetchRoomById, fetchRooms2 };

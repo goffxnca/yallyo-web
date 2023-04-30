@@ -21,6 +21,10 @@ export interface Room extends DbDocumentBase {
   size: number;
 }
 
+export interface RoomSocketUpdate extends Room {
+  updateStatus: "C" | "U" | "D";
+}
+
 export interface RoomsGroupedByLanguage {
   language: string;
   count: number;

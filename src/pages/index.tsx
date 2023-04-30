@@ -1,12 +1,7 @@
 import Friends from "@/components/Friends/Friends";
 import PillItem from "@/components/Layouts/PillItem";
 import RoomList from "@/components/RoomList";
-// import {
-//   addRooms,
-//   fetchRooms,
-//   fetchRooms2,
-//   subscribeRooms,
-// } from "@/services/roomService";
+import { addRooms } from "@/services/roomService";
 import { useEffect, useRef, useState } from "react";
 
 import Modal from "@/components/Modals/Modal";
@@ -21,6 +16,7 @@ import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import DarkOverlay from "@/components/Layouts/Overlay";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { subscribeRoomsUpdates } from "@/subscription";
 
 const HomePage = () => {
   console.log("HomePage");
@@ -57,6 +53,12 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchRoomsGroupedByLanguage());
+    const roomSocket = subscribeRoomsUpdates(dispatch);
+    alert("subscribed the roomsocket");
+    return () => {
+      alert("unsubscribed the roomsocket");
+      roomSocket.disconnect();
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -221,7 +223,7 @@ const HomePage = () => {
       </button> */}
       <HeaderControls
         onClickCreateRoom={() => {
-          // addRooms(counter);
+          addRooms(counter);
           // setShowNewRoomFormModal(true);
           setCounter(counter + 1);
         }}
@@ -247,15 +249,17 @@ const HomePage = () => {
                 onEmitSelect={setCurrentLang}
               />
             )} */}
-            {roomsGroupedByLanguage.map((lang) => (
-              <PillItem
-                key={lang.language}
-                title={lang.language}
-                count={lang.count}
-                active={lang.language === currentLang}
-                onEmitSelect={setCurrentLang}
-              />
-            ))}
+            {roomsGroupedByLanguage
+              .filter((lang) => lang.count > 0)
+              .map((lang) => (
+                <PillItem
+                  key={lang.language}
+                  title={lang.language}
+                  count={lang.count}
+                  active={lang.language === currentLang}
+                  onEmitSelect={setCurrentLang}
+                />
+              ))}
             <div
               className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
               onClick={() => {
@@ -333,9 +337,9 @@ const HomePage = () => {
       </div>
 
       {/* <hr /> */}
-      {/* <div className="text-white">
+      <div className="text-white">
         {status} {rooms.length}
-      </div> */}
+      </div>
       <RoomList
         rooms={rooms}
         onLoadMoreRooms={() => {

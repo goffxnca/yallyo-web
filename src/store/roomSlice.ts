@@ -3,6 +3,7 @@ import {
   Pagination,
   Room,
   RoomFetchOptions,
+  RoomSocketUpdate,
   RoomsGroupedByLanguage,
 } from "@/models/types";
 import { ENVS } from "@/utils/constants";
@@ -34,7 +35,7 @@ export const fetchRooms = createAsyncThunk(
 );
 
 export const fetchRoomsGroupedByLanguage = createAsyncThunk(
-  "room/groupedByLanguage",
+  "room/fetchRoomsGroupedByLanguage",
   async () => {
     const endpoint = `${ENVS.API_URL}/rooms/groupedByLanguage`;
     const response = await fetch(endpoint);
@@ -88,11 +89,53 @@ const roomSlice = createSlice({
     addRoom(state, action: PayloadAction<Room>) {
       state.rooms.push(action.payload);
     },
-    updateRoom(state, action: PayloadAction<Room>) {
-      const index = state.rooms.findIndex(
-        (room) => room._id === action.payload._id
-      );
-      state.rooms[index] = action.payload;
+    updateRooms(state, action: PayloadAction<RoomSocketUpdate[]>) {
+      action.payload.forEach((roomUpdate) => {
+        //Create
+        if (roomUpdate.updateStatus === "C") {
+          state.rooms = [roomUpdate, ...state.rooms];
+
+          //If the group for specific language already exist in context, add +1 to it
+          state.roomsGroupedByLanguage = state.roomsGroupedByLanguage.map(
+            (group) =>
+              group.language === roomUpdate.language
+                ? { ...group, count: group.count + 1 }
+                : group
+          );
+
+          //If not exist, manually assign 1
+          if (
+            state.roomsGroupedByLanguage.findIndex(
+              (group) => group.language === roomUpdate.language
+            ) === -1
+          ) {
+            state.roomsGroupedByLanguage = [
+              ...state.roomsGroupedByLanguage,
+              { language: roomUpdate.language, count: 1 },
+            ];
+          }
+        }
+        //Update
+        else if (roomUpdate.updateStatus === "U") {
+          state.rooms = state.rooms.map((room) =>
+            room._id === roomUpdate._id ? roomUpdate : room
+          );
+        }
+        //Delete
+        else if (roomUpdate.updateStatus === "D") {
+          state.rooms = state.rooms.filter(
+            (room) => room._id !== roomUpdate._id
+          );
+
+          //If the group for specific language already exist in context, substract 1 from it
+          state.roomsGroupedByLanguage = state.roomsGroupedByLanguage.map(
+            (group) =>
+              group.language === roomUpdate.language
+                ? { ...group, count: group.count - 1 }
+                : group
+          );
+        }
+      });
     },
     removeRoom(state, action: PayloadAction<string>) {
       state.rooms = state.rooms.filter((room) => room._id !== action.payload);
@@ -145,5 +188,6 @@ const roomSlice = createSlice({
   },
 });
 
-export const { addRoom, updateRoom, removeRoom, resetRoom } = roomSlice.actions;
+export const { addRoom, updateRooms, removeRoom, resetRoom } =
+  roomSlice.actions;
 export default roomSlice.reducer;

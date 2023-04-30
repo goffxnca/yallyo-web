@@ -37,9 +37,8 @@ const Avatar = ({ name, size, showMic, url }: Props) => {
       }}
       style={{
         backgroundColor: !url && name ? getRandomColor() : "",
-        // backgroundImage: url
-        //   ? `url(https://i.pravatar.cc/100?v=${Math.random()})`
-        //   : "",
+        backgroundImage: url ? `url(${url})` : "",
+        backgroundSize: "contain",
         backgroundPosition: "center",
       }}
     >
@@ -62,7 +61,7 @@ const Avatar = ({ name, size, showMic, url }: Props) => {
             setShowProfile(false);
           }}
         >
-          <UserProfile name={name} bio="" />
+          <UserProfile name={name} bio="" url={url} />
         </Modal>
       )}
     </li>
