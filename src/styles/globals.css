@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: #101010;
+}
 .loading-spinner {
   display: flex;
   justify-content: center;

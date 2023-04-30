@@ -22,8 +22,8 @@ import { AppDispatch, RootState } from "@/store/store";
 import DarkOverlay from "@/components/Layouts/Overlay";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
-const Home = () => {
-  console.log("Home...");
+const HomePage = () => {
+  console.log("HomePage");
   const { rooms, roomsGroupedByLanguage, status, canLoadMore, error } =
     useSelector((state: RootState) => state.room);
 
@@ -236,7 +236,7 @@ const Home = () => {
         <div>
           <div className="text-white text-sm">Languages:</div>
           <div className="flex flex-wrap items-center">
-            {!showFullLangs && currentLang && (
+            {/* {!showFullLangs && currentLang && (
               <PillItem
                 title={currentLang}
                 count={
@@ -246,34 +246,32 @@ const Home = () => {
                 active={true}
                 onEmitSelect={setCurrentLang}
               />
-            )}
-            {roomsGroupedByLanguage
-              .slice(0, showFullLangs ? roomsGroupedByLanguage.length - 1 : 6)
-              .map((lang) => (
-                <PillItem
-                  key={lang.language}
-                  title={lang.language}
-                  count={lang.count}
-                  active={lang.language === currentLang}
-                  onEmitSelect={setCurrentLang}
-                />
-              ))}
+            )} */}
+            {roomsGroupedByLanguage.map((lang) => (
+              <PillItem
+                key={lang.language}
+                title={lang.language}
+                count={lang.count}
+                active={lang.language === currentLang}
+                onEmitSelect={setCurrentLang}
+              />
+            ))}
             <div
               className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
               onClick={() => {
                 setShowFullLangs(!showFullLangs);
               }}
             >
-              <span className="text-xs">
+              {/* <span className="text-xs">
                 {showFullLangs
                   ? "Collapse"
                   : `Show All ${roomsGroupedByLanguage.length - 6}+`}
-              </span>
-              {showFullLangs ? (
+              </span> */}
+              {/* {showFullLangs ? (
                 <ChevronUpIcon className=" h-5 w-5" />
               ) : (
                 <ChevronDownIcon className=" h-5 w-5" />
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -299,38 +297,36 @@ const Home = () => {
         <div>
           <div className="text-white text-sm">Topics:</div>
           <div className="flex items-center flex-wrap">
-            {!showFullTopics && currentTopic && (
+            {/* {!showFullTopics && currentTopic && (
               <PillItem
                 title={currentTopic}
                 active={true}
                 onEmitSelect={setCurrentTopic}
               />
-            )}
+            )} */}
 
-            {TOPICS.slice(0, showFullTopics ? TOPICS.length - 1 : 6).map(
-              (topic, index) => (
-                <PillItem
-                  key={index}
-                  title={topic}
-                  active={topic === currentTopic}
-                  onEmitSelect={setCurrentTopic}
-                />
-              )
-            )}
+            {TOPICS.map((topic, index) => (
+              <PillItem
+                key={index}
+                title={topic}
+                active={topic === currentTopic}
+                onEmitSelect={setCurrentTopic}
+              />
+            ))}
             <div
               className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
               onClick={() => {
                 setShowFullTopics(!showFullTopics);
               }}
             >
-              <span className="text-xs">
+              {/* <span className="text-xs">
                 {showFullTopics ? "Collapse" : `Show Al ${TOPICS.length - 6}+`}
-              </span>
-              {showFullTopics ? (
+              </span> */}
+              {/* {showFullTopics ? (
                 <ChevronUpIcon className=" h-5 w-5" />
               ) : (
                 <ChevronDownIcon className=" h-5 w-5" />
-              )}
+              )} */}
             </div>
           </div>
         </div>
@@ -382,11 +378,11 @@ const Home = () => {
         </Modal>
       )}
       {canLoadMore && (
-        <div className="text-white mx-auto" ref={roomListRef}>
-          <div
-            className="cursor-pointer"
-            onClick={() => setCurrentPage(currentPage + 1)}
-          >
+        <div
+          className="text-white mx-auto border border-gray-200 p-2 text-sm rounded-md cursor-pointer hover:text-accent2 delay-100 transition-all"
+          ref={roomListRef}
+        >
+          <div className="" onClick={() => setCurrentPage(currentPage + 1)}>
             Load More...
           </div>
         </div>
@@ -397,4 +393,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

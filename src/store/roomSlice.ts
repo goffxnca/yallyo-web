@@ -27,7 +27,6 @@ export const fetchRooms = createAsyncThunk(
   "room/fetchRooms",
   async (options: RoomFetchOptions) => {
     const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${options.pagination.pageNumber}&pageSize=${options.pagination.pageSize}&language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}`;
-    console.log("endpoint");
     const response = await fetch(endpoint);
     const data = await response.json();
     return data as Room[];
