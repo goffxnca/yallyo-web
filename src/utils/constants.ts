@@ -223,6 +223,7 @@ const AVATARS = [
 
 const ENVS = {
   API_URL: process.env.NEXT_PUBLIC_API_URL!,
+  API_WS_URL: process.env.NEXT_PUBLIC_API_WS_URL!,
   ROOMS_REFRESH: +(process.env.NEXT_PUBLIC_ROOMS_REFRESH || 60000),
 };
 

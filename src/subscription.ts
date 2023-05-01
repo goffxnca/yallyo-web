@@ -1,8 +1,9 @@
 import { Socket, io } from "socket.io-client";
 import { updateRooms } from "./store/roomSlice";
+import { ENVS } from "./utils/constants";
 
 export const subscribeRoomsUpdates = (dispatch: any): Socket => {
-  const roomsSocket = io(`ws://localhost:4000/rooms`);
+  const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);
 
   roomsSocket.on("open", () => {
     console.log("WebSocket connection opened");
