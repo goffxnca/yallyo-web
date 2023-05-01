@@ -9,7 +9,7 @@ import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
 import Rules from "@/components/Rules";
 import { Room } from "@/models/types";
-import { LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
+import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
@@ -17,6 +17,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import DarkOverlay from "@/components/Layouts/Overlay";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/subscription";
+import * as _ from "lodash";
 
 const HomePage = () => {
   console.log("HomePage");
@@ -25,76 +26,60 @@ const HomePage = () => {
 
   const dispatch: AppDispatch = useDispatch();
 
-  const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
     useState<boolean>(false);
   const [showRules, setShowRules] = useState<boolean>(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [counter, setCounter] = useState(1);
-
-  const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
-
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
 
-  const roomListRef = useRef<HTMLDivElement>(null);
-
   const isFirstMount = useRef(true);
+  const roomListRef = useRef<HTMLDivElement>(null);
+  const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
+  // Determine page first mount
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+  }, []);
+
+  // Subscribe to room update
   useEffect(() => {
     dispatch(fetchRoomsGroupedByLanguage());
     const roomSocket = subscribeRoomsUpdates(dispatch);
-    alert("subscribed the roomsocket");
     return () => {
-      alert("unsubscribed the roomsocket");
       roomSocket.disconnect();
     };
   }, [dispatch]);
 
+  //Monitor Language, Level, Topic changes
   useEffect(() => {
-    setCurrentPage(1);
-  }, [currentLang]);
-
-  //Monitor page changes
-  useEffect(() => {
-    console.log("fetchRooms ran...");
-
-    // alert(currentLang);
-    // dispatch(
-    //   fetchRooms({
-    //     pagination: {
-    //       pageNumber: currentPage,
-    //       pageSize: 10,
-    //     },
-    //     filters: { language: currentLang },
-    //     resultStrategy: currentPage > 1 ? "append" : "replace",
-    //   })
-    // );
-
     if (
       (currentLang !== prevFiltersRef.current.prevLang ||
         currentLevel !== prevFiltersRef.current.prevLevel ||
         currentTopic !== prevFiltersRef.current.prevTopic) &&
       currentPage > 1
     ) {
-      // alert("language change");
       setCurrentPage(1);
     } else {
       dispatch(
         fetchRooms({
           pagination: {
             pageNumber: currentPage,
-            pageSize: 10,
+            pageSize: ENVS.ROOMS_ITEMS,
           },
           filters: {
             language: currentLang,
@@ -112,100 +97,44 @@ const HomePage = () => {
     };
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
 
-  //Monitor filters changes
-  // useEffect(() => {
-  //   if (isFirstMount.current) {
-  //     isFirstMount.current = false;
-  //     return;
-  //   }
+  const loadMoreRooms = _.debounce(() => {
+    setCurrentPage(currentPage + 1);
+  }, 500);
 
-  //   console.log("fetchRooms2 ran...");
-  //   dispatch(
-  //     fetchRooms({ pagination: { pageNumber: currentPage, pageSize: 10 } })
-  //   );
-  // }, [currentLang]);
+  //Control Rooms Lazy Load (Pagination)
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (roomListRef.current && rooms.length > 0) {
+      console.log("ran IntersectionObserver effect");
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
 
-  //Control Room Lazy Load (Pagination)...
-  // useEffect(() => {
-  //   let observer: IntersectionObserver;
-  //   if (roomListRef.current && rooms.length > 0) {
-  //     console.log("ran IntersectionObserver effect");
-  //     const options = {
-  //       root: null,
-  //       rootMargin: "0px",
-  //       threshold: 1.0,
-  //     };
+      observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && status === "success" && rooms.length > 0) {
+          // alert("load more..");
+          // alert("ky");
 
-  //     observer = new IntersectionObserver(([entry]) => {
-  //       if (entry.isIntersecting && status === "success" && rooms.length > 0) {
-  //         // alert("load more..");
-  //         // alert("ky");
+          loadMoreRooms();
+        }
+      }, options);
 
-  //         loadMoreRooms();
-  //       }
-  //     }, options);
+      // alert("sub");
 
-  //     // alert("sub");
+      if (observer) {
+        observer.observe(roomListRef.current);
+      }
+    }
 
-  //     observer.observe(roomListRef.current);
-  //   }
-
-  //   return () => {
-  //     // alert("clean");
-  //     if (roomListRef.current && rooms.length) {
-  //       observer.unobserve(roomListRef.current);
-  //     }
-  //   };
-  // }, [roomListRef, rooms]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log("ranInterval")
-  //     // getRooms();
-  //   }, ENVS.ROOMS_REFRESH);
-
-  //   return () => {
-  //     console.log("clearInterval")
-  //     clearInterval(interval);
-  //   };
-  // }, [])
-
-  // useEffect(() => {
-  //   // set up the subscription
-  //   const unsubscribe = subscribeRooms((rooms: Room[]) => {
-  //     setRooms(rooms);
-  //     setFilteredRooms(rooms);
-  //     // console.log("ROOMS RE-READ");
-  //   });
-
-  //   // return a cleanup function to unsubscribe when the component unmounts
-  //   return () => {
-  //     alert("unsub rooms");
-  //     unsubscribe();
-  //   };
-  // }, []);
-
-  // const filterLanguage = () => {
-  //   let filtered = rooms;
-
-  //   if (currentLang) {
-  //     filtered = filtered.filter((room) => room.language === currentLang);
-  //   }
-
-  //   if (currentLevel) {
-  //     filtered = filtered.filter((room) => room.level === currentLevel);
-  //   }
-
-  //   if (currentTopic) {
-  //     filtered = filtered.filter((room) => room.topic === currentTopic);
-  //   }
-
-  //   setFilteredRooms(filtered);
-  // };
-
-  // useEffect(() => {
-  //   filterLanguage();
-  // }, [currentLang, currentLevel, currentTopic, rooms]);
+    return () => {
+      // alert("clean");
+      if (roomListRef.current && rooms.length && observer) {
+        observer.unobserve(roomListRef.current);
+      }
+    };
+  }, [roomListRef, rooms]);
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
@@ -221,10 +150,13 @@ const HomePage = () => {
       >
         Change Counter
       </button> */}
+
       <HeaderControls
         onClickCreateRoom={() => {
+          setShowNewRoomFormModal(true);
+        }}
+        onClickGenRoom={() => {
           addRooms(counter);
-          // setShowNewRoomFormModal(true);
           setCounter(counter + 1);
         }}
         onClickShowRules={() => {
@@ -335,18 +267,14 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
       {/* <hr /> */}
       <div className="text-white">
         {status} {rooms.length}
       </div>
       <RoomList
         rooms={rooms}
-        onLoadMoreRooms={() => {
-          setCurrentPage(currentPage + 1);
-        }}
+        isLoading={!isFirstMount.current && status === "loading"}
       ></RoomList>
-
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
@@ -359,7 +287,6 @@ const HomePage = () => {
           <span className="text-md">My Friends</span>
         </div>
       </div> */}
-
       {showNewRoomFormModal && (
         <Modal
           showCloseButton={true}
@@ -370,7 +297,6 @@ const HomePage = () => {
           <NewRoomForm onSubmit={(topic: string) => {}} />
         </Modal>
       )}
-
       {showRules && (
         <Modal
           showCloseButton={true}
@@ -391,8 +317,7 @@ const HomePage = () => {
           </div>
         </div>
       )}
-
-      {status === "loading" && <DarkOverlay />}
+      {/* {status === "loading" && <DarkOverlay />} */}
     </main>
   );
 };

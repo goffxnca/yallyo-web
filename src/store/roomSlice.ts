@@ -19,7 +19,7 @@ interface RoomState extends AsyncState {
 const initialState: RoomState = {
   rooms: [],
   roomsGroupedByLanguage: [],
-  status: "idle",
+  status: "idle", //TODO: this status is buggy because all of async functions here that run simutinously migth overwrite each others status
   error: "",
   canLoadMore: true,
 };
@@ -28,7 +28,12 @@ export const fetchRooms = createAsyncThunk(
   "room/fetchRooms",
   async (options: RoomFetchOptions) => {
     const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${options.pagination.pageNumber}&pageSize=${options.pagination.pageSize}&language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}`;
+
     const response = await fetch(endpoint);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
     const data = await response.json();
     return data as Room[];
   }
@@ -39,6 +44,11 @@ export const fetchRoomsGroupedByLanguage = createAsyncThunk(
   async () => {
     const endpoint = `${ENVS.API_URL}/rooms/groupedByLanguage`;
     const response = await fetch(endpoint);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
     const data = await response.json();
     return data as RoomsGroupedByLanguage[];
   }
@@ -152,13 +162,13 @@ const roomSlice = createSlice({
       })
       .addCase(fetchRooms.fulfilled, (state, action) => {
         state.status = "success";
+        state.canLoadMore = action.payload.length === ENVS.ROOMS_ITEMS;
         if (action.payload.length > 0) {
           state.rooms =
             action.meta.arg.resultStrategy === "append"
               ? [...state.rooms, ...action.payload]
               : action.payload;
         } else {
-          state.canLoadMore = false;
           if (action.meta.arg.pagination.pageNumber === 1) {
             state.rooms = [];
           }

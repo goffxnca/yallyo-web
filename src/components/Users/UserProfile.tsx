@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ButtonLong from "../Uis/ButtonLong";
+import { useState } from "react";
 
 interface Props {
   name: string;
@@ -8,13 +9,22 @@ interface Props {
 }
 
 const UserProfile = ({ name, bio, url }: Props) => {
+  const [imageReady, setImageReady] = useState(false);
   return (
     <div className="p-10 md:w-[800px]">
       <div className="md:flex gap-x-4 items-center text-center md:text-left">
         <img
           src={url}
-          className="rounded-full border-4 border-accent2 w-40 h-40 p-1 mx-auto"
+          className={`rounded-full border-4 border-accent2 w-40 h-40 p-1 mx-auto ${
+            !imageReady && "hidden"
+          }`}
           alt="cool"
+          onLoad={() => {
+            // alert("hey");
+            setTimeout(() => {
+              setImageReady(true);
+            }, 1000);
+          }}
         />
         <div className="text-white">
           <h2 className="text-4xl my-2">{name}</h2>

@@ -1,13 +1,14 @@
 import { Room } from "@/models/types";
 import RoomItem from "./RoomItem";
-import { useEffect, useRef } from "react";
+import RoomItemSkeleton from "./Skeletons/RoomItemSkeleton";
+import { createNArray } from "@/utils/array-utils";
 
 interface Props {
   rooms: Room[];
-  onLoadMoreRooms: Function;
+  isLoading: boolean;
 }
 
-const RoomList = ({ rooms, onLoadMoreRooms }: Props) => {
+const RoomList = ({ rooms, isLoading }: Props) => {
   console.log("RoomList");
   return (
     <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
@@ -28,6 +29,8 @@ const RoomList = ({ rooms, onLoadMoreRooms }: Props) => {
           size={room.size}
         ></RoomItem>
       ))}
+      {isLoading &&
+        createNArray(6).map((item) => <RoomItemSkeleton key={item} />)}
     </ul>
   );
 };
