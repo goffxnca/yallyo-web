@@ -103,6 +103,13 @@ const roomSlice = createSlice({
       action.payload.forEach((roomUpdate) => {
         //Create
         if (roomUpdate.updateStatus === "C") {
+          const existingRoom = state.rooms.find(
+            (r) => r._id === roomUpdate._id
+          );
+          if (existingRoom) {
+            return;
+          }
+
           state.rooms = [roomUpdate, ...state.rooms];
 
           //If the group for specific language already exist in context, add +1 to it
@@ -133,6 +140,13 @@ const roomSlice = createSlice({
         }
         //Delete
         else if (roomUpdate.updateStatus === "D") {
+          const existingRoom = state.rooms.find(
+            (r) => r._id === roomUpdate._id
+          );
+          if (existingRoom) {
+            return;
+          }
+
           state.rooms = state.rooms.filter(
             (room) => room._id !== roomUpdate._id
           );

@@ -12,9 +12,10 @@ interface Props {
   size: "sm" | "md" | "lg";
   showMic: boolean;
   url: string;
+  avatarColor: string;
 }
 
-const Avatar = ({ name, size, showMic, url }: Props) => {
+const Avatar = ({ name, size, showMic, url, avatarColor }: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -36,7 +37,7 @@ const Avatar = ({ name, size, showMic, url }: Props) => {
         setShowProfile(true);
       }}
       style={{
-        backgroundColor: !url && name ? getRandomColor() : "",
+        backgroundColor: !url && name ? avatarColor : "",
         backgroundImage: url ? `url(${url})` : "",
         backgroundSize: "contain",
         backgroundPosition: "center",

@@ -82,11 +82,12 @@ const RoomDetail = () => {
             <ul className="flex gap-2">
               {room?.joiners.map((joiner) => (
                 <Avatar
-                  key={joiner.id}
-                  name={joiner.name}
+                  key={joiner._id}
+                  name={joiner.displayName}
                   size="lg"
                   showMic={true}
                   url=""
+                  avatarColor={joiner.avatarColor}
                 />
               ))}
             </ul>

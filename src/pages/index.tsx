@@ -14,15 +14,16 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import DarkOverlay from "@/components/Layouts/Overlay";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/subscription";
 import * as _ from "lodash";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 const HomePage = () => {
   console.log("HomePage");
-  const { rooms, roomsGroupedByLanguage, status, canLoadMore, error } =
-    useSelector((state: RootState) => state.room);
+  const { rooms, roomsGroupedByLanguage, status, canLoadMore } = useSelector(
+    (state: RootState) => state.room
+  );
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -41,8 +42,19 @@ const HomePage = () => {
   const [showFullTopics, setShowFullTopics] = useState(false);
 
   const isFirstMount = useRef(true);
-  const roomListRef = useRef<HTMLDivElement>(null);
+  const readMoreRef = useRef<HTMLDivElement>(null);
   const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
+
+  const loadMoreRooms = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  useIntersectionObserver({
+    targetRef: readMoreRef,
+    onIntersecting: loadMoreRooms,
+    requiredCondition: rooms.length > 0,
+    deps: [rooms],
+  });
 
   const toggleFriendsPopup = () => {
     setShowFriendPopup(!showFriendPopup);
@@ -96,45 +108,6 @@ const HomePage = () => {
       prevTopic: currentTopic,
     };
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
-
-  const loadMoreRooms = _.debounce(() => {
-    setCurrentPage(currentPage + 1);
-  }, 500);
-
-  //Control Rooms Lazy Load (Pagination)
-  useEffect(() => {
-    let observer: IntersectionObserver;
-    if (roomListRef.current && rooms.length > 0) {
-      console.log("ran IntersectionObserver effect");
-      const options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
-      };
-
-      observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && status === "success" && rooms.length > 0) {
-          // alert("load more..");
-          // alert("ky");
-
-          loadMoreRooms();
-        }
-      }, options);
-
-      // alert("sub");
-
-      if (observer) {
-        observer.observe(roomListRef.current);
-      }
-    }
-
-    return () => {
-      // alert("clean");
-      if (roomListRef.current && rooms.length && observer) {
-        observer.unobserve(roomListRef.current);
-      }
-    };
-  }, [roomListRef, rooms]);
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
@@ -307,16 +280,17 @@ const HomePage = () => {
           <Rules />
         </Modal>
       )}
-      {canLoadMore && (
+      {canLoadMore && <div ref={readMoreRef}></div>}
+      {/* {canLoadMore && (
         <div
           className="text-white mx-auto border border-gray-200 p-2 text-sm rounded-md cursor-pointer hover:text-accent2 delay-100 transition-all"
-          ref={roomListRef}
+          ref={readMoreRef}
         >
           <div className="" onClick={() => setCurrentPage(currentPage + 1)}>
             Load More...
           </div>
         </div>
-      )}
+      )} */}
       {/* {status === "loading" && <DarkOverlay />} */}
     </main>
   );

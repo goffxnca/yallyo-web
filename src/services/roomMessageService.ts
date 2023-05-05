@@ -59,6 +59,7 @@ const createRoomMessage = async (roomId: string, roomMessage?: RoomMessage) => {
     roomId: roomId,
     message: faker.lorem.sentence(),
     createdBy: faker.name.fullName(),
+    active: true,
     // createdDate: Timestamp.now(),
   };
 

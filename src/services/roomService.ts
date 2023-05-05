@@ -108,16 +108,12 @@ const addRooms = async (count: number) => {
   const newRoom: Room = {
     level: getRandomItem(LANGAUGE_LEVEL),
     language: getRandomItem(LANGUAGES),
-    joiners: roomJoinerArray.map((_) => ({
-      id: Math.random().toString(),
-      name: faker.name.fullName(),
-      profileUrl: randomBoolean() ? getRandomItem(AVATARS) : "",
-    })),
+    joiners: [],
     topic: getRandomItem(TOPICS),
     desc: faker.lorem.sentence(),
     active: true,
     createdBy: faker.name.fullName(),
-    count: count.toString(),
+    order: count.toString(),
     size: randomRoomSize,
   };
 

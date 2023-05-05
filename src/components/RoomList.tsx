@@ -25,7 +25,7 @@ const RoomList = ({ rooms, isLoading }: Props) => {
           // createdDate={room.createdDate}
           // createdDateISO={room.createdDateISO}
           createdBy={room.createdBy}
-          count={room.count}
+          order={room.order}
           size={room.size}
         ></RoomItem>
       ))}

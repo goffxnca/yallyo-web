@@ -12,11 +12,17 @@ const RoomItem = ({
   language,
   level,
   joiners,
-  count,
+  order,
   size,
 }: Props) => {
+  const isFullRoom = size === joiners.length;
+
   return (
-    <li className="p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl">
+    <li
+      className={`p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl ${
+        isFullRoom && "opacity-70"
+      } `}
+    >
       <div className="text-white">
         {language} <span className="text-gray-500">{level}</span>
       </div>
@@ -28,8 +34,9 @@ const RoomItem = ({
         {createNArray(size).map((item, index) => (
           <Avatar
             key={item}
-            name={joiners[index]?.name || ""}
-            url={joiners[index]?.profileUrl || ""}
+            name={joiners[index]?.displayName || ""}
+            url={joiners[index]?.avatarUrl || ""}
+            avatarColor={joiners[index]?.avatarColor || ""}
             size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
             showMic={false}
           />
@@ -43,12 +50,18 @@ const RoomItem = ({
           />
         ))} */}
       </ul>
-      <a
-        href={`/rooms/${_id}`}
-        className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
-      >
-        Join Now {count}
-      </a>
+      {isFullRoom ? (
+        <div className="m-auto text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
+          Room is full
+        </div>
+      ) : (
+        <a
+          href={`/rooms/${_id}`}
+          className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
+        >
+          Join Now {order}
+        </a>
+      )}
     </li>
   );
 };

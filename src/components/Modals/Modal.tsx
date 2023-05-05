@@ -12,7 +12,7 @@ const Modal = ({ showCloseButton, emitClose, children }: Props) => {
     <>
       {createPortal(
         <div
-          className="fixed w-full h-full bg-primary bg-opacity-50  top-0 left-0 flex justify-center items-center "
+          className="fixed w-full h-full bg-primary bg-opacity-80  top-0 left-0 flex justify-center items-center "
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -20,7 +20,7 @@ const Modal = ({ showCloseButton, emitClose, children }: Props) => {
           <div className="relative">
             <div className="absolute right-4 top-1">
               <XMarkIcon
-                className="h-10 w-10 cursor-pointer hover:scale-110"
+                className="h-10 w-10 cursor-pointer hover:scale-110 text-white"
                 onClick={() => {
                   emitClose();
                 }}

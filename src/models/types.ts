@@ -2,12 +2,11 @@ import { Timestamp } from "firebase/firestore";
 
 interface DbDocumentBase {
   _id?: string;
+  active: boolean;
   createdAt?: string;
   createdBy?: string;
   updatedAt?: string;
   updatedBy?: string;
-  // createdDate: Timestamp;
-  // createdDateISO?: string;
 }
 
 export interface Room extends DbDocumentBase {
@@ -15,10 +14,10 @@ export interface Room extends DbDocumentBase {
   level: string;
   desc: string;
   topic: string;
-  joiners: UserShort[];
+  joiners: IUser[];
   active: boolean;
-  count: string;
   size: number;
+  order: string;
 }
 
 export interface RoomSocketUpdate extends Room {
@@ -61,4 +60,14 @@ interface UserShort {
 export interface RoomMessage extends DbDocumentBase {
   roomId: string;
   message: string;
+}
+
+export interface IUser extends DbDocumentBase {
+  displayName: string;
+  email: string;
+  avatarUrl: string;
+  avatarColor: string;
+  bio: string;
+  followers: number;
+  followings: number;
 }
