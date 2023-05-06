@@ -1,19 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import ContentLoader from "react-content-loader";
 
-interface Props {
-  focus: boolean;
-}
-
-const RoomItemSkeleton = ({ focus }: Props) => {
+const RoomItemSkeleton = () => {
   const elemRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (focus && elemRef.current) {
-      console.log("focus...");
-      elemRef.current.scrollIntoView({ block: "center" });
-    }
-  }, [elemRef, focus]);
   return (
     <div
       className="p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl h-full"

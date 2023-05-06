@@ -43,6 +43,7 @@ const HomePage = () => {
 
   const isFirstMount = useRef(true);
   const readMoreRef = useRef<HTMLDivElement>(null);
+  const firstRoomRef = useRef<HTMLDivElement>(null);
   const prevFiltersRef = useRef({ prevLang: "", prevLevel: "", prevTopic: "" });
 
   const loadMoreRooms = () => {
@@ -52,8 +53,8 @@ const HomePage = () => {
   useIntersectionObserver({
     targetRef: readMoreRef,
     onIntersecting: loadMoreRooms,
-    requiredCondition: rooms.length > 0 && canLoadMore,
-    deps: [rooms, canLoadMore],
+    requiredCondition: rooms.length > 0 && canLoadMore && status === "success",
+    deps: [rooms, canLoadMore, status],
   });
 
   const toggleFriendsPopup = () => {
@@ -67,6 +68,14 @@ const HomePage = () => {
       return;
     }
   }, []);
+
+  // Scroll to first room item when filters applied
+  useEffect(() => {
+    firstRoomRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, [currentLang, currentLevel, currentTopic]);
 
   // Subscribe to room update
   useEffect(() => {
@@ -241,12 +250,15 @@ const HomePage = () => {
         </div>
       </div>
       {/* <hr /> */}
-      <div className="text-white">
+
+      <div className="text-white" ref={firstRoomRef}>
         {status} {rooms.length}
       </div>
+
       <RoomList
         rooms={rooms}
-        isLoading={!isFirstMount.current && status === "loading"}
+        isLoading={status === "loading"}
+        showOnTop={!!currentLang || !!currentLevel || !!currentTopic}
       ></RoomList>
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
@@ -280,7 +292,7 @@ const HomePage = () => {
           <Rules />
         </Modal>
       )}
-      {canLoadMore && <div ref={readMoreRef}></div>}
+      {canLoadMore && <div className="mt-52" ref={readMoreRef}></div>}
       {/* {canLoadMore && (
         <div
           className="text-white mx-auto border border-gray-200 p-2 text-sm rounded-md cursor-pointer hover:text-accent2 delay-100 transition-all"
