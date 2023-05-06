@@ -25,7 +25,7 @@ const UserProfile = ({
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
 
   return (
-    <div className="p-5 md:p-10 md:w-[600px] md:flex">
+    <div className="p-5 md:p-10 min-w-[400px] max-w-[600px] md:flex">
       {/* Avatar */}
       <div className="flex justify-center items-start">
         <div className="border-4 border-accent2 p-1 rounded-full w-44">
@@ -46,11 +46,12 @@ const UserProfile = ({
       </div>
 
       <div className="text-white md:ml-4">
-        <h2 className="text-4xl mb-4 text-center mt-4 md:mt- text-accent2">
+        <h2 className="text-4xl mb-4 text-center md:text-left mt-4 md:mt- text-accent2">
           {name}
         </h2>
-        <p className="mb-4 text-gray-400">{bio}</p>
-        <div className="flex justify-between">
+        <p className="mb-4 text-gray-400 text-center md:text-left">{bio}</p>
+
+        <div className="flex justify-center gap-x-4">
           <p className="text-sm text-gray-400">
             <span className="font-bold  text-white">{followers}</span> Followers
           </p>
