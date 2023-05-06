@@ -1,4 +1,9 @@
-import Image from "next/image";
+import {
+  CircleStackIcon,
+  FingerPrintIcon,
+  ListBulletIcon,
+  MegaphoneIcon,
+} from "@heroicons/react/24/outline";
 
 const Rules = () => {
   const rules = [
@@ -14,17 +19,23 @@ const Rules = () => {
     "Violations will result in consequences: Users who violate any of these rules may be warned, kicked out of the chat room, or banned from the website altogether, depending on the severity of the violation",
   ];
   return (
-    <div className="p-10 md:w-[800px] text-white">
-      <h2 className="text-accent2 text-3xl text-center mb-6">
-        Community Rules
-      </h2>
-      <ul className="list-item text-sm">
-        {rules.map((rule, index) => (
-          <li key={index} className="list-disc mb-2">
-            {rule}
-          </li>
-        ))}
-      </ul>
+    <div className="p-5 md:p-10 md:w-[600px] text-white">
+      <div className="h-96 md:h-auto overflow-scroll">
+        <h2 className="text-accent2 text-3xl text-center mb-6">
+          Community Rules
+        </h2>
+        <ul className="list-item text-sm">
+          {rules.map((rule, index) => (
+            <li key={index} className="mb-3 flex">
+              <div className="mr-1">
+                <MegaphoneIcon className="w-5 h-5" />
+              </div>
+
+              <div>{rule}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

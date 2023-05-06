@@ -45,7 +45,7 @@ const UserProfile = ({
         </div>
       </div>
 
-      <div className="text-white ml-4">
+      <div className="text-white md:ml-4">
         <h2 className="text-4xl mb-4 text-center mt-4 md:mt- text-accent2">
           {name}
         </h2>
