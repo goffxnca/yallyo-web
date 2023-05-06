@@ -13,9 +13,21 @@ interface Props {
   showMic: boolean;
   url: string;
   avatarColor: string;
+  bio: string;
+  followers: number;
+  followings: number;
 }
 
-const Avatar = ({ name, size, showMic, url, avatarColor }: Props) => {
+const Avatar = ({
+  name,
+  size,
+  showMic,
+  url,
+  avatarColor,
+  bio,
+  followers,
+  followings,
+}: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -62,7 +74,14 @@ const Avatar = ({ name, size, showMic, url, avatarColor }: Props) => {
             setShowProfile(false);
           }}
         >
-          <UserProfile name={name} bio="" url={url} />
+          <UserProfile
+            name={name}
+            url={url}
+            avatarColor={avatarColor}
+            bio={bio}
+            followers={followers}
+            followings={followings}
+          />
         </Modal>
       )}
     </li>

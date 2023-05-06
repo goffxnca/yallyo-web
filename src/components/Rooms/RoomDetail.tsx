@@ -88,6 +88,9 @@ const RoomDetail = () => {
                   showMic={true}
                   url=""
                   avatarColor={joiner.avatarColor}
+                  bio=""
+                  followers={0}
+                  followings={0}
                 />
               ))}
             </ul>

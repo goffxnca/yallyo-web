@@ -31,16 +31,22 @@ const RoomItem = ({
         ({topic}) {desc}
       </div>
       <ul className="flex flex-wrap justify-center gap-2">
-        {createNArray(size).map((item, index) => (
-          <Avatar
-            key={item}
-            name={joiners[index]?.displayName || ""}
-            url={joiners[index]?.avatarUrl || ""}
-            avatarColor={joiners[index]?.avatarColor || ""}
-            size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
-            showMic={false}
-          />
-        ))}
+        {createNArray(size).map((item, index) => {
+          const joiner = joiners[index];
+          return (
+            <Avatar
+              key={item}
+              name={joiner?.displayName || ""}
+              url={joiner?.avatarUrl || ""}
+              avatarColor={joiner?.avatarColor || ""}
+              bio={joiner?.bio || ""}
+              followers={joiner?.followers || 0}
+              followings={joiner?.followings || 0}
+              size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
+              showMic={false}
+            />
+          );
+        })}
         {/* {joiners.map((joiner, index) => (
           <Avatar
             key={index}
