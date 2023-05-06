@@ -33,7 +33,7 @@ const useIntersectionObserver = ({
           document.querySelector("html")!.style.overflow = "hidden";
           setTimeout(() => {
             document.querySelector("html")!.style.overflow = "scroll";
-          }, 2000);
+          }, 10000);
           onIntersecting();
         }
       }, options);
