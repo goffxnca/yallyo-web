@@ -30,7 +30,9 @@ const RoomList = ({ rooms, isLoading }: Props) => {
         ></RoomItem>
       ))}
       {isLoading &&
-        createNArray(6).map((item) => <RoomItemSkeleton key={item} />)}
+        createNArray(10).map((item) => (
+          <RoomItemSkeleton key={item} focus={item === 1} />
+        ))}
     </ul>
   );
 };

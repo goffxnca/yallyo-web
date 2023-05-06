@@ -1,5 +1,4 @@
 import { RefObject, useEffect } from "react";
-import * as _ from "lodash";
 
 interface Props {
   targetRef: RefObject<HTMLElement>;
@@ -20,9 +19,10 @@ const useIntersectionObserver = ({
   requiredCondition,
   deps,
 }: Props) => {
-  const onIntersectingDebounce = _.debounce(() => {
-    onIntersecting();
-  }, 500);
+  // const onIntersectingDebounce = _.debounce(() => {
+  //   console.log("intersecting");
+  //   onIntersecting();
+  // }, 0);
 
   useEffect(() => {
     let observer: IntersectionObserver;
@@ -30,7 +30,11 @@ const useIntersectionObserver = ({
       console.log("useIntersectionObserver useEffect ran...");
       observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {
-          onIntersectingDebounce();
+          document.querySelector("html")!.style.overflow = "hidden";
+          setTimeout(() => {
+            document.querySelector("html")!.style.overflow = "scroll";
+          }, 2000);
+          onIntersecting();
         }
       }, options);
 

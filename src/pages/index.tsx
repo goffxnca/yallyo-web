@@ -52,8 +52,8 @@ const HomePage = () => {
   useIntersectionObserver({
     targetRef: readMoreRef,
     onIntersecting: loadMoreRooms,
-    requiredCondition: rooms.length > 0,
-    deps: [rooms],
+    requiredCondition: rooms.length > 0 && canLoadMore,
+    deps: [rooms, canLoadMore],
   });
 
   const toggleFriendsPopup = () => {
