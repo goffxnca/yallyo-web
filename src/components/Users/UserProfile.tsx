@@ -25,7 +25,7 @@ const UserProfile = ({
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
 
   return (
-    <div className="p-10 md:w-[600px] md:flex">
+    <div className="p-5 md:p-10 md:w-[600px] md:flex">
       {/* Avatar */}
       <div className="flex justify-center items-start">
         <div className="border-4 border-accent2 p-1 rounded-full w-44">

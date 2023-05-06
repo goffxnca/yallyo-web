@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import UserProfile from "./Users/UserProfile";
 import Modal from "./Modals/Modal";
 import { MicrophoneIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import { random } from "lodash";
 
 interface Props {
   name: string;
