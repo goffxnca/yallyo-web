@@ -44,7 +44,9 @@ const Avatar = ({
       }
        hover:scale-105 select-none cursor-pointer`}
       onClick={() => {
-        setShowProfile(true);
+        if (name) {
+          setShowProfile(true);
+        }
       }}
       style={{
         backgroundColor: !url && name ? avatarColor : "",

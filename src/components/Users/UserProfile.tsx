@@ -40,7 +40,11 @@ const UserProfile = ({
               backgroundPosition: "center",
             }}
           >
-            {name && !url && <div>{nameAbbr && <div>{nameAbbr}</div>}</div>}
+            {name && !url && (
+              <div>
+                {nameAbbr && <div className="text-5xl">{nameAbbr}</div>}
+              </div>
+            )}
           </div>
         </div>
       </div>
