@@ -8,7 +8,6 @@ import Modal from "@/components/Modals/Modal";
 import NewRoomForm from "@/components/Forms/NewRoomForm";
 import HeaderControls from "@/components/Layouts/HeaderControls";
 import Rules from "@/components/Rules";
-import { Room } from "@/models/types";
 import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +21,13 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/subscription";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import {
+  ArrowLongUpIcon,
+  ArrowUpIcon,
+  ArrowUturnUpIcon,
+  BarsArrowUpIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 
 const HomePage = () => {
   console.log("HomePage");
@@ -82,11 +88,15 @@ const HomePage = () => {
         topic: currentTopic,
       })
     );
+    focusOnFirstItem();
+  }, [currentLang, currentLevel, currentTopic]);
+
+  const focusOnFirstItem = () => {
     firstRoomRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "center",
     });
-  }, [currentLang, currentLevel, currentTopic]);
+  };
 
   // Subscribe to room update
   useEffect(() => {
@@ -277,15 +287,31 @@ const HomePage = () => {
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
       )}
+
+      {/* Toggle Friends */}
       {/* <div
         className="fixed bottom-0 right-2 md:right-10 bg-secondary px-4 py-1 rounded-t-lg  text-accent1 hover:text-accent2 border border-b-0 cursor-pointer select-none"
         onClick={toggleFriendsPopup}
       >
         <div className="flex gap-x-2 justify-center items-center">
-          <UsersIcon className="h-5 w-5" />
+          <UserIcon className="h-5 w-5" />
           <span className="text-md">My Friends</span>
         </div>
       </div> */}
+
+      {/* Go to top */}
+      {currentPage > 1 && (
+        <div
+          className="fixed bottom-0 right-2 md:right-10 bg-secondary px-4 py-1 rounded-t-lg  border border-b-0 cursor-pointer select-none text-white hover:text-accent2 hover:border-accent2"
+          onClick={focusOnFirstItem}
+        >
+          <div className="flex gap-x-2 justify-center items-center">
+            <ArrowUturnUpIcon className="h-5 w-5" />
+            <span className="text-md">To Top</span>
+          </div>
+        </div>
+      )}
+
       {showNewRoomFormModal && (
         <Modal
           showCloseButton={true}

@@ -60,8 +60,7 @@ const UserProfile = ({
             <span className="font-bold  text-white">{followers}</span> Followers
           </p>
           <p className="text-sm text-gray-400">
-            <span className="font-bold text-white">{followings}</span>{" "}
-            Followings
+            <span className="font-bold text-white">{followings}</span> Following
           </p>
         </div>
 

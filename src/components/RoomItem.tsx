@@ -1,26 +1,28 @@
 import { Room } from "@/models/types";
 import Avatar from "./Avatar";
-import Link from "next/link";
 import { createNArray } from "@/utils/array-utils";
+import { useEffect, memo, useState } from "react";
+import { NoSymbolIcon } from "@heroicons/react/24/outline";
 
 interface Props extends Room {}
 
-const RoomItem = ({
-  desc,
-  _id,
-  topic,
-  language,
-  level,
-  joiners,
-  order,
-  size,
-}: Props) => {
+const RoomItem = memo((room: Props) => {
+  const { desc, _id, topic, language, level, joiners, order, size } = room;
   const isFullRoom = size === joiners.length;
+
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 1000);
+  }, [room]);
 
   return (
     <li
       className={`p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl ${
-        isFullRoom && "opacity-70"
+        isAnimating && "animate-fadeIn"
       } `}
     >
       <div className="text-white">
@@ -57,8 +59,9 @@ const RoomItem = ({
         ))} */}
       </ul>
       {isFullRoom ? (
-        <div className="m-auto text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
-          Room is full
+        <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
+          <NoSymbolIcon className="h-5 w-5 mr-2" />
+          <span className="text-md">Full Room</span>
         </div>
       ) : (
         <a
@@ -70,6 +73,8 @@ const RoomItem = ({
       )}
     </li>
   );
-};
+});
+
+RoomItem.displayName = "RoomItem";
 
 export default RoomItem;

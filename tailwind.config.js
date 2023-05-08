@@ -19,6 +19,15 @@ module.exports = {
         accent2: "#45ffff",
       },
     },
+    animation: {
+      fadeIn: "fadeIn 1s ease-in-out",
+    },
+    keyframes: (theme) => ({
+      fadeIn: {
+        "0%": { backgroundColor: theme("colors.gray.500") },
+        "100%": { backgroundColor: theme("colors.secondary") },
+      },
+    }),
   },
   plugins: [require("@tailwindcss/forms")],
 };
