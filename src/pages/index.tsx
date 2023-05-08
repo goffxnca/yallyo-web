@@ -12,7 +12,11 @@ import { Room } from "@/models/types";
 import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRooms, fetchRoomsGroupedByLanguage } from "@/store/roomSlice";
+import {
+  fetchRooms,
+  fetchRoomsGroupedByLanguage,
+  updateFilters,
+} from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/subscription";
@@ -71,6 +75,13 @@ const HomePage = () => {
 
   // Scroll to first room item when filters applied
   useEffect(() => {
+    dispatch(
+      updateFilters({
+        language: currentLang,
+        level: currentLevel,
+        topic: currentTopic,
+      })
+    );
     firstRoomRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -258,7 +269,10 @@ const HomePage = () => {
       <RoomList
         rooms={rooms}
         isLoading={status === "loading"}
-        showOnTop={!!currentLang || !!currentLevel || !!currentTopic}
+        showOnTop={
+          (!!currentLang || !!currentLevel || !!currentTopic) &&
+          currentPage === 1
+        }
       ></RoomList>
       {showFriendPopup && (
         <Friends onEmitClose={() => setShowFriendPopup(false)} />
