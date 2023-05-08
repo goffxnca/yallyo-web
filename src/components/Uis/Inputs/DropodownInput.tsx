@@ -2,40 +2,35 @@ import BaseInput from "./BaseInput";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { DropdownItem } from "@/models/types";
 
 interface Props {
   id: string;
   label: string;
-  emitChange: Function;
+  items: DropdownItem[];
+  onChange: Function;
 }
-
-const people = [
-  { id: 3, name: "3" },
-  { id: 4, name: "4" },
-  { id: 5, name: "5" },
-  { id: 6, name: "6" },
-  { id: 7, name: "7" },
-  { id: 8, name: "8" },
-  { id: 9, name: "9" },
-  { id: 10, name: "10" },
-];
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-const DropdownInput = ({ id, label, emitChange }: Props) => {
-  const [selected, setSelected] = useState(people[3]);
+const DropdownInput = ({ id, label, items, onChange }: Props) => {
+  const [selected, setSelected] = useState("");
+  const dropdownItems: DropdownItem[] = [
+    { display: "Select", value: "" },
+    ...items,
+  ];
 
   return (
-    <BaseInput label={label} emitChange={emitChange}>
+    <BaseInput label={label}>
       <div className="mt-2">
         <Listbox value={selected} onChange={setSelected}>
           {({ open }) => (
             <>
               <div className="relative mt-2">
                 <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  <span className="block truncate">{selected.name}</span>
+                  <span className="block truncate">{selected}</span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <ChevronUpDownIcon
                       className="h-5 w-5 text-gray-400"
@@ -52,9 +47,9 @@ const DropdownInput = ({ id, label, emitChange }: Props) => {
                   leaveTo="opacity-0"
                 >
                   <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {people.map((person) => (
+                    {dropdownItems.map(({ display, value }) => (
                       <Listbox.Option
-                        key={person.id}
+                        key={value}
                         className={({ active }) =>
                           classNames(
                             active
@@ -63,7 +58,7 @@ const DropdownInput = ({ id, label, emitChange }: Props) => {
                             "relative cursor-default select-none py-2 pl-3 pr-9"
                           )
                         }
-                        value={person}
+                        value={value}
                       >
                         {({ selected, active }) => (
                           <>
@@ -73,7 +68,7 @@ const DropdownInput = ({ id, label, emitChange }: Props) => {
                                 "block truncate"
                               )}
                             >
-                              {person.name}
+                              {display}
                             </span>
 
                             {selected ? (

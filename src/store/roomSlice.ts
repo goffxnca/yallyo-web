@@ -61,6 +61,32 @@ export const fetchRoomsGroupedByLanguage = createAsyncThunk(
   }
 );
 
+export const createRoom = createAsyncThunk(
+  "room/createRoom",
+  async (room: any) => {
+    const payload: Room = {
+      ...room,
+      order: Date.now().toString(),
+      size: +room.size,
+    };
+
+    const endpoint = `${ENVS.API_URL}/rooms`;
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const createdRoom = await response.json();
+    return createdRoom as Room;
+  }
+);
+
 export const joinRoom = createAsyncThunk(
   "room/fetchRooms",
   async (pagination: Pagination) => {}
@@ -234,7 +260,21 @@ const roomSlice = createSlice({
       })
       .addCase(fetchRoomsGroupedByLanguage.rejected, (state, action) => {
         state.status = "error";
-        state.error = action.error.message ?? "Failed to fetch rooms";
+        state.error =
+          action.error.message ?? "Failed to fetch room count by language";
+      });
+
+    builder
+      .addCase(createRoom.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createRoom.fulfilled, (state, action) => {
+        state.status = "success";
+        state.rooms = [action.payload, ...state.rooms];
+      })
+      .addCase(createRoom.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to create room";
       });
   },
 });

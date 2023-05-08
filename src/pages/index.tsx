@@ -12,6 +12,7 @@ import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  createRoom,
   fetchRooms,
   fetchRoomsGroupedByLanguage,
   updateFilters,
@@ -21,13 +22,8 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/subscription";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import {
-  ArrowLongUpIcon,
-  ArrowUpIcon,
-  ArrowUturnUpIcon,
-  BarsArrowUpIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowUturnUpIcon } from "@heroicons/react/24/outline";
+import { FieldValues } from "react-hook-form";
 
 const HomePage = () => {
   console.log("HomePage");
@@ -138,6 +134,12 @@ const HomePage = () => {
       prevTopic: currentTopic,
     };
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
+
+  const onFormSubmit = (data: FieldValues) => {
+    dispatch(createRoom(data)).then(() => {
+      setShowNewRoomFormModal(false);
+    });
+  };
 
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
@@ -319,7 +321,7 @@ const HomePage = () => {
             setShowNewRoomFormModal(false);
           }}
         >
-          <NewRoomForm onSubmit={(topic: string) => {}} />
+          <NewRoomForm onSubmit={onFormSubmit} />
         </Modal>
       )}
       {showRules && (

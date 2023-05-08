@@ -71,3 +71,8 @@ export interface IUser extends DbDocumentBase {
   followers: number;
   followings: number;
 }
+
+export interface DropdownItem {
+  value: string;
+  display: string;
+}
