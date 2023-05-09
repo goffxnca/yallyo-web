@@ -1,12 +1,12 @@
-import Friends from "@/components/Friends/Friends";
-import PillItem from "@/components/Layouts/PillItem";
-import RoomList from "@/components/RoomList";
+import Friends from "@/components/Friends/FriendList";
+import PillItem from "@/components/UIs/PillItem";
+import RoomList from "@/components/Rooms/RoomList";
 import { addRooms } from "@/services/roomService";
 import { useEffect, useRef, useState } from "react";
 
-import Modal from "@/components/Modals/Modal";
-import NewRoomForm from "@/components/Forms/NewRoomForm";
-import HeaderControls from "@/components/Layouts/HeaderControls";
+import Modal from "@/components/UIs/Modal";
+import NewRoomForm from "@/components/Rooms/NewRoomForm";
+import HeaderControls from "@/components/UIs/HeaderControls";
 import Rules from "@/components/Rules";
 import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
 import Head from "next/head";
@@ -19,7 +19,7 @@ import {
 } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import { subscribeRoomsUpdates } from "@/subscription";
+import { subscribeRoomsUpdates } from "@/libs/ws-subscriptions";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowUturnUpIcon } from "@heroicons/react/24/outline";

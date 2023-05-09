@@ -1,4 +1,4 @@
-import RoomDetail from "@/components/Rooms/RoomDetail";
+import RoomDetail from "@/components/Session/RoomDetail";
 
 const RoomSession = () => {
   return <RoomDetail />;

@@ -2,7 +2,7 @@ import { Room, RoomMessage } from "@/models/types";
 // import { fetchRoomById } from "@/services/roomService";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Avatar from "../Avatar";
+import Avatar from "../UIs/Avatar";
 import {
   MicrophoneIcon,
   VideoCameraIcon,
@@ -12,7 +12,7 @@ import {
   ComputerDesktopIcon,
   LanguageIcon,
 } from "@heroicons/react/24/outline";
-import Button from "../Uis/Button";
+import Button from "../Forms/Button";
 import {
   createRoomMessage,
   subscribeRoomMessages,

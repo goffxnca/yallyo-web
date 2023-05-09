@@ -1,6 +1,6 @@
 import { Socket, io } from "socket.io-client";
-import { updateRooms } from "./store/roomSlice";
-import { ENVS } from "./utils/constants";
+import { updateRooms } from "../store/roomSlice";
+import { ENVS } from "../utils/constants";
 
 export const subscribeRoomsUpdates = (dispatch: any): Socket => {
   const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);

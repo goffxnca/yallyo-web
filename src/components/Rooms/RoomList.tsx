@@ -1,6 +1,6 @@
 import { Room } from "@/models/types";
 import RoomItem from "./RoomItem";
-import RoomItemSkeleton from "./Skeletons/RoomItemSkeleton";
+import RoomItemSkeleton from "../Skeletons/RoomItemSkeleton";
 import { createNArray } from "@/utils/array-utils";
 
 interface Props {

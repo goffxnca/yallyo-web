@@ -1,8 +1,8 @@
 import { getRandomColor } from "@/utils/color-utils";
 import { convertFullnameToAbbr } from "@/utils/string-utils";
 import { useEffect, useState } from "react";
-import UserProfile from "./Users/UserProfile";
-import Modal from "./Modals/Modal";
+import UserProfile from "../Users/UserProfile";
+import Modal from "./Modal";
 import { MicrophoneIcon } from "@heroicons/react/24/outline";
 
 interface Props {

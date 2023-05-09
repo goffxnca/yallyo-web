@@ -1,8 +1,8 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import TextInput from "../Uis/Inputs/TextInput";
+import TextInput from "../Forms/Inputs/TextInput";
 import { useState } from "react";
 import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
-import DropdownInput3 from "../Uis/Inputs/DropodownInput3";
+import DropdownInput3 from "../Forms/Inputs/DropodownInput3";
 import { createNArrayFrom } from "@/utils/array-utils";
 import { FieldValues, useForm } from "react-hook-form";
 import { maxLength, minLength } from "@/utils/form-utils";

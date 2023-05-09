@@ -5,7 +5,7 @@ import {
   configureStore,
 } from "@reduxjs/toolkit";
 import roomReducer from "./roomSlice";
-import commonReducer from "./commonSlice";
+import commonReducer from "./appSlice";
 
 const rootReducer = combineReducers({
   room: roomReducer,
