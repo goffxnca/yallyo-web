@@ -16,6 +16,7 @@ interface RoomState extends AsyncState {
   roomsGroupedByLanguage: RoomsGroupedByLanguage[];
   canLoadMore: boolean;
   filters: RoomFilter;
+  recentCreatedRoomId: string;
 }
 
 const initialState: RoomState = {
@@ -29,6 +30,7 @@ const initialState: RoomState = {
     level: "",
     topic: "",
   },
+  recentCreatedRoomId: "",
 };
 
 export const fetchRooms = createAsyncThunk(
@@ -270,6 +272,7 @@ const roomSlice = createSlice({
       })
       .addCase(createRoom.fulfilled, (state, action) => {
         state.status = "success";
+        state.recentCreatedRoomId = action.payload._id!;
         state.rooms = [action.payload, ...state.rooms];
       })
       .addCase(createRoom.rejected, (state, action) => {

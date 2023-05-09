@@ -22,14 +22,19 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { subscribeRoomsUpdates } from "@/libs/ws-subscriptions";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
-import { ArrowUturnUpIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon, ArrowUturnUpIcon } from "@heroicons/react/24/outline";
 import { FieldValues } from "react-hook-form";
+import Notification from "@/components/UIs/Notification";
 
 const HomePage = () => {
   console.log("HomePage");
-  const { rooms, roomsGroupedByLanguage, status, canLoadMore } = useSelector(
-    (state: RootState) => state.room
-  );
+  const {
+    rooms,
+    roomsGroupedByLanguage,
+    status,
+    canLoadMore,
+    recentCreatedRoomId,
+  } = useSelector((state: RootState) => state.room);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -46,6 +51,8 @@ const HomePage = () => {
   const [counter, setCounter] = useState(1);
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
+  const [showRoomCreatedNotification, setShowRoomCreatedNotification] =
+    useState(false);
 
   const isFirstMount = useRef(true);
   const readMoreRef = useRef<HTMLDivElement>(null);
@@ -136,9 +143,15 @@ const HomePage = () => {
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
 
   const onFormSubmit = (data: FieldValues) => {
-    dispatch(createRoom(data)).then(() => {
-      setShowNewRoomFormModal(false);
-    });
+    dispatch(createRoom(data))
+      .unwrap()
+      .then(() => {
+        setShowNewRoomFormModal(false);
+        setShowRoomCreatedNotification(true);
+      })
+      .catch(() => {
+        setShowNewRoomFormModal(false);
+      });
   };
 
   return (
@@ -346,6 +359,46 @@ const HomePage = () => {
         </div>
       )} */}
       {/* {status === "loading" && <DarkOverlay />} */}
+
+      {showRoomCreatedNotification && (
+        <Notification
+          type="success"
+          messageTitle="Room created successfully!"
+          messageBody={
+            <div className="flex items-center">
+              <span>You room is now ready.</span>
+
+              <div className="flex items-center border rounded-md py-1 px-2 bg-white text-accent1 hover:text-accent2 hover:bg-secondary ml-2 cursor-pointer">
+                <ArrowRightIcon className="h-4 w-4 mr-2" />
+                <a
+                  href={`/rooms/${recentCreatedRoomId}`}
+                  target="_blank"
+                  onClick={() => {
+                    setShowRoomCreatedNotification(false);
+                  }}
+                >
+                  Join Now
+                </a>
+              </div>
+            </div>
+          }
+          autoFadeout={false}
+          onFadedOut={() => {
+            setShowRoomCreatedNotification(false);
+          }}
+        />
+      )}
+
+      {/* Generic errors for any situations related to room CRUD asyncs */}
+      {status === "error" && (
+        <Notification
+          type="error"
+          messageTitle="Something went wrong!"
+          messageBody="You can refresh the page or try again."
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
+      )}
     </main>
   );
 };

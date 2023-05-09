@@ -22,7 +22,9 @@ const NewRoomForm = ({ onSubmit }: Props) => {
 
   const onFormSubmit = (data: FieldValues) => {
     setLoading(true);
-    onSubmit(data);
+    setTimeout(() => {
+      onSubmit(data);
+    }, 5000);
   };
 
   return (
