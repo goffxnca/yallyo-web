@@ -20,10 +20,10 @@ const Header = () => {
       <div className="text-accent1 font-bold text-xl text-center">
         <div className="text-2xl">
           Hey<span className="text-accent2">Guyz</span>
-          <span className="text-accent2 text-white text-sm">.com</span>
+          <span className=" text-white text-sm">.com</span>
         </div>
-        <div className="text-white text-md mb-2">
-          Practice English - Meet friends - Enjoy
+        <div className="text-white text-base mt-2">
+          Practice English - Meet New Friends
         </div>
       </div>
       <UserCircleIcon

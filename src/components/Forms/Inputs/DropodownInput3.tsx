@@ -24,6 +24,7 @@ const DropdownInput3 = React.forwardRef<HTMLSelectElement, Props>(
           ref={ref}
         >
           <option value="">Please Select</option>
+          <hr></hr>
           {items.map(({ value, display }) => (
             <option key={value} value={value}>
               {display}

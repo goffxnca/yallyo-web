@@ -5,11 +5,13 @@ import {
   configureStore,
 } from "@reduxjs/toolkit";
 import roomReducer from "./roomSlice";
-import commonReducer from "./appSlice";
+import appReducer from "./appSlice";
+import sessionSlice from "./sessionSlice";
 
 const rootReducer = combineReducers({
+  app: appReducer,
   room: roomReducer,
-  common: commonReducer,
+  session: sessionSlice,
 });
 
 const store = configureStore({

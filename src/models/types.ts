@@ -76,3 +76,9 @@ export interface DropdownItem {
   value: string;
   display: string;
 }
+
+export interface SessionConrol {
+  micOn: boolean;
+  camOn: boolean;
+  chatOn: boolean;
+}

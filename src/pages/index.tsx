@@ -366,7 +366,7 @@ const HomePage = () => {
           messageTitle="Room created successfully!"
           messageBody={
             <div className="flex items-center">
-              <span>You room is now ready.</span>
+              <span>Your room is now ready.</span>
 
               <div className="flex items-center border rounded-md py-1 px-2 bg-white text-accent1 hover:text-accent2 hover:bg-secondary ml-2 cursor-pointer">
                 <ArrowRightIcon className="h-4 w-4 mr-2" />
