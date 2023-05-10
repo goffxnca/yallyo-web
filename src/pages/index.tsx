@@ -394,7 +394,7 @@ const HomePage = () => {
         <Notification
           type="error"
           messageTitle="Something went wrong!"
-          messageBody="You can refresh the page or try again."
+          messageBody="You can refresh the page or try again later."
           autoFadeout={true}
           onFadedOut={() => {}}
         />

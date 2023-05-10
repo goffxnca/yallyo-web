@@ -12,13 +12,15 @@ import {
   RocketLaunchIcon,
   ComputerDesktopIcon,
   LanguageIcon,
+  ArrowUturnUpIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import Button from "../Forms/Button";
 import {
   createRoomMessage,
   subscribeRoomMessages,
 } from "@/services/roomMessageService";
-import SessionControls from "./SessionControls";
+import SessionControlList from "./SessionControlList";
 import SessionChatSidebar from "./SessionChatSidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -68,11 +70,19 @@ const RoomSession = () => {
     <div className="md:flex h-full">
       {/* Main Content */}
       <div className="w-full md:relative bg-primary h-full relative">
-        <div className="py-4 pl-4">
+        <div className="flex py-4 justify-between px-4">
           <Button text="Back" emitClick={() => {}} />
+          {room?.joiners && room.size && (
+            <div className="flex items-center text-white">
+              <UsersIcon className="h-5 w-5 mr-2" />
+              <div>
+                {room?.joiners.length} / {room?.size}
+              </div>
+            </div>
+          )}
         </div>
 
-        <SessionControls />
+        <SessionControlList />
 
         <SessionContent />
       </div>

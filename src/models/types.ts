@@ -80,5 +80,6 @@ export interface DropdownItem {
 export interface SessionConrol {
   micOn: boolean;
   camOn: boolean;
+  shareScreenOn: boolean;
   chatOn: boolean;
 }

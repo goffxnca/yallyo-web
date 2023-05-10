@@ -110,7 +110,7 @@ const addRooms = async (count: number) => {
     language: getRandomItem(LANGUAGES),
     joiners: [],
     topic: getRandomItem(TOPICS),
-    desc: faker.lorem.sentence(),
+    desc: faker.lorem.sentence().substring(0, 50),
     active: true,
     createdBy: faker.name.fullName(),
     order: count.toString(),

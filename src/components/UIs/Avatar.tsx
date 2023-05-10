@@ -61,12 +61,6 @@ const Avatar = ({
       {/* Black Circle */}
       {name && !url && <div>{nameAbbr && <div>{nameAbbr}</div>}</div>}
 
-      {showMic && (
-        <div className="absolute right-2 bottom-2 p-2 mx-1 rounded-md ">
-          <MicrophoneIcon className="w-6 h-6 " />
-        </div>
-      )}
-
       {showProfile && (
         <Modal
           showCloseButton={true}

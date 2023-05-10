@@ -14,6 +14,7 @@ const initialState: SessionState = {
   controls: {
     micOn: false,
     camOn: false,
+    shareScreenOn: false,
     chatOn: false,
   },
 };
@@ -64,6 +65,15 @@ const sessionSlice = createSlice({
     addSession(state, action: PayloadAction<Room>) {
       //   state.room
     },
+    toggleMic(state) {
+      state.controls.micOn = !state.controls.micOn;
+    },
+    toggleCam(state) {
+      state.controls.camOn = !state.controls.camOn;
+    },
+    toggleShareScreen(state) {
+      state.controls.shareScreenOn = !state.controls.shareScreenOn;
+    },
     toggleChat(state) {
       state.controls.chatOn = !state.controls.chatOn;
     },
@@ -84,5 +94,11 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { addSession, toggleChat } = sessionSlice.actions;
+export const {
+  addSession,
+  toggleMic,
+  toggleCam,
+  toggleShareScreen,
+  toggleChat,
+} = sessionSlice.actions;
 export default sessionSlice.reducer;

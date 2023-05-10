@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>This is chat room</h1>
+    <video id="localVideo"></video>
+    <video id="remoteVideo"></video>
+
+    <script defer>
+      const localVideo = document.getElementById("localVideo");
+      const remoteVideo = document.getElementById("remoteVideo");
+
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          alert("cool");
+          console.log(stream);
+          localVideo.srcObject = stream;
+          // Create WebRTC connection and add stream to it
+          const connection = new RTCPeerConnection();
+          stream
+            .getTracks()
+            .forEach((track) => connection.addTrack(track, stream));
+          // Attach remote stream to remote video element
+          connection.ontrack = (event) => {
+            remoteVideo.srcObject = event.streams[0];
+          };
+          // Send signaling messages to the other peer to establish a connection
+          // ...
+        })
+        .catch((error) => {
+          alert("cool22");
+          console.error("Failed to get user media", error);
+        });
+    </script>
+  </body>
+</html>
