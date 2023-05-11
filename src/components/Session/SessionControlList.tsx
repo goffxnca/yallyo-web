@@ -8,11 +8,8 @@ import { AppDispatch, RootState } from "@/store/store";
 import {
   MicrophoneIcon,
   VideoCameraIcon,
-  InformationCircleIcon,
   PhoneIcon,
-  RocketLaunchIcon,
   ComputerDesktopIcon,
-  LanguageIcon,
 } from "@heroicons/react/24/solid";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 
@@ -20,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import SessionControlItem from "./SessionControlItem";
 
 const SessionControlList = ({}) => {
-  console.log("SessionControls");
   const { room, controls } = useSelector((state: RootState) => state.session);
 
   const dispatch: AppDispatch = useDispatch();

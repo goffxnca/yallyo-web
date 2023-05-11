@@ -10,7 +10,6 @@ interface Props {
 
 const SessionControlItem = React.memo(
   ({ Icon, disabled = false, bgColor, tooltip, onClick }: Props) => {
-    console.log("cross", disabled);
     return (
       // <div className="p-3 mx-1 rounded-md">
       //   {/* <Icon className="w-6 h-6" /> */}

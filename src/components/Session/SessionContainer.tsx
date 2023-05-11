@@ -49,22 +49,23 @@ const RoomSession = () => {
     getRoom();
   }, [router]);
 
-  useEffect(() => {
-    let unsubscribe = () => {};
-    // set up the subscription
-    if (roomId) {
-      unsubscribe = subscribeRoomMessages(roomId, (messagse: RoomMessage[]) => {
-        setRoomMessages(messagse);
-        console.log("ROOMS MESSAGES RE-READ");
-      });
-    }
+  //We will workon realtime chat message later
+  // useEffect(() => {
+  //   let unsubscribe = () => {};
+  //   // set up the subscription
+  //   if (roomId) {
+  //     unsubscribe = subscribeRoomMessages(roomId, (messagse: RoomMessage[]) => {
+  //       setRoomMessages(messagse);
+  //       console.log("ROOMS MESSAGES RE-READ");
+  //     });
+  //   }
 
-    // return a cleanup function to unsubscribe when the component unmounts
-    return () => {
-      // alert("unsub ROOMS MESSAGES");
-      unsubscribe();
-    };
-  }, [roomId]);
+  //   // return a cleanup function to unsubscribe when the component unmounts
+  //   return () => {
+  //     // alert("unsub ROOMS MESSAGES");
+  //     unsubscribe();
+  //   };
+  // }, [roomId]);
 
   return (
     <div className="md:flex h-full">

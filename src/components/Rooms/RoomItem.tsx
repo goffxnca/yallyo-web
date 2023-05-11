@@ -3,6 +3,7 @@ import Avatar from "../UIs/Avatar";
 import { createNArray } from "@/utils/array-utils";
 import { useEffect, memo, useState } from "react";
 import { NoSymbolIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 interface Props extends Room {}
 
@@ -64,12 +65,17 @@ const RoomItem = memo((room: Props) => {
           <span className="text-md">Full Room</span>
         </div>
       ) : (
-        <a
-          href={`/rooms/${_id}`}
-          className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
-        >
-          Join Now {order}
-        </a>
+        // <a
+        //   href={`/rooms/${_id}`}
+        //   className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
+        // >
+        //   Join Now {order}
+        // </a>
+        <Link href={`/rooms/${_id}`}>
+          <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
+            Join Now {order}
+          </div>
+        </Link>
       )}
     </li>
   );

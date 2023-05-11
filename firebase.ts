@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD-k-Twbrsc-zqUi6Y6J5PTqieAvIIrq78",
-  authDomain: "testchat-dev-5d85b.firebaseapp.com",
-  projectId: "testchat-dev-5d85b",
-  storageBucket: "testchat-dev-5d85b.appspot.com",
-  messagingSenderId: "539934637323",
-  appId: "1:539934637323:web:d3b4ec3b2fbe32d2f1760e",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_apiKey,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_authDomain,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_projectId,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_storageBucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_messagingSenderId,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_appId,
 };
 
 // Initialize Firebase
@@ -20,6 +20,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const googleAuthProvider = new GoogleAuthProvider();
 
-export { db, auth, provider };
+export { db, auth, googleAuthProvider };

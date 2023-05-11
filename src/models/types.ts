@@ -83,3 +83,11 @@ export interface SessionConrol {
   shareScreenOn: boolean;
   chatOn: boolean;
 }
+
+export interface FirebaseUser {
+  displayName: string;
+  firstName: string;
+  email: string;
+  photoUrl: string;
+  idToken: string;
+}

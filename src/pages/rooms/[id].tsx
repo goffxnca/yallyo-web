@@ -13,12 +13,8 @@ const RoomSession = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  // console.log(controls);
-
   useEffect(() => {
-    console.log("useEffect 0");
     if (id) {
-      console.log("useEffect 1");
       dispatch(fetchSession(id.toString()));
     }
   }, [dispatch, id]);

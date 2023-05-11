@@ -8,35 +8,47 @@
   </head>
   <body>
     <h1>This is chat room</h1>
-    <video id="localVideo"></video>
-    <video id="remoteVideo"></video>
 
-    <script defer>
-      const localVideo = document.getElementById("localVideo");
-      const remoteVideo = document.getElementById("remoteVideo");
+    <video
+      id="localVideo"
+      autoplay="true"
+      style="width: 300px; height: 300px"
+    ></video>
+    <video
+      id="remoteVideo"
+      autoplay="true"
+      style="width: 300px; height: 300px"
+    ></video>
 
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-          alert("cool");
-          console.log(stream);
-          localVideo.srcObject = stream;
-          // Create WebRTC connection and add stream to it
-          const connection = new RTCPeerConnection();
-          stream
-            .getTracks()
-            .forEach((track) => connection.addTrack(track, stream));
-          // Attach remote stream to remote video element
-          connection.ontrack = (event) => {
-            remoteVideo.srcObject = event.streams[0];
-          };
-          // Send signaling messages to the other peer to establish a connection
-          // ...
-        })
-        .catch((error) => {
-          alert("cool22");
-          console.error("Failed to get user media", error);
-        });
+    <script>
+      window.onload = function () {
+        const localVideo = document.getElementById("localVideo");
+        const remoteVideo = document.getElementById("remoteVideo");
+
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            // alert("cool");
+            // console.log(stream);
+            localVideo.srcObject = stream;
+            remoteVideo.srcObject = stream;
+            // Create WebRTC connection and add stream to it
+            // const connection = new RTCPeerConnection();
+            // stream
+            //   .getTracks()
+            //   .forEach((track) => connection.addTrack(track, stream));
+            // // Attach remote stream to remote video element
+            // connection.ontrack = (event) => {
+            //   remoteVideo.srcObject = event.streams[0];
+            // };
+            // Send signaling messages to the other peer to establish a connection
+            // ...
+          })
+          .catch((error) => {
+            alert("cool22");
+            console.error("Failed to get user media", error);
+          });
+      };
     </script>
   </body>
 </html>

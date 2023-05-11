@@ -7,15 +7,18 @@ import {
 import roomReducer from "./roomSlice";
 import appReducer from "./appSlice";
 import sessionSlice from "./sessionSlice";
+import authSlice from "./authSlice";
 
 const rootReducer = combineReducers({
   app: appReducer,
+  auth: authSlice,
   room: roomReducer,
   session: sessionSlice,
 });
 
 const store = configureStore({
   reducer: rootReducer,
+  // devTools: true,
 });
 
 export type RootState = ReturnType<typeof store.getState>; //A Type for useSelector
