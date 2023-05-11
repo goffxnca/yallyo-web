@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Header from "./Header";
+import Header from "./Headers/Header";
 
 interface Props {
   children: ReactNode;
@@ -11,7 +11,7 @@ const Layout = ({ children }: Props) => {
   return (
     <div className="h-screen flex flex-col">
       <Header />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow pt-16">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
     </div>
   );

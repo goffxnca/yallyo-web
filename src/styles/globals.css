@@ -32,11 +32,7 @@ textarea {
   }
 }
 
-/* textarea:focus {
-  outline: none !important;
-  border-color: red !important;
-} */
-
+/* Loading spinner style for overlay */
 .loading-spinner {
   display: flex;
   justify-content: center;
@@ -86,4 +82,19 @@ textarea {
   100% {
     transform: translate(24px, 0);
   }
+}
+
+/* Overwrite default tailwind bounce animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px); /* Adjust the height of the bounce here */
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
 }

@@ -13,14 +13,13 @@ const Auth = React.memo(() => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("@@@@onAuthStateChanged");
+      console.log("@@@@onAuthStateChanged", user);
       if (user) {
         const auth: FirebaseUser = {
           displayName: user.displayName!,
           email: user.email!,
           photoUrl: user.photoURL!,
-          firstName: "",
-          idToken: "ff",
+          idToken: (user as any).accessToken,
         };
         dispatch(assignAuth(auth));
       } else {

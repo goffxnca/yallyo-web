@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { joinClasses } from "@/utils/jsx-utils";
 
 const people = [
   { id: 3, name: "3" },
@@ -12,10 +13,6 @@ const people = [
   { id: 9, name: "9" },
   { id: 10, name: "10" },
 ];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
 
 const Dropdown = () => {
   const [selected, setSelected] = useState(people[3]);
@@ -50,7 +47,7 @@ const Dropdown = () => {
                   <Listbox.Option
                     key={person.id}
                     className={({ active }) =>
-                      classNames(
+                      joinClasses(
                         active ? "bg-indigo-600 text-white" : "text-gray-900",
                         "relative cursor-default select-none py-2 pl-3 pr-9"
                       )
@@ -60,7 +57,7 @@ const Dropdown = () => {
                     {({ selected, active }) => (
                       <>
                         <span
-                          className={classNames(
+                          className={joinClasses(
                             selected ? "font-semibold" : "font-normal",
                             "block truncate"
                           )}
@@ -70,7 +67,7 @@ const Dropdown = () => {
 
                         {selected ? (
                           <span
-                            className={classNames(
+                            className={joinClasses(
                               active ? "text-white" : "text-indigo-600",
                               "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}

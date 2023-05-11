@@ -86,7 +86,6 @@ export interface SessionConrol {
 
 export interface FirebaseUser {
   displayName: string;
-  firstName: string;
   email: string;
   photoUrl: string;
   idToken: string;

@@ -3,16 +3,13 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { DropdownItem } from "@/models/types";
+import { joinClasses } from "@/utils/jsx-utils";
 
 interface Props {
   id: string;
   label: string;
   items: DropdownItem[];
   onChange: Function;
-}
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
 }
 
 const DropdownInput = ({ id, label, items, onChange }: Props) => {
@@ -51,7 +48,7 @@ const DropdownInput = ({ id, label, items, onChange }: Props) => {
                       <Listbox.Option
                         key={value}
                         className={({ active }) =>
-                          classNames(
+                          joinClasses(
                             active
                               ? "bg-indigo-600 text-white"
                               : "text-gray-900",
@@ -63,7 +60,7 @@ const DropdownInput = ({ id, label, items, onChange }: Props) => {
                         {({ selected, active }) => (
                           <>
                             <span
-                              className={classNames(
+                              className={joinClasses(
                                 selected ? "font-semibold" : "font-normal",
                                 "block truncate"
                               )}
@@ -73,7 +70,7 @@ const DropdownInput = ({ id, label, items, onChange }: Props) => {
 
                             {selected ? (
                               <span
-                                className={classNames(
+                                className={joinClasses(
                                   active ? "text-white" : "text-indigo-600",
                                   "absolute inset-y-0 right-0 flex items-center pr-4"
                                 )}
