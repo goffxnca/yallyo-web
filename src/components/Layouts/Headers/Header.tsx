@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SigninWithGoogleButton from "./SigninWithGoogleButton";
 import AccountMenus from "./AccountMenus";
 import { useEffect, useState } from "react";
+import LogoSection from "./LogoSection";
 
 const Header = () => {
   console.log("Header");
@@ -26,22 +27,7 @@ const Header = () => {
         {JSON.stringify({ ...authState })}
       </div> */}
 
-      <div className="flex items-center text-accent1 font-bold text-xl">
-        <div className="text-accent1 text-3xl">
-          <Image src={"/images/yobro2.png"} width={60} height={60} alt="yeh" />
-        </div>
-
-        <div>
-          <div className="text-2xl">
-            Hey<span className="text-accent2">Guyz</span>
-            <span className=" text-white text-sm">.com</span>
-          </div>
-          <div className="text-gray-500 text-sm">
-            English Learning Community
-            {/* Global Citizen Community */}
-          </div>
-        </div>
-      </div>
+      <LogoSection />
 
       {!loading && (
         <>
