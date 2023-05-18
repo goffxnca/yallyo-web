@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
 import { UserRecord } from "firebase-admin/auth";
-// import axios from "axios";
 import fetch from "cross-fetch";
 
 // // Start writing functions
