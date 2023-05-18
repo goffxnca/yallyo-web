@@ -20,7 +20,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 z-40 w-full border-b border-gray-600 bg-opacity-95">
+    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 z-30 w-full border-b border-gray-600 bg-opacity-95">
       {/* <div className="text-white text-sm">{status}</div> */}
 
       {/* <div className="text-white text-sm absolute top-20 left-0 bg-black overflow-hidden">
@@ -39,11 +39,11 @@ const Header = () => {
             />
           )}
 
-          {authState.user?.photoUrl && (
+          {authState.user?.photoURL && (
             <AccountMenus
               email={authState.user?.email}
               displayName={authState.user?.displayName}
-              profileURL={authState.user?.photoUrl!}
+              profileURL={authState.user?.photoURL!}
             />
           )}
         </>

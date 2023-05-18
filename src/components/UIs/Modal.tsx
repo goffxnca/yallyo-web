@@ -12,7 +12,7 @@ const Modal = ({ showCloseButton, emitClose, children }: Props) => {
     <>
       {createPortal(
         <div
-          className="fixed w-full h-full bg-primary bg-opacity-80  top-0 left-0 flex justify-center items-center "
+          className="fixed w-full h-full bg-primary bg-opacity-80  top-0 left-0 flex justify-center items-center z-50"
           onClick={(e) => {
             e.stopPropagation();
           }}

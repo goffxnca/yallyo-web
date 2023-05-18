@@ -16,9 +16,10 @@ const Auth = React.memo(() => {
       console.log("@@@@onAuthStateChanged", user);
       if (user) {
         const auth: FirebaseUser = {
-          displayName: user.displayName!,
+          uid: user.uid,
           email: user.email!,
-          photoUrl: user.photoURL!,
+          displayName: user.displayName!,
+          photoURL: user.photoURL!,
           idToken: (user as any).accessToken,
         };
         dispatch(assignAuth(auth));

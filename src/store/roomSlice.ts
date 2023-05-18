@@ -10,6 +10,7 @@ import {
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";
+import { RootState } from "./store";
 
 interface RoomState extends AsyncState {
   rooms: Room[];
@@ -65,18 +66,21 @@ export const fetchRoomsGroupedByLanguage = createAsyncThunk(
 
 export const createRoom = createAsyncThunk(
   "room/createRoom",
-  async (room: any) => {
+  async (room: any, thunkAPI) => {
     const payload: Room = {
       ...room,
       order: Date.now().toString(),
       size: +room.size,
     };
 
+    const currentState = thunkAPI.getState() as RootState;
+
     const endpoint = `${ENVS.API_URL}/rooms`;
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
       },
       body: JSON.stringify(payload),
     });
@@ -152,7 +156,7 @@ const roomSlice = createSlice({
             (r) => r._id === roomUpdate._id
           );
           if (existingRoom) {
-            return;
+            return state;
           }
 
           if (!skipAddingToRoomList) {
@@ -167,7 +171,7 @@ const roomSlice = createSlice({
                 : group
           );
 
-          //If not room count by language is not exist, manually assign 1
+          //If room count by language is not exist, manually assign 1
           if (
             state.roomsGroupedByLanguage.findIndex(
               (group) => group.language === roomUpdate.language
@@ -273,7 +277,7 @@ const roomSlice = createSlice({
       .addCase(createRoom.fulfilled, (state, action) => {
         state.status = "success";
         state.recentCreatedRoomId = action.payload._id!;
-        state.rooms = [action.payload, ...state.rooms];
+        // state.rooms = [action.payload, ...state.rooms];
       })
       .addCase(createRoom.rejected, (state, action) => {
         state.status = "error";

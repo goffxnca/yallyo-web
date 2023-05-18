@@ -31,12 +31,12 @@ const SessionContent = () => {
       {/* <div className="text-white">{focused}</div> */}
       <div className="flex justify-center">
         <ul className="flex gap-2 flex-wrap justify-center max-w-[900px]">
-          {room?.joiners.map((joiner: any) => (
+          {room?.joiners.map((joiner: IUser) => (
             <Joiner
               key={joiner._id}
               name={joiner.displayName}
               size={room.joiners.length > 5 ? "md" : "lg"}
-              url={joiner.avatarUrl}
+              url={joiner.photoURL}
               avatarColor={joiner.avatarColor}
               bio=""
               followers={0}

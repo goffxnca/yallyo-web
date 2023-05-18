@@ -5,10 +5,22 @@ import { useEffect, memo, useState } from "react";
 import { NoSymbolIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-interface Props extends Room {}
+interface Props extends Room {
+  createdByMe: boolean;
+}
 
 const RoomItem = memo((room: Props) => {
-  const { desc, _id, topic, language, level, joiners, order, size } = room;
+  const {
+    desc,
+    _id,
+    topic,
+    language,
+    level,
+    joiners,
+    order,
+    size,
+    createdByMe,
+  } = room;
   const isFullRoom = size === joiners.length;
 
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -24,7 +36,7 @@ const RoomItem = memo((room: Props) => {
     <li
       className={`p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl ${
         isAnimating && "animate-fadeIn"
-      } `}
+      } ${createdByMe && "border border-accent2"} `}
     >
       <div className="text-white">
         {language} <span className="text-gray-500">{level}</span>
@@ -40,7 +52,7 @@ const RoomItem = memo((room: Props) => {
             <Avatar
               key={item}
               name={joiner?.displayName || ""}
-              url={joiner?.avatarUrl || ""}
+              url={joiner?.photoURL || ""}
               avatarColor={joiner?.avatarColor || ""}
               bio={joiner?.bio || ""}
               followers={joiner?.followers || 0}

@@ -1,27 +1,14 @@
-import { Room, RoomMessage } from "@/models/types";
-// import { fetchRoomById } from "@/services/roomService";
+import { RoomMessage } from "@/models/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Avatar from "../UIs/Avatar";
 
-import {
-  MicrophoneIcon,
-  VideoCameraIcon,
-  InformationCircleIcon,
-  PhoneIcon,
-  RocketLaunchIcon,
-  ComputerDesktopIcon,
-  LanguageIcon,
-  ArrowUturnUpIcon,
-  UsersIcon,
-} from "@heroicons/react/24/outline";
+import { UsersIcon } from "@heroicons/react/24/outline";
 import Button from "../Forms/Button";
 import {
   createRoomMessage,
   subscribeRoomMessages,
 } from "@/services/roomMessageService";
 import SessionControlList from "./SessionControlList";
-import SessionChatSidebar from "./SessionChatSidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import SessionContent from "./SessionContent";

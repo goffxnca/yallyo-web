@@ -1,7 +1,6 @@
 import Friends from "@/components/Friends/FriendList";
 import PillItem from "@/components/UIs/PillItem";
 import RoomList from "@/components/Rooms/RoomList";
-import { addRooms } from "@/services/roomService";
 import { useEffect, useRef, useState } from "react";
 
 import Modal from "@/components/UIs/Modal";
@@ -16,6 +15,7 @@ import {
   fetchRooms,
   fetchRoomsGroupedByLanguage,
   updateFilters,
+  updateRooms,
 } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -145,9 +145,10 @@ const HomePage = () => {
   const onFormSubmit = (data: FieldValues) => {
     dispatch(createRoom(data))
       .unwrap()
-      .then(() => {
+      .then((createdRoom) => {
         setShowNewRoomFormModal(false);
         setShowRoomCreatedNotification(true);
+        dispatch(updateRooms([{ ...createdRoom, updateStatus: "C" }]));
       })
       .catch(() => {
         setShowNewRoomFormModal(false);
@@ -172,10 +173,6 @@ const HomePage = () => {
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);
-        }}
-        onClickGenRoom={() => {
-          addRooms(counter);
-          setCounter(counter + 1);
         }}
         onClickShowRules={() => {
           setShowRules(true);

@@ -1,41 +1,50 @@
-// // import * as functions from "firebase-functions";
+import * as functions from "firebase-functions";
+import { UserRecord } from "firebase-admin/auth";
+// import axios from "axios";
+import fetch from "cross-fetch";
 
-// // // Start writing functions
-// // // https://firebase.google.com/docs/functions/typescript
-// //
+// // Start writing functions
+// // https://firebase.google.com/docs/functions/typescript
+//
+// export const helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
 
-// // export const helloWorld = functions.https.onRequest((request, response) => {
-// //   functions.logger.info("Hello logs!", { structuredData: true });
-// //   response.send("Hello from Firebase!");
-// // });
+const REGION = "asia-southeast1";
 
-// import * as functions from "firebase-functions";
-// import * as admin from "firebase-admin";
+const onUserCreated = functions
+  .region(REGION)
+  .auth.user()
+  .onCreate(async (user: UserRecord) => {
+    functions.logger.info("Create user triggered", { data: user });
+    try {
+      const { uid, email, displayName, photoURL, providerData } = user;
+      const response = await fetch("https://agentsistant.com/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.GCF_API_KEY!,
+        },
+        body: JSON.stringify({
+          _id: uid,
+          email,
+          displayName,
+          photoURL,
+          provider: providerData[0]?.providerId || "",
+        }),
+      });
 
-// admin.initializeApp();
+      const data = await response.json();
 
-// const REGION = "asia-southeast1";
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
 
-// const onRoomsChange3 = functions
-//   .region(REGION)
-//   .firestore.document("rooms/{roomId}")
-//   .onWrite(async (change, context) => {
-//     functions.logger.info("Rooms Data Changed", {
-//       data: {
-//         action: context.eventType,
-//         before: change.before.data(),
-//         after: change.after.data(),
-//       },
-//     });
+      functions.logger.info("Create user successfully", { data });
+    } catch (error) {
+      functions.logger.error("Create user failed: ", error);
+    }
+  });
 
-//     const rooms = await admin.firestore().collection("rooms").get();
-//     let data: any[] = [];
-//     rooms.forEach((doc) => {
-//       data.push(doc.data());
-//     });
-
-//     await admin.firestore().collection("roomsZip").doc().set({ zip: data });
-//     // Handle the change here
-//   });
-
-// export { onRoomsChange3 };
+export { onUserCreated };

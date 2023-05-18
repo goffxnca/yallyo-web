@@ -65,7 +65,7 @@ export interface RoomMessage extends DbDocumentBase {
 export interface IUser extends DbDocumentBase {
   displayName: string;
   email: string;
-  avatarUrl: string;
+  photoURL: string;
   avatarColor: string;
   bio: string;
   followers: number;
@@ -85,8 +85,9 @@ export interface SessionConrol {
 }
 
 export interface FirebaseUser {
+  uid: string;
   displayName: string;
   email: string;
-  photoUrl: string;
+  photoURL: string;
   idToken: string;
 }
