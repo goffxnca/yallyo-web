@@ -1,22 +1,24 @@
 import {
-  AsyncState,
-  Pagination,
-  Room,
+  IAsyncState,
   RoomFetchOptions,
-  RoomFilter,
-  RoomSocketUpdate,
   RoomsGroupedByLanguage,
 } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";
 import { RootState } from "./store";
+import {
+  IPagination,
+  IRoom,
+  IRoomFilter,
+  IRoomSocketUpdate,
+} from "@/types/common";
 
-interface RoomState extends AsyncState {
-  rooms: Room[];
+interface RoomState extends IAsyncState {
+  rooms: IRoom[];
   roomsGroupedByLanguage: RoomsGroupedByLanguage[];
   canLoadMore: boolean;
-  filters: RoomFilter;
+  filters: IRoomFilter;
   recentCreatedRoomId: string;
 }
 
@@ -45,7 +47,7 @@ export const fetchRooms = createAsyncThunk(
       throw new Error(response.statusText);
     }
     const data = await response.json();
-    return data as Room[];
+    return data as IRoom[];
   }
 );
 
@@ -67,7 +69,7 @@ export const fetchRoomsGroupedByLanguage = createAsyncThunk(
 export const createRoom = createAsyncThunk(
   "room/createRoom",
   async (room: any, thunkAPI) => {
-    const payload: Room = {
+    const payload: IRoom = {
       ...room,
       order: Date.now().toString(),
       size: +room.size,
@@ -89,43 +91,43 @@ export const createRoom = createAsyncThunk(
       throw new Error(response.statusText);
     }
     const createdRoom = await response.json();
-    return createdRoom as Room;
+    return createdRoom as IRoom;
   }
 );
 
 export const joinRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const leaveRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const cancelRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const sendRoomMessage = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const reportRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 const roomSlice = createSlice({
   name: "room",
   initialState,
   reducers: {
-    addRoom(state, action: PayloadAction<Room>) {
+    addRoom(state, action: PayloadAction<IRoom>) {
       state.rooms.push(action.payload);
     },
-    updateRooms(state, action: PayloadAction<RoomSocketUpdate[]>) {
+    updateRooms(state, action: PayloadAction<IRoomSocketUpdate[]>) {
       const { language, level, topic } = state.filters;
       const hasFilters = !!language || !!level || !!topic;
 
@@ -211,7 +213,7 @@ const roomSlice = createSlice({
     resetRoom(state) {
       state = initialState;
     },
-    updateFilters(state, action: PayloadAction<RoomFilter>) {
+    updateFilters(state, action: PayloadAction<IRoomFilter>) {
       state.filters = { ...action.payload };
     },
   },

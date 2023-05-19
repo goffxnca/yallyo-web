@@ -1,10 +1,10 @@
-import { AsyncState, FirebaseUser } from "@/types/frontend";
+import { IAsyncState, IFirebaseUser } from "@/types/frontend";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
 
-interface AuthState extends AsyncState {
-  user: FirebaseUser | null;
+interface AuthState extends IAsyncState {
+  user: IFirebaseUser | null;
 }
 
 const initialState: AuthState = {
@@ -28,7 +28,7 @@ const sessionSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    assignAuth(state, action: PayloadAction<FirebaseUser>) {
+    assignAuth(state, action: PayloadAction<IFirebaseUser>) {
       state.user = action.payload;
     },
     resetAuth(state) {

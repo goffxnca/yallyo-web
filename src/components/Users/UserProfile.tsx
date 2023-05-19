@@ -6,7 +6,7 @@ import { convertFullnameToAbbr } from "@/utils/string-utils";
 interface Props {
   name: string;
   url: string;
-  avatarColor: string;
+  color: string;
   followers: number;
   followings: number;
   bio: string;
@@ -15,7 +15,7 @@ interface Props {
 const UserProfile = ({
   name,
   url,
-  avatarColor,
+  color,
   bio,
   followers,
   followings,
@@ -33,7 +33,7 @@ const UserProfile = ({
               name ? "" : "border border-dashed border-gray-600"
             } select-none cursor-pointer`}
             style={{
-              backgroundColor: !url && name ? avatarColor : "",
+              backgroundColor: !url && name ? color : "",
               backgroundImage: url ? `url(${url})` : "",
               backgroundSize: "contain",
               backgroundPosition: "center",

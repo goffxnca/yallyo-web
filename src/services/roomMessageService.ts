@@ -1,4 +1,4 @@
-import { Room, RoomMessage } from "@/types/frontend";
+import { IRoomMessage } from "@/types/frontend";
 import {
   Unsubscribe,
   onSnapshot,
@@ -17,13 +17,13 @@ import { getRandomItem } from "@/utils/array-utils";
 import { JOINERS, LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
 import { faker } from "@faker-js/faker";
 
-const getRoomMessages = async (roomId: string): Promise<RoomMessage[]> => {
+const getRoomMessages = async (roomId: string): Promise<IRoomMessage[]> => {
   const roomMessagesCollection = collection(db, "roomMessages");
   const q = query(roomMessagesCollection, orderBy("createdDate", "desc"));
   const snapshot = await getDocs(q);
-  const roomMessages: RoomMessage[] = [];
+  const roomMessages: IRoomMessage[] = [];
   snapshot.forEach((doc) => {
-    roomMessages.push(doc.data() as RoomMessage);
+    roomMessages.push(doc.data() as IRoomMessage);
   });
   return roomMessages;
 };
@@ -41,7 +41,7 @@ const subscribeRoomMessages = (
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
     console.log("1");
-    const roomMessages: RoomMessage[] = [];
+    const roomMessages: IRoomMessage[] = [];
     // snapshot.forEach((doc) => {
     //   roomMessages.push(doc.data() as RoomMessage);
     // });
@@ -52,15 +52,18 @@ const subscribeRoomMessages = (
   return unsubscribe;
 };
 
-const createRoomMessage = async (roomId: string, roomMessage?: RoomMessage) => {
+const createRoomMessage = async (
+  roomId: string,
+  roomMessage?: IRoomMessage
+) => {
   const docRef = doc(db, "roomMessages", Math.random().toString());
-  const postData: RoomMessage = {
+  const postData: IRoomMessage = {
     _id: docRef.id,
     roomId: roomId,
     message: faker.lorem.sentence(),
     createdBy: faker.name.fullName(),
     active: true,
-    // createdDate: Timestamp.now(),
+    createdAt: "",
   };
 
   setDoc(docRef, postData);

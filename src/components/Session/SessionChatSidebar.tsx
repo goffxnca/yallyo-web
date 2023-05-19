@@ -1,4 +1,4 @@
-import { RoomMessage } from "@/types/frontend";
+import { IRoomMessage } from "@/types/frontend";
 import {
   MicrophoneIcon,
   VideoCameraIcon,
@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 const SessionChatSidebar = () => {
-  const roomMessages: RoomMessage[] = [];
+  const roomMessages: IRoomMessage[] = [];
   return (
     <div className="md:w-1/3 md:relative bg-gray-300 flex items-center justify-center">
       <div>

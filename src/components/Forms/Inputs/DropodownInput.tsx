@@ -2,19 +2,19 @@ import BaseInput from "./BaseInput";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { DropdownItem } from "@/types/frontend";
+import { IDropdownItem } from "@/types/frontend";
 import { joinClasses } from "@/utils/jsx-utils";
 
 interface Props {
   id: string;
   label: string;
-  items: DropdownItem[];
+  items: IDropdownItem[];
   onChange: Function;
 }
 
 const DropdownInput = ({ id, label, items, onChange }: Props) => {
   const [selected, setSelected] = useState("");
-  const dropdownItems: DropdownItem[] = [
+  const dropdownItems: IDropdownItem[] = [
     { display: "Select", value: "" },
     ...items,
   ];

@@ -1,12 +1,12 @@
-import { Room } from "@/types/frontend";
 import RoomItem from "./RoomItem";
 import RoomItemSkeleton from "../Skeletons/RoomItemSkeleton";
 import { createNArray } from "@/utils/array-utils";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import { IRoom } from "@/types/common";
 
 interface Props {
-  rooms: Room[];
+  rooms: IRoom[];
   isLoading: boolean;
   showOnTop: boolean;
 }
@@ -27,16 +27,15 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
           _id={room._id}
           language={room.language}
           level={room.level}
+          topic={room.topic}
           desc={room.desc}
           joiners={room.joiners}
-          active={room.active}
-          topic={room.topic}
-          // createdDate={room.createdDate}
-          // createdDateISO={room.createdDateISO}
-          createdBy={room.createdBy}
+          size={room.size}
           createdByMe={room.createdBy === user?.uid}
           order={room.order}
-          size={room.size}
+          active={room.active}
+          createdAt={room.createdAt}
+          createdBy={room.createdBy}
         ></RoomItem>
       ))}
 

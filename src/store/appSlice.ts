@@ -1,6 +1,4 @@
-import { AsyncState, Pagination, Room } from "@/types/frontend";
-import { ENVS } from "@/utils/constants";
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface UiState {
   theme: string;

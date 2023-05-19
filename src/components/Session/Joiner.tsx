@@ -6,7 +6,7 @@ interface Props {
   name: string;
   size: "sm" | "md" | "lg";
   url: string;
-  avatarColor: string;
+  color: string;
   bio: string;
   followers: number;
   followings: number;
@@ -18,7 +18,7 @@ const Joiner = ({
   name,
   size,
   url,
-  avatarColor,
+  color,
   bio,
   followers,
   followings,
@@ -37,7 +37,7 @@ const Joiner = ({
           size={size}
           showMic={true}
           url={url}
-          avatarColor={avatarColor}
+          color={color}
           bio=""
           followers={0}
           followings={0}

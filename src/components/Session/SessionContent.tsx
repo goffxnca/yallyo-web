@@ -5,7 +5,6 @@ import exp from "constants";
 import Joiner from "./Joiner";
 import { useEffect, useState } from "react";
 import { getRandomItem } from "@/utils/array-utils";
-import { IUser } from "@/types/frontend";
 
 const SessionContent = () => {
   const { room, controls } = useSelector((state: RootState) => state.session);
@@ -31,13 +30,13 @@ const SessionContent = () => {
       {/* <div className="text-white">{focused}</div> */}
       <div className="flex justify-center">
         <ul className="flex gap-2 flex-wrap justify-center max-w-[900px]">
-          {room?.joiners.map((joiner: IUser) => (
+          {room?.joiners.map((joiner) => (
             <Joiner
               key={joiner._id}
-              name={joiner.displayName}
+              name={joiner.dname}
               size={room.joiners.length > 5 ? "md" : "lg"}
               url={joiner.photoURL}
-              avatarColor={joiner.avatarColor}
+              color={joiner.color}
               bio=""
               followers={0}
               followings={0}

@@ -14,7 +14,7 @@ const FriendItem = ({ id, name, online }: Props) => {
         size="md"
         showMic={false}
         url=""
-        avatarColor=""
+        color=""
         bio=""
         followers={0}
         followings={0}

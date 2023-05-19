@@ -1,4 +1,4 @@
-import { RoomMessage } from "@/types/frontend";
+import { IRoomMessage } from "@/types/frontend";
 import { toggleChat } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 
@@ -19,7 +19,7 @@ import ChatMessageList from "./ChatMessageList";
 const SessionChatOverlayMobile = () => {
   const dispatch: AppDispatch = useDispatch();
   //   const { room, controls } = useSelector((state: RootState) => state.session);
-  const roomMessages: RoomMessage[] = [];
+  const roomMessages: IRoomMessage[] = [];
   return (
     <div className="chat-mobile">
       <div className="">

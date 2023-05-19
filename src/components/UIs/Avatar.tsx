@@ -10,7 +10,7 @@ interface Props {
   size: "sm" | "md" | "lg";
   showMic: boolean;
   url: string;
-  avatarColor: string;
+  color: string;
   bio: string;
   followers: number;
   followings: number;
@@ -21,7 +21,7 @@ const Avatar = ({
   size,
   showMic,
   url,
-  avatarColor,
+  color,
   bio,
   followers,
   followings,
@@ -49,7 +49,7 @@ const Avatar = ({
         }
       }}
       style={{
-        backgroundColor: !url && name ? avatarColor : "",
+        backgroundColor: !url && name ? color : "",
         backgroundImage: url ? `url(${url})` : "",
         backgroundSize: "contain",
         backgroundPosition: "center",
@@ -71,7 +71,7 @@ const Avatar = ({
           <UserProfile
             name={name}
             url={url}
-            avatarColor={avatarColor}
+            color={color}
             bio={bio}
             followers={followers}
             followings={followings}

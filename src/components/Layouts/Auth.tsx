@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../../../firebase";
-import { FirebaseUser } from "@/types/frontend";
+import { IFirebaseUser } from "@/types/frontend";
 import { assignAuth, resetAuth } from "@/store/authSlice";
 import React from "react";
 
@@ -15,7 +15,7 @@ const Auth = React.memo(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("@@@@onAuthStateChanged", user);
       if (user) {
-        const auth: FirebaseUser = {
+        const auth: IFirebaseUser = {
           uid: user.uid,
           email: user.email!,
           displayName: user.displayName!,

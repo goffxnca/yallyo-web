@@ -1,4 +1,4 @@
-import { RoomMessage } from "@/types/frontend";
+import { IRoomMessage } from "@/types/frontend";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ const RoomSession = () => {
 
   // const [room, setRoom] = useState<Room | null>(null);
   const [roomId, setRoomId] = useState<string>("");
-  const [roomMessages, setRoomMessages] = useState<RoomMessage[]>([]);
+  const [roomMessages, setRoomMessages] = useState<IRoomMessage[]>([]);
 
   const router = useRouter();
 

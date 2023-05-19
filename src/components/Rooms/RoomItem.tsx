@@ -1,11 +1,11 @@
-import { Room } from "@/types/frontend";
 import Avatar from "../UIs/Avatar";
 import { createNArray } from "@/utils/array-utils";
 import { useEffect, memo, useState } from "react";
 import { NoSymbolIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { IRoom } from "@/types/common";
 
-interface Props extends Room {
+interface Props extends IRoom {
   createdByMe: boolean;
 }
 
@@ -51,12 +51,12 @@ const RoomItem = memo((room: Props) => {
           return (
             <Avatar
               key={item}
-              name={joiner?.displayName || ""}
-              url={joiner?.photoURL || ""}
-              avatarColor={joiner?.avatarColor || ""}
-              bio={joiner?.bio || ""}
-              followers={joiner?.followers || 0}
-              followings={joiner?.followings || 0}
+              name={joiner?.dname}
+              url={joiner?.photoURL}
+              color={joiner?.color}
+              bio=""
+              followers={0}
+              followings={0}
               size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
               showMic={false}
             />

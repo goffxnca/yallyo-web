@@ -1,11 +1,11 @@
 import BaseInput from "./BaseInput";
 import React, { ChangeEventHandler } from "react";
-import { DropdownItem } from "@/types/frontend";
+import { IDropdownItem } from "@/types/frontend";
 
 interface Props {
   id: string;
   label: string;
-  items: DropdownItem[];
+  items: IDropdownItem[];
   defaultVal?: string;
   error?: string;
   onChange: ChangeEventHandler<HTMLSelectElement>;

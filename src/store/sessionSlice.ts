@@ -1,10 +1,12 @@
-import { AsyncState, Pagination, Room, SessionConrol } from "@/types/frontend";
+import { IPagination, IRoom } from "@/types/common";
+import { IAsyncState, SessionConrol } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";
+import { RootState } from "./store";
 
-interface SessionState extends AsyncState {
-  room?: Room;
+interface SessionState extends IAsyncState {
+  room?: IRoom;
   controls: SessionConrol;
 }
 
@@ -21,48 +23,55 @@ const initialState: SessionState = {
 
 export const fetchSession = createAsyncThunk(
   "room/fetchRoom",
-  async (roomId: string) => {
+  async (roomId: string, thunkAPI) => {
+    const currentState = thunkAPI.getState() as RootState;
+
     const endpoint = `${ENVS.API_URL}/rooms/${roomId}`;
-    const response = await fetch(endpoint);
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
+      },
+    });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
     const data = await response.json();
-    return data as Room;
+    return data as IRoom;
   }
 );
 
 export const joinRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const leaveRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const cancelRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const sendRoomMessage = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 export const reportRoom = createAsyncThunk(
   "room/fetchRooms",
-  async (pagination: Pagination) => {}
+  async (pagination: IPagination) => {}
 );
 
 const sessionSlice = createSlice({
   name: "session",
   initialState,
   reducers: {
-    addSession(state, action: PayloadAction<Room>) {
+    addSession(state, action: PayloadAction<IRoom>) {
       //   state.room
     },
     toggleMic(state) {

@@ -7,17 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 const RoomSession = () => {
   console.log("RoomSession");
-  // const { room, controls } = useSelector((state: RootState) => state.session);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    if (id) {
+    if (id && user) {
       dispatch(fetchSession(id.toString()));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, user]);
 
   return <SessionContainer />;
 };
