@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../../../firebase";
-import { FirebaseUser } from "@/models/types";
+import { FirebaseUser } from "@/types/frontend";
 import { assignAuth, resetAuth } from "@/store/authSlice";
 import React from "react";
 

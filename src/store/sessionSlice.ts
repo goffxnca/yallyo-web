@@ -1,4 +1,4 @@
-import { AsyncState, Pagination, Room, SessionConrol } from "@/models/types";
+import { AsyncState, Pagination, Room, SessionConrol } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";

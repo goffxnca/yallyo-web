@@ -1,4 +1,4 @@
-import { Room } from "@/models/types";
+import { Room } from "@/types/frontend";
 import Avatar from "../UIs/Avatar";
 import { createNArray } from "@/utils/array-utils";
 import { useEffect, memo, useState } from "react";

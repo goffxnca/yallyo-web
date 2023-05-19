@@ -9,6 +9,16 @@ interface DbDocumentBase {
   updatedBy?: string;
 }
 
+export interface IUser extends DbDocumentBase {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  avatarColor: string;
+  bio: string;
+  followers: number;
+  followings: number;
+}
+
 export interface Room extends DbDocumentBase {
   language: string;
   level: string;
@@ -51,25 +61,9 @@ export interface AsyncState {
   error: string;
 }
 
-interface UserShort {
-  id: string;
-  name: string;
-  profileUrl: string;
-}
-
 export interface RoomMessage extends DbDocumentBase {
   roomId: string;
   message: string;
-}
-
-export interface IUser extends DbDocumentBase {
-  displayName: string;
-  email: string;
-  photoURL: string;
-  avatarColor: string;
-  bio: string;
-  followers: number;
-  followings: number;
 }
 
 export interface DropdownItem {

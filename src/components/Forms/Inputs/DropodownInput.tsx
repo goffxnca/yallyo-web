@@ -2,7 +2,7 @@ import BaseInput from "./BaseInput";
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { DropdownItem } from "@/models/types";
+import { DropdownItem } from "@/types/frontend";
 import { joinClasses } from "@/utils/jsx-utils";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { RoomMessage } from "@/models/types";
+import { RoomMessage } from "@/types/frontend";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

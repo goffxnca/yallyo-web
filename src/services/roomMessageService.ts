@@ -1,4 +1,4 @@
-import { Room, RoomMessage } from "@/models/types";
+import { Room, RoomMessage } from "@/types/frontend";
 import {
   Unsubscribe,
   onSnapshot,

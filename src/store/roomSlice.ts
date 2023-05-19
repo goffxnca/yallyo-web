@@ -6,7 +6,7 @@ import {
   RoomFilter,
   RoomSocketUpdate,
   RoomsGroupedByLanguage,
-} from "@/models/types";
+} from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";

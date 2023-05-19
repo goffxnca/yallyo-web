@@ -1,4 +1,4 @@
-import { RoomMessage } from "@/models/types";
+import { RoomMessage } from "@/types/frontend";
 import { toggleChat } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 

@@ -5,7 +5,7 @@ import exp from "constants";
 import Joiner from "./Joiner";
 import { useEffect, useState } from "react";
 import { getRandomItem } from "@/utils/array-utils";
-import { IUser } from "@/models/types";
+import { IUser } from "@/types/frontend";
 
 const SessionContent = () => {
   const { room, controls } = useSelector((state: RootState) => state.session);

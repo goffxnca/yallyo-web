@@ -1,6 +1,6 @@
 import BaseInput from "./BaseInput";
 import React, { ChangeEventHandler } from "react";
-import { DropdownItem } from "@/models/types";
+import { DropdownItem } from "@/types/frontend";
 
 interface Props {
   id: string;

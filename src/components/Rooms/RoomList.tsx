@@ -1,4 +1,4 @@
-import { Room } from "@/models/types";
+import { Room } from "@/types/frontend";
 import RoomItem from "./RoomItem";
 import RoomItemSkeleton from "../Skeletons/RoomItemSkeleton";
 import { createNArray } from "@/utils/array-utils";

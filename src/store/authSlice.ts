@@ -1,4 +1,4 @@
-import { AsyncState, FirebaseUser } from "@/models/types";
+import { AsyncState, FirebaseUser } from "@/types/frontend";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
