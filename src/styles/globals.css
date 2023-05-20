@@ -52,18 +52,22 @@ textarea {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #ff037c;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.loading-spinner__dot2 {
+  background-color: #45ffff !important;
 }
 
 .loading-spinner__dot1 {
   left: 6px;
-  animation: loading-spinner__moveDot1 0.6s infinite;
+  animation: loading-spinner__moveDot1 2s infinite;
 }
 
 .loading-spinner__dot2 {
   left: 6px;
-  animation: loading-spinner__moveDot2 0.6s infinite;
+  animation: loading-spinner__moveDot2 1s infinite;
 }
 
 @keyframes loading-spinner__moveDot1 {
