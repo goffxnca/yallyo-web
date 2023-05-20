@@ -158,7 +158,7 @@ const HomePage = () => {
   return (
     <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
       <Head>
-        <title>Practice English Online - HeyGuyz.com</title>
+        <title>Yallyo - English Learning Community</title>
       </Head>
 
       {/* <button

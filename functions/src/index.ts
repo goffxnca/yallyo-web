@@ -28,7 +28,7 @@ const onUserCreated = functions
         body: JSON.stringify({
           _id: uid,
           email,
-          displayName,
+          dname: displayName,
           photoURL,
           provider: providerData[0]?.providerId || "",
         }),
