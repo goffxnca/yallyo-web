@@ -29,10 +29,16 @@ const Header = () => {
 
       <LogoSection />
 
-      <div className="text-center">
-        <h1 className="text-gray-100 font-semibold text-2xl">Yallyo.com</h1>
-        <h2 className="text-gray-400 text-sm">Language Learning Community</h2>
-      </div>
+      {!loading && (
+        <div className="text-center">
+          <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
+            Yallyo.com
+          </h1>
+          <h2 className="text-gray-400 text-xs md:text-sm">
+            Language Learning Community
+          </h2>
+        </div>
+      )}
 
       {!loading && (
         <>
