@@ -1,7 +1,7 @@
 import Avatar from "../UIs/Avatar";
 import { createNArray } from "@/utils/array-utils";
 import { useEffect, memo, useState } from "react";
-import { NoSymbolIcon } from "@heroicons/react/24/outline";
+import { NoSymbolIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { IRoom } from "@/types/common";
 
@@ -38,8 +38,16 @@ const RoomItem = memo((room: Props) => {
         isAnimating && "animate-fadeIn"
       } ${createdByMe && "border border-accent2"} `}
     >
-      <div className="text-white">
-        {language} <span className="text-gray-500">{level}</span>
+      <div className="flex justify-between text-white">
+        <div className="">
+          {language} <span className="text-gray-500">{level}</span>
+        </div>
+
+        {/* < className="h-5 w-5" /> */}
+
+        <div className="tex-white text-[12px] text-gray-500">
+          {room.joiners.length} / {room.size}
+        </div>
       </div>
 
       <div className=" text-accent2 text-sm italic">
