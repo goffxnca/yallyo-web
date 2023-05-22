@@ -43,7 +43,7 @@ const RoomItem = memo((room: Props) => {
           {language} <span className="text-gray-500">{level}</span>
         </div>
 
-        {/* < className="h-5 w-5" /> */}
+        {/* < className="h-5 w-5" />yo */}
 
         <div className="tex-white text-[12px] text-gray-500">
           {room.joiners.length} / {room.size}

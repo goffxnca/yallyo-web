@@ -123,8 +123,8 @@ const HomePage = () => {
       dispatch(
         fetchRooms({
           pagination: {
-            pageNumber: currentPage,
-            pageSize: ENVS.ROOMS_ITEMS,
+            pnum: currentPage,
+            psize: ENVS.ROOMS_ITEMS,
           },
           filters: {
             language: currentLang,

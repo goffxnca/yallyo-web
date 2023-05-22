@@ -39,7 +39,7 @@ const initialState: RoomState = {
 export const fetchRooms = createAsyncThunk(
   "room/fetchRooms",
   async (options: RoomFetchOptions) => {
-    const endpoint = `${ENVS.API_URL}/rooms?pageNumber=${options.pagination.pageNumber}&pageSize=${options.pagination.pageSize}&language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}`;
+    const endpoint = `${ENVS.API_URL}/rooms?language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}&pnum=${options.pagination.pnum}&pageSize=${options.pagination.psize}`;
 
     const response = await fetch(endpoint);
 
@@ -244,7 +244,7 @@ const roomSlice = createSlice({
             state.rooms = action.payload;
           }
         } else {
-          if (action.meta.arg.pagination.pageNumber === 1) {
+          if (action.meta.arg.pagination.pnum === 1) {
             state.rooms = [];
           }
         }

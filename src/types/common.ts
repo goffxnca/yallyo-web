@@ -38,8 +38,8 @@ export interface IRoomSocketUpdate extends IRoom {
 }
 
 export interface IPagination {
-  pageNumber: number;
-  pageSize: number;
+  pnum: number;
+  psize: number;
 }
 
 export interface IRoomFilter {
