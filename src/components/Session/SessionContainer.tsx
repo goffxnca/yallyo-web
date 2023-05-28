@@ -243,9 +243,9 @@ const RoomSession = () => {
               id="localUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover" }}
-              width={200}
-              height={200}
+              style={{ objectFit: "cover", width: 200, height: 200 }}
+              // width={200}
+              // height={200}
             />
           </div>
 
@@ -254,9 +254,9 @@ const RoomSession = () => {
               id="remoteUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover" }}
-              width={200}
-              height={200}
+              style={{ objectFit: "cover", width: 200, height: 200 }}
+              // width={200}
+              // height={200}
             />
           </div>
           {/* <video width={600} id="cool2" autoPlay /> */}
