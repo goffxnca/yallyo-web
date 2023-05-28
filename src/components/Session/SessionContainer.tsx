@@ -244,6 +244,8 @@ const RoomSession = () => {
               autoPlay
               playsInline
               style={{ objectFit: "cover" }}
+              width={200}
+              height={200}
             />
           </div>
 
@@ -253,6 +255,8 @@ const RoomSession = () => {
               autoPlay
               playsInline
               style={{ objectFit: "cover" }}
+              width={200}
+              height={200}
             />
           </div>
           {/* <video width={600} id="cool2" autoPlay /> */}
