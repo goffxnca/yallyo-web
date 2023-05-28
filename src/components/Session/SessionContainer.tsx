@@ -237,12 +237,12 @@ const RoomSession = () => {
 
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
-        <div className="text-white flex">
-          <div className="bg-red-400 w-94 h-94">
+        <div className="video-container">
+          <div className="bg-red-400">
             <video id="localUser" autoPlay playsInline />
           </div>
 
-          <div className="bg-red-400 w-94 h-94">
+          <div className="bg-red-400">
             <video id="remoteUser" autoPlay playsInline />
           </div>
           {/* <video width={600} id="cool2" autoPlay /> */}
