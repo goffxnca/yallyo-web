@@ -83,7 +83,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
             <DropdownInput3
               id="size"
               label="Maximum Participants"
-              items={createNArrayFrom(3, 8).map((item) => ({
+              items={createNArrayFrom(3, 3).map((item) => ({
                 value: item.toString(),
                 display: item.toString(),
               }))}

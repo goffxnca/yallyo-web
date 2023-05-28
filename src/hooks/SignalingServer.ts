@@ -1,26 +1,32 @@
 import { RtmChannel, RtmClient } from "agora-rtm-sdk";
 
+interface SignalingServerSettings {
+  roomId: string;
+  userId: string;
+  onJoin: Function;
+  onAnswer: Function;
+  onAcceptAnswer: Function;
+  onIceCandidate: Function;
+  onPeerLeft: Function;
+}
+
 class SignalingServer {
   client: RtmClient | null = null;
   channel: RtmChannel | null = null;
-  //   _onJoin: Function | null = null;
-  constructor(
-    roomId: string,
-    userId: string,
-    private onJoin: Function,
-    private onAnswer: Function,
-    private onAcceptAnswer: Function,
-    private onIceCandidate: Function,
-    private onPeerLeft: Function
-  ) {
-    this.initAgola(roomId, userId);
-    // console.log(
-    //   `RTM: SignalingServer init roomid: ${roomId}, userid: ${userId}`
-    // );
-  }
+  settings: SignalingServerSettings | null = null;
 
-  private async initAgola(roomId: string, userId: string) {
-    const self = this;
+  async initAgola(settings: SignalingServerSettings) {
+    this.settings = settings;
+
+    const {
+      userId,
+      roomId,
+      onJoin,
+      onAnswer,
+      onAcceptAnswer,
+      onIceCandidate,
+      onPeerLeft,
+    } = settings;
 
     const options = {
       uid: userId,
@@ -38,15 +44,15 @@ class SignalingServer {
       console.log(`RTM: ${memberId} boardcasted message: ${message.text}`);
 
       if (type === "offer") {
-        self.onAnswer(offer);
+        onAnswer(offer);
       }
 
       if (type === "answer") {
-        self.onAcceptAnswer(answer);
+        onAcceptAnswer(answer);
       }
 
       if (type === "candidate") {
-        self.onIceCandidate(candidate);
+        onIceCandidate(candidate);
       }
     });
 
@@ -55,13 +61,17 @@ class SignalingServer {
     this.channel.on("MemberJoined", function (memberId) {
       //   console.log(`RTM: ${memberId} joined channel ${roomId}`);
       // alert(`${memberId} joined`);
-      if (self && self.onJoin) {
-        self.onJoin(memberId);
-      }
+      onJoin(memberId);
     });
     // Display channel member stats
-    this.channel.on("MemberLeft", function () {
-      self.onPeerLeft();
+    const self = this;
+    this.channel.on("MemberLeft", function (xxxx) {
+      if (xxxx !== userId) {
+        // alert(xxxx);
+        // self.channel?.removeAllListeners();
+        // self.client?.removeAllListeners();
+        // onPeerLeft();
+      }
     });
 
     await this.channel.join();

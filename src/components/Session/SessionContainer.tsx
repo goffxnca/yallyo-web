@@ -80,39 +80,36 @@ const RoomSession = () => {
       remoteStream = new MediaStream();
       remoteUserVideo.srcObject = remoteStream;
 
-      signalingServer = new SignalingServer(
-        room?._id,
-        user?.uid!,
-        (memberId: string) => {
+      signalingServer = new SignalingServer();
+      signalingServer.initAgola({
+        roomId: room?._id,
+        userId: user?.uid!,
+        onJoin: (memberId: string) => {
           // console.log(`${memberId} =====YEAH JOINED====`);
           createOffer();
         },
-        (offer: any) => {
+        onAnswer: (offer: any) => {
           // console.log(`${memberId} =====YEAH JOINED====`);
           createAnswer(offer);
         },
-        (answer: any) => {
+        onAcceptAnswer: (answer: any) => {
           // console.log(`${memberId} =====YEAH JOINED====`);
           acceptAnswer(answer);
         },
-        (iceCandidate: any) => {
+        onIceCandidate: (iceCandidate: any) => {
           // console.log(`${memberId} =====YEAH JOINED====`);
-          if (peerConnection && peerConnection.localDescription) {
+          if (peerConnection) {
             // alert("adding ice");
             peerConnection.addIceCandidate(iceCandidate);
           }
         },
-        () => {
-          // console.log(`${memberId} =====YEAH JOINED====`);
-          // if (peerConnection && peerConnection.localDescription) {
-          //   // alert("adding ice");
-          //   peerConnection.addIceCandidate(iceCandidate);
-          // }
+        onPeerLeft: () => {
           alert("peer left");
-          resetPeerConnection();
-          initRoomSession();
-        }
-      );
+          // resetPeerConnection();
+          // initRoomSession();
+          // remoteUserVideo.srcObject = null;
+        },
+      });
 
       //Add tracks (video, audio) of local stream to peerConnection, so that peer2 will be able to recieve them later via it own .ontrack event
       localStream.getTracks().forEach(async (track) => {
@@ -140,14 +137,6 @@ const RoomSession = () => {
           });
         }
       };
-
-      // console.log("RTM:: signalingServer", signalingServer);
-
-      // setTimeout(() => {
-      //   signalingServer.client?.sendMessageToPeer({ text: "heyy" }, "xxx");
-      // }, 20000);
-
-      // createOffer();
     } catch (error) {
       console.log("rejected", error);
     }
@@ -156,7 +145,7 @@ const RoomSession = () => {
   const createOffer = async () => {
     // alert("creating offer");
 
-    const offer = await peerConnection?.createOffer();
+    const offer = await peerConnection?.createOffer({ iceRestart: true });
     // console.log("offer", offer);
     await peerConnection?.setLocalDescription(offer);
 
@@ -169,6 +158,7 @@ const RoomSession = () => {
 
   const createAnswer = async (offer: any) => {
     // alert("creating answer");
+
     await peerConnection?.setRemoteDescription(offer);
     const answer = await peerConnection?.createAnswer();
     await peerConnection?.setLocalDescription(answer);
@@ -180,9 +170,12 @@ const RoomSession = () => {
 
   const acceptAnswer = async (answer: any) => {
     // alert("adding answer4444");
-    if (!peerConnection?.remoteDescription) {
-      peerConnection?.setRemoteDescription(answer);
-    }
+
+    // if (!peerConnection?.remoteDescription) {
+    //   peerConnection?.setRemoteDescription(answer);
+    // }
+    console.log("peerConnection", peerConnection);
+    await peerConnection?.setRemoteDescription(answer);
   };
 
   useEffect(() => {
