@@ -238,9 +238,9 @@ const RoomSession = () => {
 
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
-        <div className="flex justify-center">
-          <ul className="flex gap-2 flex-wrap justify-center max-w-[900px]">
-            <div className="w-40 h-40 bg-red-200">
+        <div className="flex justify-center my-4">
+          <ul className="flex gap-2 flex-wrap justify-center ">
+            <div className="w-40 h-40 md:w-64 md:h-64 bg-red-200">
               <video
                 id="localUser"
                 autoPlay
@@ -249,15 +249,13 @@ const RoomSession = () => {
                   objectFit: "cover",
                   width: "100%",
                   height: "100%",
-                  maxWidth: 200,
-                  margin: "auto",
                 }}
                 // width={200}
                 // height={200}
               />
             </div>
 
-            <div className="w-40 h-40 bg-red-200">
+            <div className="w-40 h-40 md:w-64 md:h-64 bg-red-200">
               <video
                 id="remoteUser"
                 autoPlay
@@ -266,17 +264,15 @@ const RoomSession = () => {
                   objectFit: "cover",
                   width: "100%",
                   height: "100%",
-                  maxWidth: 200,
-                  margin: "auto",
                 }}
                 // width={200}
                 // height={200}
               />
             </div>
-            {/* 
-            {createNArray(6).map((num) => (
-              <div key={num} className="w-40 h-40 bg-red-200"></div>
-            ))} */}
+
+            {createNArray(8).map((num) => (
+              <div key={num} className="w-40 h-40 md:w-64 md:h-64 bg-red-200" />
+            ))}
           </ul>
         </div>
 
