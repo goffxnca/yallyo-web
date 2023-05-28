@@ -14,6 +14,7 @@ import { RootState } from "@/store/store";
 import SessionContent from "./SessionContent";
 import SessionChatOverlayMobile from "./SessionChatOverlayMobile";
 import SignalingServer from "@/hooks/SignalingServer";
+import { createNArray } from "@/utils/array-utils";
 
 let localStream: MediaStream | null;
 let remoteStream: MediaStream | null;
@@ -237,28 +238,78 @@ const RoomSession = () => {
 
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
-        <div className="grid grid-cols-2 bg-white justify-center">
-          <div className="bg-red-400">
+        <div className="flex justify-center">
+          <ul className="flex gap-2 flex-wrap justify-center max-w-[900px]">
+            <div className="w-40 h-40 bg-red-200">
+              <video
+                id="localUser"
+                autoPlay
+                playsInline
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: 200,
+                  margin: "auto",
+                }}
+                // width={200}
+                // height={200}
+              />
+            </div>
+
+            <div className="w-40 h-40 bg-red-200">
+              <video
+                id="remoteUser"
+                autoPlay
+                playsInline
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: 200,
+                  margin: "auto",
+                }}
+                // width={200}
+                // height={200}
+              />
+            </div>
+            {/* 
+            {createNArray(6).map((num) => (
+              <div key={num} className="w-40 h-40 bg-red-200"></div>
+            ))} */}
+          </ul>
+        </div>
+
+        <div className="flex justify-center bg-white">
+          {/* <div className="">
             <video
               id="localUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              // width={200}
-              // height={200}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+                maxWidth: 200,
+                margin: "auto",
+              }}
             />
-          </div>
-
-          <div className="bg-green-400">
+          </div> */}
+          {/* 
+          <div className="">
             <video
               id="remoteUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              // width={200}
-              // height={200}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+                maxWidth: 200,
+                margin: "auto",
+              }}
             />
-          </div>
+          </div> */}
           {/* <video width={600} id="cool2" autoPlay /> */}
         </div>
 
