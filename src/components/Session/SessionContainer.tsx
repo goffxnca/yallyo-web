@@ -237,13 +237,23 @@ const RoomSession = () => {
 
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
-        <div className="video-container">
+        <div className="flex bg-white justify-center">
           <div className="bg-red-400">
-            <video id="localUser" autoPlay playsInline />
+            <video
+              id="localUser"
+              autoPlay
+              playsInline
+              style={{ objectFit: "cover" }}
+            />
           </div>
 
-          <div className="bg-red-400">
-            <video id="remoteUser" autoPlay playsInline />
+          <div className="bg-green-400">
+            <video
+              id="remoteUser"
+              autoPlay
+              playsInline
+              style={{ objectFit: "cover" }}
+            />
           </div>
           {/* <video width={600} id="cool2" autoPlay /> */}
         </div>
@@ -258,7 +268,7 @@ const RoomSession = () => {
           src="https://www.youtube.com/embed/tgbNymZ7vqY"
         ></iframe> */}
 
-        <SessionContent />
+        {/* <SessionContent /> */}
       </div>
 
       {/* {controls.chatOn && <SessionChatSidebar />} */}
