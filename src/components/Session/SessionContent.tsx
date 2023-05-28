@@ -15,7 +15,7 @@ const SessionContent = () => {
     if (room?.joiners) {
       interval = setInterval(() => {
         const userToBeFocused = getRandomItem(room?.joiners || []);
-        console.log(userToBeFocused);
+        // console.log(userToBeFocused);
         setFocused(userToBeFocused?._id || "");
       }, 60000);
     }

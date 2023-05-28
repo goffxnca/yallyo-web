@@ -19,7 +19,7 @@ const onUserCreated = functions
     functions.logger.info("Create user triggered", { data: user });
     try {
       const { uid, email, displayName, photoURL, providerData } = user;
-      const response = await fetch("https://heyguyz.com/users", {
+      const response = await fetch("https://heyguyz.com/bo/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

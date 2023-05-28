@@ -16,7 +16,12 @@ import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import SessionControlItem from "./SessionControlItem";
 
-const SessionControlList = ({}) => {
+interface Props {
+  onToggleCam: Function;
+  onToggleVoice: Function;
+}
+
+const SessionControlList = ({ onToggleCam, onToggleVoice }: Props) => {
   const { room, controls } = useSelector((state: RootState) => state.session);
 
   const dispatch: AppDispatch = useDispatch();
@@ -31,6 +36,7 @@ const SessionControlList = ({}) => {
           tooltip={controls.micOn ? "Mute" : "Unmute"}
           onClick={() => {
             dispatch(toggleMic());
+            onToggleVoice();
           }}
         />
         <SessionControlItem
@@ -39,6 +45,7 @@ const SessionControlList = ({}) => {
           tooltip={controls.camOn ? "Cam Off" : "Cam On"}
           onClick={() => {
             dispatch(toggleCam());
+            onToggleCam();
           }}
         />
         <SessionControlItem

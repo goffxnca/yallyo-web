@@ -33,7 +33,8 @@
             localVideo.srcObject = stream;
             remoteVideo.srcObject = stream;
             // Create WebRTC connection and add stream to it
-            // const connection = new RTCPeerConnection();
+            const connection = new RTCPeerConnection();
+            console.log(connection);
             // stream
             //   .getTracks()
             //   .forEach((track) => connection.addTrack(track, stream));
