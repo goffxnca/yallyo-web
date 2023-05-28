@@ -53,7 +53,7 @@ class SignalingServer {
 
     this.channel.on("MemberJoined", function (memberId) {
       //   console.log(`RTM: ${memberId} joined channel ${roomId}`);
-      alert(`${memberId} joined`);
+      // alert(`${memberId} joined`);
       if (self && self.onJoin) {
         self.onJoin(memberId);
       }

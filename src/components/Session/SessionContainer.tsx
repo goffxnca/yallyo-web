@@ -90,7 +90,7 @@ const RoomSession = () => {
         (iceCandidate: any) => {
           // console.log(`${memberId} =====YEAH JOINED====`);
           if (peerConnection && peerConnection.localDescription) {
-            alert("adding ice");
+            // alert("adding ice");
             peerConnection.addIceCandidate(iceCandidate);
           }
         }
@@ -103,7 +103,7 @@ const RoomSession = () => {
 
       //Vice versa, when peer2 add it local track to peerConnection, we will recieve its tracks as well, so that we can stream remote media on ourscreen later
       peerConnection.ontrack = (event) => {
-        alert("peerConnection.ontrack");
+        // alert("peerConnection.ontrack");
         event.streams[0].getTracks().forEach(async (track) => {
           remoteStream.addTrack(track);
         });
@@ -136,7 +136,7 @@ const RoomSession = () => {
   };
 
   const createOffer = async () => {
-    alert("creating offer");
+    // alert("creating offer");
 
     const offer = await peerConnection.createOffer();
     // console.log("offer", offer);
@@ -149,7 +149,7 @@ const RoomSession = () => {
   };
 
   const createAnswer = async (offer: any) => {
-    alert("creating answer");
+    // alert("creating answer");
     await peerConnection.setRemoteDescription(offer);
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);
@@ -160,7 +160,7 @@ const RoomSession = () => {
   };
 
   const acceptAnswer = async (answer: any) => {
-    alert("adding answer4444");
+    // alert("adding answer4444");
     if (!peerConnection.remoteDescription) {
       peerConnection.setRemoteDescription(answer);
     }
