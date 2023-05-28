@@ -239,8 +239,8 @@ const RoomSession = () => {
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
         <div className="flex justify-center my-4">
-          <ul className="flex gap-2 flex-wrap justify-center ">
-            <div className="w-40 h-40 md:w-64 md:h-64 bg-red-200">
+          <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
+            <div className="w-40 h-40 md:w-64 md:h-64 bg-secondary rounded-md">
               <video
                 id="localUser"
                 autoPlay
@@ -250,12 +250,11 @@ const RoomSession = () => {
                   width: "100%",
                   height: "100%",
                 }}
-                // width={200}
-                // height={200}
+                className="rounded-md"
               />
             </div>
 
-            <div className="w-40 h-40 md:w-64 md:h-64 bg-red-200">
+            <div className="w-40 h-40 md:w-64 md:h-64 bg-secondary rounded-md">
               <video
                 id="remoteUser"
                 autoPlay
@@ -265,13 +264,15 @@ const RoomSession = () => {
                   width: "100%",
                   height: "100%",
                 }}
-                // width={200}
-                // height={200}
+                className="rounded-md"
               />
             </div>
 
             {createNArray(8).map((num) => (
-              <div key={num} className="w-40 h-40 md:w-64 md:h-64 bg-red-200" />
+              <div
+                key={num}
+                className="w-40 h-40 md:w-64 md:h-64 bg-secondary rounded-md"
+              />
             ))}
           </ul>
         </div>
