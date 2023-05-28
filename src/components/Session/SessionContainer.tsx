@@ -239,7 +239,7 @@ const RoomSession = () => {
 
         <div className="text-white flex">
           <div className="bg-red-400 w-94 h-94">
-            <video id="localUser" autoPlay width={400} />
+            <video id="localUser" autoPlay playsInline width={400} />
           </div>
 
           <div className="bg-red-400 w-94 h-94">
