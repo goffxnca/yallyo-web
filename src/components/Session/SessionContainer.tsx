@@ -237,13 +237,13 @@ const RoomSession = () => {
 
         <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
 
-        <div className="flex bg-white justify-center">
+        <div className="grid grid-cols-2 bg-white justify-center">
           <div className="bg-red-400">
             <video
               id="localUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover", width: 200, height: 200 }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               // width={200}
               // height={200}
             />
@@ -254,7 +254,7 @@ const RoomSession = () => {
               id="remoteUser"
               autoPlay
               playsInline
-              style={{ objectFit: "cover", width: 200, height: 200 }}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
               // width={200}
               // height={200}
             />
