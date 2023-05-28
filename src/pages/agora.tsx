@@ -39,10 +39,11 @@ const AgoraSignal = () => {
             .append("State changed To: " + state + " Reason: " + reason);
         });
 
-        document.getElementById("login")!.onclick = async function () {
-          options.uid = document.getElementById("userID")!.value;
-          await client.login(options);
-        };
+        // document.getElementById("login")!.onclick = async function () {
+        //   options.uid =
+        //     ((document.getElementById("userID") as any)?.value as number) || 0;
+        //   await client.login(options);
+        // };
         // logout
         document.getElementById("logout")!.onclick = async function () {
           await client.logout();
