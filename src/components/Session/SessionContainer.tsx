@@ -115,14 +115,14 @@ const RoomSession = () => {
 
       //Add tracks (video, audio) of local stream to peerConnection, so that peer2 will be able to recieve them later via it own .ontrack event
       localStream.getTracks().forEach(async (track) => {
-        peerConnection.addTrack(track, localStream);
+        peerConnection?.addTrack(track, localStream!);
       });
 
       //Vice versa, when peer2 add it local track to peerConnection, we will recieve its tracks as well, so that we can stream remote media on ourscreen later
       peerConnection.ontrack = (event) => {
         // alert("peerConnection.ontrack");
         event.streams[0].getTracks().forEach(async (track) => {
-          remoteStream.addTrack(track);
+          remoteStream?.addTrack(track);
         });
       };
 
@@ -130,7 +130,7 @@ const RoomSession = () => {
       peerConnection.onicecandidate = async (event) => {
         console.log("candidatess");
         if (event.candidate) {
-          await signalingServer.channel?.sendMessage({
+          await signalingServer?.channel?.sendMessage({
             text: JSON.stringify({
               type: "candidate",
               candidate: event.candidate,
@@ -155,32 +155,32 @@ const RoomSession = () => {
   const createOffer = async () => {
     // alert("creating offer");
 
-    const offer = await peerConnection.createOffer();
+    const offer = await peerConnection?.createOffer();
     // console.log("offer", offer);
-    await peerConnection.setLocalDescription(offer);
+    await peerConnection?.setLocalDescription(offer);
 
     // console.log("peerConnection", peerConnection);
 
-    await signalingServer.channel?.sendMessage({
+    await signalingServer?.channel?.sendMessage({
       text: JSON.stringify({ type: "offer", offer, id: user?.uid }),
     });
   };
 
   const createAnswer = async (offer: any) => {
     // alert("creating answer");
-    await peerConnection.setRemoteDescription(offer);
-    const answer = await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
+    await peerConnection?.setRemoteDescription(offer);
+    const answer = await peerConnection?.createAnswer();
+    await peerConnection?.setLocalDescription(answer);
 
-    await signalingServer.channel?.sendMessage({
+    await signalingServer?.channel?.sendMessage({
       text: JSON.stringify({ type: "answer", answer, id: user?.uid }),
     });
   };
 
   const acceptAnswer = async (answer: any) => {
     // alert("adding answer4444");
-    if (!peerConnection.remoteDescription) {
-      peerConnection.setRemoteDescription(answer);
+    if (!peerConnection?.remoteDescription) {
+      peerConnection?.setRemoteDescription(answer);
     }
   };
 
