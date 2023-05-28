@@ -15,10 +15,10 @@ import SessionContent from "./SessionContent";
 import SessionChatOverlayMobile from "./SessionChatOverlayMobile";
 import SignalingServer from "@/hooks/SignalingServer";
 
-let localStream: MediaStream;
-let remoteStream: MediaStream;
-let peerConnection: RTCPeerConnection;
-let signalingServer: SignalingServer;
+let localStream: MediaStream | null;
+let remoteStream: MediaStream | null;
+let peerConnection: RTCPeerConnection | null;
+let signalingServer: SignalingServer | null;
 let servers: {
   iceServers: [
     { urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"] }
@@ -45,6 +45,13 @@ const RoomSession = () => {
       track.enabled = !track.enabled;
       console.log(track);
     });
+  };
+
+  const resetPeerConnection = async () => {
+    localStream = null;
+    remoteStream = null;
+    peerConnection = null;
+    signalingServer = null;
   };
 
   const initRoomSession = async () => {
@@ -93,6 +100,16 @@ const RoomSession = () => {
             // alert("adding ice");
             peerConnection.addIceCandidate(iceCandidate);
           }
+        },
+        () => {
+          // console.log(`${memberId} =====YEAH JOINED====`);
+          // if (peerConnection && peerConnection.localDescription) {
+          //   // alert("adding ice");
+          //   peerConnection.addIceCandidate(iceCandidate);
+          // }
+          alert("peer left");
+          resetPeerConnection();
+          initRoomSession();
         }
       );
 
@@ -141,6 +158,7 @@ const RoomSession = () => {
     const offer = await peerConnection.createOffer();
     // console.log("offer", offer);
     await peerConnection.setLocalDescription(offer);
+
     // console.log("peerConnection", peerConnection);
 
     await signalingServer.channel?.sendMessage({
@@ -174,6 +192,9 @@ const RoomSession = () => {
       // console.log("RTM: clean signalingServer");
       if (signalingServer) {
         signalingServer.client?.removeAllListeners();
+      }
+      if (peerConnection) {
+        peerConnection.close();
       }
     };
   }, [user, room]);

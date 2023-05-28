@@ -10,7 +10,8 @@ class SignalingServer {
     private onJoin: Function,
     private onAnswer: Function,
     private onAcceptAnswer: Function,
-    private onIceCandidate: Function
+    private onIceCandidate: Function,
+    private onPeerLeft: Function
   ) {
     this.initAgola(roomId, userId);
     // console.log(
@@ -58,10 +59,10 @@ class SignalingServer {
         self.onJoin(memberId);
       }
     });
-    // // Display channel member stats
-    // channel.on("MemberLeft", function (memberId) {
-    //   console.log(`RTM: ${memberId} left channel ${roomId}`);
-    // });
+    // Display channel member stats
+    this.channel.on("MemberLeft", function () {
+      self.onPeerLeft();
+    });
 
     await this.channel.join();
 
