@@ -14,7 +14,7 @@ let signalingServer: SignalingServer | null;
 let reconnect: any;
 let targetPeerId: string;
 
-const PeerPage = () => {
+const P2PPage = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
@@ -246,4 +246,4 @@ const PeerPage = () => {
   );
 };
 
-export default PeerPage;
+export default P2PPage;
