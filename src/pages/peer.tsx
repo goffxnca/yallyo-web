@@ -97,7 +97,9 @@ const PeerPage = () => {
         });
 
         if (toid) {
-          connectPeer();
+          setTimeout(() => {
+            document.getElementById("connect")?.click();
+          }, 3000);
         }
       };
 
@@ -108,7 +110,7 @@ const PeerPage = () => {
 
   return (
     <div>
-      <button onClick={connectPeer} className="text-white">
+      <button onClick={connectPeer} className="text-white" id="connect">
         {" "}
         Call
       </button>
