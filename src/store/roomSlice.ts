@@ -36,7 +36,7 @@ const initialState: RoomState = {
   recentCreatedRoomId: "",
 };
 
-export const fetchRooms = createAsyncThunk(
+export const fetchRoomsAsync = createAsyncThunk(
   "room/fetchRooms",
   async (options: RoomFetchOptions) => {
     const endpoint = `${ENVS.API_URL}/rooms?language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}&pnum=${options.pagination.pnum}&psize=${options.pagination.psize}`;
@@ -51,7 +51,7 @@ export const fetchRooms = createAsyncThunk(
   }
 );
 
-export const fetchRoomsGroupedByLanguage = createAsyncThunk(
+export const fetchRoomsGroupedByLanguageAsync = createAsyncThunk(
   "room/fetchRoomsGroupedByLanguage",
   async () => {
     const endpoint = `${ENVS.API_URL}/rooms/groupedByLanguage`;
@@ -219,11 +219,11 @@ const roomSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchRooms.pending, (state, action) => {
+      .addCase(fetchRoomsAsync.pending, (state, action) => {
         state.status = "loading";
         state.canLoadMore = true;
       })
-      .addCase(fetchRooms.fulfilled, (state, action) => {
+      .addCase(fetchRoomsAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.canLoadMore = action.payload.length === ENVS.ROOMS_ITEMS;
         if (action.payload.length > 0) {
@@ -249,16 +249,16 @@ const roomSlice = createSlice({
           }
         }
       })
-      .addCase(fetchRooms.rejected, (state, action) => {
+      .addCase(fetchRoomsAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to fetch rooms";
       });
 
     builder
-      .addCase(fetchRoomsGroupedByLanguage.pending, (state) => {
+      .addCase(fetchRoomsGroupedByLanguageAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchRoomsGroupedByLanguage.fulfilled, (state, action) => {
+      .addCase(fetchRoomsGroupedByLanguageAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.roomsGroupedByLanguage = _.orderBy(
           action.payload,
@@ -266,7 +266,7 @@ const roomSlice = createSlice({
           ["desc", "asc"]
         );
       })
-      .addCase(fetchRoomsGroupedByLanguage.rejected, (state, action) => {
+      .addCase(fetchRoomsGroupedByLanguageAsync.rejected, (state, action) => {
         state.status = "error";
         state.error =
           action.error.message ?? "Failed to fetch room count by language";

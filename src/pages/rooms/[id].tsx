@@ -1,5 +1,5 @@
 import SessionContainer from "@/components/Session/SessionContainer";
-import { fetchSession } from "@/store/sessionSlice";
+import { fetchSessionAsync } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -15,7 +15,7 @@ const RoomSession = () => {
 
   useEffect(() => {
     if (id && user) {
-      dispatch(fetchSession(id.toString()));
+      dispatch(fetchSessionAsync(id.toString()));
     }
   }, [dispatch, id, user]);
 

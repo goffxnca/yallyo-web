@@ -229,9 +229,9 @@ const RoomSession = () => {
 
         <div className="text-white">{user?.uid}</div>
 
-        <SessionControlList onToggleCam={toggleCam} onToggleVoice={toggleMic} />
+        <SessionControlList onToggleCam={toggleCam} onToggleMic={toggleMic} />
 
-        <div className="flex justify-center my-4">
+        {/* <div className="flex justify-center my-4">
           <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
             <div className="w-40 h-40 md:w-64 md:h-64 bg-secondary rounded-md">
               <video
@@ -268,7 +268,7 @@ const RoomSession = () => {
               />
             ))}
           </ul>
-        </div>
+        </div> */}
 
         <div className="flex justify-center bg-white">
           {/* <div className="">
@@ -313,7 +313,7 @@ const RoomSession = () => {
           src="https://www.youtube.com/embed/tgbNymZ7vqY"
         ></iframe> */}
 
-        {/* <SessionContent /> */}
+        <SessionContent />
       </div>
 
       {/* {controls.chatOn && <SessionChatSidebar />} */}

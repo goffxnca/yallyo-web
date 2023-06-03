@@ -9,7 +9,7 @@ import React from "react";
 
 const Auth = React.memo(() => {
   const dispatch: AppDispatch = useDispatch();
-  console.log("Auth");
+  // console.log("Auth");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

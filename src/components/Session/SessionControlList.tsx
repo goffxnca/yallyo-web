@@ -1,5 +1,5 @@
 import {
-  toggleCam,
+  toggleLocalCam,
   toggleChat,
   toggleMic,
   toggleShareScreen,
@@ -18,11 +18,11 @@ import SessionControlItem from "./SessionControlItem";
 
 interface Props {
   onToggleCam: Function;
-  onToggleVoice: Function;
+  onToggleMic: Function;
 }
 
-const SessionControlList = ({ onToggleCam, onToggleVoice }: Props) => {
-  const { room, controls } = useSelector((state: RootState) => state.session);
+const SessionControlList = ({ onToggleCam, onToggleMic }: Props) => {
+  const { controls } = useSelector((state: RootState) => state.session);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -35,8 +35,8 @@ const SessionControlList = ({ onToggleCam, onToggleVoice }: Props) => {
           disabled={!controls.micOn}
           tooltip={controls.micOn ? "Mute" : "Unmute"}
           onClick={() => {
-            dispatch(toggleMic());
-            onToggleVoice();
+            // dispatch(toggleLocalCam());
+            onToggleMic(controls.micOn);
           }}
         />
         <SessionControlItem
@@ -44,8 +44,8 @@ const SessionControlList = ({ onToggleCam, onToggleVoice }: Props) => {
           disabled={!controls.camOn}
           tooltip={controls.camOn ? "Cam Off" : "Cam On"}
           onClick={() => {
-            dispatch(toggleCam());
-            onToggleCam();
+            // dispatch(toggleLocalCam());
+            onToggleCam(controls.camOn);
           }}
         />
         <SessionControlItem

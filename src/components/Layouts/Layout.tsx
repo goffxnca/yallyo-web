@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Layout = ({ children }: Props) => {
-  console.log("Layout");
+  // console.log("Layout");
   // return <div className="p-10 md:p-20 max-w-[1240px] m-auto">{children}</div>;
   return (
     <div className="h-screen flex flex-col">

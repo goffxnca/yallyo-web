@@ -20,7 +20,7 @@ interface Props {
 }
 
 const AccountMenus = ({ email, displayName, profileURL }: Props) => {
-  console.log("AccountMenus");
+  // console.log("AccountMenus");
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 

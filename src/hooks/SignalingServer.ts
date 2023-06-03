@@ -65,13 +65,8 @@ class SignalingServer {
     });
     // Display channel member stats
     const self = this;
-    this.channel.on("MemberLeft", function (xxxx) {
-      if (xxxx !== userId) {
-        // alert(xxxx);
-        // self.channel?.removeAllListeners();
-        // self.client?.removeAllListeners();
-        // onPeerLeft();
-      }
+    this.channel.on("MemberLeft", function (memberId) {
+      onPeerLeft(memberId);
     });
 
     await this.channel.join();

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import LogoSection from "./LogoSection";
 
 const Header = () => {
-  console.log("Header");
+  // console.log("Header");
   const dispatch: AppDispatch = useDispatch();
   const authState = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(true);

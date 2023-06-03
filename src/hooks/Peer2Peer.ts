@@ -1,23 +1,20 @@
-import { RtmChannel, RtmClient } from "agora-rtm-sdk";
-
 interface Peer2PeerSettings {
-  //   roomId: string;
   localUserId: string;
   remoteUserId?: string;
   onStatusChange: Function;
-  //   onJoin: Function;
-  //   onAnswer: Function;
-  //   onAcceptAnswer: Function;
-  //   onIceCandidate: Function;
-  //   onPeerLeft: Function;
+  onLocalVideoStreamed: Function;
+  onRemoteVideoStreamed: Function;
 }
 
 class Peer2Peer {
-  peer: any;
-
-  client: RtmClient | null = null;
-  channel: RtmChannel | null = null;
+  peer: any = null;
   settings: Peer2PeerSettings | null = null;
+  status: string = "";
+  localStream: MediaStream | null = null;
+  mediaStreamConstraints: MediaStreamConstraints = {
+    video: true,
+    audio: false,
+  };
 
   setRemoteUserId(rid: string) {
     if (this.settings) {
@@ -25,132 +22,132 @@ class Peer2Peer {
     }
   }
 
+  updateStatus(status: string) {
+    this.status = status;
+    this.settings?.onStatusChange(status);
+  }
+
   async init(settings: Peer2PeerSettings) {
     this.settings = settings;
 
-    const {
-      localUserId,
-      remoteUserId,
-      onStatusChange,
-      //   roomId,
-      //   onJoin,
-      //   onAnswer,
-      //   onAcceptAnswer,
-      //   onIceCandidate,
-      //   onPeerLeft,
-    } = settings;
+    await this.renderLocalVideoStream();
 
+    const { localUserId } = settings;
     const Peer = await import("peerjs");
-
     this.peer = new Peer.default(localUserId);
+    console.log(`Registered ${localUserId} for PeerServerCloud`);
 
-    this.peer.on("call", function (call: any, xxx: any) {
-      console.log("call", call);
-      console.log("remoteUserId", remoteUserId);
-      onStatusChange("ANSWERING");
-      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-        function (stream: any) {
-          onStatusChange("CONNECTED");
-          const localUserVideo = document.getElementById(
-            `video-${localUserId}`
-          ) as HTMLVideoElement;
+    //When remote peer recieving call
+    this.peer.on("call", async (call: any) => {
+      console.log(`Receiving call from ${call.peer}`);
+      this.updateStatus("RECEIVING_CALL");
 
-          call.answer(stream); // Answer the call with an A/V stream.
-          call.on("stream", function (remoteStream: any) {
-            const remoteUserVideo = document.getElementById(
-              `video-${call.peer}`
-            ) as HTMLVideoElement;
-            // console.log("videoElem", localUserVideo);
-            localUserVideo.srcObject = stream;
+      try {
+        const localStream = await navigator.mediaDevices.getUserMedia(
+          this.mediaStreamConstraints
+        );
 
-            // Show stream in some video/canvas element.
-            remoteUserVideo.srcObject = remoteStream;
-            console.log("remoteStream");
-          });
-        },
-        function (err: any) {
-          console.log("Failed to get local stream", err);
-        }
-      );
+        call.answer(localStream);
+        call.on("stream", (remoteStream: MediaStream) => {
+          const remoteUserVideo = this.getVideoElement(call.peer);
+          remoteUserVideo.srcObject = remoteStream;
+          console.log(`Accepting call from ${call.peer} successfully`);
+          this.updateStatus("CONNECTED");
+          this.settings?.onRemoteVideoStreamed(call.peer);
+        });
+      } catch (error) {
+        console.error(`Accepting call from ${call.peer} failed`, error);
+      }
     });
 
     this.peer.on("open", () => {
-      onStatusChange("OPEN");
+      this.updateStatus("OPEN");
     });
 
     this.peer.on("connection", () => {
-      onStatusChange("CONNECTION");
+      this.updateStatus("CONNECTION");
     });
 
     this.peer.on("disconnected", () => {
-      onStatusChange("DISCONNECTED");
+      this.updateStatus("DISCONNECTED");
     });
 
-    this.peer.on("error", () => {
-      onStatusChange("ERROR");
+    this.peer.on("error", (error: any) => {
+      this.updateStatus("ERROR");
+      console.log("Peer2Peer:Error", error);
     });
 
     this.peer.on("close", () => {
-      onStatusChange("CLOSED");
+      this.updateStatus("CLOSED");
     });
   }
 
-  callRemotePeer(callId: string) {
-    this.settings?.onStatusChange("CALLING");
-    const self = this;
-    const {
-      localUserId,
-      remoteUserId,
-      onStatusChange,
-      //   roomId,
-      //   onJoin,
-      //   onAnswer,
-      //   onAcceptAnswer,
-      //   onIceCandidate,
-      //   onPeerLeft,
-    } = this.settings!;
+  callRemotePeer(remoteId: string) {
+    const { remoteUserId } = this.settings!;
+    console.log(`Calling to ${remoteUserId}`);
+    this.updateStatus("CALLING");
 
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-      function (stream: any) {
-        const call = self.peer.call(callId, stream);
+    const call = this.peer.call(remoteId, this.localStream);
+    call.on("stream", (remoteStream: MediaStream) => {
+      const remoteUserVideo = this.getVideoElement(remoteUserId as string);
+      remoteUserVideo.srcObject = remoteStream;
+      console.log(`Render remote stream for ${remoteUserId} successfully`);
+      this.updateStatus("CONNECTED");
+      this.settings?.onRemoteVideoStreamed(remoteId);
+    });
 
-        call.on("stream", function (remoteStream: any) {
-          self.settings?.onStatusChange("CONNECTED");
-          // Show stream in some video/canvas element.
-          const localUserVideo = document.getElementById(
-            `video-${localUserId}`
-          ) as HTMLVideoElement;
-
-          const remoteUserVideo = document.getElementById(
-            `video-${remoteUserId}`
-          ) as HTMLVideoElement;
-
-          localUserVideo.srcObject = stream;
-          remoteUserVideo.srcObject = remoteStream;
-          console.log("got remote stream");
-        });
-      },
-      function (err: any) {
-        console.log("Failed to get local stream", err);
-      }
-    );
+    call.off("stream", () => {
+      console.log("off");
+    });
   }
 
-  renderLocalStream = () => {
-    const self = this;
-    console.log("ddd", self.settings?.localUserId);
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(
-      function (stream: any) {
-        const localUserVideo = document.getElementById(
-          `video-${self.settings?.localUserId}`
-        ) as HTMLVideoElement;
-        localUserVideo.srcObject = stream;
-      },
+  renderLocalVideoStream = async () => {
+    console.log("Request browser permissions for local streaming");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(
+        this.mediaStreamConstraints
+      );
+      this.localStream = stream;
 
-      function (err: any) {
-        console.log("Failed to get local stream", err);
+      const localUserVideo = this.getVideoElement(
+        this.settings?.localUserId as string
+      );
+      localUserVideo.srcObject = stream;
+      this.settings?.onLocalVideoStreamed();
+      console.log("Render local stream successfully");
+    } catch (error) {
+      console.log("Render local stream failed", error);
+    }
+  };
+
+  toggleCam = () => {
+    if (this.localStream) {
+      console.log(
+        "this.localStream.getVideoTracks()",
+        this.localStream.getVideoTracks()
+      );
+      const [track] = this.localStream.getVideoTracks();
+      if (track) {
+        const fromStatus = track.enabled ? "on" : "off";
+        const toStatus = !track.enabled ? "on" : "off";
+
+        track.enabled = !track.enabled;
+        // track.stop();
+        console.log(
+          `Toggle stream camera success from ${fromStatus} to ${toStatus}`
+        );
+      } else {
+        console.error(
+          "Toggle stream camera failed: local stream video track not found"
+        );
       }
-    );
+    } else {
+      console.error("Toggle stream camera failed: local stream not found");
+    }
+  };
+
+  private getVideoElement = (peerId: string) => {
+    return document.getElementById(`video-${peerId}`) as HTMLVideoElement;
   };
 }
 

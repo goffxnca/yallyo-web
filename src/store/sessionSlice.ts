@@ -1,4 +1,4 @@
-import { IPagination, IRoom } from "@/types/common";
+import { IPagination, IRoom, IRoomPeer } from "@/types/common";
 import { IAsyncState, SessionConrol } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -7,21 +7,23 @@ import { RootState } from "./store";
 
 interface SessionState extends IAsyncState {
   room?: IRoom;
+  peers: IRoomPeer[];
   controls: SessionConrol;
 }
 
 const initialState: SessionState = {
   status: "idle",
   error: "",
+  peers: [],
   controls: {
-    micOn: false,
-    camOn: false,
+    micOn: true,
+    camOn: true,
     shareScreenOn: false,
     chatOn: false,
   },
 };
 
-export const fetchSession = createAsyncThunk(
+export const fetchSessionAsync = createAsyncThunk(
   "room/fetchRoom",
   async (roomId: string, thunkAPI) => {
     const currentState = thunkAPI.getState() as RootState;
@@ -39,6 +41,27 @@ export const fetchSession = createAsyncThunk(
     }
     const data = await response.json();
     return data as IRoom;
+  }
+);
+
+export const fetchPeersAsync = createAsyncThunk(
+  "room/fetchPeers",
+  async (roomId: string, thunkAPI) => {
+    const currentState = thunkAPI.getState() as RootState;
+
+    const endpoint = `${ENVS.API_URL}/rooms/${roomId}/peers`;
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    return data as IRoomPeer[];
   }
 );
 
@@ -74,10 +97,10 @@ const sessionSlice = createSlice({
     addSession(state, action: PayloadAction<IRoom>) {
       //   state.room
     },
-    toggleMic(state) {
+    toggleLocalMic(state) {
       state.controls.micOn = !state.controls.micOn;
     },
-    toggleCam(state) {
+    toggleLocalCam(state) {
       state.controls.camOn = !state.controls.camOn;
     },
     toggleShareScreen(state) {
@@ -86,28 +109,91 @@ const sessionSlice = createSlice({
     toggleChat(state) {
       state.controls.chatOn = !state.controls.chatOn;
     },
+    toggleMic(state, action: PayloadAction<string>) {
+      state.peers = state.peers.map((peer) =>
+        peer.socketId === action.payload
+          ? {
+              ...peer,
+              controls: {
+                ...peer.controls,
+                micOn: !peer.controls.micOn,
+              },
+            }
+          : peer
+      );
+    },
+    toggleCam(state, action: PayloadAction<string>) {
+      state.peers = state.peers.map((peer) =>
+        peer.socketId === action.payload
+          ? {
+              ...peer,
+              controls: {
+                ...peer.controls,
+                camOn: !peer.controls.camOn,
+              },
+            }
+          : peer
+      );
+    },
+    addPeer(state, action: PayloadAction<IRoomPeer>) {
+      state.peers = [...state.peers, { ...action.payload, status: "joining" }];
+    },
+    markPeerAsRemoving(state, action: PayloadAction<string>) {
+      state.peers = state.peers.map((peer) =>
+        peer.socketId === action.payload ? { ...peer, status: "leaving" } : peer
+      );
+    },
+    removePeer(state, action: PayloadAction<string>) {
+      state.peers = state.peers.filter(
+        (peer) => peer.socketId !== action.payload
+      );
+    },
+    removePeerLoading(state, action: PayloadAction<string>) {
+      state.peers = state.peers.map((peer) =>
+        peer.userId === action.payload ? { ...peer, status: "connected" } : peer
+      );
+    },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchSession.pending, (state, action) => {
+      .addCase(fetchSessionAsync.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchSession.fulfilled, (state, action) => {
+      .addCase(fetchSessionAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.room = action.payload;
       })
-      .addCase(fetchSession.rejected, (state, action) => {
+      .addCase(fetchSessionAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to fetch session";
+      });
+
+    builder
+      .addCase(fetchPeersAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPeersAsync.fulfilled, (state, action) => {
+        state.status = "success";
+        state.peers = action.payload;
+      })
+      .addCase(fetchPeersAsync.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to fetch room's peers";
       });
   },
 });
 
 export const {
+  toggleLocalMic,
+  toggleLocalCam,
   addSession,
   toggleMic,
   toggleCam,
   toggleShareScreen,
   toggleChat,
+  addPeer,
+  removePeer,
+  removePeerLoading,
+  markPeerAsRemoving,
 } = sessionSlice.actions;
 export default sessionSlice.reducer;

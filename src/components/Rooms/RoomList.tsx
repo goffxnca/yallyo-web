@@ -12,7 +12,7 @@ interface Props {
 }
 
 const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
-  console.log("RoomList");
+  // console.log("RoomList");
 
   const { user } = useSelector((state: RootState) => state.auth);
 

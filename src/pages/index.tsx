@@ -12,8 +12,8 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createRoom,
-  fetchRooms,
-  fetchRoomsGroupedByLanguage,
+  fetchRoomsAsync,
+  fetchRoomsGroupedByLanguageAsync,
   updateFilters,
   updateRooms,
 } from "@/store/roomSlice";
@@ -27,7 +27,7 @@ import { FieldValues } from "react-hook-form";
 import Notification from "@/components/UIs/Notification";
 
 const HomePage = () => {
-  console.log("HomePage");
+  // console.log("HomePage");
   const {
     rooms,
     roomsGroupedByLanguage,
@@ -103,7 +103,7 @@ const HomePage = () => {
 
   // Subscribe to room update
   useEffect(() => {
-    dispatch(fetchRoomsGroupedByLanguage());
+    dispatch(fetchRoomsGroupedByLanguageAsync());
     const roomSocket = subscribeRoomsUpdates(dispatch);
     return () => {
       roomSocket.disconnect();
@@ -121,7 +121,7 @@ const HomePage = () => {
       setCurrentPage(1);
     } else {
       dispatch(
-        fetchRooms({
+        fetchRoomsAsync({
           pagination: {
             pnum: currentPage,
             psize: ENVS.ROOMS_ITEMS,

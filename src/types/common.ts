@@ -47,3 +47,44 @@ export interface IRoomFilter {
   level?: string;
   topic?: string;
 }
+
+//Room Sessions
+export interface ISocketIOMessage {
+  type: RoomsGatewayEventCode | SessionsGatewayEventCode;
+  message?: string;
+  payload?: any;
+}
+
+export interface IRoomPeer {
+  socketId: string;
+  roomId: string;
+  userId: string;
+  joinedAt: string;
+  controls: IMediaControls;
+  dname: string;
+  status: "joining" | "leaving" | "connected";
+}
+
+export interface IMediaControls {
+  micOn: boolean;
+  camOn: boolean;
+  screenOn: boolean;
+}
+
+export interface IRoomPeerSocketUpdates extends IRoomPeer {
+  updateStatus: "C" | "U" | "D";
+}
+
+export enum RoomsGatewayEventCode {
+  UPDATE = "update",
+}
+
+export enum SessionsGatewayEventCode {
+  JOIN = "join",
+  JOIN_DUPLICATE = "join_duplicate",
+  LEAVE = "leave",
+  MIC_ON = "mic_on",
+  MIC_OFF = "mic_off",
+  CAM_ON = "cam_on",
+  CAM_OFF = "cam_off",
+}
