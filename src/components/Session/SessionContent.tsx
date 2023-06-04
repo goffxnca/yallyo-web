@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import Avatar from "../UIs/Avatar";
 import { RootState } from "@/store/store";
-import exp from "constants";
 import Joiner from "./Joiner";
 import { useEffect, useState } from "react";
 import { getRandomItem } from "@/utils/array-utils";
 
 const SessionContent = () => {
-  const { room, controls } = useSelector((state: RootState) => state.session);
+  const { room } = useSelector((state: RootState) => state.session);
   const [focused, setFocused] = useState<string>();
 
   useEffect(() => {

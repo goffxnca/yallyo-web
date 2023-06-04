@@ -1,5 +1,5 @@
 interface Props {
-  text: string;
+  text?: string;
 }
 
 const DarkOverlay = ({ text }: Props) => {

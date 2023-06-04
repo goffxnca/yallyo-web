@@ -1,5 +1,5 @@
 import { IRoomMessage } from "@/types/frontend";
-import { toggleChat } from "@/store/sessionSlice";
+import { toggleLocalChat } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 
 import {
@@ -27,7 +27,7 @@ const SessionChatOverlayMobile = () => {
           <XMarkIcon
             className="h-8 w-8 cursor-pointer hover:scale-110 text-white"
             onClick={() => {
-              dispatch(toggleChat());
+              dispatch(toggleLocalChat());
             }}
           />
         </div>
