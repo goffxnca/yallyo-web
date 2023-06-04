@@ -4,9 +4,6 @@ import { SetStateAction, useEffect, useState } from "react";
 import { RootState, AppDispatch } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import adapter from "webrtc-adapter";
-import SignalingServer from "@/hooks/SignalingServer";
-import DarkOverlay from "@/components/Layouts/Overlay";
 import Peer2Peer from "@/hooks/Peer2Peer";
 import { subscribeSessionsUpdates } from "@/libs/ws-subscriptions";
 import { Socket } from "socket.io-client";
@@ -22,15 +19,10 @@ import {
   ISocketIOMessage,
   SessionsGatewayEventCode,
 } from "@/types/common";
-import { ArrowPathIcon, MicrophoneIcon } from "@heroicons/react/24/outline";
 import SessionControlList from "@/components/Session/SessionControlList";
 import VideoStreamItem from "@/components/Session/VideoStreamItem";
 
-let signalingServer: SignalingServer | null;
-let reconnect: any;
 let p2p: Peer2Peer;
-let showRCTPeer: any;
-let targetPeerId: string;
 let sessionsSocket: Socket;
 
 interface IPeer {
@@ -44,10 +36,10 @@ interface IPeer {
 const MultiplePeers = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { peers } = useSelector((state: RootState) => state.session);
+  const { controls } = useSelector((state: RootState) => state.session);
+
   const router = useRouter();
 
-  const [peers22, setPeers22] = useState<IPeer[]>([]);
-  const [joiners, setJoiners] = useState<Array<any>>([]);
   const [status, setStatus] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
@@ -93,34 +85,7 @@ const MultiplePeers = () => {
       },
     });
 
-    setPeers22((prev: any) => {
-      const newPeer: IPeer = {
-        peerId: p2p.peer._id,
-        peerLocalId: p2p.settings?.localUserId!,
-        peerRemoteId: Math.random().toString(),
-        // peerObject: p2p.peer,
-        peerStatus: p2p.status,
-      };
-      return [...prev, newPeer];
-    });
-
     setInitializedOnce(true);
-  };
-
-  reconnect = () => {
-    location.reload();
-    //   connectPeer(targetPeerId);
-  };
-
-  showRCTPeer = () => {
-    // const xx = p2p.getConnection();
-    const xxx = p2p.peer.connections[targetPeerId][0];
-    p2p.peer.destroy();
-    // const jjj = xxx.remoteStream
-    //   .getTracks()
-    //   .find((track: any) => track.kind === "video");
-    // jjj.stop();
-    console.log("p2p", p2p.peer);
   };
 
   useEffect(() => {
@@ -168,26 +133,8 @@ const MultiplePeers = () => {
   }
   return (
     <div>
-      <button
-        onClick={() => {
-          reconnect();
-        }}
-        className="text-white"
-      >
-        Re Connect
-      </button>
-
-      <button
-        onClick={() => {
-          showRCTPeer();
-        }}
-        className="text-white"
-      >
-        Show RCTPeer
-      </button>
-
       <div className="text-white">{status}</div>
-      <div className="text-white">{JSON.stringify(joiners)}</div>
+      {/* <div className="text-white">{JSON.stringify(joiners)}</div> */}
 
       <SessionControlList
         onToggleMic={(current: boolean) => {
@@ -210,22 +157,17 @@ const MultiplePeers = () => {
             payload: localPeerData?.socketId,
           };
           sessionsSocket.emit("clientMessage", data);
-          dispatch(toggleLocalCam());
           p2p.toggleCam();
-
-          // console.log("localStream", p2p.localStream);
-
-          // const [videoTrack] = p2p.localStream?.getVideoTracks() || [];
-          // console.log("localStream.getVideoTracks1", videoTrack);
-          // videoTrack.enabled = !videoTrack.enabled;
-          // console.log("localStream.getVideoTracks2", videoTrack);
+          dispatch(toggleLocalCam());
         }}
       />
 
-      {/* <pre className="text-white text-xs">{JSON.stringify(localPeerData)}</pre> */}
+      <pre className="text-white text-xs">
+        Local Controls {JSON.stringify(controls)}
+      </pre>
 
       <pre className="text-white text-xs">
-        {/* {JSON.stringify(
+        {JSON.stringify(
           peers.map((peer) => ({
             socketId: peer.socketId,
             roomId: peer.roomId,
@@ -235,8 +177,8 @@ const MultiplePeers = () => {
           })),
           null,
           2
-        )} */}
-        {JSON.stringify(peers, null, 2)}
+        )}
+        {/* {JSON.stringify(peers, null, 2)} */}
       </pre>
       <div className="flex justify-center my-4">
         <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
@@ -252,7 +194,7 @@ const MultiplePeers = () => {
             .map((peer) => {
               return (
                 <VideoStreamItem
-                  key={peer.userId}
+                  key={peer.socketId}
                   userId={peer.userId}
                   status={peer.status}
                   displayName={peer.dname}

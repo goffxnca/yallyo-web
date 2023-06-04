@@ -43,11 +43,7 @@ class Peer2Peer {
       this.updateStatus("RECEIVING_CALL");
 
       try {
-        const localStream = await navigator.mediaDevices.getUserMedia(
-          this.mediaStreamConstraints
-        );
-
-        call.answer(localStream);
+        call.answer(this.localStream);
         call.on("stream", (remoteStream: MediaStream) => {
           const remoteUserVideo = this.getVideoElement(call.peer);
           remoteUserVideo.srcObject = remoteStream;
@@ -94,10 +90,6 @@ class Peer2Peer {
       console.log(`Render remote stream for ${remoteUserId} successfully`);
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteVideoStreamed(remoteId);
-    });
-
-    call.off("stream", () => {
-      console.log("off");
     });
   }
 

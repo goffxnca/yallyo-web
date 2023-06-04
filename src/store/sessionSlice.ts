@@ -137,6 +137,18 @@ const sessionSlice = createSlice({
     },
     addPeer(state, action: PayloadAction<IRoomPeer>) {
       state.peers = [...state.peers, { ...action.payload, status: "joining" }];
+      // const existingPeer = state.peers.find(
+      //   (peer) => peer.userId === action.payload.userId
+      // );
+      // if (existingPeer) {
+      //   console.log("Exising, Ignored!");
+      //   return state;
+      // } else {
+      //   state.peers = [
+      //     ...state.peers,
+      //     { ...action.payload, status: "joining" },
+      //   ];
+      // }
     },
     markPeerAsRemoving(state, action: PayloadAction<string>) {
       state.peers = state.peers.map((peer) =>

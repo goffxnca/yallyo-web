@@ -32,6 +32,7 @@ const HomePage = () => {
     rooms,
     roomsGroupedByLanguage,
     status,
+    error,
     canLoadMore,
     recentCreatedRoomId,
   } = useSelector((state: RootState) => state.room);
@@ -368,7 +369,7 @@ const HomePage = () => {
               <div className="flex items-center border rounded-md py-1 px-2 bg-white text-accent1 hover:text-accent2 hover:bg-secondary ml-2 cursor-pointer">
                 <ArrowRightIcon className="h-4 w-4 mr-2" />
                 <a
-                  href={`/rooms/${recentCreatedRoomId}`}
+                  href={`/room/${recentCreatedRoomId}`}
                   target="_blank"
                   onClick={() => {
                     setShowRoomCreatedNotification(false);
@@ -391,7 +392,7 @@ const HomePage = () => {
         <Notification
           type="error"
           messageTitle="Something went wrong!"
-          messageBody="You can refresh the page or try again later."
+          messageBody={error || "You can refresh the page or try again later."}
           autoFadeout={true}
           onFadedOut={() => {}}
         />

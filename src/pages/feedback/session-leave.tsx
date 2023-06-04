@@ -1,7 +1,7 @@
 import Button from "@/components/Forms/Button";
 import { useRouter } from "next/router";
 
-const SessionTimeout = () => {
+const SessionLeave = () => {
   const router = useRouter();
 
   const handleGoHomeClick = () => {
@@ -11,8 +11,7 @@ const SessionTimeout = () => {
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
         <div className=" text-white text-center">
-          You were disconnected from the room because you attempted to use two
-          sessions simultaneously
+          👋 You have left the chat room, Thank you for joining!
         </div>
         <div className="flex justify-center mt-4">
           <Button text="Go Back Home Page" emitClick={handleGoHomeClick} />
@@ -22,4 +21,4 @@ const SessionTimeout = () => {
   );
 };
 
-export default SessionTimeout;
+export default SessionLeave;

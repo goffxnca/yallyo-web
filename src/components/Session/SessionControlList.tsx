@@ -50,11 +50,10 @@ const SessionControlList = ({ onToggleCam, onToggleMic }: Props) => {
         />
         <SessionControlItem
           Icon={<ComputerDesktopIcon />}
-          tooltip={
-            controls.shareScreenOn ? "Stop Sharing Screen" : "Share Screen"
-          }
+          disabled={true}
+          tooltip={"Share screen feature is coming soon"}
           onClick={() => {
-            dispatch(toggleShareScreen());
+            // dispatch(toggleShareScreen());
           }}
         />
         <SessionControlItem
@@ -69,6 +68,9 @@ const SessionControlList = ({ onToggleCam, onToggleMic }: Props) => {
           Icon={<PhoneIcon />}
           bgColor="bg-red-500"
           tooltip="Hang Up"
+          onClick={() => {
+            window.location.href = "/feedback/session-leave";
+          }}
         />
 
         {/* <div className="p-2 mx-1 rounded-md relative cursor-pointer">

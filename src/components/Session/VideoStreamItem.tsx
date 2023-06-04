@@ -10,7 +10,7 @@ interface Props {
 
 const VideoStreamItem = ({ userId, status, displayName, controls }: Props) => {
   return (
-    <div className="w-40 h-40 md:w-64 md:h-64 bg-red-200 rounded-md relative">
+    <div className="w-40 h-40 md:w-64 md:h-64 bg-secondary rounded-md relative">
       {/* <div className="text-white">{peer.userId}</div> */}
       <video
         id={`video-${userId}`}
@@ -21,7 +21,9 @@ const VideoStreamItem = ({ userId, status, displayName, controls }: Props) => {
           width: "100%",
           height: "100%",
         }}
-        className={`rounded-md  ${status !== "connected" && "opacity-25"} `}
+        className={`rounded-md  ${status !== "connected" && "opacity-25"} ${
+          controls && !controls.camOn && "hidden"
+        }`}
       />
       {status !== "connected" && (
         <div className="animate-pulse absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

@@ -78,7 +78,7 @@ export const subscribeSessionsUpdates = (
         dispatch(markPeerAsRemoving(payload));
         setTimeout(() => {
           dispatch(removePeer(payload));
-        }, 3000);
+        }, 2000);
 
       case SessionsGatewayEventCode.MIC_ON:
       case SessionsGatewayEventCode.MIC_OFF:
@@ -92,7 +92,7 @@ export const subscribeSessionsUpdates = (
 
       case SessionsGatewayEventCode.JOIN_DUPLICATE:
         // console.log("HEY WHAT WRONG HERE");
-        window.location.replace("/feedback/session-timeout");
+        window.location.href = "/feedback/session-duplicate";
       default:
         break;
     }
