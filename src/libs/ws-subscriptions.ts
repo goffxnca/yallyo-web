@@ -81,13 +81,17 @@ export const subscribeSessionsUpdates = (
         }, 2000);
 
       case SessionsGatewayEventCode.MIC_ON:
+        dispatch(toggleMic({ socketId: payload, status: true }));
+        break;
       case SessionsGatewayEventCode.MIC_OFF:
-        dispatch(toggleMic(payload));
+        dispatch(toggleMic({ socketId: payload, status: false }));
         break;
 
       case SessionsGatewayEventCode.CAM_ON:
+        dispatch(toggleCam({ socketId: payload, status: true }));
+        break;
       case SessionsGatewayEventCode.CAM_OFF:
-        dispatch(toggleCam(payload));
+        dispatch(toggleCam({ socketId: payload, status: false }));
         break;
 
       case SessionsGatewayEventCode.JOIN_DUPLICATE:

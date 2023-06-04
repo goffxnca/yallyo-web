@@ -1,5 +1,5 @@
 import { createNArray } from "@/utils/array-utils";
-import { SetStateAction, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { RootState, AppDispatch } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,7 @@ import { useRouter } from "next/router";
 import Peer2Peer from "@/hooks/Peer2Peer";
 import { subscribeSessionsUpdates } from "@/libs/ws-subscriptions";
 import { Socket } from "socket.io-client";
-import {
-  fetchPeersAsync,
-  removePeerLoading,
-  toggleLocalCam,
-  toggleLocalMic,
-  toggleMic,
-} from "@/store/sessionSlice";
+import { fetchPeersAsync, removePeerLoading } from "@/store/sessionSlice";
 import {
   IRoomPeer,
   ISocketIOMessage,
@@ -21,41 +15,33 @@ import {
 } from "@/types/common";
 import SessionControlList from "@/components/Session/SessionControlList";
 import VideoStreamItem from "@/components/Session/VideoStreamItem";
+import PreviewScreen from "@/components/Session/PreviewScreen";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
 
-interface IPeer {
-  peerId: string;
-  peerLocalId: string;
-  peerRemoteId: string;
-  //   peerObject: string;
-  peerStatus: string;
-}
-
 const MultiplePeers = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { peers } = useSelector((state: RootState) => state.session);
-  const { controls } = useSelector((state: RootState) => state.session);
 
   const router = useRouter();
 
-  const [status, setStatus] = useState("");
+  const [peerStatus, setPeerStatus] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
   const [initilizedOnce, setInitializedOnce] = useState(false);
+  const [showPreviewScreen, setShowPreviewScreen] = useState(true);
 
   const dispatch: AppDispatch = useDispatch();
 
-  const initRoomSession = async () => {
-    // alert("initRoomSession");
+  const initRoomSession = useCallback(async () => {
     console.log("Initializing room session");
 
     p2p = new Peer2Peer();
     await p2p.init({
       localUserId: user?.uid as string,
       remoteUserId: "",
-      onStatusChange: setStatus,
+      onStatusChange: setPeerStatus,
       onLocalVideoStreamed: () => {
         sessionsSocket = subscribeSessionsUpdates(
           roomCode as string,
@@ -86,88 +72,100 @@ const MultiplePeers = () => {
     });
 
     setInitializedOnce(true);
-  };
+  }, [dispatch, roomCode, user]);
+
+  useEffect(() => {
+    const { roomId } = router.query;
+    if (roomId) {
+      setRoomCode(roomId as string);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    console.log("111111111==========");
+    if (user && roomCode && !showPreviewScreen && !initilizedOnce) {
+      console.log("222222222??????==========");
+      initRoomSession();
+    }
+  }, [user, roomCode, showPreviewScreen, initilizedOnce, initRoomSession]);
+
+  useEffect(() => {
+    if (peerStatus) {
+      console.log("Peer connection status is now: ", peerStatus);
+    }
+  }, [peerStatus]);
 
   useEffect(() => {
     if (user && peers.length > 0) {
       const myPeerInfo = peers.find((peer) => peer.userId === user?.uid);
       setLocalPeerData(myPeerInfo);
     }
-  }, [peers, user]);
+  }, [user, peers]);
 
   useEffect(() => {
     return () => {
       if (sessionsSocket) {
-        alert("clean222");
+        alert("clean sessionsSocket");
         sessionsSocket.disconnect();
+      }
+      if (p2p.peer) {
+        alert("clean p2p");
+        p2p.disconnect();
       }
     };
   }, []);
 
-  useEffect(() => {
-    if (status) {
-      console.log("Peer connection status is now: ", status);
-    }
-  }, [status]);
-
-  useEffect(() => {
-    // console.log("111111111==========");
-    if (typeof window !== "undefined" && router && user) {
-      //   console.log("222222222??????==========");
-      const { query } = router;
-      const { roomId } = query;
-
-      if (roomId) {
-        setRoomCode(roomId as string);
-      }
-
-      if (roomCode && !initilizedOnce) {
-        initRoomSession();
-        console.log("dd2222");
-      }
-    }
-  }, [router, user, roomCode]);
-
   if (!user) {
     return <div className="text-white">Auth Required</div>;
   }
-  return (
-    <div>
-      <div className="text-white">{status}</div>
-      {/* <div className="text-white">{JSON.stringify(joiners)}</div> */}
 
-      <SessionControlList
-        onToggleMic={(current: boolean) => {
-          const data: ISocketIOMessage = {
-            type: current
-              ? SessionsGatewayEventCode.MIC_OFF
-              : SessionsGatewayEventCode.MIC_ON,
-            message: `User ${user.uid} turned mic ${current ? "off" : "on"}`,
-            payload: localPeerData?.socketId,
-          };
-          sessionsSocket.emit("clientMessage", data);
-          dispatch(toggleLocalMic());
-        }}
-        onToggleCam={(current: boolean) => {
-          const data: ISocketIOMessage = {
-            type: current
-              ? SessionsGatewayEventCode.CAM_OFF
-              : SessionsGatewayEventCode.CAM_ON,
-            message: `User ${user.uid} turned camara ${current ? "off" : "on"}`,
-            payload: localPeerData?.socketId,
-          };
-          sessionsSocket.emit("clientMessage", data);
-          p2p.toggleCam();
-          dispatch(toggleLocalCam());
+  if (showPreviewScreen) {
+    return (
+      <PreviewScreen
+        onPreviewFinished={() => {
+          setShowPreviewScreen(false);
         }}
       />
+    );
+  }
+
+  return (
+    <div>
+      <div className="text-white">{peerStatus}</div>
+      {/* <div className="text-white">{JSON.stringify(joiners)}</div> */}
+
+      {localPeerData && (
+        <SessionControlList
+          controls={localPeerData.controls}
+          onToggleMic={(current: boolean) => {
+            const data: ISocketIOMessage = {
+              type: current
+                ? SessionsGatewayEventCode.MIC_OFF
+                : SessionsGatewayEventCode.MIC_ON,
+              message: `User ${user.uid} turned mic ${current ? "off" : "on"}`,
+              payload: localPeerData?.socketId,
+            };
+            sessionsSocket.emit("clientMessage", data);
+            p2p.toggleAudioStream();
+          }}
+          onToggleCam={(current: boolean) => {
+            const data: ISocketIOMessage = {
+              type: current
+                ? SessionsGatewayEventCode.CAM_OFF
+                : SessionsGatewayEventCode.CAM_ON,
+              message: `User ${user.uid} turned camara ${
+                current ? "off" : "on"
+              }`,
+              payload: localPeerData?.socketId,
+            };
+            sessionsSocket.emit("clientMessage", data);
+            p2p.toggleVideoStream();
+          }}
+        />
+      )}
 
       <pre className="text-white text-xs">
-        Local Controls {JSON.stringify(controls)}
-      </pre>
-
-      <pre className="text-white text-xs">
-        {JSON.stringify(
+        {/* {JSON.stringify(
           peers.map((peer) => ({
             socketId: peer.socketId,
             roomId: peer.roomId,
@@ -177,7 +175,7 @@ const MultiplePeers = () => {
           })),
           null,
           2
-        )}
+        )} */}
         {/* {JSON.stringify(peers, null, 2)} */}
       </pre>
       <div className="flex justify-center my-4">

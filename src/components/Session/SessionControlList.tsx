@@ -1,9 +1,4 @@
-import {
-  toggleLocalCam,
-  toggleChat,
-  toggleMic,
-  toggleShareScreen,
-} from "@/store/sessionSlice";
+import { toggleLocalChat } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import {
   MicrophoneIcon,
@@ -15,15 +10,15 @@ import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 
 import { useDispatch, useSelector } from "react-redux";
 import SessionControlItem from "./SessionControlItem";
+import { IMediaControls } from "@/types/common";
 
 interface Props {
+  controls: IMediaControls;
   onToggleCam: Function;
   onToggleMic: Function;
 }
 
-const SessionControlList = ({ onToggleCam, onToggleMic }: Props) => {
-  const { controls } = useSelector((state: RootState) => state.session);
-
+const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -59,9 +54,9 @@ const SessionControlList = ({ onToggleCam, onToggleMic }: Props) => {
         <SessionControlItem
           Icon={<ChatBubbleBottomCenterTextIcon />}
           // cross={!controls.chatOn}
-          tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
+          // tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
           onClick={() => {
-            dispatch(toggleChat());
+            dispatch(toggleLocalChat());
           }}
         />
         <SessionControlItem

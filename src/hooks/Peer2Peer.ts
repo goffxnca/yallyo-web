@@ -13,14 +13,8 @@ class Peer2Peer {
   localStream: MediaStream | null = null;
   mediaStreamConstraints: MediaStreamConstraints = {
     video: true,
-    audio: false,
+    audio: true,
   };
-
-  setRemoteUserId(rid: string) {
-    if (this.settings) {
-      this.settings.remoteUserId = rid;
-    }
-  }
 
   updateStatus(status: string) {
     this.status = status;
@@ -70,7 +64,7 @@ class Peer2Peer {
 
     this.peer.on("error", (error: any) => {
       this.updateStatus("ERROR");
-      console.log("Peer2Peer:Error", error);
+      console.error("Peer2Peer:Error", error);
     });
 
     this.peer.on("close", () => {
@@ -108,11 +102,11 @@ class Peer2Peer {
       this.settings?.onLocalVideoStreamed();
       console.log("Render local stream successfully");
     } catch (error) {
-      console.log("Render local stream failed", error);
+      console.error("Render local stream failed", error);
     }
   };
 
-  toggleCam = () => {
+  toggleVideoStream = () => {
     if (this.localStream) {
       console.log(
         "this.localStream.getVideoTracks()",
@@ -126,16 +120,48 @@ class Peer2Peer {
         track.enabled = !track.enabled;
         // track.stop();
         console.log(
-          `Toggle stream camera success from ${fromStatus} to ${toStatus}`
+          `Toggle video stream success from ${fromStatus} to ${toStatus}`
         );
       } else {
         console.error(
-          "Toggle stream camera failed: local stream video track not found"
+          "Toggle video stream failed: local audio track not found"
         );
       }
     } else {
-      console.error("Toggle stream camera failed: local stream not found");
+      console.error("Toggle video stream failed: local stream not found");
     }
+  };
+
+  toggleAudioStream = () => {
+    if (this.localStream) {
+      console.log(
+        "this.localStream.getAudioTracks()",
+        this.localStream.getAudioTracks()
+      );
+      const [track] = this.localStream.getAudioTracks();
+      if (track) {
+        const fromStatus = track.enabled ? "on" : "off";
+        const toStatus = !track.enabled ? "on" : "off";
+
+        track.enabled = !track.enabled;
+        //TODO: need to re-test whether it use property enabled or muted
+        // track.stop();
+        console.log(
+          `Toggle audio stream success from ${fromStatus} to ${toStatus}`
+        );
+      } else {
+        console.error(
+          "Toggle audio stream failed: local audio track not found"
+        );
+      }
+    } else {
+      console.error("Toggle audio stream failed: local stream not found");
+    }
+  };
+
+  disconnect = () => {
+    this.peer.destroy();
+    this.peer = null;
   };
 
   private getVideoElement = (peerId: string) => {

@@ -27,7 +27,9 @@ let servers: {
 };
 
 const RoomSession = () => {
-  const { room, controls } = useSelector((state: RootState) => state.session);
+  const { room, localControls } = useSelector(
+    (state: RootState) => state.session
+  );
   const { user } = useSelector((state: RootState) => state.auth);
 
   // const [room, setRoom] = useState<Room | null>(null);
@@ -229,7 +231,7 @@ const RoomSession = () => {
 
         <div className="text-white">{user?.uid}</div>
 
-        <SessionControlList onToggleCam={toggleCam} onToggleMic={toggleMic} />
+        {/* <SessionControlList onToggleCam={toggleCam} onToggleMic={toggleMic} /> */}
 
         {/* <div className="flex justify-center my-4">
           <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
@@ -318,7 +320,7 @@ const RoomSession = () => {
 
       {/* {controls.chatOn && <SessionChatSidebar />} */}
 
-      {controls.chatOn && <SessionChatOverlayMobile />}
+      {localControls.chatOn && <SessionChatOverlayMobile />}
     </div>
   );
 };

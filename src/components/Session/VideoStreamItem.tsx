@@ -16,6 +16,7 @@ const VideoStreamItem = ({ userId, status, displayName, controls }: Props) => {
         id={`video-${userId}`}
         autoPlay
         playsInline
+        controls={false}
         style={{
           objectFit: "cover",
           width: "100%",
