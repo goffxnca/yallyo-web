@@ -106,7 +106,7 @@ const JoinerList = () => {
                 )}
                 style={{ backgroundColor: getRandomColor() || "red" }}
               >
-                <div className="flex items-stretch justify-center h-full w-full ">
+                <div className="flex  justify-center h-full w-full ">
                   {/* James Doe */}
                   <div className="relative ">
                     <video
