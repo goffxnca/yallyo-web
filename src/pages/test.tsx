@@ -54,7 +54,7 @@ const JoinerList = () => {
         controls={medias}
       />
 
-      {/* <div className="text-white absolute bottom-0 z-50">
+      <div className="text-white absolute bottom-0 flex gap-3 z-50">
         <div
           className="bg-gray-500"
           onClick={() => {
@@ -79,7 +79,7 @@ const JoinerList = () => {
         >
           Decrease
         </div>
-      </div> */}
+      </div>
 
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
@@ -101,7 +101,7 @@ const JoinerList = () => {
                 // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
                 className={joinClasses(
                   joiners <= 2
-                    ? "text-white w-20 h-20 md:w-1/2 md:h-[w-1/2] lg:w-1/3"
+                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3"
                     : joiners <= 4
                     ? "text-white w-1/2 md:w-1/3 md:h-[w-1/3] lg:w-1/4"
                     : "text-white w-1/2 md:w-1/3 md:h-[w-1/3]"
