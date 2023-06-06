@@ -54,41 +54,39 @@ const JoinerList = () => {
         controls={medias}
       />
 
-      <div className="text-white absolute bottom-0 flex gap-3 z-50">
-        <div
-          className="bg-gray-500"
-          onClick={() => {
-            if (joiners < 5) {
-              setJoiners((j) => {
-                return j + 1;
-              });
-            }
-          }}
-        >
-          Increase
-        </div>
-        <div
-          className="bg-gray-500"
-          onClick={() => {
-            if (joiners > 1) {
-              setJoiners((j) => {
-                return j - 1;
-              });
-            }
-          }}
-        >
-          Decrease
-        </div>
+      <div
+        className="bg-gray-500 text-white absolute top-0 z-50 p-2"
+        onClick={() => {
+          if (joiners < 5) {
+            setJoiners((j) => {
+              return j + 1;
+            });
+          }
+        }}
+      >
+        Increase
+      </div>
+      <div
+        className="bg-gray-500 text-white absolute bottom-0 z-50 p-2"
+        onClick={() => {
+          if (joiners > 1) {
+            setJoiners((j) => {
+              return j - 1;
+            });
+          }
+        }}
+      >
+        Decrease
       </div>
 
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
         className={joinClasses(
           joiners <= 2
-            ? "flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen overflow-y-hidden"
+            ? "flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen"
             : joiners <= 4
-            ? "flex flex-row flex-wrap content-center items-center justify-center h-screen overflow-y-hidden"
-            : "flex flex-row flex-wrap content-center items-center justify-center h-screen overflow-y-hidden",
+            ? "flex flex-row flex-wrap content-center items-center justify-center h-screen"
+            : "flex flex-row flex-wrap content-center items-center justify-center h-screen",
           "bg-pramary"
         )}
       >

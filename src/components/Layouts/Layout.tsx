@@ -10,7 +10,7 @@ const Layout = ({ children }: Props) => {
   // return <div className="p-10 md:p-20 max-w-[1240px] m-auto">{children}</div>;
   return (
     <div className="h-screen flex flex-col">
-      {/* <Header /> */}
+      <Header />
       <main className="flex-grow">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
     </div>
