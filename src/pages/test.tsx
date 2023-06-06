@@ -85,10 +85,10 @@ const JoinerList = () => {
       <div
         className={joinClasses(
           joiners <= 2
-            ? "flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen"
+            ? "flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen overflow-y-hidden"
             : joiners <= 4
-            ? "flex flex-row flex-wrap content-center items-center justify-center h-screen"
-            : "flex flex-row flex-wrap content-center items-center justify-center h-screen",
+            ? "flex flex-row flex-wrap content-center items-center justify-center h-screen overflow-y-hidden"
+            : "flex flex-row flex-wrap content-center items-center justify-center h-screen overflow-y-hidden",
           "bg-pramary"
         )}
       >
