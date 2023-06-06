@@ -10,9 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Auth />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
     </Provider>
   );
 }
