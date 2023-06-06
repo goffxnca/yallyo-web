@@ -83,11 +83,11 @@ const JoinerList = () => {
       <div
         className={joinClasses(
           joiners <= 2
-            ? "flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen"
+            ? "flex flex-col md:flex-row md:flex-wrap "
             : joiners <= 4
-            ? "flex flex-row flex-wrap content-center items-center justify-center h-screen"
-            : "flex flex-row flex-wrap content-center items-center justify-center h-screen",
-          "bg-pramary"
+            ? "flex flex-row flex-wrap"
+            : "flex flex-row flex-wrap",
+          "content-center items-center justify-center h-screen bg-pramary"
         )}
       >
         {ready &&
@@ -99,12 +99,12 @@ const JoinerList = () => {
                 // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
                 className={joinClasses(
                   joiners <= 2
-                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3"
+                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3 max-w-[350px]"
                     : joiners <= 4
-                    ? "text-white w-1/2 md:w-1/3 md:h-[w-1/3] lg:w-1/4"
-                    : "text-white w-1/2 md:w-1/3 md:h-[w-1/3]"
+                    ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3 max-w-[400px]"
+                    : "text-white w-1/2 md:w-1/3 md:h-[w-1/3] max-w-[400px]"
                 )}
-                // style={{ backgroundColor: getRandomColor() || "red" }}
+                style={{ backgroundColor: getRandomColor() || "red" }}
               >
                 <div className="flex items-stretch justify-center h-full w-full ">
                   {/* James Doe */}
