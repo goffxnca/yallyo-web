@@ -99,10 +99,10 @@ const JoinerList = () => {
                 // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
                 className={joinClasses(
                   joiners <= 2
-                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3 max-w-[350px]"
+                    ? "text-white w-full h-[w-full] md:w-1/2 md:h-[w-1/2] lg:w-1/3 max-w-[350px]"
                     : joiners <= 4
                     ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3 max-w-[400px]"
-                    : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3] max-w-[400px] max-h-[400px]"
+                    : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3] max-w-[400px]"
                 )}
                 style={{ backgroundColor: getRandomColor() || "red" }}
               >
