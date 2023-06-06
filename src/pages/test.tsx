@@ -57,7 +57,7 @@ const JoinerList = () => {
       <div
         className="bg-gray-500 text-white absolute top-0 z-50 p-2"
         onClick={() => {
-          if (joiners < 5) {
+          if (joiners < 10) {
             setJoiners((j) => {
               return j + 1;
             });
@@ -99,10 +99,10 @@ const JoinerList = () => {
                 // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
                 className={joinClasses(
                   joiners <= 2
-                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3 max-w-[350px] max-h-[350px]"
+                    ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3"
                     : joiners <= 4
-                    ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3 max-w-[400px]  max-h-[400px]"
-                    : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3] max-w-[400px]  max-h-[400px]",
+                    ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3"
+                    : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3]",
                   "p-1"
                 )}
                 // style={{ backgroundColor: getRandomColor() || "red" }}
@@ -116,7 +116,7 @@ const JoinerList = () => {
                       playsInline
                       controls={false}
                       style={{
-                        objectFit: "cover",
+                        objectFit: "contain",
                         width: "100%",
                         height: "auto",
                       }}
