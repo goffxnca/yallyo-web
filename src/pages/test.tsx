@@ -54,7 +54,7 @@ const JoinerList = () => {
         controls={medias}
       />
 
-      <div className="text-white absolute bottom-0 flex gap-3 z-50">
+      <div className="text-white absolute bottom-0 z-50">
         <div
           className="bg-gray-500"
           onClick={() => {
