@@ -102,7 +102,7 @@ const JoinerList = () => {
                     ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3 max-w-[350px]"
                     : joiners <= 4
                     ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3 max-w-[400px]"
-                    : "text-white w-1/2 md:w-1/3 md:h-[w-1/3] max-w-[400px] max-h-[400px]"
+                    : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3] max-w-[400px] max-h-[400px]"
                 )}
                 style={{ backgroundColor: getRandomColor() || "red" }}
               >
