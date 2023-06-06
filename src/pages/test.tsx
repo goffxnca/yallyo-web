@@ -54,7 +54,7 @@ const JoinerList = () => {
         controls={medias}
       />
 
-      <div className="text-white absolute bottom-0 z-50">
+      {/* <div className="text-white absolute bottom-0 z-50">
         <div
           className="bg-gray-500"
           onClick={() => {
@@ -79,7 +79,7 @@ const JoinerList = () => {
         >
           Decrease
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
