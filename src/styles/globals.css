@@ -117,3 +117,9 @@ textarea {
   height: 100%;
   object-fit: cover;
 }
+
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
+}
