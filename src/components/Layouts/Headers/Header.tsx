@@ -30,7 +30,7 @@ const Header = () => {
       <LogoSection />
 
       {!loading && (
-        <div className="text-center">
+        <div className="text-center hidden md:block">
           <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
             Yallyo.com
           </h1>

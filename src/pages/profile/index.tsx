@@ -1,5 +1,11 @@
+import PageContainer from "@/components/Layouts/PageContainer";
+
 const ProfilePage = () => {
-  return <h1 className="text-white">Profile</h1>;
+  return (
+    <PageContainer>
+      <h1 className="text-white">Profile</h1>
+    </PageContainer>
+  );
 };
 
 export default ProfilePage;

@@ -25,6 +25,7 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowRightIcon, ArrowUturnUpIcon } from "@heroicons/react/24/outline";
 import { FieldValues } from "react-hook-form";
 import Notification from "@/components/UIs/Notification";
+import PageContainer from "@/components/Layouts/PageContainer";
 
 const HomePage = () => {
   // console.log("HomePage");
@@ -157,7 +158,7 @@ const HomePage = () => {
   };
 
   return (
-    <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
+    <PageContainer>
       <Head>
         <title>Yallyo2 - Language Learning Community</title>
       </Head>
@@ -397,7 +398,7 @@ const HomePage = () => {
           onFadedOut={() => {}}
         />
       )}
-    </main>
+    </PageContainer>
   );
 };
 

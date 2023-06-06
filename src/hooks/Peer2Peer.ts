@@ -124,7 +124,7 @@ class Peer2Peer {
         );
       } else {
         console.error(
-          "Toggle video stream failed: local audio track not found"
+          "Toggle video stream failed: local video track not found"
         );
       }
     } else {
