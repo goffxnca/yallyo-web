@@ -88,7 +88,7 @@ const JoinerList = () => {
             : joiners <= 4
             ? "flex flex-row flex-wrap"
             : "flex flex-row flex-wrap",
-          "content-center items-center justify-center h-[90vh] mt-[10vh] bg-pramary"
+          "content-center items-center justify-center h-screen bg-pramary"
         )}
       >
         {ready &&
@@ -101,10 +101,10 @@ const JoinerList = () => {
                 // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
                 className={joinClasses(
                   joiners <= 2
-                    ? "text-white w-full h-full md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
+                    ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
                     : joiners <= 4
-                    ? "text-white w-1/2 h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
-                    : "text-white w-1/2 h-1/3 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3",
+                    ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
+                    : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4 lg:w-1/3 lg:h-1/3",
                   "p-1"
                 )}
                 style={{ backgroundColor: getRandomColor() || "red" }}
