@@ -88,7 +88,7 @@ const JoinerList = () => {
             : joiners <= 4
             ? "flex flex-row flex-wrap"
             : "flex flex-row flex-wrap",
-          "content-center items-center justify-center h-screen overflow-y-clip bg-pramary"
+          "content-center items-center justify-center h-screen overflow-y-hidden bg-pramary"
         )}
       >
         {ready &&
