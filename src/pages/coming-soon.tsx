@@ -38,7 +38,8 @@ const ComingSoon = () => {
           <span className="text-accent2">Yallyo</span> is coming soon
         </h1>
         <p className="text-white text-lg mb-8">
-          We're working hard to bring Yallyo online on July 1, 2023. Stay tuned!
+          We are working hard to bring Yallyo online on July 1, 2023. Stay
+          tuned!
         </p>
 
         <div className="flex justify-center items-center px-2 bg-gradient-to-tr">
