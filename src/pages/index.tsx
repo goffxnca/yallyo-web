@@ -74,6 +74,12 @@ const HomePage = () => {
     setShowFriendPopup(!showFriendPopup);
   };
 
+  useEffect(() => {
+    if (window) {
+      window.location.href = "/coming-soon";
+    }
+  }, []);
+
   // Determine page first mount
   useEffect(() => {
     if (isFirstMount.current) {
