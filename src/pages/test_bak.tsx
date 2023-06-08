@@ -45,10 +45,16 @@ const JoinerList2 = () => {
 
   const calculateBoxSize = (total: number) => {
     const { innerWidth, innerHeight } = window;
+    const layout = innerWidth > innerHeight ? "lanscape" : "portrait";
+
     let finalBoxSize = 0;
     if (innerWidth >= 1280) {
       //lg
-      finalBoxSize = total === 1 ? innerWidth / 2 : innerWidth / 4;
+      if (layout === "lanscape") {
+        finalBoxSize = total === 1 ? innerHeight / 2 : innerHeight / 3;
+      } else {
+        finalBoxSize = total === 1 ? innerWidth / 2 : innerWidth / 4;
+      }
     } else if (innerWidth >= 1024) {
       //lg
       finalBoxSize = total === 1 ? innerWidth : innerWidth / 3;
@@ -89,7 +95,7 @@ const JoinerList2 = () => {
 
   const medias: IMediaControls = { camOn: true, micOn: true, screenOn: false };
   return (
-    <div className="relative ">
+    <div className="relative max-w-screen-lg mx-auto">
       <SessionControlList
         onToggleCam={() => {}}
         onToggleMic={() => {}}
@@ -132,7 +138,7 @@ const JoinerList2 = () => {
           //     : joiners <= 4
           //     ? "flex flex-row flex-wrap"
           //     : "flex flex-row flex-wrap",
-          "content-center items-center justify-center h-screen bg-pramary flex flex-row flex-wrap"
+          "content-center items-center justify-center h-screen bg-pramary flex flex-row flex-wrap w-full"
         )}
       >
         {ready &&
