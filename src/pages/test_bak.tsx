@@ -84,14 +84,14 @@ const JoinerList2 = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && window.navigator) {
       setReady(true);
-      //   renderLocalVideoStream();
+      renderLocalVideoStream();
       const { innerWidth, innerHeight } = window;
       setScreen({
         width: innerWidth,
         height: innerHeight,
         layout: innerWidth > innerHeight ? "lanscape" : "portrait",
       });
-      //   setBoxSize(innerWidth / 2 + "px");
+      setBoxSize(innerWidth / 2 + "px");
       calculateBoxSize(joiners);
     }
   }, [joiners]);
@@ -190,7 +190,7 @@ const JoinerList2 = () => {
                           </div>
 
                           <div className="bg-red-200">
-                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1">
                               <div className="flex items-center">
                                 <div className="relative ml-1">
                                   <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-1" />
@@ -202,7 +202,7 @@ const JoinerList2 = () => {
                               </div>
                             </div> */}
                                 </div>
-                                <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
+                                <div className="text-xs md:text-sm font-bold overflow-ellipsis text-white">
                                   {name}
                                 </div>
                               </div>
@@ -229,7 +229,7 @@ const JoinerList2 = () => {
                             // className="rounded-lg"
                           />
                           <div className="bg-red-200">
-                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1">
                               <div className="flex items-center">
                                 <div className="relative ml-1">
                                   <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
@@ -241,7 +241,7 @@ const JoinerList2 = () => {
                               </div>
                             </div> */}
                                 </div>
-                                <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
+                                <div className="text-xs md:text-sm font-bold overflow-ellipsis text-white">
                                   {name}
                                 </div>
                               </div>
