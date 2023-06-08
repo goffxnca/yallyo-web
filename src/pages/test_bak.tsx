@@ -1,5 +1,6 @@
 import PageContainer from "@/components/Layouts/PageContainer";
 import SessionControlList from "@/components/Session/SessionControlList";
+import Avatar from "@/components/UIs/Avatar";
 
 import { IMediaControls } from "@/types/common";
 import { createNArray } from "@/utils/array-utils";
@@ -141,11 +142,11 @@ const JoinerList2 = () => {
           //     : joiners <= 4
           //     ? "flex flex-row flex-wrap"
           //     : "flex flex-row flex-wrap",
-          "h-screen bg-pramary  bg-yellow-300"
+          "h-screen bg-pramary "
         )}
       >
         <div
-          className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center bg-green-200 pt-[65px] max-w-screen-lg mx-auto`}
+          className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center pt-[65px] max-w-screen-lg mx-auto`}
           style={{ height: screen.height }}
         >
           {ready &&
@@ -180,17 +181,28 @@ const JoinerList2 = () => {
                   }}
                 >
                   {/* //Video From Camera */}
-                  <div className="flex items-stretch justify-center h-full w-full bg-gray-200">
+                  <div className="flex items-stretch justify-center h-full w-full bg-secondary">
                     {/* James Doe */}
                     <div className="relative w-full overflow-hidden">
                       {camOff ? (
                         <div className="w-full h-full ">
                           <div className="text-white flex justify-center items-center h-full">
-                            This is just an Avatar
+                            <div className="text-white flex justify-center">
+                              <Avatar
+                                name={name}
+                                size="lg"
+                                showMic={false}
+                                url={faker.image.avatar()}
+                                color={getRandomColor()}
+                                bio=""
+                                followers={0}
+                                followings={0}
+                              />
+                            </div>
                           </div>
 
                           <div className="bg-red-200">
-                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-50 p-1">
                               <div className="flex items-center">
                                 <div className="relative ml-1">
                                   <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-1" />
@@ -229,7 +241,7 @@ const JoinerList2 = () => {
                             // className="rounded-lg"
                           />
                           <div className="bg-red-200">
-                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-50 p-1">
                               <div className="flex items-center">
                                 <div className="relative ml-1">
                                   <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
