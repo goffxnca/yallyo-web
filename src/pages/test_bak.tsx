@@ -167,9 +167,9 @@ const JoinerList2 = () => {
                 }}
               >
                 {/* //Video From Camera */}
-                <div className="flex items-stretch justify-center h-full w-full bg-secondary">
+                <div className="flex items-stretch justify-center h-full w-full bg-gray-200">
                   {/* James Doe */}
-                  <div className="relative w-full">
+                  <div className="relative w-full overflow-hidden">
                     {camOff ? (
                       <div className="w-full h-full ">
                         <div className="text-white flex justify-center items-center h-full">
@@ -198,7 +198,6 @@ const JoinerList2 = () => {
                       </div>
                     ) : (
                       <div>
-                        {" "}
                         <video
                           id={`video-${val}`}
                           autoPlay
