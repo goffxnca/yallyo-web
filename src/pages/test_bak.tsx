@@ -11,7 +11,7 @@ import { MicrophoneIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 
 const JoinerList2 = () => {
-  const [screen, setScreen] = useState({ width: 0, heigth: 0, layout: "" });
+  const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
   const [boxSize, setBoxSize] = useState("200px");
   const [ready, setReady] = useState(false);
   const [joiners, setJoiners] = useState(1);
@@ -57,7 +57,10 @@ const JoinerList2 = () => {
       }
     } else if (innerWidth >= 1024) {
       //lg
-      finalBoxSize = total === 1 ? innerWidth : innerWidth / 3;
+      if (layout === "lanscape") {
+        finalBoxSize = total === 1 ? innerHeight / 2 : innerHeight / 3;
+      } else {
+      }
     } else if (innerWidth >= 768) {
       //md
       finalBoxSize =
@@ -81,11 +84,11 @@ const JoinerList2 = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && window.navigator) {
       setReady(true);
-      renderLocalVideoStream();
+      //   renderLocalVideoStream();
       const { innerWidth, innerHeight } = window;
       setScreen({
         width: innerWidth,
-        heigth: innerHeight,
+        height: innerHeight,
         layout: innerWidth > innerHeight ? "lanscape" : "portrait",
       });
       //   setBoxSize(innerWidth / 2 + "px");
@@ -95,7 +98,7 @@ const JoinerList2 = () => {
 
   const medias: IMediaControls = { camOn: true, micOn: true, screenOn: false };
   return (
-    <div className="relative max-w-screen-lg mx-auto">
+    <div className="relative  mx-auto">
       <SessionControlList
         onToggleCam={() => {}}
         onToggleMic={() => {}}
@@ -138,115 +141,120 @@ const JoinerList2 = () => {
           //     : joiners <= 4
           //     ? "flex flex-row flex-wrap"
           //     : "flex flex-row flex-wrap",
-          "content-center items-center justify-center h-screen bg-pramary flex flex-row flex-wrap w-full"
+          "h-screen bg-pramary  bg-yellow-300"
         )}
       >
-        {ready &&
-          createNArray(joiners).map((val) => {
-            const name = faker.name.fullName();
-            const camOff = randomBoolean();
-            return (
-              <div
-                key={val}
-                // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
-                // className={joinClasses(
-                //   joiners <= 2
-                //     ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
-                //     : joiners <= 4
-                //     ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
-                //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
-                //   "p-1"
-                // )}
-                // className={joinClasses(
-                //   joiners <= 2
-                //     ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
-                //     : joiners <= 4
-                //     ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
-                //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
-                //   "p-1"
-                // )}
-                className="p-1"
-                style={{
-                  //   backgroundColor: getRandomColor() || "red",
-                  height: boxSize,
-                  width: boxSize,
-                }}
-              >
-                {/* //Video From Camera */}
-                <div className="flex items-stretch justify-center h-full w-full bg-gray-200">
-                  {/* James Doe */}
-                  <div className="relative w-full overflow-hidden">
-                    {camOff ? (
-                      <div className="w-full h-full ">
-                        <div className="text-white flex justify-center items-center h-full">
-                          This is just an Avatar
-                        </div>
+        <div
+          className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center bg-green-200 pt-[65px] max-w-screen-lg mx-auto`}
+          style={{ height: screen.height }}
+        >
+          {ready &&
+            createNArray(joiners).map((val) => {
+              const name = faker.name.fullName();
+              const camOff = randomBoolean();
+              return (
+                <div
+                  key={val}
+                  // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
+                  // className={joinClasses(
+                  //   joiners <= 2
+                  //     ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
+                  //     : joiners <= 4
+                  //     ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
+                  //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
+                  //   "p-1"
+                  // )}
+                  // className={joinClasses(
+                  //   joiners <= 2
+                  //     ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
+                  //     : joiners <= 4
+                  //     ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
+                  //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
+                  //   "p-1"
+                  // )}
+                  className="p-1"
+                  style={{
+                    //   backgroundColor: getRandomColor() || "red",
+                    height: boxSize,
+                    width: boxSize,
+                  }}
+                >
+                  {/* //Video From Camera */}
+                  <div className="flex items-stretch justify-center h-full w-full bg-gray-200">
+                    {/* James Doe */}
+                    <div className="relative w-full overflow-hidden">
+                      {camOff ? (
+                        <div className="w-full h-full ">
+                          <div className="text-white flex justify-center items-center h-full">
+                            This is just an Avatar
+                          </div>
 
-                        <div className="bg-red-200">
-                          <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
-                            <div className="flex items-center">
-                              <div className="relative ml-1">
-                                <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-1" />
-                                {/* <div className="absolute top-0 left-0 right-0 bottom-0">
+                          <div className="bg-red-200">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
+                              <div className="flex items-center">
+                                <div className="relative ml-1">
+                                  <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500 flex-1" />
+                                  {/* <div className="absolute top-0 left-0 right-0 bottom-0">
                               <div className="flex justify-center items-center w-full h-full">
                                 <div
                                   className={`border border-red-500 w-8 rotate-45`}
                                 ></div>
                               </div>
                             </div> */}
-                              </div>
-                              <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
-                                {name}
+                                </div>
+                                <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
+                                  {name}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <video
-                          id={`video-${val}`}
-                          autoPlay
-                          playsInline
-                          controls={false}
-                          //   style={{
-                          //     objectFit: "cover",
-                          //     width: "100%",
-                          //     height: "auto",
-                          //   }}
-                          style={{
-                            objectFit: "cover",
-                            width: boxSize,
-                            height: boxSize,
-                          }}
-                          // className="rounded-lg"
-                        />
-                        <div className="bg-red-200">
-                          <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
-                            <div className="flex items-center">
-                              <div className="relative ml-1">
-                                <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
-                                {/* <div className="absolute top-0 left-0 right-0 bottom-0">
+                      ) : (
+                        <div>
+                          <video
+                            id={`video-${val}`}
+                            autoPlay
+                            playsInline
+                            controls={false}
+                            //   style={{
+                            //     objectFit: "cover",
+                            //     width: "100%",
+                            //     height: "auto",
+                            //   }}
+                            style={{
+                              objectFit: "cover",
+                              width: boxSize,
+                              height: boxSize,
+                            }}
+                            // className="rounded-lg"
+                          />
+                          <div className="bg-red-200">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
+                              <div className="flex items-center">
+                                <div className="relative ml-1">
+                                  <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
+                                  {/* <div className="absolute top-0 left-0 right-0 bottom-0">
                               <div className="flex justify-center items-center w-full h-full">
                                 <div
                                   className={`border border-red-500 w-8 rotate-45`}
                                 ></div>
                               </div>
                             </div> */}
-                              </div>
-                              <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
-                                {name}
+                                </div>
+                                <div className="text-xs md:text-lg font-bold overflow-ellipsis text-white">
+                                  {name}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
       </div>
     </div>
   );
