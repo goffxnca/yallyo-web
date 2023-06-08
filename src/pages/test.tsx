@@ -81,78 +81,84 @@ const JoinerList = () => {
       </div>
 
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
-      <div
-        className={joinClasses(
-          joiners <= 2
-            ? "flex flex-col md:flex-row md:flex-wrap "
-            : joiners <= 4
-            ? "flex flex-row flex-wrap"
-            : "flex flex-row flex-wrap",
-          "content-center items-center justify-center h-screen overflow-y-hidden bg-pramary"
-        )}
-      >
-        {ready &&
-          createNArray(joiners).map((val) => {
-            const name = faker.name.fullName();
-            const camOff = randomBoolean();
-            return (
-              <div
-                key={val}
-                // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
-                className={joinClasses(
-                  joiners <= 2
-                    ? "text-white w-full h-1/3 md:w-1/2 md:h-1/2 lg:w-1/3 lg:h-1/3"
-                    : joiners <= 4
-                    ? "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/3 lg:w-1/3 lg:h-1/3"
-                    : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4 lg:w-1/3 lg:h-1/3",
-                  "p-1"
-                )}
-                style={{ backgroundColor: getRandomColor() || "red" }}
-              >
-                {/* //Video From Camera */}
-                <div className="flex items-stretch justify-center h-full w-full">
-                  {/* James Doe */}
-                  <div className="relative ">
-                    <div>This is just an Avatar</div>
+      <div className="h-screen ">
+        <div
+          className={joinClasses(
+            joiners <= 2
+              ? "flex flex-col md:flex-row md:flex-wrap "
+              : joiners <= 4
+              ? "flex flex-row flex-wrap"
+              : "flex flex-row flex-wrap",
+            "content-center items-center justify-center bg-pramary"
+          )}
+        >
+          {ready &&
+            createNArray(joiners).map((val) => {
+              const name = faker.name.fullName();
+              const camOff = randomBoolean();
+              return (
+                <div
+                  key={val}
+                  // className="text-white w-full md:h-1/2  md:w-1/2 md:max-w-1/2 max-w-[500px] max-h-[500px]"
+                  className={joinClasses(
+                    joiners <= 2
+                      ? "text-white w-full md:w-1/2 md:h-[w-1/2] lg:w-1/3"
+                      : joiners <= 4
+                      ? "text-white w-1/2 md:w-1/2 md:h-[w-1/3] lg:w-1/3"
+                      : "text-white w-1/2 h-[w-1/2] md:w-1/3 md:h-[w-1/3]",
+                    "p-1"
+                  )}
+                  style={{ backgroundColor: getRandomColor() || "red" }}
+                >
+                  {/* //Video From Camera */}
+                  <div className="flex items-stretch justify-center h-full w-full">
+                    {/* James Doe */}
+                    <div className="relative ">
+                      {camOff ? (
+                        <div>This is just an Avatar</div>
+                      ) : (
+                        <div>
+                          <video
+                            id={`video-${val}`}
+                            autoPlay
+                            playsInline
+                            controls={false}
+                            style={{
+                              objectFit: "contain",
+                              width: "100%",
+                              height: "auto",
+                            }}
+                            // className="rounded-lg"
+                          />
 
-                    {/* <video
-                      id={`video-${val}`}
-                      autoPlay
-                      playsInline
-                      controls={false}
-                      style={{
-                        objectFit: "contain",
-                        width: "100%",
-                        height: "auto",
-                      }}
-                      // className="rounded-lg"
-                    /> */}
-
-                    {/* <div className="bg-red-200">
-                      <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
-                        <div className="flex items-center">
-            
-                          <div className="relative ml-1">
-                            <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
-                            <div className="absolute top-0 left-0 right-0 bottom-0">
+                          <div className="bg-red-200">
+                            <div className="absolute bottom-0 bg-black text-center  bg-opacity-70 p-1 md:p-3 ">
+                              <div className="flex items-center">
+                                {/* Mic */}
+                                <div className="relative ml-1">
+                                  <MicrophoneIcon className="w-4 h-4 md:w-5 md:h-5 text-red-500" />
+                                  {/* <div className="absolute top-0 left-0 right-0 bottom-0">
                               <div className="flex justify-center items-center w-full h-full">
                                 <div
                                   className={`border border-red-500 w-8 rotate-45`}
                                 ></div>
                               </div>
+                            </div> */}
+                                </div>
+                                <div className="text-xs md:text-lg font-bold overflow-ellipsis">
+                                  {name} {JSON.stringify(camOff)}
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div className="text-xs md:text-lg font-bold overflow-ellipsis">
-                            {name} {JSON.stringify(camOff)}
-                          </div>
                         </div>
-                      </div>
-                    </div> */}
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
       </div>
     </div>
   );
