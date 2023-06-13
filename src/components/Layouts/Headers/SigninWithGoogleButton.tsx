@@ -1,9 +1,10 @@
 import Image from "next/image";
 
 interface Props {
+  responsive: boolean;
   onClick: Function;
 }
-const SigninWithGoogleButton = ({ onClick }: Props) => {
+const SigninWithGoogleButton = ({ responsive, onClick }: Props) => {
   //   return (
   //     <button
   //       className="flex border border-gray-400 rounded-md px-2 py-1 hover:bg-gray-700"
@@ -25,7 +26,11 @@ const SigninWithGoogleButton = ({ onClick }: Props) => {
       <div className="bg-white p-3">
         <Image src="/google.svg" alt="My Icon" width={18} height={18} />
       </div>
-      <div className="hidden md:block text-white px-2 text-sm group-hover:shadow">
+      <div
+        className={`${
+          responsive && "hidden"
+        } md:block text-white px-2 text-sm group-hover:shadow`}
+      >
         Signin with Google
       </div>
     </button>

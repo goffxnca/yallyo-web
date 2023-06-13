@@ -99,7 +99,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                 </Link>
               )}
             </Menu.Item>
-
+            {/* 
             <Menu.Item>
               {({ active }) => (
                 <Link
@@ -116,7 +116,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                   Feature Request
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item>
               {({ active }) => (

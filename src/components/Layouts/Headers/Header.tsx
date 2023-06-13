@@ -20,7 +20,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 z-30 w-full border-b border-gray-600 bg-opacity-70">
+    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 z-30 w-full border-b border-gray-600 bg-opacity-90">
       {/* <div className="text-white text-sm">{status}</div> */}
 
       {/* <div className="text-white text-sm absolute top-20 left-0 bg-black overflow-hidden">
@@ -29,7 +29,8 @@ const Header = () => {
 
       <LogoSection />
 
-      {!loading && (
+      {/* TODO: This snippet will be un-commmented later */}
+      {/* {!loading && (
         <div className="text-center hidden md:block">
           <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
             Yallyo.com
@@ -38,12 +39,13 @@ const Header = () => {
             Language Learning Community
           </h2>
         </div>
-      )}
+      )} */}
 
       {!loading && (
         <>
           {!authState.user && (
             <SigninWithGoogleButton
+              responsive={true}
               onClick={() => {
                 dispatch(signinWithGoogle());
               }}

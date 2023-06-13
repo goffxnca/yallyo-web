@@ -162,6 +162,10 @@ class Peer2Peer {
   disconnect = () => {
     this.peer.destroy();
     this.peer = null;
+    if (this.localStream) {
+      this.localStream.getTracks().forEach((track) => track.stop());
+      this.localStream = null;
+    }
   };
 
   private getVideoElement = (peerId: string) => {

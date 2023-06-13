@@ -11,7 +11,7 @@ const SessionLeave = () => {
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
         <div className=" text-white text-center">
-          👋 You have left the chat room, Thank you for joining!
+          👋 You have just left the chat room. Thank you for joining!
         </div>
         <div className="flex justify-center mt-4">
           <Button text="Go Back Home Page" emitClick={handleGoHomeClick} />

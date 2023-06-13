@@ -60,6 +60,7 @@ const sessionSlice = createSlice({
       .addCase(signoutFromGoogle.fulfilled, (state, action) => {
         state.status = "idle";
         state.user = null;
+        window.location.href = "/";
       })
       .addCase(signoutFromGoogle.rejected, (state, action) => {
         state.status = "error";

@@ -106,5 +106,9 @@ export const subscribeSessionsUpdates = (
     console.log("WebSocket /sessions connection closed");
   });
 
+  peersSocket.on("error2", (data) => {
+    console.error("WebSocket /sessions error22: ", data);
+  });
+
   return peersSocket;
 };

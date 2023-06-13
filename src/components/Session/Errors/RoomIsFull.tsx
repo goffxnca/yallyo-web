@@ -1,19 +1,20 @@
-import Button from "@/components/Forms/Button";
+import Button from "../../Forms/Button";
 import { useRouter } from "next/router";
 
-const SessionTimeout = () => {
+const RoomIsFull = () => {
   const router = useRouter();
 
   const handleGoHomeClick = () => {
     router.replace("/");
   };
+
   return (
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
-        <div className=" text-white text-center max-w-[500px]">
-          👋 You were automatically disconnected from this room when you joined
-          another room at the same time. Thank you for joining!
+        <div className=" text-white text-center">
+          🤪 Sorry, the room is full. You cannot join at this time.
         </div>
+
         <div className="flex justify-center mt-4">
           <Button text="Go Back Home Page" emitClick={handleGoHomeClick} />
         </div>
@@ -22,4 +23,4 @@ const SessionTimeout = () => {
   );
 };
 
-export default SessionTimeout;
+export default RoomIsFull;

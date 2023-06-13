@@ -18,7 +18,9 @@ const PreviewScreen = ({ onPreviewFinished }: Props) => {
 
   return (
     <div className="flex justify-center items-center h-screen p-10">
-      <div className="">{showLoading && <DarkOverlay text="Loading..." />}</div>
+      <div className="">
+        {showLoading && <DarkOverlay text="Initializing..." />}
+      </div>
     </div>
   );
 };
