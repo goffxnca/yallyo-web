@@ -47,14 +47,17 @@ const MultiplePeers = () => {
           roomCode as string,
           user!,
           dispatch,
-          (joiner: IRoomPeer) => {
-            if (p2p.settings) {
-              p2p.settings.remoteUserId = joiner.userId;
-            }
+          {
+            onJoin: (joiner: IRoomPeer) => {
+              if (p2p.settings) {
+                p2p.settings.remoteUserId = joiner.userId;
+              }
 
-            setTimeout(() => {
-              p2p.callRemotePeer(joiner.userId);
-            }, 2000);
+              setTimeout(() => {
+                p2p.callRemotePeer(joiner.userId);
+              }, 2000);
+            },
+            onLeave: () => {},
           }
         );
         console.log("Subscribed /sessions");
