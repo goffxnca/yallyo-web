@@ -56,11 +56,8 @@ const RoomSessionPage = () => {
       remoteUserId: "",
       onStatusChange: setPeerStatus,
       onLocalVideoStreamed: () => {
-        sessionsSocket = subscribeSessionsUpdates(
-          roomId,
-          user!,
-          dispatch,
-          (joiner: IRoomPeer) => {
+        sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
+          onJoin: (joiner: IRoomPeer) => {
             if (p2p.settings) {
               p2p.settings.remoteUserId = joiner.userId;
             }
@@ -68,8 +65,20 @@ const RoomSessionPage = () => {
             setTimeout(() => {
               p2p.callRemotePeer(joiner.userId);
             }, 2000);
-          }
-        );
+
+            const joinAudio = document.getElementById(
+              "join-audio"
+            ) as HTMLAudioElement;
+            joinAudio.play();
+          },
+          onLeave: () => {
+            const leaveAudio = document.getElementById(
+              "leave-audio"
+            ) as HTMLAudioElement;
+            leaveAudio.play();
+          },
+        });
+
         console.log("Subscribed /sessions");
 
         setTimeout(() => {

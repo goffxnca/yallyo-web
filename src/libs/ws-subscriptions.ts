@@ -43,7 +43,7 @@ export const subscribeSessionsUpdates = (
   roomId: string,
   user: IFirebaseUser,
   dispatch: any,
-  onJoin: Function
+  callbacks: { onJoin: Function; onLeave: Function }
 ): Socket => {
   const peersSocket = io(
     `${ENVS.API_WS_URL}/sessions?rid=${roomId}&uid=${user.uid}&dname=${user.displayName}`
@@ -70,7 +70,7 @@ export const subscribeSessionsUpdates = (
         //We just use frontend to delay that process abit before syncing with Redux to make animation join/leave transition looks smooth
         setTimeout(() => {
           dispatch(addPeer(payload));
-          onJoin(payload);
+          callbacks.onJoin(payload);
         }, 3000);
         break;
 
@@ -78,6 +78,7 @@ export const subscribeSessionsUpdates = (
         dispatch(markPeerAsRemoving(payload));
         setTimeout(() => {
           dispatch(removePeer(payload));
+          callbacks.onLeave(payload);
         }, 2000);
 
       case SessionsGatewayEventCode.MIC_ON:

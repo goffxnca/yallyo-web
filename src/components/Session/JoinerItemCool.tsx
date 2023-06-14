@@ -15,7 +15,6 @@ interface Props {
 }
 const JoinerItemCool = ({
   userId,
-
   status,
   displayName,
   controls,

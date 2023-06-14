@@ -43,9 +43,10 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
   }, [user, peers]);
 
   const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
-  const [boxSize, setBoxSize] = useState("200px");
+  const [boxSize, setBoxSize] = useState("0px");
 
   const calculateBoxSize = (total: number) => {
+    console.log("calculateBoxSize...." + peers.length);
     const { innerWidth, innerHeight } = window;
     const layout = innerWidth > innerHeight ? "lanscape" : "portrait";
 
@@ -84,20 +85,42 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.navigator) {
+    if (typeof window !== "undefined" && window.navigator && peers.length) {
       const { innerWidth, innerHeight } = window;
       setScreen({
         width: innerWidth,
         height: innerHeight,
         layout: innerWidth > innerHeight ? "lanscape" : "portrait",
       });
-      setBoxSize(innerWidth / 2 + "px");
+
       calculateBoxSize(peers.length);
     }
-  }, [peers]);
+  }, [peers.length]);
 
   return (
     <div className="relative mx-auto">
+      <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
+
+      <audio
+        autoPlay={false}
+        src="/audios/join.mp3"
+        className="absolute left-0 bottom-0"
+        id="join-audio"
+      >
+        Your browser does not support the
+        <code>audio</code> element.
+      </audio>
+
+      <audio
+        autoPlay={false}
+        src="/audios/leave.mp3"
+        className="absolute left-0 bottom-0"
+        id="leave-audio"
+      >
+        Your browser does not support the
+        <code>audio</code> element.
+      </audio>
+
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
         className={joinClasses(
