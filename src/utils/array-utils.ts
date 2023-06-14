@@ -8,7 +8,7 @@ const createNArray = (length: number): number[] => {
 };
 
 const createNArrayFrom = (from: number, length: number): number[] => {
-  return Array.from({ length }, (v, k) => k + 3);
+  return Array.from({ length: length }, (v, k) => k + from);
 };
 
 export { getRandomItem, createNArray, createNArrayFrom };

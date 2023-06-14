@@ -149,7 +149,7 @@ const RoomSessionPage = () => {
     return <RoomNotFound />;
   }
 
-  if (room && room.joiners.length === 3) {
+  if (room && room.joiners.length === room.size) {
     return <RoomIsFull />;
   }
 
