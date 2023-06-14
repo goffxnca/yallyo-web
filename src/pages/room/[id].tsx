@@ -150,7 +150,7 @@ const RoomSessionPage = () => {
   }
 
   if (room && room.joiners.length === room.size) {
-    return <RoomIsFull />;
+    return (window.location.href = "/feedback/room-full");
   }
 
   //TODO: More to check 1.Room is not full, 2.User medias permission match room requirements
