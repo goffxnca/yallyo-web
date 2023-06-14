@@ -23,14 +23,14 @@ export interface IUser extends IDbDocument {
   provider: string;
 }
 
-export type TRoomJoiner = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
+export type TMinimalUser = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
 
 export interface IRoom extends IDbDocument {
   language: string;
   level: string;
   topic: string;
   desc: string;
-  joiners: TRoomJoiner[];
+  joiners: TMinimalUser[];
   size: number;
   order: string;
 }
@@ -64,6 +64,7 @@ export interface IRoomPeer {
   joinedAt: string;
   controls: IMediaControls;
   dname: string;
+  userInfo: TMinimalUser;
   status: "joining" | "leaving" | "connected";
 }
 

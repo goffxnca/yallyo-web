@@ -23,6 +23,7 @@ import PreviewScreen from "@/components/Session/PreviewScreen";
 import AuthRequired from "@/components/Session/Errors/AuthRequired";
 import RoomNotFound from "@/components/Session/Errors/RoomNotFound";
 import RoomIsFull from "@/components/Session/Errors/RoomIsFull";
+import SessionContainer from "@/components/Session/SessionContainer";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -156,80 +157,89 @@ const RoomSessionPage = () => {
   //TODO: More to check 1.Room is not full, 2.User medias permission match room requirements
 
   return (
-    <div>
-      <div className="text-white">{peerStatus}</div>
-      {/* <div className="text-white">{JSON.stringify(joiners)}</div> */}
-
-      {localPeerData && (
-        <SessionControlList
-          controls={localPeerData.controls}
-          onToggleMic={(current: boolean) => {
-            const data: ISocketIOMessage = {
-              type: current
-                ? SessionsGatewayEventCode.MIC_OFF
-                : SessionsGatewayEventCode.MIC_ON,
-              message: `User ${user.uid} turned mic ${current ? "off" : "on"}`,
-              payload: localPeerData?.socketId,
-            };
-            sessionsSocket.emit("clientMessage", data);
-            p2p.toggleAudioStream();
-          }}
-          onToggleCam={(current: boolean) => {
-            const data: ISocketIOMessage = {
-              type: current
-                ? SessionsGatewayEventCode.CAM_OFF
-                : SessionsGatewayEventCode.CAM_ON,
-              message: `User ${user.uid} turned camara ${
-                current ? "off" : "on"
-              }`,
-              payload: localPeerData?.socketId,
-            };
-            sessionsSocket.emit("clientMessage", data);
-            p2p.toggleVideoStream();
-          }}
-        />
-      )}
-
-      <pre className="text-white text-xs">
-        {/* {JSON.stringify(
-          peers.map((peer) => ({
-            socketId: peer.socketId,
-            roomId: peer.roomId,
-            userId: peer.userId,
-            status: peer.status,
-            dname: peer.dname,
-          })),
-          null,
-          2
-        )} */}
-        {/* {JSON.stringify(peers, null, 2)} */}
-      </pre>
-      <div className="flex justify-center my-4">
-        <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
-          <VideoStreamItem
-            userId={user.uid}
-            status={localPeerData?.status!}
-            displayName={localPeerData?.dname!}
-            controls={localPeerData?.controls!}
-          />
-
-          {peers
-            .filter((peer) => peer.userId !== user.uid)
-            .map((peer) => {
-              return (
-                <VideoStreamItem
-                  key={peer.socketId}
-                  userId={peer.userId}
-                  status={peer.status}
-                  displayName={peer.dname}
-                  controls={peer.controls}
-                />
-              );
-            })}
-        </ul>
-      </div>
-    </div>
+    <SessionContainer
+      user={user}
+      peers={peers}
+      sessionsSocket={sessionsSocket}
+      p2p={p2p}
+    />
   );
+
+  // return (
+  //   <div>
+  //     <div className="text-white">{peerStatus}</div>
+  //     {/* <div className="text-white">{JSON.stringify(joiners)}</div> */}
+
+  //     {localPeerData && (
+  //       <SessionControlList
+  //         controls={localPeerData.controls}
+  //         onToggleMic={(current: boolean) => {
+  //           const data: ISocketIOMessage = {
+  //             type: current
+  //               ? SessionsGatewayEventCode.MIC_OFF
+  //               : SessionsGatewayEventCode.MIC_ON,
+  //             message: `User ${user.uid} turned mic ${current ? "off" : "on"}`,
+  //             payload: localPeerData?.socketId,
+  //           };
+  //           sessionsSocket.emit("clientMessage", data);
+  //           p2p.toggleAudioStream();
+  //         }}
+  //         onToggleCam={(current: boolean) => {
+  //           const data: ISocketIOMessage = {
+  //             type: current
+  //               ? SessionsGatewayEventCode.CAM_OFF
+  //               : SessionsGatewayEventCode.CAM_ON,
+  //             message: `User ${user.uid} turned camara ${
+  //               current ? "off" : "on"
+  //             }`,
+  //             payload: localPeerData?.socketId,
+  //           };
+  //           sessionsSocket.emit("clientMessage", data);
+  //           p2p.toggleVideoStream();
+  //         }}
+  //       />
+  //     )}
+
+  //     <pre className="text-white text-xs">
+  //       {/* {JSON.stringify(
+  //         peers.map((peer) => ({
+  //           socketId: peer.socketId,
+  //           roomId: peer.roomId,
+  //           userId: peer.userId,
+  //           status: peer.status,
+  //           dname: peer.dname,
+  //         })),
+  //         null,
+  //         2
+  //       )} */}
+  //       {/* {JSON.stringify(peers, null, 2)} */}
+  //     </pre>
+  //     <div className="flex justify-center my-4">
+  //       <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
+  //         <VideoStreamItem
+  //           userId={user.uid}
+  //           status={localPeerData?.status!}
+  //           displayName={localPeerData?.dname!}
+  //           controls={localPeerData?.controls!}
+  //         />
+
+  //         {peers
+  //           .filter((peer) => peer.userId !== user.uid)
+  //           .map((peer) => {
+  //             return (
+  //               <VideoStreamItem
+  //                 key={peer.socketId}
+  //                 userId={peer.userId}
+  //                 status={peer.status}
+  //                 displayName={peer.dname}
+  //                 controls={peer.controls}
+  //               />
+  //             );
+  //           })}
+  //       </ul>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default RoomSessionPage;
