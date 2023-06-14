@@ -55,7 +55,6 @@ const RoomSessionPage = () => {
       remoteUserId: "",
       onStatusChange: setPeerStatus,
       onLocalVideoStreamed: () => {
-        debugger;
         sessionsSocket = subscribeSessionsUpdates(
           roomId,
           user!,
