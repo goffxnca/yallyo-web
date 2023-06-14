@@ -103,6 +103,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
 
       <audio
         autoPlay={false}
+        controls
         src="/audios/join.mp3"
         className="absolute left-0 bottom-0"
         id="join-audio"
@@ -110,16 +111,16 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
         Your browser does not support the
         <code>audio</code> element.
       </audio>
-
+      {/* 
       <audio
         autoPlay={false}
-        src="/audios/leave.mp3"
+        src="/audios/leave2.mp3"
         className="absolute left-0 bottom-0"
         id="leave-audio"
       >
         Your browser does not support the
         <code>audio</code> element.
-      </audio>
+      </audio> */}
 
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
