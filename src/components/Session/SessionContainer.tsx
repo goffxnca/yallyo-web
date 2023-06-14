@@ -102,12 +102,13 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
       <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
 
       <audio
-        autoPlay={false}
+        autoPlay={true}
         controls
         src="/audios/join.mp3"
         className="absolute left-0 bottom-0"
         id="join-audio"
       >
+        <source src=""></source>
         Your browser does not support the
         <code>audio</code> element.
       </audio>
