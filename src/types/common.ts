@@ -23,12 +23,14 @@ export interface IUser extends IDbDocument {
   provider: string;
 }
 
+export type TRoomJoiner = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
+
 export interface IRoom extends IDbDocument {
   language: string;
   level: string;
   topic: string;
   desc: string;
-  joiners: Pick<IUser, "_id" | "dname" | "photoURL" | "color">[];
+  joiners: TRoomJoiner[];
   size: number;
   order: string;
 }
