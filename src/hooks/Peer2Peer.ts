@@ -28,6 +28,7 @@ class Peer2Peer {
 
     const { localUserId } = settings;
     const Peer = await import("peerjs");
+    alert(`Registering user id: ${localUserId} on PeerServerCloud`);
     this.peer = new Peer.default(localUserId);
     console.log(`Registered ${localUserId} for PeerServerCloud`);
 
