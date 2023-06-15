@@ -39,45 +39,47 @@ const RoomSessionPage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const initRoomSession = useCallback(async () => {
-    alert("initRoomSession");
-    console.log("=========================");
-    console.log("Initializing room session");
+    if (user && roomId) {
+      alert("initRoomSession");
+      console.log("=========================");
+      console.log("Initializing room session");
 
-    p2p = new Peer2Peer();
-    await p2p.init({
-      localUserId: user?.uid as string,
-      remoteUserId: "",
-      onStatusChange: setPeerStatus,
-      onLocalVideoStreamed: () => {
-        sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
-          onConnected: () => {
-            console.log("Subscribed /sessions");
-            setTimeout(() => {
-              dispatch(fetchPeersAsync(roomId)).then(() => {
-                console.log("Fetched peers");
-                dispatch(removePeerLoading(user?.uid as string));
-              });
-            }, 2000);
-          },
-          onJoin: (joiner: IRoomPeer) => {
-            if (p2p.settings) {
-              p2p.settings.remoteUserId = joiner.userId;
-            }
+      p2p = new Peer2Peer();
+      await p2p.init({
+        localUserId: user?.uid as string,
+        remoteUserId: "",
+        onStatusChange: setPeerStatus,
+        onLocalVideoStreamed: () => {
+          sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
+            onConnected: () => {
+              console.log("Subscribed /sessions");
+              setTimeout(() => {
+                dispatch(fetchPeersAsync(roomId)).then(() => {
+                  console.log("Fetched peers");
+                  dispatch(removePeerLoading(user?.uid as string));
+                });
+              }, 2000);
+            },
+            onJoin: (joiner: IRoomPeer) => {
+              if (p2p.settings) {
+                p2p.settings.remoteUserId = joiner.userId;
+              }
 
-            setTimeout(() => {
-              p2p.callRemotePeer(joiner.userId);
-            }, 2000);
-          },
-          onLeave: () => {},
-        });
-      },
-      onRemoteVideoStreamed: (remoteId: string) => {
-        dispatch(removePeerLoading(remoteId));
-      },
-    });
+              setTimeout(() => {
+                p2p.callRemotePeer(joiner.userId);
+              }, 2000);
+            },
+            onLeave: () => {},
+          });
+        },
+        onRemoteVideoStreamed: (remoteId: string) => {
+          dispatch(removePeerLoading(remoteId));
+        },
+      });
 
-    setInitializedOnce(true);
-  }, [dispatch, roomId, user]);
+      setInitializedOnce(true);
+    }
+  }, [user, roomId, dispatch]);
 
   useEffect(() => {
     const { sid } = router.query;
