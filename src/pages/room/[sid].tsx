@@ -40,7 +40,7 @@ const RoomSessionPage = () => {
 
   const initRoomSession = useCallback(async () => {
     if (user && roomId) {
-      alert("initRoomSession");
+      // alert("initRoomSession");
       console.log("=========================");
       console.log("Initializing room session");
 
