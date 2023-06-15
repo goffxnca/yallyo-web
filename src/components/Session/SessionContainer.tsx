@@ -28,6 +28,8 @@ interface Props {
   p2p: Peer2Peer;
 }
 
+const GAP_PX = 8;
+
 const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   console.log("SessionContainer");
 
@@ -80,7 +82,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
           ? innerWidth
           : total === 2
           ? innerWidth / 1.5
-          : innerWidth / 2;
+          : innerWidth / 2 - GAP_PX;
     }
     setBoxSize(finalBoxSize + "px");
   }, []);
@@ -158,7 +160,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
           )}
 
           <div className="flex justify-center my-4">
-            <ul className="flex flex-wrap justify-center max-w-[1400px]">
+            <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
               {/* <VideoStreamItem
                 userId={user.uid}
                 status={localPeerData?.status!}
