@@ -29,7 +29,6 @@ const RoomSessionPage = () => {
 
   const { user } = useSelector((state: RootState) => state.auth);
   const { room } = useSelector((state: RootState) => state.session);
-  const { peers } = useSelector((state: RootState) => state.session);
 
   const [peerStatus, setPeerStatus] = useState("");
   const [roomSid, setRoomSid] = useState("");
@@ -151,14 +150,7 @@ const RoomSessionPage = () => {
 
   //TODO: More to check 1.Room is not full, 2.User medias permission match room requirements
 
-  return (
-    <SessionContainer
-      user={user}
-      peers={peers}
-      sessionsSocket={sessionsSocket}
-      p2p={p2p}
-    />
-  );
+  return <SessionContainer sessionsSocket={sessionsSocket} p2p={p2p} />;
 };
 
 export default RoomSessionPage;

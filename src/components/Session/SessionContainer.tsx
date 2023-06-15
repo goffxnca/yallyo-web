@@ -24,14 +24,15 @@ import VideoStreamItem from "./VideoStreamItem";
 import JoinerItemCool from "./JoinerItemCool";
 
 interface Props {
-  user: IFirebaseUser;
-  peers: IRoomPeer[];
   sessionsSocket: Socket;
   p2p: Peer2Peer;
 }
 
-const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
+const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   console.log("SessionContainer");
+
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { peers } = useSelector((state: RootState) => state.session);
 
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
 
@@ -96,7 +97,11 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
 
       calculateBoxSize(peers.length);
     }
-  }, [peers, calculateBoxSize]);
+  }, [peers.length, calculateBoxSize]);
+
+  if (!user || !peers.length) {
+    return <div className="text-white">Nothing</div>;
+  }
 
   return (
     <div className="relative mx-auto">
