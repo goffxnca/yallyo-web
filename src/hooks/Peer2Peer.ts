@@ -102,8 +102,25 @@ class Peer2Peer {
       localUserVideo.srcObject = stream;
       this.settings?.onLocalVideoStreamed();
       console.log("Render local stream successfully");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Render local stream failed", error);
+
+      if (error instanceof Error) {
+        if (
+          error.name === "NotAllowedError" ||
+          error.name === "PermissionDeniedError"
+        ) {
+          // Handle permission denied error
+          // Show a message on the UI indicating that camera/microphone access is required
+          alert("Why dont you allow the cam/mic :(");
+        } else {
+          // Handle other types of errors
+          // Show a generic error message on the UI
+        }
+      } else {
+        // Handle unexpected error types
+        // Show a generic error message on the UI
+      }
     }
   };
 
