@@ -42,7 +42,7 @@ const JoinerItemCool = ({
       //   "p-1"
       // )}
 
-      className={`relative  rounded-lg ${
+      className={`relative rounded-lg overflow-hidden ${
         status !== "connected" && "opacity-70"
       }`}
       style={{
