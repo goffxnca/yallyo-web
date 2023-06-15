@@ -14,7 +14,7 @@ import { getRandomColor } from "@/utils/color-utils";
 import { joinClasses } from "@/utils/jsx-utils";
 import { faker } from "@faker-js/faker";
 import { MicrophoneIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { IFirebaseUser } from "@/types/frontend";
@@ -45,8 +45,8 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
   const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
   const [boxSize, setBoxSize] = useState("100px");
 
-  const calculateBoxSize = (total: number) => {
-    console.log("calculateBoxSize...." + peers.length);
+  const calculateBoxSize = useCallback((total: number) => {
+    // console.log("calculateBoxSize...." + peers.length);
     const { innerWidth, innerHeight } = window;
     const layout = innerWidth > innerHeight ? "lanscape" : "portrait";
 
@@ -82,7 +82,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
           : innerWidth / 2;
     }
     setBoxSize(finalBoxSize + "px");
-  };
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.navigator && peers.length) {
@@ -95,7 +95,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
 
       calculateBoxSize(peers.length);
     }
-  }, [peers.length]);
+  }, [peers.length, calculateBoxSize]);
 
   return (
     <div className="relative mx-auto">
