@@ -68,7 +68,7 @@ const RoomSessionPage = () => {
             dispatch(removePeerLoading(user?.uid as string));
           });
           console.log("Fetching peers");
-        }, 1000);
+        }, 10000);
       },
       onRemoteVideoStreamed: (remoteId: string) => {
         dispatch(removePeerLoading(remoteId));
