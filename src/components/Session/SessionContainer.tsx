@@ -96,7 +96,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
 
       calculateBoxSize(peers.length);
     }
-  }, [peers.length, calculateBoxSize]);
+  }, [peers, calculateBoxSize]);
 
   return (
     <div className="relative mx-auto">
