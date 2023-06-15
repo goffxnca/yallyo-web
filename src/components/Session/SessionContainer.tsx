@@ -158,7 +158,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
           )}
 
           <div className="flex justify-center my-4">
-            <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
+            <ul className="flex flex-wrap justify-center max-w-[1400px]">
               {/* <VideoStreamItem
                 userId={user.uid}
                 status={localPeerData?.status!}
