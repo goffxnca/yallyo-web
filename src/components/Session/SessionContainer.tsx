@@ -85,7 +85,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.navigator && peers.length) {
+    if (typeof window !== "undefined" && window.navigator) {
       alert("test");
       const { innerWidth, innerHeight } = window;
       setScreen({
