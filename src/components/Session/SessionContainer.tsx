@@ -43,7 +43,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
   }, [user, peers]);
 
   const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
-  const [boxSize, setBoxSize] = useState("0px");
+  const [boxSize, setBoxSize] = useState("100px");
 
   const calculateBoxSize = (total: number) => {
     console.log("calculateBoxSize...." + peers.length);
