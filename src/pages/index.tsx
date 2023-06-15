@@ -26,9 +26,14 @@ import { ArrowRightIcon, ArrowUturnUpIcon } from "@heroicons/react/24/outline";
 import { FieldValues } from "react-hook-form";
 import Notification from "@/components/UIs/Notification";
 import PageContainer from "@/components/Layouts/PageContainer";
+import {
+  addCreateRoomQuota,
+  readCurrentCreateRoomQuotaCount,
+} from "@/utils/localstorage-utils";
 
 const HomePage = () => {
   // console.log("HomePage");
+
   const {
     rooms,
     roomsGroupedByLanguage,
@@ -50,11 +55,14 @@ const HomePage = () => {
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
 
-  const [counter, setCounter] = useState(1);
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
   const [showRoomCreatedNotification, setShowRoomCreatedNotification] =
     useState(false);
+  const [
+    showRoomCreateOverQuotaNotification,
+    setShowRoomCreateOverQuotaNotification,
+  ] = useState(false);
 
   const isFirstMount = useRef(true);
   const readMoreRef = useRef<HTMLDivElement>(null);
@@ -145,12 +153,19 @@ const HomePage = () => {
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
 
   const onFormSubmit = (data: FieldValues) => {
+    if (readCurrentCreateRoomQuotaCount() === ENVS.CREATE_ROOM_QUOTA) {
+      setShowNewRoomFormModal(false);
+      setShowRoomCreateOverQuotaNotification(true);
+      return;
+    }
+
     dispatch(createRoom(data))
       .unwrap()
       .then((createdRoom) => {
         setShowNewRoomFormModal(false);
         setShowRoomCreatedNotification(true);
         dispatch(updateRooms([{ ...createdRoom, updateStatus: "C" }]));
+        addCreateRoomQuota();
       })
       .catch(() => {
         setShowNewRoomFormModal(false);
@@ -394,6 +409,16 @@ const HomePage = () => {
           type="error"
           messageTitle="Something went wrong!"
           messageBody={error || "You can refresh the page or try again later."}
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
+      )}
+
+      {showRoomCreateOverQuotaNotification && (
+        <Notification
+          type="error"
+          messageTitle="Create room failed!"
+          messageBody={error || "You can create only 3 rooms per day."}
           autoFadeout={true}
           onFadedOut={() => {}}
         />
