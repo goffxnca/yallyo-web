@@ -49,6 +49,15 @@ const RoomSessionPage = () => {
       onStatusChange: setPeerStatus,
       onLocalVideoStreamed: () => {
         sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
+          onConnected: () => {
+            console.log("Subscribed /sessions");
+            setTimeout(() => {
+              dispatch(fetchPeersAsync(roomId)).then(() => {
+                console.log("Fetched peers");
+                dispatch(removePeerLoading(user?.uid as string));
+              });
+            }, 2000);
+          },
           onJoin: (joiner: IRoomPeer) => {
             if (p2p.settings) {
               p2p.settings.remoteUserId = joiner.userId;
@@ -60,15 +69,6 @@ const RoomSessionPage = () => {
           },
           onLeave: () => {},
         });
-
-        console.log("Subscribed /sessions");
-
-        setTimeout(() => {
-          dispatch(fetchPeersAsync(roomId)).then(() => {
-            dispatch(removePeerLoading(user?.uid as string));
-          });
-          console.log("Fetching peers");
-        }, 10000);
       },
       onRemoteVideoStreamed: (remoteId: string) => {
         dispatch(removePeerLoading(remoteId));

@@ -43,7 +43,7 @@ export const subscribeSessionsUpdates = (
   roomId: string,
   user: IFirebaseUser,
   dispatch: any,
-  callbacks: { onJoin: Function; onLeave: Function }
+  callbacks: { onConnected: Function; onJoin: Function; onLeave: Function }
 ): Socket => {
   const peersSocket = io(
     `${ENVS.API_WS_URL}/sessions?rid=${roomId}&uid=${user.uid}&dname=${user.displayName}`
@@ -51,6 +51,7 @@ export const subscribeSessionsUpdates = (
 
   peersSocket.on("connect", () => {
     console.log("WebSocket /sessions connection opened");
+    callbacks.onConnected();
   });
 
   peersSocket.on("serverPush", (data: ISocketIOMessage) => {
