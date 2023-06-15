@@ -42,8 +42,8 @@ const JoinerItemCool = ({
       //   "p-1"
       // )}
 
-      className={`relative p-1 rounded-lg ${
-        status !== "connected" && "opacity-50"
+      className={`relative  rounded-lg ${
+        status !== "connected" && "opacity-70"
       }`}
       style={{
         //   backgroundColor: getRandomColor() || "red",
