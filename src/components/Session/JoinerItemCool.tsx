@@ -96,6 +96,7 @@ const JoinerItemCool = ({
                   width: boxSize,
                   height: boxSize,
                 }}
+                className="rounded-lg"
               />
             </div>
 
