@@ -34,6 +34,7 @@ const RoomSessionPage = () => {
   const [roomSid, setRoomSid] = useState("");
   const [roomId, setRoomId] = useState("");
   const [initilizedOnce, setInitializedOnce] = useState(false);
+  const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
   const [showPreviewScreen, setShowPreviewScreen] = useState(true);
 
   const dispatch: AppDispatch = useDispatch();
@@ -90,7 +91,9 @@ const RoomSessionPage = () => {
 
   useEffect(() => {
     if (user && roomSid) {
-      dispatch(fetchSessionBySidAsync(roomSid));
+      dispatch(fetchSessionBySidAsync(roomSid)).finally(() => {
+        setRoomFetchedOnce(true);
+      });
     }
   }, [user, roomSid, dispatch]);
 
@@ -140,14 +143,18 @@ const RoomSessionPage = () => {
   }
 
   if (!room) {
-    return <RoomNotFound />;
+    if (roomFetchedOnce) {
+      return <RoomNotFound />;
+    } else {
+      return null;
+    }
   }
 
-  if (!room.active) {
+  if (room && !room.active) {
     return <RoomInactive />;
   }
 
-  if (room.joiners.length === room.size) {
+  if (room && room.joiners.length === room.size) {
     return (window.location.href = "/feedback/room-full");
   }
 
