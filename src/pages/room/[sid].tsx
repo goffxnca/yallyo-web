@@ -39,6 +39,7 @@ const RoomSessionPage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const initRoomSession = useCallback(async () => {
+    alert("initRoomSession");
     console.log("=========================");
     console.log("Initializing room session");
 
