@@ -173,6 +173,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                 controls={localPeerData?.controls!}
                 boxSize={boxSize}
                 photoUrl={user?.photoURL!}
+                showStatusIndicator={false}
               />
 
               {peers
@@ -195,6 +196,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                       controls={peer.controls}
                       boxSize={boxSize}
                       photoUrl={peer.userInfo.photoURL}
+                      showStatusIndicator={true}
                     />
                   );
                 })}

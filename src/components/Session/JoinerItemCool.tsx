@@ -1,7 +1,6 @@
 import { IMediaControls } from "@/types/common";
-import { MicrophoneIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import Avatar from "../UIs/Avatar";
-import { faker } from "@faker-js/faker";
 import { getRandomColor } from "@/utils/color-utils";
 import JoinerItemCoolFooter from "./JoinerItemCoolFooter";
 
@@ -12,6 +11,7 @@ interface Props {
   controls: IMediaControls;
   boxSize: string;
   photoUrl: string;
+  showStatusIndicator: boolean;
 }
 const JoinerItemCool = ({
   userId,
@@ -20,6 +20,7 @@ const JoinerItemCool = ({
   controls,
   boxSize,
   photoUrl,
+  showStatusIndicator,
 }: Props) => {
   return (
     <div
@@ -40,7 +41,10 @@ const JoinerItemCool = ({
       //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
       //   "p-1"
       // )}
-      className="p-1 rounded-lg"
+
+      className={`relative p-1 rounded-lg ${
+        status !== "connected" && "opacity-50"
+      }`}
       style={{
         //   backgroundColor: getRandomColor() || "red",
         height: boxSize,
@@ -102,6 +106,17 @@ const JoinerItemCool = ({
           </div>
         </div>
       </div>
+
+      {showStatusIndicator && status !== "connected" && (
+        <div className="animate-pulse absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="">
+            <ArrowPathIcon className="h-5 w-5 text-white animate-spin mx-auto" />
+            {status === "leaving" && (
+              <div className="text-white capitalize">{status}</div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
