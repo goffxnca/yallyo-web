@@ -101,28 +101,6 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
     <div className="relative mx-auto">
       <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
 
-      <audio
-        autoPlay={true}
-        controls
-        src="/audios/join.mp3"
-        className="absolute left-0 bottom-0"
-        id="join-audio"
-      >
-        <source src=""></source>
-        Your browser does not support the
-        <code>audio</code> element.
-      </audio>
-      {/* 
-      <audio
-        autoPlay={false}
-        src="/audios/leave2.mp3"
-        className="absolute left-0 bottom-0"
-        id="leave-audio"
-      >
-        Your browser does not support the
-        <code>audio</code> element.
-      </audio> */}
-
       {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
       <div
         className={joinClasses(

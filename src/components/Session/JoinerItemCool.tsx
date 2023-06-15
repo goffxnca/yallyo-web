@@ -40,7 +40,7 @@ const JoinerItemCool = ({
       //     : "text-white w-1/2 h-1/4 md:w-1/2 md:h-1/4  lg:h-1/3 lg:w-[h1/3]",
       //   "p-1"
       // )}
-      className="p-1"
+      className="p-1 rounded-lg"
       style={{
         //   backgroundColor: getRandomColor() || "red",
         height: boxSize,
@@ -48,7 +48,7 @@ const JoinerItemCool = ({
       }}
     >
       {/* //Video From Camera */}
-      <div className="flex items-stretch justify-center h-full w-full bg-secondary">
+      <div className="flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden">
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
           {controls && !controls.camOn && (

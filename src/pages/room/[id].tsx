@@ -65,18 +65,8 @@ const RoomSessionPage = () => {
             setTimeout(() => {
               p2p.callRemotePeer(joiner.userId);
             }, 2000);
-
-            const joinAudio = document.getElementById(
-              "join-audio"
-            ) as HTMLAudioElement;
-            joinAudio.play();
           },
-          onLeave: () => {
-            const leaveAudio = document.getElementById(
-              "leave-audio"
-            ) as HTMLAudioElement;
-            leaveAudio.play();
-          },
+          onLeave: () => {},
         });
 
         console.log("Subscribed /sessions");
