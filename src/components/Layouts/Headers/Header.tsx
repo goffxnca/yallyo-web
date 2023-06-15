@@ -20,7 +20,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 z-30 w-full border-b border-gray-600 bg-opacity-90">
+    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 w-full border-b border-gray-600 bg-opacity-90 z-30">
       {/* <div className="text-white text-sm">{status}</div> */}
 
       {/* <div className="text-white text-sm absolute top-20 left-0 bg-black overflow-hidden">

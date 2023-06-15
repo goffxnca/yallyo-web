@@ -22,7 +22,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
   const dispatch: AppDispatch = useDispatch();
 
   return (
-    <div className="flex justify-center absolute top-20 left-0 right-0 z-40">
+    <div className="flex justify-center absolute top-20 left-0 right-0 z-20">
       <div className="flex items-center justify-center bg-secondary text-white rounded-md ">
         {/* <div className="text-white">{JSON.stringify(controls)}</div> */}
         <SessionControlItem
