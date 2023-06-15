@@ -26,6 +26,8 @@ export interface IUser extends IDbDocument {
 export type TMinimalUser = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
 
 export interface IRoom extends IDbDocument {
+  //sid is for short friendly id
+  sid: string;
   language: string;
   level: string;
   topic: string;
@@ -63,7 +65,6 @@ export interface IRoomPeer {
   userId: string;
   joinedAt: string;
   controls: IMediaControls;
-  dname: string;
   userInfo: TMinimalUser;
   status: "joining" | "leaving" | "connected";
 }

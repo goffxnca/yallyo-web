@@ -13,6 +13,7 @@ const RoomItem = memo((room: Props) => {
   const {
     desc,
     _id,
+    sid,
     topic,
     language,
     level,
@@ -86,7 +87,7 @@ const RoomItem = memo((room: Props) => {
         </div>
       ) : (
         <a
-          href={`/room/${_id}`}
+          href={`/room/${sid}`}
           target="_blank"
           className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
         >

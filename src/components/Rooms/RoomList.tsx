@@ -25,6 +25,7 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
         <RoomItem
           key={room._id}
           _id={room._id}
+          sid={room.sid}
           language={room.language}
           level={room.level}
           topic={room.topic}

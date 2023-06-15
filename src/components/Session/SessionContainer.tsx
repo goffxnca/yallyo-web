@@ -160,7 +160,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
               <JoinerItemCool
                 userId={user.uid}
                 status={localPeerData?.status!}
-                displayName={localPeerData?.dname!}
+                displayName={localPeerData?.userInfo.dname!}
                 controls={localPeerData?.controls!}
                 boxSize={boxSize}
                 photoUrl={user.photoURL}
@@ -182,7 +182,7 @@ const SessionContainer = ({ user, peers, sessionsSocket, p2p }: Props) => {
                       key={peer.socketId}
                       userId={peer.userId}
                       status={peer.status}
-                      displayName={peer.dname}
+                      displayName={peer.userInfo.dname}
                       controls={peer.controls}
                       boxSize={boxSize}
                       photoUrl={peer.userInfo.photoURL}

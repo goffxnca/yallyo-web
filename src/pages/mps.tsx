@@ -186,7 +186,7 @@ const MultiplePeers = () => {
           <VideoStreamItem
             userId={user.uid}
             status={localPeerData?.status!}
-            displayName={localPeerData?.dname!}
+            displayName={localPeerData?.userInfo.dname!}
             controls={localPeerData?.controls!}
           />
 
@@ -198,7 +198,7 @@ const MultiplePeers = () => {
                   key={peer.socketId}
                   userId={peer.userId}
                   status={peer.status}
-                  displayName={peer.dname}
+                  displayName={peer.userInfo.dname}
                   controls={peer.controls}
                 />
               );

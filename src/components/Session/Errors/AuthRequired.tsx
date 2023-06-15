@@ -17,7 +17,7 @@ const AuthRequired = () => {
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
         <div className=" text-white text-center">
-          🔒 You need to login with Google Account to join the room.
+          🔒 You need to login with Google Account to join this room.
         </div>
 
         <div className="flex justify-center mt-4">

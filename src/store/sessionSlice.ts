@@ -21,7 +21,7 @@ const initialState: SessionState = {
 };
 
 export const fetchSessionAsync = createAsyncThunk(
-  "room/fetchRoom",
+  "room/fetchSessionAsync",
   async (roomId: string, thunkAPI) => {
     const currentState = thunkAPI.getState() as RootState;
 
@@ -41,8 +41,29 @@ export const fetchSessionAsync = createAsyncThunk(
   }
 );
 
+export const fetchSessionBySidAsync = createAsyncThunk(
+  "room/fetchSessionBySidAsync",
+  async (roomSid: string, thunkAPI) => {
+    const currentState = thunkAPI.getState() as RootState;
+
+    const endpoint = `${ENVS.API_URL}/rooms/bysid/${roomSid}`;
+    const response = await fetch(endpoint, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    return data as IRoom;
+  }
+);
+
 export const fetchPeersAsync = createAsyncThunk(
-  "room/fetchPeers",
+  "room/fetchPeersAsync",
   async (roomId: string, thunkAPI) => {
     const currentState = thunkAPI.getState() as RootState;
 
@@ -60,31 +81,6 @@ export const fetchPeersAsync = createAsyncThunk(
     const data = await response.json();
     return data as IRoomPeer[];
   }
-);
-
-export const joinRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const leaveRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const cancelRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const sendRoomMessage = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const reportRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
 );
 
 const sessionSlice = createSlice({
@@ -156,7 +152,21 @@ const sessionSlice = createSlice({
       })
       .addCase(fetchSessionAsync.rejected, (state, action) => {
         state.status = "error";
-        state.error = action.error.message ?? "Failed to fetch session";
+        state.error =
+          action.error.message ?? "Failed to fetch session by room id";
+      });
+
+    builder
+      .addCase(fetchSessionBySidAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchSessionBySidAsync.fulfilled, (state, action) => {
+        state.status = "success";
+        state.room = action.payload;
+      })
+      .addCase(fetchSessionBySidAsync.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to fetch session by sid";
       });
 
     builder

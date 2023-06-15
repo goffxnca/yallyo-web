@@ -99,7 +99,7 @@ const JoinerList2 = () => {
 
   const medias: IMediaControls = { camOn: true, micOn: true, screenOn: false };
   return (
-    <div className="relative  mx-auto">
+    <div className="relative mx-auto">
       <SessionControlList
         onToggleCam={() => {}}
         onToggleMic={() => {}}
