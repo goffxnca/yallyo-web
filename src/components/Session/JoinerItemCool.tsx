@@ -80,7 +80,7 @@ const JoinerItemCool = ({
           )}
 
           <div className="relative h-full w-full">
-            <div className="rounded-lg z-20">
+            <div className="rounded-lg overflow-hidden z-20">
               <video
                 id={`video-${userId}`}
                 autoPlay
