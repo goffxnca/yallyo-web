@@ -99,9 +99,9 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
     }
   }, [peers.length, calculateBoxSize]);
 
-  if (!user || !peers.length) {
-    return <div className="text-white">Nothing</div>;
-  }
+  // if (!user || !peers.length) {
+  //   return <div className="text-white">Nothing</div>;
+  // }
 
   return (
     <div className="relative mx-auto">
@@ -134,7 +134,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   type: current
                     ? SessionsGatewayEventCode.MIC_OFF
                     : SessionsGatewayEventCode.MIC_ON,
-                  message: `User ${user.uid} turned mic ${
+                  message: `User ${user?.uid} turned mic ${
                     current ? "off" : "on"
                   }`,
                   payload: localPeerData?.socketId,
@@ -147,7 +147,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   type: current
                     ? SessionsGatewayEventCode.CAM_OFF
                     : SessionsGatewayEventCode.CAM_ON,
-                  message: `User ${user.uid} turned camara ${
+                  message: `User ${user?.uid} turned camara ${
                     current ? "off" : "on"
                   }`,
                   payload: localPeerData?.socketId,
@@ -168,16 +168,16 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
               /> */}
 
               <JoinerItemCool
-                userId={user.uid}
+                userId={user?.uid!}
                 status={localPeerData?.status!}
                 displayName={localPeerData?.userInfo.dname!}
                 controls={localPeerData?.controls!}
                 boxSize={boxSize}
-                photoUrl={user.photoURL}
+                photoUrl={user?.photoURL!}
               />
 
               {peers
-                .filter((peer) => peer.userId !== user.uid)
+                .filter((peer) => peer.userId !== user?.uid)
                 .map((peer) => {
                   return (
                     // <VideoStreamItem
