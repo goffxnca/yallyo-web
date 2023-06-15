@@ -48,6 +48,7 @@ const MultiplePeers = () => {
           user!,
           dispatch,
           {
+            onConnected: () => {},
             onJoin: (joiner: IRoomPeer) => {
               if (p2p.settings) {
                 p2p.settings.remoteUserId = joiner.userId;
