@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => {
       <main className="flex-grow">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
       <div className="text-white fixed top-0 z-50">
-        {process.env.NEXT_PUBLIC_BUILD_YO}
+        {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
       </div>
     </div>
   );
