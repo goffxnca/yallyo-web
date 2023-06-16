@@ -35,7 +35,7 @@ const RoomSessionPage = () => {
   const [roomId, setRoomId] = useState("");
   const [initilizedOnce, setInitializedOnce] = useState(false);
   const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
-  const [showPreviewScreen, setShowPreviewScreen] = useState(true);
+  const [showPreviewScreen, setShowPreviewScreen] = useState(true); //This gonna always take 5 seconds static
 
   const dispatch: AppDispatch = useDispatch();
 

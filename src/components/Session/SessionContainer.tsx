@@ -49,7 +49,8 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   const [boxSize, setBoxSize] = useState("0px");
 
   const calculateBoxSize = useCallback((total: number) => {
-    // console.log("calculateBoxSize...." + peers.length);
+    //We try to treat peer length zero or one the same, so we avoid blinky joiner box
+    const totalIsZeroOrOne = total === 0 || total === 1;
     const { innerWidth, innerHeight } = window;
     const layout = innerWidth > innerHeight ? "lanscape" : "portrait";
 
@@ -57,38 +58,36 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
     if (innerWidth >= 1280) {
       //lg
       if (layout === "lanscape") {
-        finalBoxSize = total === 1 ? innerHeight / 2 : innerHeight / 3;
+        finalBoxSize = totalIsZeroOrOne ? innerHeight / 2 : innerHeight / 3;
       } else {
-        finalBoxSize = total === 1 ? innerWidth / 2 : innerWidth / 4;
+        finalBoxSize = totalIsZeroOrOne ? innerWidth / 2 : innerWidth / 4;
       }
     } else if (innerWidth >= 1024) {
       //lg
       if (layout === "lanscape") {
-        finalBoxSize = total === 1 ? innerHeight / 2 : innerHeight / 3;
+        finalBoxSize = totalIsZeroOrOne ? innerHeight / 2 : innerHeight / 3;
       } else {
       }
     } else if (innerWidth >= 768) {
       //md
-      finalBoxSize =
-        total === 1
-          ? innerWidth
-          : total === 2
-          ? innerWidth / 2
-          : innerWidth / 3;
+      finalBoxSize = totalIsZeroOrOne
+        ? innerWidth
+        : total === 2
+        ? innerWidth / 2
+        : innerWidth / 3;
     } else {
       //sm
-      finalBoxSize =
-        total === 1
-          ? innerWidth
-          : total === 2
-          ? innerWidth / 1.5
-          : innerWidth / 2 - GAP_PX;
+      finalBoxSize = totalIsZeroOrOne
+        ? innerWidth
+        : total === 2
+        ? innerWidth / 1.5
+        : innerWidth / 2 - GAP_PX;
     }
     setBoxSize(finalBoxSize + "px");
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.navigator && peers.length) {
+    if (typeof window !== "undefined" && window.navigator) {
       const { innerWidth, innerHeight } = window;
       setScreen({
         width: innerWidth,
