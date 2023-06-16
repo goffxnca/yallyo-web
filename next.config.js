@@ -14,7 +14,7 @@ const nextConfig = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     const customPlugins = [
       new webpack.DefinePlugin({
-        "process.env.NEXT_PUBLIC_BUILD_ID": JSON.stringify(buildId),
+        "process.env.NEXT_PUBLIC_BUILD_YO": JSON.stringify(buildId),
       }),
     ];
     config.plugins.push(...customPlugins);
