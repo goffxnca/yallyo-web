@@ -80,7 +80,7 @@ export const subscribeSessionsUpdates = (
         setTimeout(() => {
           dispatch(removePeer(payload));
           callbacks.onLeave(payload);
-        }, 2000);
+        }, 3000);
 
       case SessionsGatewayEventCode.MIC_ON:
         dispatch(toggleMic({ socketId: payload, status: true }));

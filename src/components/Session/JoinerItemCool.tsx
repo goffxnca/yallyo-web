@@ -43,7 +43,7 @@ const JoinerItemCool = ({
       // )}
 
       className={`relative rounded-lg overflow-hidden ${
-        status !== "connected" && "opacity-70"
+        status !== "connected" && "opacity-60"
       }`}
       style={{
         //   backgroundColor: getRandomColor() || "red",
@@ -100,20 +100,22 @@ const JoinerItemCool = ({
               />
             </div>
 
-            <JoinerItemCoolFooter
-              controls={controls}
-              displayName={displayName}
-            />
+            {displayName && (
+              <JoinerItemCoolFooter
+                controls={controls}
+                displayName={displayName}
+              />
+            )}
           </div>
         </div>
       </div>
 
       {showStatusIndicator && status !== "connected" && (
         <div className="animate-pulse absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="">
+          <div className="bg-black bg-opacity-40 p-4 w-full rounded-lg">
             <ArrowPathIcon className="h-5 w-5 text-white animate-spin mx-auto" />
             {status === "leaving" && (
-              <div className="text-white capitalize">{status}</div>
+              <div className="text-white capitalize text-sm">{status}</div>
             )}
           </div>
         </div>
