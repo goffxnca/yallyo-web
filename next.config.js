@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const { version } = require("./package.json");
+
 const nextConfig = {
   reactStrictMode: false,
   images: {
@@ -10,6 +13,9 @@ const nextConfig = {
       { protocol: "https", hostname: "loremflickr.com" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
     ],
+  },
+  publicRuntimeConfig: {
+    version: version,
   },
 };
 
