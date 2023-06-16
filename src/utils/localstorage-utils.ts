@@ -20,7 +20,6 @@ const readCurrentCreateRoomQuotaCount = () => {
 };
 
 const addCreateRoomQuota = () => {
-  debugger;
   const currentRawData = localStorage.getItem(`create-room-quota`);
   const currentJsonData = currentRawData ? JSON.parse(currentRawData) : null;
 

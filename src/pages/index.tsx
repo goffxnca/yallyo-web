@@ -419,7 +419,7 @@ const HomePage = () => {
           type="error"
           messageTitle="Create room failed!"
           messageBody={error || "You can create only 3 rooms per day."}
-          autoFadeout={true}
+          autoFadeout={false}
           onFadedOut={() => {}}
         />
       )}

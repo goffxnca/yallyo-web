@@ -98,6 +98,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
           id="desc"
           label="Room Tagline & Intro"
           placeholder="Let's make some noise guys"
+          spellCheck={false}
           {...register("desc", {
             required: "This field is required",
             minLength: { ...minLength(5) },
