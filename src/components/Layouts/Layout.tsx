@@ -13,6 +13,9 @@ const Layout = ({ children }: Props) => {
       <Header />
       <main className="flex-grow">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
+      <div className="text-white fixed top-0 z-50">
+        {process.env.NEXT_PUBLIC_BUILD_ID}
+      </div>
     </div>
   );
 };

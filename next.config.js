@@ -11,6 +11,16 @@ const nextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
     ],
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    const customPlugins = [
+      new webpack.DefinePlugin({
+        "process.env.NEXT_PUBLIC_BUILD_ID": JSON.stringify(buildId),
+      }),
+    ];
+    config.plugins.push(...customPlugins);
+    // Important: return the modified config
+    return config;
+  },
 };
 
 module.exports = nextConfig;
