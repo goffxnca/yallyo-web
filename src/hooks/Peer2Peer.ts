@@ -112,7 +112,11 @@ class Peer2Peer {
         ) {
           // Handle permission denied error
           // Show a message on the UI indicating that camera/microphone access is required
-          alert("Why dont you allow the cam/mic :(");
+          if (error.name === "NotAllowedError") {
+            alert("NotAllowedError: You reject by yourself?");
+          } else if (error.name === "PermissionDeniedError") {
+            alert("PermissionDeniedError: Browser reject it?");
+          }
         }
       } else {
         // Handle other generic error that is not related to browser API

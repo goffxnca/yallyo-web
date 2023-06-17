@@ -40,7 +40,7 @@ const HomePage = () => {
     status,
     error,
     canLoadMore,
-    recentCreatedRoomId,
+    recentCreatedRoomSid,
   } = useSelector((state: RootState) => state.room);
 
   const dispatch: AppDispatch = useDispatch();
@@ -385,7 +385,7 @@ const HomePage = () => {
               <div className="flex items-center border rounded-md py-1 px-2 bg-white text-accent1 hover:text-accent2 hover:bg-secondary ml-2 cursor-pointer">
                 <ArrowRightIcon className="h-4 w-4 mr-2" />
                 <a
-                  href={`/room/${recentCreatedRoomId}`}
+                  href={`/room/${recentCreatedRoomSid}`}
                   target="_blank"
                   onClick={() => {
                     setShowRoomCreatedNotification(false);

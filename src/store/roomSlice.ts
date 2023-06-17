@@ -19,7 +19,7 @@ interface RoomState extends IAsyncState {
   roomsGroupedByLanguage: RoomsGroupedByLanguage[];
   canLoadMore: boolean;
   filters: IRoomFilter;
-  recentCreatedRoomId: string;
+  recentCreatedRoomSid: string;
 }
 
 const initialState: RoomState = {
@@ -33,7 +33,7 @@ const initialState: RoomState = {
     level: "",
     topic: "",
   },
-  recentCreatedRoomId: "",
+  recentCreatedRoomSid: "",
 };
 
 export const fetchRoomsAsync = createAsyncThunk(
@@ -278,7 +278,7 @@ const roomSlice = createSlice({
       })
       .addCase(createRoom.fulfilled, (state, action) => {
         state.status = "success";
-        state.recentCreatedRoomId = action.payload._id!;
+        state.recentCreatedRoomSid = action.payload.sid!;
         // state.rooms = [action.payload, ...state.rooms];
       })
       .addCase(createRoom.rejected, (state, action) => {

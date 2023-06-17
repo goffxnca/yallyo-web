@@ -9,7 +9,6 @@ import { maxLength, minLength } from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
-import AuthRequired from "../Session/Errors/AuthRequired";
 import SigninWithGoogleButton from "../Layouts/Headers/SigninWithGoogleButton";
 import { signinWithGoogle } from "@/store/authSlice";
 import Notification from "@/components/UIs/Notification";
@@ -39,7 +38,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
 
   if (!user) {
     return (
-      <div className="p-5 md:p-10">
+      <div className="p-10">
         <div className=" text-white text-center">
           🔒 You need to login to create chat room.
         </div>
@@ -159,7 +158,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
         <Notification
           type="success"
           messageTitle="Login successfully!"
-          messageBody="You can now start create chat room."
+          messageBody="You are now ready to create a chat room."
           autoFadeout={true}
           onFadedOut={() => {}}
         />
