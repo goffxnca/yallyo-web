@@ -12,6 +12,7 @@ interface Props {
   boxSize: string;
   photoUrl: string;
   showStatusIndicator: boolean;
+  isMe: boolean;
 }
 const JoinerItemCool = ({
   userId,
@@ -21,6 +22,7 @@ const JoinerItemCool = ({
   boxSize,
   photoUrl,
   showStatusIndicator,
+  isMe,
 }: Props) => {
   return (
     <div
@@ -75,6 +77,7 @@ const JoinerItemCool = ({
               <JoinerItemCoolFooter
                 controls={controls}
                 displayName={displayName}
+                isMe={isMe}
               />
             </div>
           )}
@@ -104,6 +107,7 @@ const JoinerItemCool = ({
               <JoinerItemCoolFooter
                 controls={controls}
                 displayName={displayName}
+                isMe={isMe}
               />
             )}
           </div>

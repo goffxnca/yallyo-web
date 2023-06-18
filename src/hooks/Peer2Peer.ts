@@ -4,6 +4,7 @@ interface Peer2PeerSettings {
   onStatusChange: Function;
   onLocalVideoStreamed: Function;
   onRemoteVideoStreamed: Function;
+  onMediaPermissionRejected: Function;
 }
 
 class Peer2Peer {
@@ -12,7 +13,7 @@ class Peer2Peer {
   status: string = "";
   localStream: MediaStream | null = null;
   mediaStreamConstraints: MediaStreamConstraints = {
-    video: true,
+    video: false,
     audio: true,
   };
 
@@ -114,6 +115,7 @@ class Peer2Peer {
           // Show a message on the UI indicating that camera/microphone access is required
           if (error.name === "NotAllowedError") {
             alert("NotAllowedError: You reject by yourself?");
+            this.settings?.onMediaPermissionRejected();
           } else if (error.name === "PermissionDeniedError") {
             alert("PermissionDeniedError: Browser reject it?");
           }

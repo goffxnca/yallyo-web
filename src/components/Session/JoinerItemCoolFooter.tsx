@@ -4,9 +4,10 @@ import { MicrophoneIcon } from "@heroicons/react/24/solid";
 interface Props {
   controls: IMediaControls;
   displayName: string;
+  isMe: boolean;
 }
 
-const JoinerItemCoolFooter = ({ controls, displayName }: Props) => {
+const JoinerItemCoolFooter = ({ controls, displayName, isMe }: Props) => {
   return (
     <div className="bg-red-200 z-30">
       <div className="absolute bottom-1 left-1 bg-black text-center  bg-opacity-50 px-4 py-1 rounded-lg ">
@@ -24,6 +25,7 @@ const JoinerItemCoolFooter = ({ controls, displayName }: Props) => {
 
           <div className="text-xs md:text-sm font-bold overflow-ellipsis text-white">
             {displayName}
+            {isMe && <span className="text-xs font-normal ml-2">(You)</span>}
           </div>
         </div>
       </div>

@@ -18,6 +18,8 @@ import AuthRequired from "@/components/Session/Errors/AuthRequired";
 import RoomNotFound from "@/components/Session/Errors/RoomNotFound";
 import SessionContainer from "@/components/Session/SessionContainer";
 import RoomInactive from "@/components/Session/Errors/RoomInactive";
+import Modal from "@/components/UIs/Modal";
+import TroubleshootingContent from "@/components/Session/TroubleshootingContent";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -36,6 +38,8 @@ const RoomSessionPage = () => {
   const [initilizedOnce, setInitializedOnce] = useState(false);
   const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
   const [showPreviewScreen, setShowPreviewScreen] = useState(true); //This gonna always take 5 seconds static
+  const [showTroubleshootingModal, setShowTroubleshootingModal] =
+    useState<boolean>(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -75,6 +79,9 @@ const RoomSessionPage = () => {
         },
         onRemoteVideoStreamed: (remoteId: string) => {
           dispatch(removePeerLoading(remoteId));
+        },
+        onMediaPermissionRejected: () => {
+          setShowTroubleshootingModal(true);
         },
       });
 
@@ -118,11 +125,11 @@ const RoomSessionPage = () => {
   useEffect(() => {
     return () => {
       if (sessionsSocket) {
-        alert("clean sessionsSocket");
+        // alert("clean sessionsSocket");
         sessionsSocket.disconnect();
       }
       if (p2p && p2p.peer) {
-        alert("clean p2p");
+        // alert("clean p2p");
         p2p.disconnect();
       }
     };
@@ -160,7 +167,21 @@ const RoomSessionPage = () => {
 
   //TODO: More to check 1.Room is not full, 2.User medias permission match room requirements
 
-  return <SessionContainer sessionsSocket={sessionsSocket} p2p={p2p} />;
+  return (
+    <>
+      <SessionContainer sessionsSocket={sessionsSocket} p2p={p2p} />
+      {showTroubleshootingModal && (
+        <Modal
+          showCloseButton={true}
+          emitClose={() => {
+            setShowTroubleshootingModal(false);
+          }}
+        >
+          <TroubleshootingContent />
+        </Modal>
+      )}
+    </>
+  );
 };
 
 export default RoomSessionPage;

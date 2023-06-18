@@ -22,6 +22,10 @@ import { Socket } from "socket.io-client";
 import Peer2Peer from "@/hooks/Peer2Peer";
 import VideoStreamItem from "./VideoStreamItem";
 import JoinerItemCool from "./JoinerItemCool";
+import Modal from "../UIs/Modal";
+import TroubleshootingContent from "./TroubleshootingContent";
+import SessionChatOverlayMobile from "./SessionChatOverlayMobile";
+import SessionChatSidebar from "./SessionChatSidebar";
 
 interface Props {
   sessionsSocket: Socket;
@@ -34,7 +38,9 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   console.log("SessionContainer");
 
   const { user } = useSelector((state: RootState) => state.auth);
-  const { peers } = useSelector((state: RootState) => state.session);
+  const { peers, localControls } = useSelector(
+    (state: RootState) => state.session
+  );
 
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
 
@@ -104,107 +110,113 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   // }
 
   return (
-    <div className="relative mx-auto">
-      <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
+    <div className="relative lg:flex">
+      <div className="relative flex-grow">
+        <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
 
-      <div className="text-white absolute bottom-0 left-0">
-        {JSON.stringify(screen)}
-      </div>
+        <div className="text-white absolute bottom-0 left-0">
+          {JSON.stringify(screen)}
+        </div>
 
-      {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
-      <div
-        className={joinClasses(
-          //   joiners <= 2
-          //     ? "flex flex-col md:flex-row md:flex-wrap "
-          //     : joiners <= 4
-          //     ? "flex flex-row flex-wrap"
-          //     : "flex flex-row flex-wrap",
-          "h-screen bg-pramary "
-        )}
-      >
+        {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
         <div
-          className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center pt-[65px] max-w-screen-lg mx-auto`}
-          style={{ height: screen.height }}
-        >
-          {localPeerData && (
-            <SessionControlList
-              controls={localPeerData.controls}
-              onToggleMic={(current: boolean) => {
-                const data: ISocketIOMessage = {
-                  type: current
-                    ? SessionsGatewayEventCode.MIC_OFF
-                    : SessionsGatewayEventCode.MIC_ON,
-                  message: `User ${user?.uid} turned mic ${
-                    current ? "off" : "on"
-                  }`,
-                  payload: localPeerData?.socketId,
-                };
-                sessionsSocket.emit("clientMessage", data);
-                p2p.toggleAudioStream();
-              }}
-              onToggleCam={(current: boolean) => {
-                const data: ISocketIOMessage = {
-                  type: current
-                    ? SessionsGatewayEventCode.CAM_OFF
-                    : SessionsGatewayEventCode.CAM_ON,
-                  message: `User ${user?.uid} turned camara ${
-                    current ? "off" : "on"
-                  }`,
-                  payload: localPeerData?.socketId,
-                };
-                sessionsSocket.emit("clientMessage", data);
-                p2p.toggleVideoStream();
-              }}
-            />
+          className={joinClasses(
+            //   joiners <= 2
+            //     ? "flex flex-col md:flex-row md:flex-wrap "
+            //     : joiners <= 4
+            //     ? "flex flex-row flex-wrap"
+            //     : "flex flex-row flex-wrap",
+            "h-screen bg-pramary "
           )}
-
-          <div className="flex justify-center my-4">
-            <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
-              {/* <VideoStreamItem
-                userId={user.uid}
-                status={localPeerData?.status!}
-                displayName={localPeerData?.dname!}
-                controls={localPeerData?.controls!}
-              /> */}
-
-              <JoinerItemCool
-                userId={user?.uid!}
-                status={localPeerData?.status!}
-                displayName={user?.displayName!}
-                controls={localPeerData?.controls!}
-                boxSize={boxSize}
-                photoUrl={user?.photoURL!}
-                showStatusIndicator={true}
+        >
+          <div
+            className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center pt-[65px] max-w-screen-lg mx-auto`}
+            style={{ height: screen.height }}
+          >
+            {localPeerData && (
+              <SessionControlList
+                controls={localPeerData.controls}
+                onToggleMic={(current: boolean) => {
+                  const data: ISocketIOMessage = {
+                    type: current
+                      ? SessionsGatewayEventCode.MIC_OFF
+                      : SessionsGatewayEventCode.MIC_ON,
+                    message: `User ${user?.uid} turned mic ${
+                      current ? "off" : "on"
+                    }`,
+                    payload: localPeerData?.socketId,
+                  };
+                  sessionsSocket.emit("clientMessage", data);
+                  p2p.toggleAudioStream();
+                }}
+                onToggleCam={(current: boolean) => {
+                  const data: ISocketIOMessage = {
+                    type: current
+                      ? SessionsGatewayEventCode.CAM_OFF
+                      : SessionsGatewayEventCode.CAM_ON,
+                    message: `User ${user?.uid} turned camara ${
+                      current ? "off" : "on"
+                    }`,
+                    payload: localPeerData?.socketId,
+                  };
+                  sessionsSocket.emit("clientMessage", data);
+                  p2p.toggleVideoStream();
+                }}
               />
+            )}
 
-              {peers
-                .filter((peer) => peer.userId !== user?.uid)
-                .map((peer) => {
-                  return (
-                    // <VideoStreamItem
-                    //   key={peer.socketId}
-                    //   userId={peer.userId}
-                    //   status={peer.status}
-                    //   displayName={peer.dname}
-                    //   controls={peer.controls}
-                    // />
+            <div className="flex justify-center my-4">
+              <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
+                {/* <VideoStreamItem
+          userId={user.uid}
+          status={localPeerData?.status!}
+          displayName={localPeerData?.dname!}
+          controls={localPeerData?.controls!}
+        /> */}
 
-                    <JoinerItemCool
-                      key={peer.socketId}
-                      userId={peer.userId}
-                      status={peer.status}
-                      displayName={peer.userInfo.dname}
-                      controls={peer.controls}
-                      boxSize={boxSize}
-                      photoUrl={peer.userInfo.photoURL}
-                      showStatusIndicator={true}
-                    />
-                  );
-                })}
-            </ul>
+                <JoinerItemCool
+                  userId={user?.uid!}
+                  status={localPeerData?.status!}
+                  displayName={user?.displayName!}
+                  controls={localPeerData?.controls!}
+                  boxSize={boxSize}
+                  photoUrl={user?.photoURL!}
+                  showStatusIndicator={true}
+                  isMe={true}
+                />
+
+                {peers
+                  .filter((peer) => peer.userId !== user?.uid)
+                  .map((peer) => {
+                    return (
+                      // <VideoStreamItem
+                      //   key={peer.socketId}
+                      //   userId={peer.userId}
+                      //   status={peer.status}
+                      //   displayName={peer.dname}
+                      //   controls={peer.controls}
+                      // />
+
+                      <JoinerItemCool
+                        key={peer.socketId}
+                        userId={peer.userId}
+                        status={peer.status}
+                        displayName={peer.userInfo.dname}
+                        controls={peer.controls}
+                        boxSize={boxSize}
+                        photoUrl={peer.userInfo.photoURL}
+                        showStatusIndicator={true}
+                        isMe={false}
+                      />
+                    );
+                  })}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+
+      {localControls && localControls.chatOn && <SessionChatSidebar />}
     </div>
   );
 };
