@@ -73,6 +73,7 @@ const MultiplePeers = () => {
       onRemoteVideoStreamed: (remoteId: string) => {
         dispatch(removePeerLoading(remoteId));
       },
+      onMediaPermissionRejected: () => {},
     });
 
     setInitializedOnce(true);
