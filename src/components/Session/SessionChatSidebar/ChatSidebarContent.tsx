@@ -8,7 +8,7 @@ interface Props {
 const ChatSidebarContent = ({ messages }: Props) => {
   return (
     <div className="flex-1 overflow-y-auto bg-secondary text-white p-4">
-      <ul className="space-y-4">
+      <ul className="space-y-3">
         {messages.map((message, index) => (
           <ChatMessageItem
             key={index}
