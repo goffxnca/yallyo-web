@@ -29,10 +29,10 @@ const ChatMessageItem = ({ message, fromMe }: Props) => {
 
       <div
         className={`px-3 shadow w-[80%] ${
-          fromMe ? "ml-auto bg-blue-500" : "bg-gray-400 text-primary"
+          fromMe ? "ml-auto bg-blue-500" : "bg-gray-300 text-primary"
         } ${roundStyle}`}
       >
-        <div className={`py-1 text-sm `}>{message}</div>
+        <div className={`py-2 text-sm `}>{message}</div>
       </div>
     </li>
   );

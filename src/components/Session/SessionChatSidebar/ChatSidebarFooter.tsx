@@ -1,4 +1,4 @@
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 const ChatSidebarFooter = () => {
   return (
@@ -11,7 +11,7 @@ const ChatSidebarFooter = () => {
         ></textarea>
 
         <div
-          className="bg-accent2 px-4 flex items-center cursor-pointer text-black rounded-lg"
+          className="bg-white px-4 flex items-center cursor-pointer text-accent1 rounded-lg"
           onClick={() => {
             //   createRoomMessage(roomId);
           }}
