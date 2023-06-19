@@ -3,7 +3,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 const ChatSidebarFooter = () => {
   return (
     <div className="w-full bg-secondary">
-      <div className="flex p-4 space-x-1">
+      <div className="flex p-4 space-x-1 bg-gray-500 lg:bg-transparent">
         <textarea
           className="w-full text-sm border-none focus:ring-0 focus:border-transparent text-secondary h-10 resize-none  rounded-lg"
           placeholder="Type a new message"
