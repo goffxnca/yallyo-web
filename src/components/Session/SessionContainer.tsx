@@ -1,31 +1,20 @@
-import PageContainer from "@/components/Layouts/PageContainer";
 import SessionControlList from "@/components/Session/SessionControlList";
-import Avatar from "@/components/UIs/Avatar";
 
 import {
-  IMediaControls,
   IRoomPeer,
   ISocketIOMessage,
   SessionsGatewayEventCode,
 } from "@/types/common";
-import { createNArray } from "@/utils/array-utils";
-import { randomBoolean } from "@/utils/bool-utils";
-import { getRandomColor } from "@/utils/color-utils";
+
 import { joinClasses } from "@/utils/jsx-utils";
-import { faker } from "@faker-js/faker";
-import { MicrophoneIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
-import { IFirebaseUser } from "@/types/frontend";
+import { RootState } from "@/store/store";
 import { Socket } from "socket.io-client";
 import Peer2Peer from "@/hooks/Peer2Peer";
-import VideoStreamItem from "./VideoStreamItem";
 import JoinerItemCool from "./JoinerItemCool";
-import Modal from "../UIs/Modal";
-import TroubleshootingContent from "./TroubleshootingContent";
-import SessionChatOverlayMobile from "./SessionChatOverlayMobile";
-import SessionChatSidebar from "./SessionChatSidebar";
+
+import SessionChatSidebar from "./SessionChatSidebar/SessionChatSidebar";
 
 interface Props {
   sessionsSocket: Socket;

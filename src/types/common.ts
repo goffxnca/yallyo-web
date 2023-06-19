@@ -79,6 +79,12 @@ export interface IRoomPeerSocketUpdates extends IRoomPeer {
   updateStatus: "C" | "U" | "D";
 }
 
+export interface IChatMessage {
+  id: string;
+  message: string;
+  fromMe: boolean;
+}
+
 export enum RoomsGatewayEventCode {
   UPDATE = "update",
 }

@@ -7,7 +7,7 @@ import { MicrophoneIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   name: string;
-  size: "sm" | "md" | "lg";
+  size: "xs" | "sm" | "md" | "lg";
   showMic: boolean;
   url: string;
   color: string;
@@ -31,7 +31,13 @@ const Avatar = ({
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const avatarSize =
-    size === "sm" ? "w-10 h-10" : size === "md" ? "w-16 h-16" : "w-24 h-24";
+    size === "xs"
+      ? "w-6 h-6"
+      : size === "sm"
+      ? "w-10 h-10"
+      : size === "md"
+      ? "w-16 h-16"
+      : "w-24 h-24";
 
   useEffect(() => {
     const randomBgColor = getRandomColor();

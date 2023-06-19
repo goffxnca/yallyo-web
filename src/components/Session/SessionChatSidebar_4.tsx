@@ -13,12 +13,13 @@ const SessionChatSidebar = () => {
   const dispatch: AppDispatch = useDispatch();
 
   return (
-    <div className="absolute left-0 right-0 top-0 bottom-0 w-full lg:relative  lg:w-[350px] z-40 lg:z-20">
+    <div className="absolute left-0 right-0 top-0 bottom-0 w-full z-40 lg:relative lg:w-[350px] lg:z-20">
       <div className="flex flex-col h-screen">
-        <div className="hidden lg:block h-12 bg-transparent"></div>
+        {/* Header */}
+        <div className="hidden bg-transparent lg:block h-14 lg:h-12"></div>
         <div className="w-full bg-secondary">
           <div
-            className=" text-white  w-full py-2"
+            className="text-white w-full py-3 lg:py-2"
             style={{
               borderBottom: 0.1,
               borderColor: "darkgray",
@@ -27,7 +28,7 @@ const SessionChatSidebar = () => {
           >
             <div className="flex items-center relative">
               <div
-                className="cursor-pointer z-20 hover:text-accent2"
+                className="cursor-pointer z-20 hover:text-accent2 pl-2"
                 onClick={() => {
                   dispatch(toggleLocalChat());
                 }}
@@ -42,6 +43,8 @@ const SessionChatSidebar = () => {
             </div>
           </div>
         </div>
+
+        {/* Content */}
         <div className="flex-1 overflow-y-auto bg-secondary text-white p-4">
           <p>Heywefew</p>
           <p>Heywefew</p>
@@ -86,16 +89,18 @@ const SessionChatSidebar = () => {
           <p>Heywefew</p>
           <p>Heywefew</p>
         </div>
-        <div className="w-full bg-green-200">
-          <div className="flex">
+
+        {/* MessageComposer */}
+        <div className="w-full bg-secondary">
+          <div className="flex p-4 space-x-1">
             <textarea
-              className="w-full text-sm border-none focus:ring-0 focus:border-transparent text-accent1 resize-none h-10"
+              className="w-full text-sm border-none focus:ring-0 focus:border-transparent text-secondary h-10 resize-none  rounded-lg"
               placeholder="Type a new message"
               spellCheck="false"
             ></textarea>
 
             <div
-              className="bg-accent2 px-4 flex items-center cursor-pointer text-black"
+              className="bg-accent2 px-4 flex items-center cursor-pointer text-black rounded-lg"
               onClick={() => {
                 //   createRoomMessage(roomId);
               }}

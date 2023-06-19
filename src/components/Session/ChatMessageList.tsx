@@ -11,11 +11,7 @@ const ChatMessageList = () => {
   return (
     <ul className="">
       {messages.map((message, index) => (
-        <ChatMessageItem
-          key={index}
-          message={message.message}
-          side={message.side}
-        />
+        <ChatMessageItem key={index} message={message.message} fromMe={false} />
       ))}
     </ul>
   );
