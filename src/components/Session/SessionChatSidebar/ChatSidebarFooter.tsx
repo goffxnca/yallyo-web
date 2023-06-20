@@ -1,5 +1,5 @@
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface Props {
   onSendMessage: Function;
@@ -7,15 +7,15 @@ interface Props {
 
 const ChatSidebarFooter = ({ onSendMessage }: Props) => {
   const [message, setMessage] = useState("");
-
-  const handleChange = (e: any) => {
-    setMessage(e.target.value);
-  };
+  const textboxRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setMessage("");
-    onSendMessage(message);
+    const message = textboxRef.current?.value;
+    if (message) {
+      onSendMessage(textboxRef.current?.value);
+      textboxRef.current.value = "";
+    }
   };
 
   return (
@@ -30,12 +30,11 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
       <div className="flex items-center p-4 space-x-1 bg-primary lg:bg-transparent">
         <form onSubmit={handleSubmit} className="w-full">
           <input
-            type="reset"
+            type="text"
             className="w-full text-base border-none focus:ring-0 focus:border-transparent text-secondary rounded-lg"
             placeholder="Type a new message"
             spellCheck="false"
-            value={message}
-            onChange={handleChange}
+            ref={textboxRef}
           ></input>
         </form>
 
