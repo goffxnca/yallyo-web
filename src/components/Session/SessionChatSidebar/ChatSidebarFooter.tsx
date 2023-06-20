@@ -12,16 +12,10 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
     setMessage(e.target.value);
   };
 
-  const handleKeyDown = (e: any) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit();
-    }
-  };
-
-  const handleSubmit = () => {
-    onSendMessage(message);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     setMessage("");
+    onSendMessage(message);
   };
 
   return (
@@ -34,14 +28,16 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
       }}
     >
       <div className="flex items-center p-4 space-x-1 bg-primary lg:bg-transparent">
-        <textarea
-          className="w-full text-base border-none focus:ring-0 focus:border-transparent text-secondary resize-none rounded-lg"
-          placeholder="Type a new message"
-          spellCheck="false"
-          value={message}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        ></textarea>
+        <form onSubmit={handleSubmit} className="w-full">
+          <input
+            type="text"
+            className="w-full text-base border-none focus:ring-0 focus:border-transparent text-secondary resize-none rounded-lg"
+            placeholder="Type a new message"
+            spellCheck="false"
+            value={message}
+            onChange={handleChange}
+          ></input>
+        </form>
 
         <div
           className="bg-white p-4 flex items-center cursor-pointer text-accent1 rounded-lg"
