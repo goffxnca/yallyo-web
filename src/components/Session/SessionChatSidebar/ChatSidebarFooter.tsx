@@ -13,7 +13,7 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
     const message = textboxRef.current?.value;
     if (message) {
       textboxRef.current.value = "";
-      onSendMessage(textboxRef.current?.value);
+      onSendMessage(message);
     }
   };
 
