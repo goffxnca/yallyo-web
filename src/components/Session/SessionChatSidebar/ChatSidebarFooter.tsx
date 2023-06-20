@@ -6,15 +6,14 @@ interface Props {
 }
 
 const ChatSidebarFooter = ({ onSendMessage }: Props) => {
-  const [message, setMessage] = useState("");
   const textboxRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const message = textboxRef.current?.value;
     if (message) {
-      onSendMessage(textboxRef.current?.value);
       textboxRef.current.value = "";
+      onSendMessage(textboxRef.current?.value);
     }
   };
 
@@ -27,8 +26,8 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
         borderStyle: "solid",
       }}
     >
-      <div className="flex items-center p-4 space-x-1 bg-primary lg:bg-transparent">
-        <form onSubmit={handleSubmit} className="w-full">
+      <div className="p-4 bg-primary lg:bg-transparent">
+        <form onSubmit={handleSubmit} className="w-full flex gap-x-1">
           <input
             type="text"
             className="w-full text-base border-none focus:ring-0 focus:border-transparent text-secondary rounded-lg"
@@ -36,16 +35,14 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
             spellCheck="false"
             ref={textboxRef}
           ></input>
-        </form>
 
-        <div
-          className="bg-white p-4 flex items-center cursor-pointer text-accent1 rounded-lg"
-          onClick={() => {
-            onSendMessage(message);
-          }}
-        >
-          <PaperAirplaneIcon className="w-6 h-6 -rotate-45" />
-        </div>
+          <button
+            type="submit"
+            className="bg-white p-4 flex items-center cursor-pointer text-accent1 rounded-lg"
+          >
+            <PaperAirplaneIcon className="w-6 h-6 -rotate-45" />
+          </button>
+        </form>
       </div>
     </div>
   );
