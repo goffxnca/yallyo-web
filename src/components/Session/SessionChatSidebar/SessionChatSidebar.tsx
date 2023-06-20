@@ -1,24 +1,53 @@
 import ChatSidebarHeader from "./ChatSidebarHeader";
 import ChatSidebarContent from "./ChatSidebarContent";
 import ChatSidebarFooter from "./ChatSidebarFooter";
-import { randomBoolean } from "@/utils/bool-utils";
-import { faker } from "@faker-js/faker";
-import { IChatMessage } from "@/types/common";
-import { createNArray } from "@/utils/array-utils";
+import {
+  IChatMessage,
+  ISocketIOMessage,
+  SessionsGatewayEventCode,
+} from "@/types/common";
+import { Socket } from "socket.io-client";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
-const SessionChatSidebar = () => {
-  const messages: IChatMessage[] = createNArray(20).map((num) => ({
-    id: Math.random().toString(),
-    message: faker.lorem.sentence(),
-    fromMe: randomBoolean(),
-  }));
+interface Props {
+  sessionsSocket: Socket;
+}
+const SessionChatSidebar = ({ sessionsSocket }: Props) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { messages } = useSelector((state: RootState) => state.session);
+
+  if (!user) {
+    return <div></div>;
+  }
 
   return (
     <div className="absolute left-0 right-0 top-0 bottom-0 w-full z-40 lg:relative lg:w-[350px] lg:z-20">
       <div className="flex flex-col h-screen">
         <ChatSidebarHeader />
         <ChatSidebarContent messages={messages} />
-        <ChatSidebarFooter />
+        <ChatSidebarFooter
+          onSendMessage={(message: string) => {
+            const payload: IChatMessage = {
+              id: Math.random().toString(),
+              sender: {
+                _id: user.uid,
+                color: "",
+                dname: user.displayName,
+                photoURL: user.photoURL,
+              },
+              message: message,
+              isMe: false,
+              sentAt: new Date().toLocaleTimeString(),
+            };
+            const data: ISocketIOMessage = {
+              type: SessionsGatewayEventCode.SEND_MSG,
+              message: `User id: ${user.uid} sent new message`,
+              payload,
+            };
+            sessionsSocket.emit("clientMessage", data);
+          }}
+        />
       </div>
     </div>
   );

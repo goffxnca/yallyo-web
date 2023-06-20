@@ -205,7 +205,9 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
         </div>
       </div>
 
-      {localControls && localControls.chatOn && <SessionChatSidebar />}
+      {localControls && localControls.chatOn && (
+        <SessionChatSidebar sessionsSocket={sessionsSocket} />
+      )}
     </div>
   );
 };

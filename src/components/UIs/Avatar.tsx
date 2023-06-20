@@ -44,7 +44,7 @@ const Avatar = ({
     setBgColor(randomBgColor);
   }, []);
   return (
-    <li
+    <div
       className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full ${
         name ? "" : "border border-dashed border-gray-600"
       }
@@ -84,7 +84,7 @@ const Avatar = ({
           />
         </Modal>
       )}
-    </li>
+    </div>
   );
 };
 

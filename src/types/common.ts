@@ -82,7 +82,9 @@ export interface IRoomPeerSocketUpdates extends IRoomPeer {
 export interface IChatMessage {
   id: string;
   message: string;
-  fromMe: boolean;
+  sender: TMinimalUser;
+  isMe: boolean;
+  sentAt: string;
 }
 
 export enum RoomsGatewayEventCode {
@@ -97,4 +99,5 @@ export enum SessionsGatewayEventCode {
   MIC_OFF = "mic_off",
   CAM_ON = "cam_on",
   CAM_OFF = "cam_off",
+  SEND_MSG = "send_msg",
 }

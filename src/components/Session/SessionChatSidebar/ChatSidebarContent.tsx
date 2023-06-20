@@ -1,64 +1,50 @@
 import { IChatMessage } from "@/types/common";
 import ChatMessageItem from "../ChatMessageItem";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { useEffect, useRef } from "react";
 
 interface Props {
   messages: IChatMessage[];
 }
 
 const ChatSidebarContent = ({ messages }: Props) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const messagesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (messagesRef && messagesRef.current) {
+        messagesRef.current.scrollTo({
+          top: messagesRef.current.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    };
+
+    scrollToBottom();
+  }, [messages.length]);
+
+  if (!user) {
+    return <div></div>;
+  }
   return (
-    <div className="flex-1 overflow-y-auto bg-secondary text-white p-4">
+    <div
+      className="flex-1 overflow-y-auto bg-secondary text-white p-4"
+      ref={messagesRef}
+    >
       <ul className="space-y-2">
         {messages.map((message, index) => (
           <ChatMessageItem
             key={index}
+            id={message.id}
             message={message.message}
-            fromMe={message.fromMe}
+            sender={message.sender}
+            isMe={user.uid === message.sender._id}
+            sentAt={message.sentAt}
           />
         ))}
       </ul>
-      {/* 
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p>
-      <p>Heywefew</p> */}
     </div>
   );
 };

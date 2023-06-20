@@ -10,6 +10,7 @@ import {
 import {
   addPeer,
   markPeerAsRemoving,
+  receiveMessage,
   removePeer,
   toggleCam,
   toggleMic,
@@ -99,6 +100,9 @@ export const subscribeSessionsUpdates = (
       case SessionsGatewayEventCode.JOIN_DUPLICATE:
         // console.log("HEY WHAT WRONG HERE");
         window.location.href = "/feedback/session-duplicate";
+
+      case SessionsGatewayEventCode.SEND_MSG:
+        dispatch(receiveMessage(payload));
       default:
         break;
     }

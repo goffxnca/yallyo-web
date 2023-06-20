@@ -1,4 +1,4 @@
-import { IMediaControls, IPagination, IRoom, IRoomPeer } from "@/types/common";
+import { IChatMessage, IMediaControls, IRoom, IRoomPeer } from "@/types/common";
 import { IAsyncState, LocalControls } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -9,6 +9,7 @@ interface SessionState extends IAsyncState {
   room?: IRoom;
   peers: IRoomPeer[];
   localControls: LocalControls;
+  messages: IChatMessage[];
 }
 
 const initialState: SessionState = {
@@ -18,6 +19,7 @@ const initialState: SessionState = {
   localControls: {
     chatOn: false,
   },
+  messages: [],
 };
 
 export const fetchSessionAsync = createAsyncThunk(
@@ -140,6 +142,9 @@ const sessionSlice = createSlice({
         peer.userId === action.payload ? { ...peer, status: "connected" } : peer
       );
     },
+    receiveMessage(state, action: PayloadAction<IChatMessage>) {
+      state.messages = [...state.messages, action.payload];
+    },
   },
   extraReducers(builder) {
     builder
@@ -207,5 +212,6 @@ export const {
   removePeer,
   removePeerLoading,
   markPeerAsRemoving,
+  receiveMessage,
 } = sessionSlice.actions;
 export default sessionSlice.reducer;
