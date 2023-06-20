@@ -35,7 +35,7 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
     >
       <div className="flex items-center p-4 space-x-1 bg-primary lg:bg-transparent">
         <textarea
-          className="w-full text-sm border-none focus:ring-0 focus:border-transparent text-secondary resize-none rounded-lg zoom touch-none"
+          className="w-full text-base border-none focus:ring-0 focus:border-transparent text-secondary resize-none rounded-lg"
           placeholder="Type a new message"
           spellCheck="false"
           value={message}
