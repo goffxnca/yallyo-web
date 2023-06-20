@@ -2,7 +2,7 @@ import ChatSidebarHeader from "./ChatSidebarHeader";
 import ChatSidebarContent from "./ChatSidebarContent";
 import ChatSidebarFooter from "./ChatSidebarFooter";
 import {
-  IChatMessage,
+  ISessionEventMessage,
   ISocketIOMessage,
   SessionsGatewayEventCode,
 } from "@/types/common";
@@ -28,8 +28,9 @@ const SessionChatSidebar = ({ sessionsSocket }: Props) => {
         <ChatSidebarContent messages={messages} />
         <ChatSidebarFooter
           onSendMessage={(message: string) => {
-            const payload: IChatMessage = {
+            const payload: ISessionEventMessage = {
               id: Math.random().toString(),
+              type: "chat",
               sender: {
                 _id: user.uid,
                 color: "",
@@ -39,6 +40,7 @@ const SessionChatSidebar = ({ sessionsSocket }: Props) => {
               message: message,
               isMe: false,
               sentAt: new Date().toLocaleTimeString(),
+              read: false,
             };
             const data: ISocketIOMessage = {
               type: SessionsGatewayEventCode.SEND_MSG,

@@ -19,6 +19,7 @@ interface Props {
 }
 
 const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
+  const { messages } = useSelector((state: RootState) => state.session);
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -55,6 +56,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
           Icon={<ChatBubbleBottomCenterTextIcon />}
           // cross={!controls.chatOn}
           // tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
+          pendingNum={messages.filter((message) => !message.read).length}
           onClick={() => {
             dispatch(toggleLocalChat());
           }}

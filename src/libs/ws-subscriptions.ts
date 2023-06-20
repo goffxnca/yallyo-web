@@ -3,14 +3,13 @@ import { updateRooms } from "../store/roomSlice";
 import { ENVS } from "../utils/constants";
 import {
   ISocketIOMessage,
-  IUser,
   RoomsGatewayEventCode,
   SessionsGatewayEventCode,
 } from "@/types/common";
 import {
   addPeer,
   markPeerAsRemoving,
-  receiveMessage,
+  addMessage,
   removePeer,
   toggleCam,
   toggleMic,
@@ -102,7 +101,7 @@ export const subscribeSessionsUpdates = (
         window.location.href = "/feedback/session-duplicate";
 
       case SessionsGatewayEventCode.SEND_MSG:
-        dispatch(receiveMessage(payload));
+        dispatch(addMessage(payload));
       default:
         break;
     }

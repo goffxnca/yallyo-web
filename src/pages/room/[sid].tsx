@@ -74,7 +74,9 @@ const RoomSessionPage = () => {
                 p2p.callRemotePeer(joiner.userId);
               }, 2000);
             },
-            onLeave: () => {},
+            onLeave: (payload: any) => {
+              const { socketId, userId, dname } = payload;
+            },
           });
         },
         onRemoteVideoStreamed: (remoteId: string) => {

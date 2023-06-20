@@ -1,11 +1,11 @@
-import { IChatMessage } from "@/types/common";
+import { ISessionEventMessage } from "@/types/common";
 import ChatMessageItem from "../ChatMessageItem";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useEffect, useRef } from "react";
 
 interface Props {
-  messages: IChatMessage[];
+  messages: ISessionEventMessage[];
 }
 
 const ChatSidebarContent = ({ messages }: Props) => {
@@ -38,10 +38,13 @@ const ChatSidebarContent = ({ messages }: Props) => {
           <ChatMessageItem
             key={index}
             id={message.id}
+            type={message.type}
+            subType={message.subType}
             message={message.message}
             sender={message.sender}
             isMe={user.uid === message.sender._id}
             sentAt={message.sentAt}
+            read={message.read}
           />
         ))}
       </ul>

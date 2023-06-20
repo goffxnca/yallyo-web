@@ -1,15 +1,26 @@
-import { IChatMessage } from "@/types/common";
+import { ISessionEventMessage } from "@/types/common";
 import Avatar from "../UIs/Avatar";
+import {
+  ArrowRightOnRectangleIcon,
+  PhoneXMarkIcon,
+} from "@heroicons/react/24/outline";
 
-interface Props extends IChatMessage {}
+interface Props extends ISessionEventMessage {}
 
-const ChatMessageItem = ({ message, sender, isMe, sentAt }: Props) => {
+const ChatMessageItem = ({
+  type,
+  subType,
+  message,
+  sender,
+  isMe,
+  sentAt,
+}: Props) => {
   const roundStyle = !isMe
     ? "rounded-r-lg rounded-tl-lg"
     : "rounded-l-lg rounded-tr-lg";
   return (
     <li className="flex items-center">
-      {!isMe && (
+      {!isMe && type === "chat" && (
         <div className="mr-2">
           <Avatar
             name={"wefew"}
@@ -24,24 +35,44 @@ const ChatMessageItem = ({ message, sender, isMe, sentAt }: Props) => {
         </div>
       )}
 
-      <div
-        className={`px-3 py-2 shadow max-w-[300px] break-words ${
-          isMe
-            ? "ml-auto bg-blue-500"
-            : "bg-gray-300 text-primary min-w-[200px]"
-        } ${roundStyle}`}
-      >
+      {type === "chat" && (
         <div
-          className={`flex justify-between text-[10px] ${
-            isMe ? "text-gray-200" : "text-gray-500"
-          }`}
+          className={`px-3 py-2 shadow max-w-[300px] break-words ${
+            isMe
+              ? "ml-auto bg-blue-500"
+              : "bg-gray-300 text-primary min-w-[200px]"
+          } ${roundStyle}`}
         >
-          <div className="">{isMe ? "" : sender.dname}</div>
-          <div className="">{sentAt}</div>
-        </div>
+          <div
+            className={`flex justify-between text-[10px] ${
+              isMe ? "text-gray-200" : "text-gray-500"
+            }`}
+          >
+            <div className="">{isMe ? "" : sender.dname}</div>
+            <div className="">{sentAt}</div>
+          </div>
 
-        <div className={`text-sm`}>{message}</div>
-      </div>
+          <div className={`text-sm`}>{message}</div>
+        </div>
+      )}
+
+      {type === "event" && (
+        <div
+          className={`px-3 py-2 shadow max-w-[300px] break-words mx-auto rounded-lg text-[12px]`}
+        >
+          <div className=" text-center">{sentAt}</div>
+          <div className="flex gap-x-2">
+            {subType === "join" && (
+              <ArrowRightOnRectangleIcon className="w-5 h-5 text-accent1" />
+            )}
+            {subType === "leave" && (
+              <PhoneXMarkIcon className="w-5 h-5 text-accent1" />
+            )}
+
+            <div className={`text-accent1 italic`}>{message}</div>
+          </div>
+        </div>
+      )}
     </li>
   );
 };

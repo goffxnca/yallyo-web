@@ -79,12 +79,17 @@ export interface IRoomPeerSocketUpdates extends IRoomPeer {
   updateStatus: "C" | "U" | "D";
 }
 
-export interface IChatMessage {
+export type SessionEventType = "chat" | "event";
+
+export interface ISessionEventMessage {
   id: string;
+  type: SessionEventType;
+  subType: string;
   message: string;
   sender: TMinimalUser;
   isMe: boolean;
   sentAt: string;
+  read: boolean;
 }
 
 export enum RoomsGatewayEventCode {

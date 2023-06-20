@@ -1,4 +1,9 @@
-import { IChatMessage, IMediaControls, IRoom, IRoomPeer } from "@/types/common";
+import {
+  ISessionEventMessage,
+  IMediaControls,
+  IRoom,
+  IRoomPeer,
+} from "@/types/common";
 import { IAsyncState, LocalControls } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -9,7 +14,7 @@ interface SessionState extends IAsyncState {
   room?: IRoom;
   peers: IRoomPeer[];
   localControls: LocalControls;
-  messages: IChatMessage[];
+  messages: ISessionEventMessage[];
 }
 
 const initialState: SessionState = {
@@ -91,6 +96,10 @@ const sessionSlice = createSlice({
   reducers: {
     toggleLocalChat(state) {
       state.localControls.chatOn = !state.localControls.chatOn;
+      state.messages = state.messages.map((message) => ({
+        ...message,
+        read: true,
+      }));
     },
     toggleMic(state, action: PayloadAction<any>) {
       const { socketId, status } = action.payload;
@@ -126,24 +135,60 @@ const sessionSlice = createSlice({
           { ...action.payload, status: "joining" },
         ];
       }
+
+      const payload: ISessionEventMessage = {
+        id: Math.random().toString(),
+        type: "event",
+        subType: "join",
+        sender: {
+          _id: action.payload.userId,
+          color: "",
+          dname: action.payload.userInfo.dname,
+          photoURL: action.payload.userInfo.photoURL,
+        },
+        message: `${action.payload.userInfo.dname} joined the room`,
+        isMe: false,
+        sentAt: new Date().toLocaleTimeString(),
+        read: state.localControls.chatOn,
+      };
+      state.messages = [...state.messages, payload];
     },
     markPeerAsRemoving(state, action: PayloadAction<string>) {
       state.peers = state.peers.map((peer) =>
         peer.socketId === action.payload ? { ...peer, status: "leaving" } : peer
       );
     },
-    removePeer(state, action: PayloadAction<string>) {
-      state.peers = state.peers.filter(
-        (peer) => peer.socketId !== action.payload
-      );
+    removePeer(state, action: PayloadAction<any>) {
+      const { socketId, userId, dname } = action.payload;
+      state.peers = state.peers.filter((peer) => peer.socketId !== socketId);
+
+      const payload: ISessionEventMessage = {
+        id: Math.random().toString(),
+        type: "event",
+        subType: "leave",
+        sender: {
+          _id: userId,
+          color: "",
+          dname: dname,
+          photoURL: "",
+        },
+        message: `${dname} left the room`,
+        isMe: false,
+        sentAt: new Date().toLocaleTimeString(),
+        read: state.localControls.chatOn,
+      };
+      state.messages = [...state.messages, payload];
     },
     removePeerLoading(state, action: PayloadAction<string>) {
       state.peers = state.peers.map((peer) =>
         peer.userId === action.payload ? { ...peer, status: "connected" } : peer
       );
     },
-    receiveMessage(state, action: PayloadAction<IChatMessage>) {
-      state.messages = [...state.messages, action.payload];
+    addMessage(state, action: PayloadAction<ISessionEventMessage>) {
+      state.messages = [
+        ...state.messages,
+        { ...action.payload, read: state.localControls.chatOn },
+      ];
     },
   },
   extraReducers(builder) {
@@ -212,6 +257,6 @@ export const {
   removePeer,
   removePeerLoading,
   markPeerAsRemoving,
-  receiveMessage,
+  addMessage,
 } = sessionSlice.actions;
 export default sessionSlice.reducer;

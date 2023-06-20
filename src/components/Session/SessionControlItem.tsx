@@ -3,13 +3,21 @@ import React from "react";
 interface Props {
   Icon: React.ReactElement;
   disabled?: boolean;
+  pendingNum?: number;
   bgColor?: string;
   tooltip?: string;
   onClick?: Function;
 }
 
 const SessionControlItem = React.memo(
-  ({ Icon, disabled = false, bgColor, tooltip, onClick }: Props) => {
+  ({
+    Icon,
+    disabled = false,
+    pendingNum = 0,
+    bgColor,
+    tooltip,
+    onClick,
+  }: Props) => {
     return (
       // <div className="p-3 mx-1 rounded-md">
       //   {/* <Icon className="w-6 h-6" /> */}
@@ -35,6 +43,14 @@ const SessionControlItem = React.memo(
                   disabled ? "border-gray-500" : "border-white"
                 } w-8 rotate-45`}
               ></div>
+            </div>
+          </div>
+        )}
+
+        {!!pendingNum && (
+          <div className="absolute top-2 right-2">
+            <div className="rounded-full bg-red-500 w-4 h-4 text-xs flex items-center justify-center">
+              {pendingNum}
             </div>
           </div>
         )}
