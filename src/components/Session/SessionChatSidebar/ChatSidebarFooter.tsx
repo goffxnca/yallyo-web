@@ -41,6 +41,7 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
           value={message}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          style={{ touchAction: "manipulation" }}
         ></textarea>
 
         <div
