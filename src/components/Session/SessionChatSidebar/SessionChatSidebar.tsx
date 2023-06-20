@@ -31,6 +31,7 @@ const SessionChatSidebar = ({ sessionsSocket }: Props) => {
             const payload: ISessionEventMessage = {
               id: Math.random().toString(),
               type: "chat",
+              subType: "",
               sender: {
                 _id: user.uid,
                 color: "",

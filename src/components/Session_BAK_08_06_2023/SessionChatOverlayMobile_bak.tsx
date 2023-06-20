@@ -38,7 +38,8 @@ const SessionChatOverlayMobile = () => {
 
         <div className="absolute left-2 right-2 bottom-2">
           <div className="flex w-ful">
-            <textarea
+            <input
+              type="text"
               className="w-full text-sm  border-none focus:ring-0 focus:border-transparent text-accent1 rounded-l-md"
               placeholder="Type a new message"
               spellCheck={false}
