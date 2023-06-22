@@ -1,46 +1,51 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowPathIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  ArrowRightIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import TextInput from "../Forms/Inputs/TextInput";
 import { useEffect, useState } from "react";
 import DropdownInput3 from "../Forms/Inputs/DropodownInput3";
 import { createNArrayFrom } from "@/utils/array-utils";
-import { FieldValues, useForm } from "react-hook-form";
 import { maxLength, minLength } from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
+import { useForm, FieldValues } from "react-hook-form";
 
-import { fetchProfileAsync } from "@/store/profileSlice";
+import { updateProfileAsync } from "@/store/profileSlice";
+
+import Notification from "@/components/UIs/Notification";
 
 interface Props {
   onSubmit: (data: FieldValues) => void;
 }
 
 const ProfileForm = ({ onSubmit }: Props) => {
-  const { user } = useSelector((state: RootState) => state.auth);
-  const { profile } = useSelector((state: RootState) => state.profile);
-  const [loading, setLoading] = useState(false);
-
   const dispatch: AppDispatch = useDispatch();
+  const { profile, status } = useSelector((state: RootState) => state.profile);
+  const [showUpdateSuccessNotificaiton, setShowUpdateSuccessNotificaiton] =
+    useState(false);
 
-  useEffect(() => {
-    if (dispatch && user) {
-      dispatch(fetchProfileAsync());
-    }
-  }, [dispatch, user]);
+  const defaultValues = {
+    dname: profile?.dname,
+    bio: profile?.bio,
+  };
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm({ defaultValues: defaultValues });
 
-  // const onFormSubmit = (data: FieldValues) => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     onSubmit(data);
-  //   }, 5000);
-  // };
+  const loading = status === "loading";
+
+  const onFormSubmit = (data: FieldValues) => {
+    dispatch(updateProfileAsync(data)).then(() => {
+      setShowUpdateSuccessNotificaiton(true);
+    });
+  };
 
   if (!profile) {
     return <div></div>;
@@ -50,7 +55,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
     <div>
       <form
         className="md:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-10"
-        onSubmit={() => {}}
+        onSubmit={handleSubmit(onFormSubmit)}
       >
         <div className="space-y-6 ">
           {/* Form Header */}
@@ -98,8 +103,8 @@ const ProfileForm = ({ onSubmit }: Props) => {
               share.
             </p>
 
-            {/* Display Name */}
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6 pl-4">
+              {/* Display Name */}
               <div className="sm:col-span-3">
                 <label
                   htmlFor="dname"
@@ -110,13 +115,21 @@ const ProfileForm = ({ onSubmit }: Props) => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="dname"
                     id="dname"
                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
-                    value={profile.dname}
-                    onChange={() => {}}
+                    {...register("dname", {
+                      required: "This field is required",
+                      minLength: { ...minLength(2) },
+                      maxLength: { ...maxLength(30) },
+                    })}
                   />
                 </div>
+
+                {errors.dname?.message?.toString() && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.dname?.message?.toString()}
+                  </div>
+                )}
               </div>
 
               {/* Email */}
@@ -151,14 +164,21 @@ const ProfileForm = ({ onSubmit }: Props) => {
                 <div className="mt-2">
                   <textarea
                     id="bio"
-                    name="bio"
                     rows={2}
                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
                     placeholder="Write a few sentences about yourself."
-                    value={profile.bio}
-                    onChange={() => {}}
+                    {...register("bio", {
+                      required: "This field is required",
+                      minLength: { ...minLength(5) },
+                      maxLength: { ...maxLength(100) },
+                    })}
                   />
                 </div>
+                {errors.bio?.message?.toString() && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors.bio?.message?.toString()}
+                  </div>
+                )}
               </div>
 
               {/* Profile Picture */}
@@ -273,27 +293,37 @@ const ProfileForm = ({ onSubmit }: Props) => {
         </div>
 
         {/* Submit Button */}
-        <div className="mt-6 flex items-center justify-end gap-x-6">
+        <div className={`mt-6 flex items-center justify-end gap-x-6`}>
           <button
             type="submit"
-            className="rounded-md bg-accent1 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-"
+            className={`flex rounded-md bg-accent1 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-black focus-visible:outline focus-visible:outline-2 ${
+              !isDirty && "opacity-25"
+            }`}
+            disabled={!isDirty}
           >
-            Save
+            {loading && (
+              <div className="animate-pulse">
+                <ArrowPathIcon className="h-5 w-5 mr-2 animate-spin" />
+              </div>
+            )}
+
+            <span className="text-md">{loading ? "Updating" : "Update"}</span>
           </button>
         </div>
       </form>
-      {/* 
+
       {loading && <DarkOverlay />}
 
-      {loginSuccessfully && (
+      {showUpdateSuccessNotificaiton && (
         <Notification
           type="success"
-          messageTitle="Login successfully!"
-          messageBody="You are now ready to create a chat room."
+          messageTitle="Update profile successfully!"
           autoFadeout={true}
-          onFadedOut={() => {}}
+          onFadedOut={() => {
+            location.reload();
+          }}
         />
-      )} */}
+      )}
     </div>
   );
 };

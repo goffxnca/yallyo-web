@@ -6,7 +6,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 interface Props {
   type: "success" | "warning" | "error";
   messageTitle: string;
-  messageBody: React.ReactNode;
+  messageBody?: React.ReactNode;
   autoFadeout: boolean;
   onFadedOut: Function;
 }
@@ -74,9 +74,11 @@ const Notification = ({
                     <p className="text-sm font-medium text-gray-900">
                       {messageTitle}
                     </p>
-                    <div className="mt-1 text-sm text-gray-500">
-                      {messageBody}
-                    </div>
+                    {messageBody && (
+                      <div className="mt-1 text-sm text-gray-500">
+                        {messageBody}
+                      </div>
+                    )}
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button

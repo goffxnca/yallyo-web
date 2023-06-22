@@ -36,6 +36,29 @@ export const fetchProfileAsync = createAsyncThunk(
   }
 );
 
+export const updateProfileAsync = createAsyncThunk(
+  "updateProfileAsync",
+  async (updatedProfileData: any, thunkAPI) => {
+    const currentState = thunkAPI.getState() as RootState;
+    const endpoint = `${ENVS.API_URL}/auth/me`;
+
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
+      },
+      body: JSON.stringify(updatedProfileData),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const updatedUser = await response.json();
+    return updatedUser as IUser;
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -52,6 +75,19 @@ const profileSlice = createSlice({
       .addCase(fetchProfileAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to fetch my profile";
+      });
+
+    builder
+      .addCase(updateProfileAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(updateProfileAsync.fulfilled, (state, action) => {
+        state.status = "success";
+        state.profile = action.payload;
+      })
+      .addCase(updateProfileAsync.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to update my profile";
       });
   },
 });

@@ -1,12 +1,12 @@
 import PageContainer from "@/components/Layouts/PageContainer";
-import ProfileForm from "@/components/Profile/ProfileForm";
+import ProfileContainer from "@/components/Profile/ProfileContainer";
 import AuthGuard from "@/components/UIs/AuthGuard";
 
 const ProfilePage = () => {
   return (
     <AuthGuard redirectToHome={false}>
       <PageContainer>
-        <ProfileForm onSubmit={() => {}} />
+        <ProfileContainer />
       </PageContainer>
     </AuthGuard>
   );

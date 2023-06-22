@@ -34,16 +34,6 @@ const Auth = React.memo(() => {
     //normal useEffect cleanup function doesn't works here, so resort to DOM api
     window.addEventListener("beforeunload", () => {
       unsubscribe();
-      //   dispatch(
-      //     createRoom({
-      //       language: "wefwef",
-      //       level: "232",
-      //       topic: "11",
-      //       desc: "efeeff",
-      //       size: 4,
-      //       order: Math.random(),
-      //     })
-      //   );
     });
   }, []);
 
