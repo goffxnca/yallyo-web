@@ -8,7 +8,7 @@ const ChatSidebarHeader = () => {
 
   return (
     <>
-      <div className="hidden bg-transparent lg:block h-14 lg:h-12"></div>
+      <div className="hidden bg-transparent lg:block h-14 lg:h-16"></div>
       <div className="w-full bg-secondary">
         <div
           className="text-white w-full py-3 lg:py-2"
@@ -30,7 +30,7 @@ const ChatSidebarHeader = () => {
             </div>
 
             <div className="text-white font-bold absolute flex justify-center w-full z-10">
-              Chat Messages
+              Chat
             </div>
           </div>
         </div>

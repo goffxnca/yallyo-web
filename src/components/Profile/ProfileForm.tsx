@@ -36,6 +36,10 @@ const ProfileForm = ({ onSubmit }: Props) => {
     }, 5000);
   };
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div>
       <form
@@ -43,62 +47,24 @@ const ProfileForm = ({ onSubmit }: Props) => {
         onSubmit={handleSubmit(onFormSubmit)}
       >
         <div className="space-y-6 ">
-          <div className="border-b border-white/10 pb-2">
+          <div className="border-b border-white/10 pb-6">
             {/* Picture */}
             <div className="text-center -mt-20">
               <li className="rounded-2xl px-2">
                 <img
-                  className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
-                  src={
-                    "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                  }
+                  className="mx-auto h-32 w-32 rounded-full"
+                  src={user.photoURL}
                   alt=""
                 />
-                <h3 className="mt-6 text-xl font-semibold leading-7 tracking-tight text-accent2">
-                  Madakastar Savario
+                <h3 className="mt-6 text-2xl font-semibold leading-7 tracking-tight text-accent2">
+                  {user?.displayName}
                 </h3>
-                <p className="text-sm leading-6 text-gray-400">Freelancer</p>
-                {/* Socials */}
-                {/* <ul role="list" className="mt-6 flex justify-center gap-x-6">
-                  <li>
-                    <a href={""} className="text-gray-400 hover:text-gray-300">
-                      <span className="sr-only">Twitter</span>
-                      <svg
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
-                      </svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={"http://google.com"}
-                      className="text-gray-400 hover:text-gray-300"
-                    >
-                      <span className="sr-only">LinkedIn</span>
-                      <svg
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </a>
-                  </li>
-                </ul> */}
+                <p className="text-sm leading-6 text-gray-400">[Bio] Cool Yo</p>
               </li>
             </div>
           </div>
 
-          <div className="border-b border-white/10 pb-12">
+          <div className="border-b border-white/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-white">
               Profile
             </h2>
@@ -107,7 +73,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
               share.
             </p>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6 pl-4">
+            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6 pl-4">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="first-name"
@@ -121,7 +87,8 @@ const ProfileForm = ({ onSubmit }: Props) => {
                     name="first-name"
                     id="first-name"
                     autoComplete="given-name"
-                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
+                    value={user.displayName}
                   />
                 </div>
               </div>
@@ -140,8 +107,8 @@ const ProfileForm = ({ onSubmit }: Props) => {
                     type="email"
                     autoComplete="email"
                     disabled
-                    value="johndoe@gmail.com"
-                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    value={user.email}
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -151,20 +118,19 @@ const ProfileForm = ({ onSubmit }: Props) => {
                   htmlFor="about"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  About Me
+                  Bio
                 </label>
                 <div className="mt-2">
                   <textarea
                     id="about"
                     name="about"
-                    rows={3}
-                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    rows={2}
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
                     defaultValue={""}
+                    placeholder="Write a few sentences about yourself."
                   />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-gray-400">
-                  Write a few sentences about yourself.
-                </p>
+                <p className="mt-3 text-sm leading-6 text-gray-400"></p>
               </div>
 
               <div className="col-span-full">
@@ -172,7 +138,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                   htmlFor="photo"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  Photo
+                  Profile Picture
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
                   <UserCircleIcon
@@ -181,16 +147,39 @@ const ProfileForm = ({ onSubmit }: Props) => {
                   />
                   <button
                     type="button"
-                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+                    disabled
+                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-500 shadow-sm cursor-not-allowed"
                   >
                     Change
                   </button>
                 </div>
+                <p className="mt-3 text-xs text-gray-400">
+                  **To update your profile picture, please change your Google
+                  Account profile picture from
+                  <a
+                    href="https://myaccount.google.com/"
+                    className="text-white text-xs ml-1 underline"
+                    target="_blank"
+                  >
+                    here
+                  </a>
+                  . Yallyo currently doesn&apos;t support this function yet.
+                  Please note that it may take a few minutes to hours for your
+                  new Google account profile picture to take effect, check this
+                  <a
+                    href="https://support.google.com/mail/thread/2904884/profile-picture-is-uploaded-but-icon-photo-won-t-change?hl=en"
+                    className="text-white text-xs ml-1 underline"
+                    target="_blank"
+                  >
+                    solution
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="border-b border-white/10 pb-12">
+          <div className="border-b border-white/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-white">
               Notifications
             </h2>
@@ -208,7 +197,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                         id="comments"
                         name="comments"
                         type="checkbox"
-                        className="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900"
+                        className="h-4 w-4 rounded border-white/10 bg-white/5 text-accent2 focus:ring-accent2 focus:ring-offset-gray-900"
                       />
                     </div>
                     <div className="text-sm leading-6">
@@ -216,10 +205,10 @@ const ProfileForm = ({ onSubmit }: Props) => {
                         htmlFor="comments"
                         className="font-medium text-white"
                       >
-                        Follow/Unfollow
+                        Account Following
                       </label>
                       <p className="text-gray-400">
-                        Get notified when someone starts following you.
+                        Get notified when someone starts following your account.
                       </p>
                     </div>
                   </div>
@@ -229,7 +218,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                         id="candidates"
                         name="candidates"
                         type="checkbox"
-                        className="h-4 w-4 rounded border-white/10 bg-white/5 text-indigo-600 focus:ring-indigo-600 focus:ring-offset-gray-900"
+                        className="h-4 w-4 rounded border-white/10 bg-white/5 text-accent2 focus:ring-accent2 focus:ring-offset-gray-900"
                       />
                     </div>
                     <div className="text-sm leading-6">
@@ -240,7 +229,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                         Room Invitation
                       </label>
                       <p className="text-gray-400">
-                        Get notified when someone invites you to a room.
+                        Get notified when someone invites you to join a room.
                       </p>
                     </div>
                   </div>
@@ -252,14 +241,8 @@ const ProfileForm = ({ onSubmit }: Props) => {
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-white"
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
-            className="rounded-md bg-accent2 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            className="rounded-md bg-accent1 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-"
           >
             Save
           </button>
