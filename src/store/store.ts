@@ -8,12 +8,14 @@ import roomReducer from "./roomSlice";
 import appReducer from "./appSlice";
 import sessionSlice from "./sessionSlice";
 import authSlice from "./authSlice";
+import profileSlice from "./profileSlice";
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authSlice,
   room: roomReducer,
   session: sessionSlice,
+  profile: profileSlice,
 });
 
 const store = configureStore({

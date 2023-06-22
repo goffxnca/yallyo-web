@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { ArrowPathIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import TextInput from "../Forms/Inputs/TextInput";
-import { useState } from "react";
-import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import { useEffect, useState } from "react";
 import DropdownInput3 from "../Forms/Inputs/DropodownInput3";
 import { createNArrayFrom } from "@/utils/array-utils";
 import { FieldValues, useForm } from "react-hook-form";
@@ -9,9 +9,8 @@ import { maxLength, minLength } from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
-import SigninWithGoogleButton from "../Layouts/Headers/SigninWithGoogleButton";
-import { signinWithGoogle } from "@/store/authSlice";
-import Notification from "@/components/UIs/Notification";
+
+import { fetchProfileAsync } from "@/store/profileSlice";
 
 interface Props {
   onSubmit: (data: FieldValues) => void;
@@ -19,51 +18,77 @@ interface Props {
 
 const ProfileForm = ({ onSubmit }: Props) => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const { profile } = useSelector((state: RootState) => state.profile);
   const [loading, setLoading] = useState(false);
-  const [loginSuccessfully, setLoginSuccessfully] = useState(false);
+
   const dispatch: AppDispatch = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  useEffect(() => {
+    if (dispatch && user) {
+      dispatch(fetchProfileAsync());
+    }
+  }, [dispatch, user]);
 
-  const onFormSubmit = (data: FieldValues) => {
-    setLoading(true);
-    setTimeout(() => {
-      onSubmit(data);
-    }, 5000);
-  };
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
 
-  if (!user) {
-    return null;
+  // const onFormSubmit = (data: FieldValues) => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     onSubmit(data);
+  //   }, 5000);
+  // };
+
+  if (!profile) {
+    return <div></div>;
   }
 
   return (
     <div>
       <form
         className="md:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-10"
-        onSubmit={handleSubmit(onFormSubmit)}
+        onSubmit={() => {}}
       >
         <div className="space-y-6 ">
+          {/* Form Header */}
           <div className="border-b border-white/10 pb-6">
             {/* Picture */}
             <div className="text-center -mt-20">
-              <li className="rounded-2xl px-2">
+              <div className="rounded-2xl px-2 space-y-2">
                 <img
                   className="mx-auto h-32 w-32 rounded-full"
-                  src={user.photoURL}
+                  src={profile.photoURL}
                   alt=""
                 />
                 <h3 className="mt-6 text-2xl font-semibold leading-7 tracking-tight text-accent2">
-                  {user?.displayName}
+                  {profile.dname}
                 </h3>
-                <p className="text-sm leading-6 text-gray-400">[Bio] Cool Yo</p>
-              </li>
+                <p className="text-sm leading-6 text-gray-200">
+                  [Bio] {profile.bio}
+                </p>
+
+                <div className="flex justify-center gap-x-4">
+                  <p className="text-sm text-gray-400">
+                    <span className="font-bold  text-white">
+                      {profile.followers}
+                    </span>{" "}
+                    Followers
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    <span className="font-bold text-white">
+                      {profile.followings}
+                    </span>{" "}
+                    Following
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* Profile Section */}
           <div className="border-b border-white/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-white">
               Profile
@@ -73,10 +98,11 @@ const ProfileForm = ({ onSubmit }: Props) => {
               share.
             </p>
 
+            {/* Display Name */}
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6 pl-4">
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="dname"
                   className="block text-sm font-medium leading-6 text-white"
                 >
                   Display Name
@@ -84,15 +110,16 @@ const ProfileForm = ({ onSubmit }: Props) => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autoComplete="given-name"
+                    name="dname"
+                    id="dname"
                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
-                    value={user.displayName}
+                    value={profile.dname}
+                    onChange={() => {}}
                   />
                 </div>
               </div>
 
+              {/* Email */}
               <div className="sm:col-span-3">
                 <label
                   htmlFor="email"
@@ -105,37 +132,39 @@ const ProfileForm = ({ onSubmit }: Props) => {
                     id="email"
                     name="email"
                     type="email"
-                    autoComplete="email"
                     disabled
-                    value={user.email}
                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-500 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
+                    value={profile.email}
+                    onChange={() => {}}
                   />
                 </div>
               </div>
 
+              {/* Bio */}
               <div className="col-span-full">
                 <label
-                  htmlFor="about"
+                  htmlFor="bio"
                   className="block text-sm font-medium leading-6 text-white"
                 >
                   Bio
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="about"
-                    name="about"
+                    id="bio"
+                    name="bio"
                     rows={2}
                     className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
-                    defaultValue={""}
                     placeholder="Write a few sentences about yourself."
+                    value={profile.bio}
+                    onChange={() => {}}
                   />
                 </div>
-                <p className="mt-3 text-sm leading-6 text-gray-400"></p>
               </div>
 
+              {/* Profile Picture */}
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  // htmlFor="photoURL"
                   className="block text-sm font-medium leading-6 text-white"
                 >
                   Profile Picture
@@ -153,6 +182,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                     Change
                   </button>
                 </div>
+
                 <p className="mt-3 text-xs text-gray-400">
                   **To update your profile picture, please change your Google
                   Account profile picture from
@@ -179,6 +209,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
             </div>
           </div>
 
+          {/* Notification Section */}
           <div className="border-b border-white/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-white">
               Notifications
@@ -191,18 +222,19 @@ const ProfileForm = ({ onSubmit }: Props) => {
             <div className="space-y-10 pl-4">
               <fieldset>
                 <div className="mt-6 space-y-6">
+                  {/* Notification Option1 */}
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
-                        id="comments"
-                        name="comments"
+                        id="notifyOnFollow"
+                        name="notifyOnFollow"
                         type="checkbox"
                         className="h-4 w-4 rounded border-white/10 bg-white/5 text-accent2 focus:ring-accent2 focus:ring-offset-gray-900"
                       />
                     </div>
-                    <div className="text-sm leading-6">
+                    <div className="text-sm leading-6 select-none">
                       <label
-                        htmlFor="comments"
+                        htmlFor="notifyOnFollow"
                         className="font-medium text-white"
                       >
                         Account Following
@@ -212,18 +244,19 @@ const ProfileForm = ({ onSubmit }: Props) => {
                       </p>
                     </div>
                   </div>
+                  {/* Notification Option2 */}
                   <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
-                        id="candidates"
-                        name="candidates"
+                        id="notifyOnInvite"
+                        name="notifyOnInvite"
                         type="checkbox"
                         className="h-4 w-4 rounded border-white/10 bg-white/5 text-accent2 focus:ring-accent2 focus:ring-offset-gray-900"
                       />
                     </div>
-                    <div className="text-sm leading-6">
+                    <div className="text-sm leading-6 select-none">
                       <label
-                        htmlFor="candidates"
+                        htmlFor="notifyOnInvite"
                         className="font-medium text-white"
                       >
                         Room Invitation
@@ -239,6 +272,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
           </div>
         </div>
 
+        {/* Submit Button */}
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
             type="submit"
