@@ -28,11 +28,12 @@ const sessionSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    assignAuth(state, action: PayloadAction<IFirebaseUser>) {
+    assignSuccessAuth(state, action: PayloadAction<IFirebaseUser>) {
       state.user = action.payload;
+      state.status = "success";
     },
-    resetAuth(state) {
-      return initialState;
+    assignErrorAuth(_) {
+      return { ...initialState, status: "error" };
     },
   },
   extraReducers(builder) {
@@ -69,5 +70,5 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { resetAuth, assignAuth } = sessionSlice.actions;
+export const { assignSuccessAuth, assignErrorAuth } = sessionSlice.actions;
 export default sessionSlice.reducer;

@@ -1,23 +1,16 @@
 import { signinWithGoogle } from "@/store/authSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import SigninWithGoogleButton from "./SigninWithGoogleButton";
 import AccountMenus from "./AccountMenus";
-import { useEffect, useState } from "react";
 import LogoSection from "./LogoSection";
+import useIsAuthChecked from "@/hooks/useIsAuthChecked";
 
 const Header = () => {
   // console.log("Header");
   const dispatch: AppDispatch = useDispatch();
   const authState = useSelector((state: RootState) => state.auth);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const isAuthChecked = useIsAuthChecked();
 
   return (
     <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 w-full border-b border-gray-600 bg-opacity-90 z-30">
@@ -29,7 +22,7 @@ const Header = () => {
 
       <LogoSection />
 
-      {/* {!loading && (
+      {isAuthChecked && (
         <div className="text-center hidden md:block">
           <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
             Yallyo.com
@@ -38,9 +31,9 @@ const Header = () => {
             Language Learning Community
           </h2>
         </div>
-      )} */}
+      )}
 
-      {!loading && (
+      {isAuthChecked && (
         <>
           {!authState.user && (
             <SigninWithGoogleButton

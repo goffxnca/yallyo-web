@@ -5,7 +5,11 @@ import { AppDispatch } from "@/store/store";
 import { signinWithGoogle } from "@/store/authSlice";
 import { useRouter } from "next/router";
 
-const AuthRequired = () => {
+interface Props {
+  message?: string;
+}
+
+const AuthRequired = ({ message }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
@@ -17,7 +21,8 @@ const AuthRequired = () => {
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
         <div className=" text-white text-center">
-          🔒 You need to login with Google Account to join this room.
+          {message ||
+            "🔒 You need to login with Google Account to see content of this page."}
         </div>
 
         <div className="flex justify-center mt-4">

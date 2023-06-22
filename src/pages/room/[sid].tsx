@@ -148,7 +148,9 @@ const RoomSessionPage = () => {
   }
 
   if (!user) {
-    return <AuthRequired />;
+    return (
+      <AuthRequired message="🔒 You need to login with Google Account to join this room." />
+    );
   }
 
   if (!room) {

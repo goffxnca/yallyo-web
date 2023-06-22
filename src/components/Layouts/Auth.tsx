@@ -1,14 +1,16 @@
 import { AppDispatch } from "@/store/store";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../../../firebase";
 import { IFirebaseUser } from "@/types/frontend";
-import { assignAuth, resetAuth } from "@/store/authSlice";
+import { assignSuccessAuth, assignErrorAuth } from "@/store/authSlice";
 import React from "react";
+import DarkOverlay from "./Overlay";
 
 const Auth = React.memo(() => {
   const dispatch: AppDispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   // console.log("Auth");
 
   useEffect(() => {
@@ -22,10 +24,11 @@ const Auth = React.memo(() => {
           photoURL: user.photoURL!,
           idToken: (user as any).accessToken,
         };
-        dispatch(assignAuth(auth));
+        dispatch(assignSuccessAuth(auth));
       } else {
-        dispatch(resetAuth());
+        dispatch(assignErrorAuth());
       }
+      setLoading(false);
     });
 
     //normal useEffect cleanup function doesn't works here, so resort to DOM api
@@ -44,7 +47,7 @@ const Auth = React.memo(() => {
     });
   }, []);
 
-  return null;
+  return <>{loading && <DarkOverlay />}</>;
 });
 
 Auth.displayName = "Auth";
