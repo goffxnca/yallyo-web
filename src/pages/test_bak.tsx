@@ -189,14 +189,12 @@ const JoinerList2 = () => {
                           <div className="text-white flex justify-center items-center h-full">
                             <div className="text-white flex justify-center">
                               <Avatar
+                                userId={Math.random().toString()}
                                 name={name}
                                 size="lg"
                                 showMic={false}
                                 url={faker.image.avatar()}
                                 color={getRandomColor()}
-                                bio=""
-                                followers={0}
-                                followings={0}
                               />
                             </div>
                           </div>

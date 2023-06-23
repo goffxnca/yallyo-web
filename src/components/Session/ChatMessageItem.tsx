@@ -23,14 +23,12 @@ const ChatMessageItem = ({
       {!isMe && type === "chat" && (
         <div className="mr-2">
           <Avatar
-            name={"wefew"}
+            userId={sender._id}
+            name={sender.dname}
             size={"xs"}
             showMic={true}
             url={sender.photoURL}
             color={"red"}
-            bio=""
-            followers={0}
-            followings={0}
           />
         </div>
       )}

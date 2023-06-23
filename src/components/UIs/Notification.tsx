@@ -8,6 +8,7 @@ interface Props {
   messageTitle: string;
   messageBody?: React.ReactNode;
   autoFadeout: boolean;
+  autoFadeoutInMs?: number;
   onFadedOut: Function;
 }
 
@@ -15,7 +16,8 @@ const Notification = ({
   type,
   messageTitle,
   messageBody,
-  autoFadeout = true,
+  autoFadeout,
+  autoFadeoutInMs = 0,
   onFadedOut,
 }: Props) => {
   const [show, setShow] = useState(true);
@@ -29,7 +31,7 @@ const Notification = ({
     if (autoFadeout) {
       setTimeout(() => {
         fadeOut();
-      }, 5000);
+      }, autoFadeoutInMs || 5000);
     }
   }, []);
 

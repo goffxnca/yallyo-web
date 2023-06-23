@@ -21,7 +21,7 @@ const ProfileContainer = () => {
     return null;
   }
 
-  return <ProfileForm onSubmit={() => {}} />;
+  return <ProfileForm />;
 };
 
 export default ProfileContainer;

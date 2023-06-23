@@ -88,6 +88,7 @@ const profileSlice = createSlice({
       .addCase(updateProfileAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to update my profile";
+        console.error("updateProfileAsync failed with error", action.error);
       });
   },
 });

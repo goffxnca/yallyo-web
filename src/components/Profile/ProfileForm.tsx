@@ -1,48 +1,75 @@
 /* eslint-disable @next/next/no-img-element */
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import {
-  ArrowPathIcon,
-  ArrowRightIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import TextInput from "../Forms/Inputs/TextInput";
-import { useEffect, useState } from "react";
-import DropdownInput3 from "../Forms/Inputs/DropodownInput3";
-import { createNArrayFrom } from "@/utils/array-utils";
-import { maxLength, minLength } from "@/utils/form-utils";
+  extractOnlyDirtiedField,
+  maxLength,
+  minLength,
+} from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { useForm, FieldValues } from "react-hook-form";
-
 import { updateProfileAsync } from "@/store/profileSlice";
-
 import Notification from "@/components/UIs/Notification";
+import ProfileImageInput from "./ProfileImageInput";
+import { uploadFileToStorage } from "@/utils/file-utils";
+import { useRouter } from "next/router";
 
-interface Props {
-  onSubmit: (data: FieldValues) => void;
-}
-
-const ProfileForm = ({ onSubmit }: Props) => {
+const ProfileForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const { profile, status } = useSelector((state: RootState) => state.profile);
   const [showUpdateSuccessNotificaiton, setShowUpdateSuccessNotificaiton] =
     useState(false);
 
+  const [uploadingImageToStorage, setUploadingImageToStorage] =
+    useState<boolean>(false);
+
   const defaultValues = {
     dname: profile?.dname,
     bio: profile?.bio,
+    photoURLOrigin: profile?.photoURL,
+    photoURL: profile?.photoURL,
   };
 
+  const router = useRouter();
   const {
     register,
+    unregister,
     handleSubmit,
-    formState: { errors, isDirty },
+    setValue,
+    formState: { errors, isDirty, dirtyFields },
   } = useForm({ defaultValues: defaultValues });
 
-  const loading = status === "loading";
+  const loading = status === "loading" || uploadingImageToStorage;
 
-  const onFormSubmit = (data: FieldValues) => {
-    dispatch(updateProfileAsync(data)).then(() => {
+  const onFormSubmit = async (formData: FieldValues) => {
+    const dirtiedFormData = extractOnlyDirtiedField(formData, dirtyFields);
+
+    let uploadedUrl;
+    if (dirtiedFormData.photoURL) {
+      setUploadingImageToStorage(true);
+      try {
+        uploadedUrl = await uploadFileToStorage(
+          "us",
+          formData.photoURL.fileContent
+        );
+      } catch (error) {
+        console.error(
+          "Error occured during uploading new profile image to server",
+          error
+        );
+      }
+      setUploadingImageToStorage(false);
+    }
+
+    let toBeUpdatedProfile;
+    if (uploadedUrl) {
+      toBeUpdatedProfile = { ...dirtiedFormData, photoURL: uploadedUrl };
+    } else {
+      toBeUpdatedProfile = dirtiedFormData;
+    }
+    dispatch(updateProfileAsync(toBeUpdatedProfile)).then(() => {
       setShowUpdateSuccessNotificaiton(true);
     });
   };
@@ -54,7 +81,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
   return (
     <div>
       <form
-        className="md:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-10"
+        className="lg:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-14"
         onSubmit={handleSubmit(onFormSubmit)}
       >
         <div className="space-y-6 ">
@@ -64,7 +91,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
             <div className="text-center -mt-20">
               <div className="rounded-2xl px-2 space-y-2">
                 <img
-                  className="mx-auto h-32 w-32 rounded-full"
+                  className="mx-auto h-32 w-32  object-cover rounded-full"
                   src={profile.photoURL}
                   alt=""
                 />
@@ -181,50 +208,26 @@ const ProfileForm = ({ onSubmit }: Props) => {
                 )}
               </div>
 
-              {/* Profile Picture */}
+              {/* Picture */}
               <div className="col-span-full">
                 <label
-                  // htmlFor="photoURL"
+                  htmlFor="photoURL"
                   className="block text-sm font-medium leading-6 text-white"
                 >
-                  Profile Picture
+                  Picture
                 </label>
-                <div className="mt-2 flex items-center gap-x-3">
-                  <UserCircleIcon
-                    className="h-12 w-12 text-gray-500"
-                    aria-hidden="true"
-                  />
-                  <button
-                    type="button"
-                    disabled
-                    className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-gray-500 shadow-sm cursor-not-allowed"
-                  >
-                    Change
-                  </button>
-                </div>
-
-                <p className="mt-3 text-xs text-gray-400">
-                  **To update your profile picture, please change your Google
-                  Account profile picture from
-                  <a
-                    href="https://myaccount.google.com/"
-                    className="text-white text-xs ml-1 underline"
-                    target="_blank"
-                  >
-                    here
-                  </a>
-                  . Yallyo currently doesn&apos;t support this function yet.
-                  Please note that it may take a few minutes to hours for your
-                  new Google account profile picture to take effect, check this
-                  <a
-                    href="https://support.google.com/mail/thread/2904884/profile-picture-is-uploaded-but-icon-photo-won-t-change?hl=en"
-                    className="text-white text-xs ml-1 underline"
-                    target="_blank"
-                  >
-                    solution
-                  </a>
-                  .
-                </p>
+                <ProfileImageInput
+                  id="photoURL"
+                  register={() =>
+                    register("photoURL", {
+                      required: "Profile picture is required",
+                    })
+                  }
+                  originFileUrl={profile.photoURL}
+                  unregister={unregister}
+                  error={errors.photoURL?.message || ""}
+                  setValue={setValue}
+                />
               </div>
             </div>
           </div>
@@ -265,7 +268,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                     </div>
                   </div>
                   {/* Notification Option2 */}
-                  <div className="relative flex gap-x-3">
+                  {/* <div className="relative flex gap-x-3">
                     <div className="flex h-6 items-center">
                       <input
                         id="notifyOnInvite"
@@ -285,7 +288,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
                         Get notified when someone invites you to join a room.
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </fieldset>
             </div>
@@ -299,7 +302,7 @@ const ProfileForm = ({ onSubmit }: Props) => {
             className={`flex rounded-md bg-accent1 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-black focus-visible:outline focus-visible:outline-2 ${
               !isDirty && "opacity-25"
             }`}
-            disabled={!isDirty}
+            disabled={!isDirty || loading}
           >
             {loading && (
               <div className="animate-pulse">
@@ -319,8 +322,9 @@ const ProfileForm = ({ onSubmit }: Props) => {
           type="success"
           messageTitle="Update profile successfully!"
           autoFadeout={true}
+          autoFadeoutInMs={1000}
           onFadedOut={() => {
-            location.reload();
+            router.reload();
           }}
         />
       )}

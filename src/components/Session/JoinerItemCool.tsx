@@ -62,14 +62,12 @@ const JoinerItemCool = ({
               <div className="text-white flex justify-center items-center h-full">
                 <div className="text-white flex justify-center">
                   <Avatar
+                    userId={userId}
                     name={displayName}
                     size="lg"
                     showMic={false}
                     url={photoUrl}
                     color={getRandomColor()}
-                    bio=""
-                    followers={0}
-                    followings={0}
                   />
                 </div>
               </div>

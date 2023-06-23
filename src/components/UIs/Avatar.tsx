@@ -6,26 +6,15 @@ import Modal from "./Modal";
 import { MicrophoneIcon } from "@heroicons/react/24/outline";
 
 interface Props {
+  userId: string;
   name: string;
   size: "xs" | "sm" | "md" | "lg";
   showMic: boolean;
   url: string;
   color: string;
-  bio: string;
-  followers: number;
-  followings: number;
 }
 
-const Avatar = ({
-  name,
-  size,
-  showMic,
-  url,
-  color,
-  bio,
-  followers,
-  followings,
-}: Props) => {
+const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -74,14 +63,7 @@ const Avatar = ({
             setShowProfile(false);
           }}
         >
-          <UserProfile
-            name={name}
-            url={url}
-            color={color}
-            bio={bio}
-            followers={followers}
-            followings={followings}
-          />
+          <UserProfile userId={userId} name={name} url={url} color={color} />
         </Modal>
       )}
     </div>

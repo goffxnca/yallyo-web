@@ -32,6 +32,7 @@ const SessionContent = () => {
           {room?.joiners.map((joiner) => (
             <Joiner
               key={joiner._id}
+              userId={joiner._id}
               name={joiner.dname}
               size={room.joiners.length > 5 ? "md" : "lg"}
               url={joiner.photoURL}

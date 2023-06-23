@@ -60,12 +60,10 @@ const RoomItem = memo((room: Props) => {
           return (
             <Avatar
               key={item}
+              userId={joiner._id}
               name={joiner?.dname}
               url={joiner?.photoURL}
               color={joiner?.color}
-              bio=""
-              followers={0}
-              followings={0}
               size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
               showMic={false}
             />

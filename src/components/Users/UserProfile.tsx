@@ -4,22 +4,13 @@ import { CheckIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { convertFullnameToAbbr } from "@/utils/string-utils";
 
 interface Props {
+  userId: string;
   name: string;
   url: string;
   color: string;
-  followers: number;
-  followings: number;
-  bio: string;
 }
 
-const UserProfile = ({
-  name,
-  url,
-  color,
-  bio,
-  followers,
-  followings,
-}: Props) => {
+const UserProfile = ({ userId, name, url, color }: Props) => {
   const [isFollowing, setIsFollowing] = useState(true);
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
 
@@ -35,7 +26,7 @@ const UserProfile = ({
             style={{
               backgroundColor: !url && name ? color : "",
               backgroundImage: url ? `url(${url})` : "",
-              backgroundSize: "contain",
+              backgroundSize: "cover",
               backgroundPosition: "center",
             }}
           >
@@ -52,14 +43,14 @@ const UserProfile = ({
         <h2 className="text-4xl mb-4 text-center md:text-left mt-4 md:mt- text-accent2">
           {name}
         </h2>
-        <p className="mb-4 text-gray-400 text-center md:text-left">{bio}</p>
+        <p className="mb-4 text-gray-400 text-center md:text-left">Biko Koko</p>
 
         <div className="flex justify-center gap-x-4">
           <p className="text-sm text-gray-400">
-            <span className="font-bold  text-white">{followers}</span> Followers
+            <span className="font-bold  text-white">7</span> Followers
           </p>
           <p className="text-sm text-gray-400">
-            <span className="font-bold text-white">{followings}</span> Following
+            <span className="font-bold text-white">18</span> Following
           </p>
         </div>
 

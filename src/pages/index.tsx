@@ -174,19 +174,6 @@ const HomePage = () => {
 
   return (
     <PageContainer>
-      <Head>
-        <title>Yallyo2 - Language Learning Community</title>
-      </Head>
-
-      {/* <button
-        className="text-white"
-        onClick={() => {
-          setCounter(counter + 1);
-        }}
-      >
-        Change Counter
-      </button> */}
-
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);

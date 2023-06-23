@@ -3,6 +3,7 @@ import Avatar from "../UIs/Avatar";
 import { randomBoolean } from "@/utils/bool-utils";
 
 interface Props {
+  userId: string;
   name: string;
   size: "sm" | "md" | "lg";
   url: string;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const Joiner = ({
+  userId,
   name,
   size,
   url,
@@ -33,14 +35,12 @@ const Joiner = ({
     >
       <div className="text-white flex justify-center">
         <Avatar
+          userId={userId}
           name={name}
           size={size}
           showMic={true}
           url={url}
           color={color}
-          bio=""
-          followers={0}
-          followings={0}
         />
       </div>
 

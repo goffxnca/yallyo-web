@@ -60,7 +60,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                 <div
                   className={joinClasses(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm select-none cursor-pointer"
+                    "group flex items-center px-4 py-2 text-sm select-none"
                   )}
                 >
                   <div>
@@ -99,8 +99,8 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                 </Link>
               )}
             </Menu.Item>
-            {/* 
-            <Menu.Item>
+
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href="/profile"
