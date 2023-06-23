@@ -330,7 +330,6 @@ const HomePage = () => {
 
       {showNewRoomFormModal && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowNewRoomFormModal(false);
           }}
@@ -340,7 +339,6 @@ const HomePage = () => {
       )}
       {showRules && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowRules(false);
           }}

@@ -58,7 +58,6 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
 
       {showProfile && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowProfile(false);
           }}

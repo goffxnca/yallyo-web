@@ -176,7 +176,6 @@ const RoomSessionPage = () => {
       <SessionContainer sessionsSocket={sessionsSocket} p2p={p2p} />
       {showTroubleshootingModal && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowTroubleshootingModal(false);
           }}
