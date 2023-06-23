@@ -29,13 +29,11 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
       <div className="flex">
         <Menu.Button className="">
           <div className="flex items-center cursor-pointer select-none group">
-            <Image
+            <img
               src={profileURL}
-              className="rounded-full w-10 h-10 group-hover:scale-105"
-              width={20}
-              height={20}
-              alt=""
+              className="w-10 h-10 object-cover rounded-full"
             />
+
             <ChevronDownIcon
               className="h-5 w-5 text-gray-400 group-hover:text-accent2"
               aria-hidden="true"

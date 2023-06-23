@@ -59,6 +59,22 @@ export const updateProfileAsync = createAsyncThunk(
   }
 );
 
+export const fetchShortProfileByIdAsync = createAsyncThunk(
+  "fetchShortProfileByIdAsync",
+  async (userId: string) => {
+    //TODO: We might re-consider again, if we should allow non logged-in user to see other user profiles or not
+    const endpoint = `${ENVS.API_URL}/users/${userId}/shortProfile`;
+    const response = await fetch(endpoint);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+    return data as IUser;
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,

@@ -7,12 +7,7 @@ import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";
 import { RootState } from "./store";
-import {
-  IPagination,
-  IRoom,
-  IRoomFilter,
-  IRoomSocketUpdate,
-} from "@/types/common";
+import { IRoom, IRoomFilter, IRoomSocketUpdate } from "@/types/common";
 
 interface RoomState extends IAsyncState {
   rooms: IRoom[];
@@ -93,31 +88,6 @@ export const createRoom = createAsyncThunk(
     const createdRoom = await response.json();
     return createdRoom as IRoom;
   }
-);
-
-export const joinRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const leaveRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const cancelRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const sendRoomMessage = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
-);
-
-export const reportRoom = createAsyncThunk(
-  "room/fetchRooms",
-  async (pagination: IPagination) => {}
 );
 
 const roomSlice = createSlice({

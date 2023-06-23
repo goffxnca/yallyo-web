@@ -60,7 +60,7 @@ const RoomItem = memo((room: Props) => {
           return (
             <Avatar
               key={item}
-              userId={joiner._id}
+              userId={joiner?._id}
               name={joiner?.dname}
               url={joiner?.photoURL}
               color={joiner?.color}
