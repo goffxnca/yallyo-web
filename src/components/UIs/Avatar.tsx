@@ -21,7 +21,7 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
 
   const avatarSize =
     size === "xs"
-      ? "w-6 h-6"
+      ? "w-8 h-8"
       : size === "sm"
       ? "w-10 h-10"
       : size === "md"
@@ -48,6 +48,7 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
         backgroundImage: url ? `url(${url})` : "",
         backgroundSize: "contain",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* Image */}
