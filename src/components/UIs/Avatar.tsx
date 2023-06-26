@@ -46,7 +46,7 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
       style={{
         backgroundColor: !url && name ? color : "",
         backgroundImage: url ? `url(${url})` : "",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}

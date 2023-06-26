@@ -13,7 +13,7 @@ class Peer2Peer {
   status: string = "";
   localStream: MediaStream | null = null;
   mediaStreamConstraints: MediaStreamConstraints = {
-    video: true,
+    video: false,
     audio: true,
   };
 

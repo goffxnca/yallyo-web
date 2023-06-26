@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { CheckIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { fetchShortProfileByIdAsync } from "@/store/profileSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import {
+  fetchShortProfileByIdAsync,
+  followAccountAsync,
+} from "@/store/profileSlice";
 import { IUser } from "@/types/common";
+import DarkOverlay from "../Layouts/Overlay";
+import Notification from "../UIs/Notification";
 
 interface Props {
   userId: string;
@@ -13,16 +18,22 @@ interface Props {
 }
 
 const UserProfile = ({ userId, name, url, color }: Props) => {
-  const [isFollowing, setIsFollowing] = useState(true);
+  const { status } = useSelector((state: RootState) => state.profile);
+  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch: AppDispatch = useDispatch();
   const [profile, setProfile] = useState<IUser>();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const isMe = profile?._id === user?.uid;
+  const isFollowing = (profile && (profile as any)["isFollowing"]) || false;
 
   useEffect(() => {
     dispatch(fetchShortProfileByIdAsync(userId))
       .unwrap()
       .then((profileData) => {
         setProfile(profileData);
-      });
+      })
+      .catch(() => {});
   }, []);
 
   return (
@@ -64,25 +75,58 @@ const UserProfile = ({ userId, name, url, color }: Props) => {
           </p>
         </div>
 
-        <button
-          className="border border-white rounded-full px-4 py-2 flex items-center justify-center m-auto text-white hover:text-accent2 mt-4"
-          onClick={() => {
-            setIsFollowing(!isFollowing);
-          }}
-        >
-          {isFollowing ? (
-            <>
-              <CheckIcon className="w-6 h-6 mr-1" />
-              <span>Following</span>
-            </>
-          ) : (
-            <>
-              <PlusIcon className="w-6 h-6 mr-1" />
-              <span>Follow</span>
-            </>
-          )}
-        </button>
+        {user && profile && !isMe && (
+          <button className="flex items-center justify-center m-auto border border-white rounded-full px-4 py-2 text-white hover:text-accent2 mt-4">
+            {isFollowing ? (
+              <div className="flex items-center justify-center w-auto">
+                <CheckIcon className="w-6 h-6 mr-1" />
+                <span className="">You are following {profile.dname}</span>
+              </div>
+            ) : (
+              <div
+                className="flex items-center justify-center w-auto"
+                onClick={() => {
+                  dispatch(followAccountAsync(userId))
+                    .unwrap()
+                    .then((data) => {
+                      setShowSuccessModal(true);
+                    })
+                    .catch(() => {});
+                }}
+              >
+                <PlusIcon className="w-6 h-6 mr-1" />
+                <span>Follow</span>
+              </div>
+            )}
+          </button>
+        )}
       </div>
+      {status === "loading" && <DarkOverlay />}
+      {status === "error" && (
+        <Notification
+          type="error"
+          messageTitle="Something went wrong!"
+          messageBody={"The server cannot process your request."}
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
+      )}
+
+      {showSuccessModal && (
+        <Notification
+          type="success"
+          messageTitle="Notification"
+          messageBody={`You are now following ${profile?.dname}`}
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
+      )}
+
+      {isFollowing && (
+        <div className="text-gray-400 text-xs italic mt-6">
+          **We do not support unfollow function at the moment.
+        </div>
+      )}
     </div>
   );
 };

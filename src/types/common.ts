@@ -23,6 +23,13 @@ export interface IUser extends IDbDocument {
   provider: string;
 }
 
+export interface IFollow {
+  _id: string | any;
+  followerId: string;
+  followeeId: string;
+  createdAt: string;
+}
+
 export type TMinimalUser = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
 
 export interface IRoom extends IDbDocument {

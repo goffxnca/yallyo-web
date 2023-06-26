@@ -21,7 +21,7 @@ const Header = () => {
       </div> */}
 
       <LogoSection />
-
+      {/* 
       {isAuthChecked && (
         <div className="absolute left-[50%] transform translate-x-[-50%] text-center hidden md:block">
           <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
@@ -31,7 +31,7 @@ const Header = () => {
             Language Learning Community
           </h2>
         </div>
-      )}
+      )} */}
 
       {isAuthChecked && (
         <>
