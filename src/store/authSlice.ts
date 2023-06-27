@@ -1,3 +1,4 @@
+// Auth slice is collection of actions for authentication
 import { IAsyncState, IFirebaseUser } from "@/types/frontend";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInWithPopup, signOut } from "firebase/auth";

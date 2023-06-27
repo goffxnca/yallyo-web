@@ -1,3 +1,4 @@
+// Room slice is collection of actions for chat rooms list in homepage
 import {
   IAsyncState,
   RoomFetchOptions,

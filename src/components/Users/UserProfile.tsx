@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { CheckIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
   fetchShortProfileByIdAsync,
   followAccountAsync,
-} from "@/store/profileSlice";
-import { IUser } from "@/types/common";
+  unfollowAccountAsync,
+} from "@/store/accountSlice";
 import DarkOverlay from "../Layouts/Overlay";
 import Notification from "../UIs/Notification";
 
@@ -14,26 +14,20 @@ interface Props {
   userId: string;
   name: string;
   url: string;
-  color: string;
 }
 
-const UserProfile = ({ userId, name, url, color }: Props) => {
-  const { status } = useSelector((state: RootState) => state.profile);
+const UserProfile = ({ userId, name, url }: Props) => {
+  const { account, status } = useSelector((state: RootState) => state.account);
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch: AppDispatch = useDispatch();
-  const [profile, setProfile] = useState<IUser>();
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessFollowModal, setShowSuccessFollowModal] = useState(false);
+  const [showSuccessUnFollowModal, setShowSuccessUnFollowModal] =
+    useState(false);
 
-  const isMe = profile?._id === user?.uid;
-  const isFollowing = (profile && (profile as any)["isFollowing"]) || false;
+  const isMe = account?._id === user?.uid;
 
   useEffect(() => {
-    dispatch(fetchShortProfileByIdAsync(userId))
-      .unwrap()
-      .then((profileData) => {
-        setProfile(profileData);
-      })
-      .catch(() => {});
+    dispatch(fetchShortProfileByIdAsync(userId));
   }, []);
 
   return (
@@ -56,49 +50,66 @@ const UserProfile = ({ userId, name, url, color }: Props) => {
 
       <div className="text-white my-2">
         <h2 className="text-4xl mb-4 text-center text-accent2">{name}</h2>
-        <p className=" text-gray-400 text-center">[bio] {profile?.bio}</p>
+        <p className=" text-gray-400 text-center">[bio] {account?.bio}</p>
       </div>
 
-      <div className="mt-10">
+      <div className="">
         <div className="flex justify-center gap-x-4 ">
           <p className="text-sm text-gray-400">
             <span className="font-bold text-lg text-white mr-1">
-              {profile?.followers}
+              {account?.followers}
             </span>
             Followers
           </p>
           <p className="text-sm text-gray-400">
             <span className="font-bold text-lg text-white mr-1">
-              {profile?.followings}
+              {account?.followings}
             </span>
             Following
           </p>
         </div>
 
-        {user && profile && !isMe && (
-          <button className="flex items-center justify-center m-auto border border-white rounded-full px-4 py-2 text-white hover:text-accent2 mt-4">
-            {isFollowing ? (
-              <div className="flex items-center justify-center w-auto">
-                <CheckIcon className="w-6 h-6 mr-1" />
-                <span className="">You are following {profile.dname}</span>
+        {user && account && !isMe && (
+          <div className="mt-10">
+            {account.isFollowing ? (
+              <div className="">
+                <div className="flex justify-center text-white ">
+                  <CheckIcon className="w-6 h-6 mr-1" />
+                  <span className="">You are following {account.dname}</span>
+                </div>
+
+                <button
+                  className="flex items-center justify-center m-auto border border-white rounded-full px-4 py-2 text-white hover:text-red-500 mt-4"
+                  onClick={() => {
+                    dispatch(unfollowAccountAsync(userId))
+                      .unwrap()
+                      .then((data) => {
+                        setShowSuccessUnFollowModal(true);
+                      })
+                      .catch(() => {});
+                  }}
+                >
+                  <MinusIcon className="w-6 h-6 mr-1" />
+                  <span>UnFollow</span>
+                </button>
               </div>
             ) : (
-              <div
-                className="flex items-center justify-center w-auto"
+              <button
+                className="flex items-center justify-center m-auto border border-white rounded-full px-4 py-2 text-white hover:text-accent2 mt-4"
                 onClick={() => {
                   dispatch(followAccountAsync(userId))
                     .unwrap()
                     .then((data) => {
-                      setShowSuccessModal(true);
+                      setShowSuccessFollowModal(true);
                     })
                     .catch(() => {});
                 }}
               >
                 <PlusIcon className="w-6 h-6 mr-1" />
                 <span>Follow</span>
-              </div>
+              </button>
             )}
-          </button>
+          </div>
         )}
       </div>
       {status === "loading" && <DarkOverlay />}
@@ -112,20 +123,24 @@ const UserProfile = ({ userId, name, url, color }: Props) => {
         />
       )}
 
-      {showSuccessModal && (
+      {showSuccessFollowModal && (
         <Notification
           type="success"
-          messageTitle="Notification"
-          messageBody={`You are now following ${profile?.dname}`}
+          messageTitle="Follow successfully"
+          messageBody={`You are now following ${account?.dname} account.`}
           autoFadeout={true}
           onFadedOut={() => {}}
         />
       )}
 
-      {isFollowing && (
-        <div className="text-gray-400 text-xs italic mt-6">
-          **We do not support unfollow function at the moment.
-        </div>
+      {showSuccessUnFollowModal && (
+        <Notification
+          type="success"
+          messageTitle="Unfollow successfully"
+          messageBody={`You are now no longer following ${account?.dname} account.`}
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
       )}
     </div>
   );

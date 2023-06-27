@@ -1,3 +1,4 @@
+// Session slice is collection of actions for chat rooms session
 import {
   ISessionEventMessage,
   IMediaControls,

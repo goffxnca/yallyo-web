@@ -21,6 +21,8 @@ export interface IUser extends IDbDocument {
   followers: number;
   followings: number;
   provider: string;
+  //This flag is not meant to be use as schema, just utility flag
+  isFollowing?: boolean;
 }
 
 export interface IFollow {

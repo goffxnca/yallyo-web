@@ -3,7 +3,9 @@ import { convertFullnameToAbbr } from "@/utils/string-utils";
 import { useEffect, useState } from "react";
 import UserProfile from "../Users/UserProfile";
 import Modal from "./Modal";
-import { MicrophoneIcon } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { resetAccount } from "@/store/accountSlice";
 
 interface Props {
   userId: string;
@@ -18,6 +20,7 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
+  const dispatch: AppDispatch = useDispatch();
 
   const avatarSize =
     size === "xs"
@@ -61,9 +64,10 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
         <Modal
           emitClose={() => {
             setShowProfile(false);
+            dispatch(resetAccount());
           }}
         >
-          <UserProfile userId={userId} name={name} url={url} color={color} />
+          <UserProfile userId={userId} name={name} url={url} />
         </Modal>
       )}
     </div>
