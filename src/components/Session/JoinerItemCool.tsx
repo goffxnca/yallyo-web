@@ -104,6 +104,7 @@ const JoinerItemCool = ({
                   height: boxSize,
                 }}
                 className="rounded-lg"
+                muted={true}
               />
             </div>
 

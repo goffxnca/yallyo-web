@@ -149,6 +149,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
               <SessionControlList
                 controls={localPeerData.controls}
                 onToggleMic={(current: boolean) => {
+                  setAmISpeaking(false);
                   const data: ISocketIOMessage = {
                     type: current
                       ? SessionsGatewayEventCode.MIC_OFF
