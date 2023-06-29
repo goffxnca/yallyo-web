@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import adapter from "webrtc-adapter";
 import SignalingServer from "@/hooks/SignalingServer";
 import { stat } from "fs";
 import DarkOverlay from "@/components/Layouts/Overlay";

@@ -7,7 +7,7 @@ import {
 } from "@/types/common";
 
 import { joinClasses } from "@/utils/jsx-utils";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Socket } from "socket.io-client";
@@ -32,6 +32,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   );
 
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
+  const [amISpeaking, setAmISpeaking] = useState(false);
 
   useEffect(() => {
     if (user && peers.length > 0) {
@@ -39,6 +40,28 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
       setLocalPeerData(myPeerInfo);
     }
   }, [user, peers]);
+
+  useEffect(() => {
+    console.log("SessionContainer:useEffect");
+    if (p2p) {
+      let timeout: NodeJS.Timeout;
+      const speakHandler = (volume: number) => {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        setAmISpeaking(true);
+        timeout = setTimeout(() => {
+          setAmISpeaking(false);
+        }, 2000);
+      };
+
+      p2p.events.on("speak", speakHandler);
+
+      return () => {
+        p2p.events.off("speak", speakHandler);
+      };
+    }
+  }, [p2p]);
 
   const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
   const [boxSize, setBoxSize] = useState("0px");
@@ -172,6 +195,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   photoUrl={user?.photoURL!}
                   showStatusIndicator={true}
                   isMe={true}
+                  speaking={amISpeaking}
                 />
 
                 {peers
@@ -196,6 +220,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                         photoUrl={peer.userInfo.photoURL}
                         showStatusIndicator={true}
                         isMe={false}
+                        speaking={false}
                       />
                     );
                   })}

@@ -1,3 +1,6 @@
+import { ISoundMeterInterface, SoundMeter } from "@/libs/soundmeter";
+import { EventEmitter } from "events";
+
 interface Peer2PeerSettings {
   localUserId: string;
   remoteUserId?: string;
@@ -12,6 +15,17 @@ class Peer2Peer {
   settings: Peer2PeerSettings | null = null;
   status: string = "";
   localStream: MediaStream | null = null;
+  events = new EventEmitter();
+  micProcesser: {
+    audioContext: AudioContext | null;
+    soundMeter: ISoundMeterInterface | null;
+    meterRefreshInverval: NodeJS.Timeout | null;
+  } = {
+    audioContext: null,
+    soundMeter: null,
+    meterRefreshInverval: null,
+  };
+
   mediaStreamConstraints: MediaStreamConstraints = {
     video: false,
     audio: true,
@@ -97,6 +111,37 @@ class Peer2Peer {
       );
       this.localStream = stream;
 
+      //========Test Sound Meter
+
+      this.micProcesser.audioContext = new AudioContext();
+      console.log("sample rate:" + this.micProcesser.audioContext.sampleRate);
+      this.micProcesser.soundMeter = new SoundMeter(
+        this.micProcesser.audioContext,
+        this.notifySpeak
+      );
+      this.micProcesser.soundMeter.connectToSource(stream, (e: any) => {
+        if (e) {
+          alert(e);
+          return;
+        }
+
+        console.log("connectToSource callback");
+
+        // this.micProcesser.meterRefreshInverval = setInterval(() => {
+        //   // instantMeter.value = instantValueDisplay.innerText =
+        //   //   soundMeter.instant.toFixed(2);
+        //   // slowMeter.value = slowValueDisplay.innerText =
+        //   //   soundMeter.slow.toFixed(2);
+        //   // clipMeter.value = clipValueDisplay.innerText = soundMeter.clip;
+        //   console.log(
+        //     "instantMeter",
+        //     this.micProcesser.soundMeter?.instant.toFixed(2)
+        //   );
+        // }, 5000);
+      });
+
+      //========
+
       const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
@@ -164,6 +209,18 @@ class Peer2Peer {
         const toStatus = !track.enabled ? "on" : "off";
 
         track.enabled = !track.enabled;
+
+        const { soundMeter, audioContext } = this.micProcesser;
+        if (track.enabled) {
+          if (soundMeter && audioContext) {
+            soundMeter.script.connect(audioContext.destination);
+          }
+        } else {
+          if (soundMeter) {
+            soundMeter.script.disconnect();
+          }
+        }
+
         //TODO: need to re-test whether it use property enabled or muted
         // track.stop();
         console.log(
@@ -186,6 +243,19 @@ class Peer2Peer {
       this.localStream.getTracks().forEach((track) => track.stop());
       this.localStream = null;
     }
+
+    const { soundMeter, audioContext } = this.micProcesser;
+    if (soundMeter && audioContext) {
+      alert("clean mic");
+      soundMeter.stop();
+      audioContext.close();
+    }
+
+    this.events.removeAllListeners();
+  };
+
+  private notifySpeak = (volume: number) => {
+    this.events.emit("speak", volume);
   };
 
   private getVideoElement = (peerId: string) => {

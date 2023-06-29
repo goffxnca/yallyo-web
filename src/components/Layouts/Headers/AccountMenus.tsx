@@ -55,26 +55,30 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <div
-                  className={joinClasses(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm select-none"
-                  )}
-                >
-                  <div>
-                    <Image
-                      src={profileURL}
-                      className="rounded-full w-8 h-8 mr-2"
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
+                <Link href="/profile">
+                  <div
+                    className={joinClasses(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "group flex items-center px-4 py-2 text-sm select-none"
+                    )}
+                  >
+                    <div>
+                      <Image
+                        src={profileURL}
+                        className="rounded-full w-8 h-8 mr-2"
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <div className="text-gray-700 font-bold">
+                        {displayName}
+                      </div>
+                      <div className="text-gray-700">{email}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-gray-700 font-bold">{displayName}</div>
-                    <div className="text-gray-700">{email}</div>
-                  </div>
-                </div>
+                </Link>
               )}
             </Menu.Item>
           </div>

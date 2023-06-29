@@ -13,6 +13,7 @@ interface Props {
   photoUrl: string;
   showStatusIndicator: boolean;
   isMe: boolean;
+  speaking: boolean;
 }
 const JoinerItemCool = ({
   userId,
@@ -23,6 +24,7 @@ const JoinerItemCool = ({
   photoUrl,
   showStatusIndicator,
   isMe,
+  speaking,
 }: Props) => {
   return (
     <div
@@ -54,7 +56,11 @@ const JoinerItemCool = ({
       }}
     >
       {/* //Video From Camera */}
-      <div className="flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden">
+      <div
+        className={`flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden  ${
+          speaking && "border-2 border-accent2"
+        }`}
+      >
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
           {controls && !controls.camOn && (
