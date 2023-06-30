@@ -65,7 +65,7 @@ const RoomItem = memo((room: Props) => {
               url={joiner?.photoURL}
               color={joiner?.color}
               size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
-              showMic={false}
+              hilight={false}
             />
           );
         })}
@@ -74,7 +74,7 @@ const RoomItem = memo((room: Props) => {
             key={index}
             name={joiner}
             size={joiners.length > 6 ? "sm" : joiners.length > 3 ? "md" : "lg"}
-            showMic={false}
+
           />
         ))} */}
       </ul>

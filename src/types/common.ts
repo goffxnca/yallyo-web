@@ -82,6 +82,7 @@ export interface IMediaControls {
   micOn: boolean;
   camOn: boolean;
   screenOn: boolean;
+  speaking: boolean;
 }
 
 export interface IRoomPeerSocketUpdates extends IRoomPeer {
@@ -114,4 +115,6 @@ export enum SessionsGatewayEventCode {
   CAM_ON = "cam_on",
   CAM_OFF = "cam_off",
   SEND_MSG = "send_msg",
+  SPEAK_ON = "speak_on",
+  SPEAK_OFF = "speak_off",
 }

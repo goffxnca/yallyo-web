@@ -97,7 +97,12 @@ const JoinerList2 = () => {
     }
   }, [joiners]);
 
-  const medias: IMediaControls = { camOn: true, micOn: true, screenOn: false };
+  const medias: IMediaControls = {
+    camOn: true,
+    micOn: true,
+    screenOn: false,
+    speaking: false,
+  };
   return (
     <div className="relative mx-auto">
       <SessionControlList
@@ -192,9 +197,9 @@ const JoinerList2 = () => {
                                 userId={Math.random().toString()}
                                 name={name}
                                 size="lg"
-                                showMic={false}
                                 url={faker.image.avatar()}
                                 color={getRandomColor()}
+                                hilight={false}
                               />
                             </div>
                           </div>

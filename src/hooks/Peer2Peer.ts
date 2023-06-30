@@ -1,4 +1,5 @@
 import { ISoundMeterInterface, SoundMeter } from "@/libs/soundmeter";
+import { ISocketIOMessage, SessionsGatewayEventCode } from "@/types/common";
 import { EventEmitter } from "events";
 
 interface Peer2PeerSettings {
@@ -8,6 +9,7 @@ interface Peer2PeerSettings {
   onLocalVideoStreamed: Function;
   onRemoteVideoStreamed: Function;
   onMediaPermissionRejected: Function;
+  onDataChannel: Function;
 }
 
 class Peer2Peer {
@@ -27,7 +29,7 @@ class Peer2Peer {
   };
 
   mediaStreamConstraints: MediaStreamConstraints = {
-    video: false,
+    video: true,
     audio: true,
   };
 
@@ -70,8 +72,14 @@ class Peer2Peer {
       this.updateStatus("OPEN");
     });
 
-    this.peer.on("connection", () => {
+    //The callee receive data channel connection
+    this.peer.on("connection", (conn: any) => {
       this.updateStatus("CONNECTION");
+      conn.on("data", (data: ISocketIOMessage) => {
+        if (this.settings) {
+          this.settings.onDataChannel(data);
+        }
+      });
     });
 
     this.peer.on("disconnected", () => {
@@ -100,6 +108,13 @@ class Peer2Peer {
       console.log(`Render remote stream for ${remoteUserId} successfully`);
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteVideoStreamed(remoteId);
+
+      const conn = this.peer.connect(remoteId, { serialization: "json" });
+      conn.on("data", (data: ISocketIOMessage) => {
+        if (this.settings) {
+          this.settings.onDataChannel(data);
+        }
+      });
     });
   }
 
@@ -252,6 +267,29 @@ class Peer2Peer {
     }
 
     this.events.removeAllListeners();
+  };
+
+  notifySpeakViaAllConnectedDataChannels = (speaking: boolean) => {
+    const data: ISocketIOMessage = {
+      type: speaking
+        ? SessionsGatewayEventCode.SPEAK_ON
+        : SessionsGatewayEventCode.SPEAK_OFF,
+      message: ``,
+      payload: {
+        userId: this.settings?.localUserId,
+      },
+    };
+
+    for (let connectionId in this.peer.connections) {
+      const connectionChannels = this.peer.connections[connectionId];
+      const dataChannel = (connectionChannels as Array<any>).find(
+        (conn: any) => conn.type === "data" && conn.open === true
+      );
+
+      if (dataChannel) {
+        dataChannel._dc.send(JSON.stringify(data));
+      }
+    }
   };
 
   private notifySpeak = (volume: number) => {

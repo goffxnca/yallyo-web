@@ -110,6 +110,7 @@ const sessionSlice = createSlice({
       const { socketId, status } = action.payload;
       updateMediaControls(state, socketId, { camOn: status });
     },
+
     addPeer(state, action: PayloadAction<IRoomPeer>) {
       // state.peers = [...state.peers, { ...action.payload, status: "joining" }];
       const existingPeer = state.peers.find(
@@ -191,6 +192,10 @@ const sessionSlice = createSlice({
         { ...action.payload, read: state.localControls.chatOn },
       ];
     },
+    updateSpeakingStatus(state, action: PayloadAction<any>) {
+      const { userId, status } = action.payload;
+      updateSpeakingControls(state, userId, { speaking: status });
+    },
   },
   extraReducers(builder) {
     builder
@@ -250,6 +255,21 @@ const updateMediaControls = (
   );
 };
 
+const updateSpeakingControls = (
+  state: SessionState,
+  userId: string,
+  updateData: Partial<IMediaControls>
+) => {
+  state.peers = state.peers.map((peer) =>
+    peer.userId === userId
+      ? {
+          ...peer,
+          controls: { ...peer.controls, ...updateData },
+        }
+      : peer
+  );
+};
+
 export const {
   toggleLocalChat,
   toggleMic,
@@ -259,5 +279,6 @@ export const {
   removePeerLoading,
   markPeerAsRemoving,
   addMessage,
+  updateSpeakingStatus,
 } = sessionSlice.actions;
 export default sessionSlice.reducer;

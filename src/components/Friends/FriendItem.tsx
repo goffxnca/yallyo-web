@@ -13,9 +13,9 @@ const FriendItem = ({ id, name, online }: Props) => {
         userId={id}
         name={name}
         size="md"
-        showMic={false}
         url=""
         color=""
+        hilight={false}
       />
       <div className="ml-4 text-white">{name}</div>
     </div>

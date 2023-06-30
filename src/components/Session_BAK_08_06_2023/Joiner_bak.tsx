@@ -38,9 +38,9 @@ const Joiner = ({
           userId={userId}
           name={name}
           size={size}
-          showMic={true}
           url={url}
           color={color}
+          hilight={false}
         />
       </div>
 

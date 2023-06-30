@@ -26,9 +26,9 @@ const ChatMessageItem = ({
             userId={sender._id}
             name={sender.dname}
             size={"xs"}
-            showMic={true}
             url={sender.photoURL}
             color={"red"}
+            hilight={false}
           />
         </div>
       )}

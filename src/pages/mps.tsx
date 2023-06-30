@@ -74,6 +74,7 @@ const MultiplePeers = () => {
         dispatch(removePeerLoading(remoteId));
       },
       onMediaPermissionRejected: () => {},
+      onDataChannel: () => {},
     });
 
     setInitializedOnce(true);

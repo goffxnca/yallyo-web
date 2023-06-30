@@ -11,12 +11,12 @@ interface Props {
   userId: string;
   name: string;
   size: "xs" | "sm" | "md" | "lg";
-  showMic: boolean;
   url: string;
   color: string;
+  hilight: boolean;
 }
 
-const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
+const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -37,10 +37,10 @@ const Avatar = ({ userId, name, size, showMic, url, color }: Props) => {
   }, []);
   return (
     <div
-      className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full ${
-        name ? "" : "border border-dashed border-gray-600"
-      }
-       hover:scale-105 select-none cursor-pointer`}
+      className={`relative flex justify-center items-center text-white ${avatarSize} ${
+        hilight && "scale-125"
+      } rounded-full ${name ? "" : "border border-dashed border-gray-600"}
+       hover:scale-125 select-none cursor-pointer`}
       onClick={() => {
         if (name) {
           setShowProfile(true);

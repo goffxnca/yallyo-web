@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { RootState, AppDispatch } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,8 +10,13 @@ import {
   fetchPeersAsync,
   fetchSessionBySidAsync,
   removePeerLoading,
+  updateSpeakingStatus,
 } from "@/store/sessionSlice";
-import { IRoomPeer } from "@/types/common";
+import {
+  IRoomPeer,
+  ISocketIOMessage,
+  SessionsGatewayEventCode,
+} from "@/types/common";
 
 import PreviewScreen from "@/components/Session/PreviewScreen";
 import AuthRequired from "@/components/Session/Errors/AuthRequired";
@@ -35,11 +40,13 @@ const RoomSessionPage = () => {
   const [peerStatus, setPeerStatus] = useState("");
   const [roomSid, setRoomSid] = useState("");
   const [roomId, setRoomId] = useState("");
-  const [initilizedOnce, setInitializedOnce] = useState(false);
+  // const [initilizedOnce, setInitializedOnce] = useState(false);
   const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
   const [showPreviewScreen, setShowPreviewScreen] = useState(true); //This gonna always take 5 seconds static
   const [showTroubleshootingModal, setShowTroubleshootingModal] =
     useState<boolean>(false);
+
+  const initilizedOnce = useRef(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -85,9 +92,29 @@ const RoomSessionPage = () => {
         onMediaPermissionRejected: () => {
           setShowTroubleshootingModal(true);
         },
+        onDataChannel: (data: ISocketIOMessage) => {
+          console.log("onDataChannel with data", data);
+          const { type, payload } = data;
+
+          switch (type) {
+            case SessionsGatewayEventCode.SPEAK_ON:
+              dispatch(
+                updateSpeakingStatus({ userId: payload.userId, status: true })
+              );
+              break;
+            case SessionsGatewayEventCode.SPEAK_OFF:
+              dispatch(
+                updateSpeakingStatus({ userId: payload.userId, status: false })
+              );
+              break;
+
+            default:
+              break;
+          }
+        },
       });
 
-      setInitializedOnce(true);
+      initilizedOnce.current = true;
     }
   }, [user, roomId, dispatch]);
 
@@ -113,10 +140,10 @@ const RoomSessionPage = () => {
   }, [room]);
 
   useEffect(() => {
-    if (user && room && !showPreviewScreen && !initilizedOnce) {
+    if (user && room && !showPreviewScreen && !initilizedOnce.current) {
       initRoomSession();
     }
-  }, [user, room, showPreviewScreen, initilizedOnce, initRoomSession]);
+  }, [user, room, showPreviewScreen, initRoomSession]);
 
   useEffect(() => {
     if (peerStatus) {

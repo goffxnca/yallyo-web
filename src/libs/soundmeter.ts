@@ -61,7 +61,7 @@ export class SoundMeter implements ISoundMeterInterface {
       // this.clip = clipcount / input.length;
 
       // console.log("how fast is this?" + this.instant);
-      if (this.instant > 0.02) {
+      if (this.instant > 0.015) {
         this.onSpeak(this.instant);
       }
     };

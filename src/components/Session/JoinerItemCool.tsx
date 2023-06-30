@@ -46,9 +46,9 @@ const JoinerItemCool = ({
       //   "p-1"
       // )}
 
-      className={`relative rounded-lg overflow-hidden ${
-        status !== "connected" && "opacity-60"
-      }`}
+      className={`relative rounded-lg overflow-hidden  ${
+        speaking && "border-4 border-accent2"
+      } ${status !== "connected" && "opacity-60"}`}
       style={{
         //   backgroundColor: getRandomColor() || "red",
         height: boxSize,
@@ -57,9 +57,7 @@ const JoinerItemCool = ({
     >
       {/* //Video From Camera */}
       <div
-        className={`flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden  ${
-          speaking && "border-2 border-accent2"
-        }`}
+        className={`flex items-stretch justify-center h-full w-full bg-secondary`}
       >
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
@@ -71,9 +69,9 @@ const JoinerItemCool = ({
                     userId={userId}
                     name={displayName}
                     size="lg"
-                    showMic={false}
                     url={photoUrl}
                     color={getRandomColor()}
+                    hilight={speaking}
                   />
                 </div>
               </div>
@@ -87,7 +85,7 @@ const JoinerItemCool = ({
           )}
 
           <div className="relative h-full w-full">
-            <div className="rounded-lg overflow-hidden z-20">
+            <div className="overflow-hidden z-20">
               <video
                 id={`video-${userId}`}
                 autoPlay
@@ -103,7 +101,7 @@ const JoinerItemCool = ({
                   width: boxSize,
                   height: boxSize,
                 }}
-                className="rounded-lg"
+                className=""
                 muted={true}
               />
             </div>

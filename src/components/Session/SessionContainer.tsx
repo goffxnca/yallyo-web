@@ -42,7 +42,6 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   }, [user, peers]);
 
   useEffect(() => {
-    console.log("SessionContainer:useEffect");
     if (p2p) {
       let timeout: NodeJS.Timeout;
       const speakHandler = (volume: number) => {
@@ -62,6 +61,12 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
       };
     }
   }, [p2p]);
+
+  useEffect(() => {
+    if (p2p) {
+      p2p.notifySpeakViaAllConnectedDataChannels(amISpeaking);
+    }
+  }, [amISpeaking, p2p]);
 
   const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
   const [boxSize, setBoxSize] = useState("0px");
@@ -221,7 +226,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                         photoUrl={peer.userInfo.photoURL}
                         showStatusIndicator={true}
                         isMe={false}
-                        speaking={false}
+                        speaking={peer.controls.speaking}
                       />
                     );
                   })}
