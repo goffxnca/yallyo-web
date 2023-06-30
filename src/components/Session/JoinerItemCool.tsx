@@ -57,7 +57,7 @@ const JoinerItemCool = ({
     >
       {/* //Video From Camera */}
       <div
-        className={`flex items-stretch justify-center h-full w-full bg-secondary`}
+        className={`flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden `}
       >
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
