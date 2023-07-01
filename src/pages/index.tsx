@@ -294,9 +294,9 @@ const HomePage = () => {
       </div>
       {/* <hr /> */}
 
-      <div className="text-white" ref={firstRoomRef}>
+      {/* <div className="text-white" ref={firstRoomRef}>
         {status} {rooms.length}
-      </div>
+      </div> */}
 
       <RoomList
         rooms={rooms}

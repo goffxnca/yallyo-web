@@ -89,7 +89,7 @@ const RoomItem = memo((room: Props) => {
           target="_blank"
           className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
         >
-          Join Now {order}
+          Join Now
         </a>
         // <Link href={`/room/${_id}`}>
         //   <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
