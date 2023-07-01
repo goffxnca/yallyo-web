@@ -129,11 +129,11 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   return (
     <div className="relative lg:flex">
       <div className="relative flex-grow">
-        <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
+        {/* <div className="text-white absolute right-0 bottom-0">{boxSize}</div> */}
 
-        <div className="text-white absolute bottom-0 left-0">
+        {/* <div className="text-white absolute bottom-0 left-0">
           {JSON.stringify(screen)}
-        </div>
+        </div> */}
 
         {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
         <div
