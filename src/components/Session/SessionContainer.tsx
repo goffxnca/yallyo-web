@@ -1,85 +1,246 @@
-import { IRoomMessage } from "@/types/frontend";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import SessionControlList from "@/components/Session/SessionControlList";
 
-import { UsersIcon } from "@heroicons/react/24/outline";
-import Button from "../Forms/Button";
 import {
-  createRoomMessage,
-  subscribeRoomMessages,
-} from "@/services/roomMessageService";
-import SessionControlList from "./SessionControlList";
+  IRoomPeer,
+  ISocketIOMessage,
+  SessionsGatewayEventCode,
+} from "@/types/common";
+
+import { joinClasses } from "@/utils/jsx-utils";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import SessionContent from "./SessionContent";
-import SessionChatOverlayMobile from "./SessionChatOverlayMobile";
+import { Socket } from "socket.io-client";
+import Peer2Peer from "@/hooks/Peer2Peer";
+import JoinerItemCool from "./JoinerItemCool";
 
-const RoomSession = () => {
-  const { room, controls } = useSelector((state: RootState) => state.session);
+import SessionChatSidebar from "./SessionChatSidebar/SessionChatSidebar";
 
-  // const [room, setRoom] = useState<Room | null>(null);
-  const [roomId, setRoomId] = useState<string>("");
-  const [roomMessages, setRoomMessages] = useState<IRoomMessage[]>([]);
+interface Props {
+  sessionsSocket: Socket;
+  p2p: Peer2Peer;
+}
 
-  const router = useRouter();
+const GAP_PX = 8;
+
+const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
+  console.log("SessionContainer");
+
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { peers, localControls } = useSelector(
+    (state: RootState) => state.session
+  );
+
+  const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
+  const [amISpeaking, setAmISpeaking] = useState(false);
 
   useEffect(() => {
-    const getRoom = async () => {
-      const roomId = router.query?.id?.toString() || "";
-      if (roomId) {
-        setRoomId(roomId);
-        // const fetchedRoom = await fetchRoomById(roomId);
-        // setRoom(fetchedRoom);
+    if (user && peers.length > 0) {
+      const myPeerInfo = peers.find((peer) => peer.userId === user.uid);
+      setLocalPeerData(myPeerInfo);
+    }
+  }, [user, peers]);
+
+  useEffect(() => {
+    if (p2p) {
+      let timeout: NodeJS.Timeout;
+      const speakHandler = (volume: number) => {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        setAmISpeaking(true);
+        timeout = setTimeout(() => {
+          setAmISpeaking(false);
+        }, 2000);
+      };
+
+      p2p.events.on("speak", speakHandler);
+
+      return () => {
+        p2p.events.off("speak", speakHandler);
+      };
+    }
+  }, [p2p]);
+
+  useEffect(() => {
+    if (p2p) {
+      p2p.notifySpeakViaAllConnectedDataChannels(amISpeaking);
+    }
+  }, [amISpeaking, p2p]);
+
+  const [screen, setScreen] = useState({ width: 0, height: 0, layout: "" });
+  const [boxSize, setBoxSize] = useState("0px");
+
+  const calculateBoxSize = useCallback((total: number) => {
+    //We try to treat peer length zero or one the same, so we avoid blinky joiner box
+    const totalIsZeroOrOne = total === 0 || total === 1;
+    const { innerWidth, innerHeight } = window;
+    const layout = innerWidth > innerHeight ? "lanscape" : "portrait";
+
+    let finalBoxSize = 0;
+    if (innerWidth >= 1280) {
+      //lg
+      if (layout === "lanscape") {
+        finalBoxSize = totalIsZeroOrOne ? innerHeight / 2 : innerHeight / 3;
+      } else {
+        finalBoxSize = totalIsZeroOrOne ? innerWidth / 2 : innerWidth / 4;
       }
-    };
+    } else if (innerWidth >= 1024) {
+      //lg
+      if (layout === "lanscape") {
+        finalBoxSize = totalIsZeroOrOne ? innerHeight / 2 : innerHeight / 3;
+      } else {
+      }
+    } else if (innerWidth >= 768) {
+      //md
+      finalBoxSize = totalIsZeroOrOne
+        ? innerWidth
+        : total === 2
+        ? innerWidth / 2
+        : innerWidth / 3;
+    } else {
+      //sm
+      finalBoxSize = totalIsZeroOrOne
+        ? innerWidth
+        : total === 2
+        ? innerWidth / 1.5
+        : innerWidth / 2 - GAP_PX;
+    }
+    setBoxSize(finalBoxSize + "px");
+  }, []);
 
-    getRoom();
-  }, [router]);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.navigator) {
+      const { innerWidth, innerHeight } = window;
+      setScreen({
+        width: innerWidth,
+        height: innerHeight,
+        layout: innerWidth > innerHeight ? "lanscape" : "portrait",
+      });
 
-  //We will workon realtime chat message later
-  // useEffect(() => {
-  //   let unsubscribe = () => {};
-  //   // set up the subscription
-  //   if (roomId) {
-  //     unsubscribe = subscribeRoomMessages(roomId, (messagse: RoomMessage[]) => {
-  //       setRoomMessages(messagse);
-  //       console.log("ROOMS MESSAGES RE-READ");
-  //     });
-  //   }
+      calculateBoxSize(peers.length);
+    }
+  }, [peers.length, calculateBoxSize]);
 
-  //   // return a cleanup function to unsubscribe when the component unmounts
-  //   return () => {
-  //     // alert("unsub ROOMS MESSAGES");
-  //     unsubscribe();
-  //   };
-  // }, [roomId]);
+  // if (!user || !peers.length) {
+  //   return <div className="text-white">Nothing</div>;
+  // }
 
   return (
-    <div className="md:flex h-full">
-      {/* Main Content */}
-      <div className="w-full md:relative bg-primary h-full relative">
-        <div className="flex py-4 justify-between px-4">
-          <Button text="Back" emitClick={() => {}} />
-          {room?.joiners && room.size && (
-            <div className="flex items-center text-white">
-              <UsersIcon className="h-5 w-5 mr-2" />
-              <div>
-                {room?.joiners.length} / {room?.size}
-              </div>
-            </div>
-          )}
+    <div className="relative lg:flex">
+      <div className="relative flex-grow">
+        <div className="text-white absolute right-0 bottom-0">{boxSize}</div>
+
+        <div className="text-white absolute bottom-0 left-0">
+          {JSON.stringify(screen)}
         </div>
 
-        <SessionControlList />
+        {/* <div className="flex flex-col md:flex-row md:flex-wrap md:content-center items-center justify-center h-screen bg-gray-500"> */}
+        <div
+          className={joinClasses(
+            //   joiners <= 2
+            //     ? "flex flex-col md:flex-row md:flex-wrap "
+            //     : joiners <= 4
+            //     ? "flex flex-row flex-wrap"
+            //     : "flex flex-row flex-wrap",
+            "h-screen bg-pramary "
+          )}
+        >
+          <div
+            className={`flex flex-row flex-wrap w-full h-full content-center items-center justify-center pt-[65px] max-w-screen-lg mx-auto`}
+            style={{ height: screen.height }}
+          >
+            {localPeerData && (
+              <SessionControlList
+                controls={localPeerData.controls}
+                onToggleMic={(current: boolean) => {
+                  setAmISpeaking(false);
+                  const data: ISocketIOMessage = {
+                    type: current
+                      ? SessionsGatewayEventCode.MIC_OFF
+                      : SessionsGatewayEventCode.MIC_ON,
+                    message: `User ${user?.uid} turned mic ${
+                      current ? "off" : "on"
+                    }`,
+                    payload: localPeerData?.socketId,
+                  };
+                  sessionsSocket.emit("clientMessage", data);
+                  p2p.toggleAudioStream();
+                }}
+                onToggleCam={(current: boolean) => {
+                  const data: ISocketIOMessage = {
+                    type: current
+                      ? SessionsGatewayEventCode.CAM_OFF
+                      : SessionsGatewayEventCode.CAM_ON,
+                    message: `User ${user?.uid} turned camara ${
+                      current ? "off" : "on"
+                    }`,
+                    payload: localPeerData?.socketId,
+                  };
+                  sessionsSocket.emit("clientMessage", data);
+                  p2p.toggleVideoStream();
+                }}
+              />
+            )}
 
-        <SessionContent />
+            <div className="flex justify-center my-4">
+              <ul className="flex gap-2 flex-wrap justify-center max-w-[1400px]">
+                {/* <VideoStreamItem
+          userId={user.uid}
+          status={localPeerData?.status!}
+          displayName={localPeerData?.dname!}
+          controls={localPeerData?.controls!}
+        /> */}
+
+                <JoinerItemCool
+                  userId={user?.uid!}
+                  status={localPeerData?.status!}
+                  displayName={user?.displayName!}
+                  controls={localPeerData?.controls!}
+                  boxSize={boxSize}
+                  photoUrl={user?.photoURL!}
+                  showStatusIndicator={true}
+                  isMe={true}
+                  speaking={amISpeaking}
+                />
+
+                {peers
+                  .filter((peer) => peer.userId !== user?.uid)
+                  .map((peer) => {
+                    return (
+                      // <VideoStreamItem
+                      //   key={peer.socketId}
+                      //   userId={peer.userId}
+                      //   status={peer.status}
+                      //   displayName={peer.dname}
+                      //   controls={peer.controls}
+                      // />
+
+                      <JoinerItemCool
+                        key={peer.socketId}
+                        userId={peer.userId}
+                        status={peer.status}
+                        displayName={peer.userInfo.dname}
+                        controls={peer.controls}
+                        boxSize={boxSize}
+                        photoUrl={peer.userInfo.photoURL}
+                        showStatusIndicator={true}
+                        isMe={false}
+                        speaking={peer.controls.speaking}
+                      />
+                    );
+                  })}
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* {controls.chatOn && <SessionChatSidebar />} */}
-
-      {controls.chatOn && <SessionChatOverlayMobile />}
+      {localControls && localControls.chatOn && (
+        <SessionChatSidebar sessionsSocket={sessionsSocket} />
+      )}
     </div>
   );
 };
 
-export default RoomSession;
+export default SessionContainer;

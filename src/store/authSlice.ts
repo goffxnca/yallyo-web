@@ -1,3 +1,4 @@
+// Auth slice is collection of actions for authentication
 import { IAsyncState, IFirebaseUser } from "@/types/frontend";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signInWithPopup, signOut } from "firebase/auth";
@@ -28,11 +29,12 @@ const sessionSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    assignAuth(state, action: PayloadAction<IFirebaseUser>) {
+    assignSuccessAuth(state, action: PayloadAction<IFirebaseUser>) {
       state.user = action.payload;
+      state.status = "success";
     },
-    resetAuth(state) {
-      return initialState;
+    assignErrorAuth(_) {
+      return { ...initialState, status: "error" };
     },
   },
   extraReducers(builder) {
@@ -60,6 +62,7 @@ const sessionSlice = createSlice({
       .addCase(signoutFromGoogle.fulfilled, (state, action) => {
         state.status = "idle";
         state.user = null;
+        window.location.href = "/";
       })
       .addCase(signoutFromGoogle.rejected, (state, action) => {
         state.status = "error";
@@ -68,5 +71,5 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { resetAuth, assignAuth } = sessionSlice.actions;
+export const { assignSuccessAuth, assignErrorAuth } = sessionSlice.actions;
 export default sessionSlice.reducer;

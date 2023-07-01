@@ -33,6 +33,15 @@ const MobilePhonePattern = (title: string) => ({
   message: `หมายเลขโทรศัพท์มือถือต้องเป็นตัวเลขเท่านั้น ความยาว 10 ตัวอักษร`,
 });
 
+const extractOnlyDirtiedField = (formData: any, dirtyFields: any) => {
+  const mapResult: any = {};
+  for (const [key, value] of Object.entries(dirtyFields)) {
+    console.log(`${key}: ${value}`);
+    mapResult[key] = formData[key];
+  }
+  return mapResult;
+};
+
 export {
   min,
   max,
@@ -41,4 +50,5 @@ export {
   EmailPattern,
   MobilePhonePattern,
   GenericPhonePattern,
+  extractOnlyDirtiedField,
 };

@@ -3,46 +3,44 @@ import { convertFullnameToAbbr } from "@/utils/string-utils";
 import { useEffect, useState } from "react";
 import UserProfile from "../Users/UserProfile";
 import Modal from "./Modal";
-import { MicrophoneIcon } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { resetAccount } from "@/store/accountSlice";
 
 interface Props {
+  userId: string;
   name: string;
-  size: "sm" | "md" | "lg";
-  showMic: boolean;
+  size: "xs" | "sm" | "md" | "lg";
   url: string;
   color: string;
-  bio: string;
-  followers: number;
-  followings: number;
+  hilight: boolean;
 }
 
-const Avatar = ({
-  name,
-  size,
-  showMic,
-  url,
-  color,
-  bio,
-  followers,
-  followings,
-}: Props) => {
+const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
+  const dispatch: AppDispatch = useDispatch();
 
   const avatarSize =
-    size === "sm" ? "w-10 h-10" : size === "md" ? "w-16 h-16" : "w-24 h-24";
+    size === "xs"
+      ? "w-8 h-8"
+      : size === "sm"
+      ? "w-10 h-10"
+      : size === "md"
+      ? "w-16 h-16"
+      : "w-24 h-24";
 
   useEffect(() => {
     const randomBgColor = getRandomColor();
     setBgColor(randomBgColor);
   }, []);
   return (
-    <li
-      className={`relative flex justify-center items-center text-white ${avatarSize} rounded-full ${
-        name ? "" : "border border-dashed border-gray-600"
-      }
-       hover:scale-105 select-none cursor-pointer`}
+    <div
+      className={`relative flex justify-center items-center text-white ${avatarSize} ${
+        hilight && "scale-125"
+      } rounded-full ${name ? "" : "border border-dashed border-gray-600"}
+       hover:scale-125 select-none cursor-pointer`}
       onClick={() => {
         if (name) {
           setShowProfile(true);
@@ -51,8 +49,9 @@ const Avatar = ({
       style={{
         backgroundColor: !url && name ? color : "",
         backgroundImage: url ? `url(${url})` : "",
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* Image */}
@@ -63,22 +62,15 @@ const Avatar = ({
 
       {showProfile && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowProfile(false);
+            dispatch(resetAccount());
           }}
         >
-          <UserProfile
-            name={name}
-            url={url}
-            color={color}
-            bio={bio}
-            followers={followers}
-            followings={followings}
-          />
+          <UserProfile userId={userId} name={name} url={url} />
         </Modal>
       )}
-    </li>
+    </div>
   );
 };
 

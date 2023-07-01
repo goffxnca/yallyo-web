@@ -26,10 +26,8 @@ export interface IDropdownItem {
   display: string;
 }
 
-export interface SessionConrol {
-  micOn: boolean;
-  camOn: boolean;
-  shareScreenOn: boolean;
+//Local control means, the controls that when value changed no need to sync with other peers
+export interface LocalControls {
   chatOn: boolean;
 }
 

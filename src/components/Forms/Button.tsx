@@ -11,7 +11,7 @@ const Button = ({ text, emitClick }: Props) => {
     <Link href={"/"} className="text-white">
       <div className=" items-center bg-secondary inline-flex px-4 py-2 rounded-full">
         <ChevronLeftIcon className="w-4 h-4 text-white" />
-        <span className="text-sm">Back</span>
+        <span className="text-sm">{text}</span>
       </div>
     </Link>
   );

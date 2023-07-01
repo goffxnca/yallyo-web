@@ -1,5 +1,5 @@
 import { IRoomMessage } from "@/types/frontend";
-import { toggleChat } from "@/store/sessionSlice";
+import { toggleLocalChat } from "@/store/sessionSlice";
 import { AppDispatch, RootState } from "@/store/store";
 
 import {
@@ -27,7 +27,7 @@ const SessionChatOverlayMobile = () => {
           <XMarkIcon
             className="h-8 w-8 cursor-pointer hover:scale-110 text-white"
             onClick={() => {
-              dispatch(toggleChat());
+              dispatch(toggleLocalChat());
             }}
           />
         </div>
@@ -38,7 +38,8 @@ const SessionChatOverlayMobile = () => {
 
         <div className="absolute left-2 right-2 bottom-2">
           <div className="flex w-ful">
-            <textarea
+            <input
+              type="text"
               className="w-full text-sm  border-none focus:ring-0 focus:border-transparent text-accent1 rounded-l-md"
               placeholder="Type a new message"
               spellCheck={false}

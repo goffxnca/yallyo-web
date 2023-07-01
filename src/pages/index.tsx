@@ -12,8 +12,8 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createRoom,
-  fetchRooms,
-  fetchRoomsGroupedByLanguage,
+  fetchRoomsAsync,
+  fetchRoomsGroupedByLanguageAsync,
   updateFilters,
   updateRooms,
 } from "@/store/roomSlice";
@@ -25,15 +25,22 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowRightIcon, ArrowUturnUpIcon } from "@heroicons/react/24/outline";
 import { FieldValues } from "react-hook-form";
 import Notification from "@/components/UIs/Notification";
+import PageContainer from "@/components/Layouts/PageContainer";
+import {
+  addCreateRoomQuota,
+  readCurrentCreateRoomQuotaCount,
+} from "@/utils/localstorage-utils";
 
 const HomePage = () => {
-  console.log("HomePage");
+  // console.log("HomePage");
+
   const {
     rooms,
     roomsGroupedByLanguage,
     status,
+    error,
     canLoadMore,
-    recentCreatedRoomId,
+    recentCreatedRoomSid,
   } = useSelector((state: RootState) => state.room);
 
   const dispatch: AppDispatch = useDispatch();
@@ -48,11 +55,14 @@ const HomePage = () => {
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
 
-  const [counter, setCounter] = useState(1);
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
   const [showRoomCreatedNotification, setShowRoomCreatedNotification] =
     useState(false);
+  const [
+    showRoomCreateOverQuotaNotification,
+    setShowRoomCreateOverQuotaNotification,
+  ] = useState(false);
 
   const isFirstMount = useRef(true);
   const readMoreRef = useRef<HTMLDivElement>(null);
@@ -109,7 +119,7 @@ const HomePage = () => {
 
   // Subscribe to room update
   useEffect(() => {
-    dispatch(fetchRoomsGroupedByLanguage());
+    dispatch(fetchRoomsGroupedByLanguageAsync());
     const roomSocket = subscribeRoomsUpdates(dispatch);
     return () => {
       roomSocket.disconnect();
@@ -127,7 +137,7 @@ const HomePage = () => {
       setCurrentPage(1);
     } else {
       dispatch(
-        fetchRooms({
+        fetchRoomsAsync({
           pagination: {
             pnum: currentPage,
             psize: ENVS.ROOMS_ITEMS,
@@ -149,12 +159,19 @@ const HomePage = () => {
   }, [dispatch, currentPage, currentLang, currentLevel, currentTopic]);
 
   const onFormSubmit = (data: FieldValues) => {
+    if (readCurrentCreateRoomQuotaCount() === ENVS.CREATE_ROOM_QUOTA) {
+      setShowNewRoomFormModal(false);
+      setShowRoomCreateOverQuotaNotification(true);
+      return;
+    }
+
     dispatch(createRoom(data))
       .unwrap()
       .then((createdRoom) => {
         setShowNewRoomFormModal(false);
         setShowRoomCreatedNotification(true);
         dispatch(updateRooms([{ ...createdRoom, updateStatus: "C" }]));
+        addCreateRoomQuota();
       })
       .catch(() => {
         setShowNewRoomFormModal(false);
@@ -162,20 +179,7 @@ const HomePage = () => {
   };
 
   return (
-    <main className="p-2 md:p-10 grid gap-y-6 bg-primary">
-      <Head>
-        <title>Yallyo - Language Learning Community</title>
-      </Head>
-
-      {/* <button
-        className="text-white"
-        onClick={() => {
-          setCounter(counter + 1);
-        }}
-      >
-        Change Counter
-      </button> */}
-
+    <PageContainer>
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);
@@ -332,7 +336,6 @@ const HomePage = () => {
 
       {showNewRoomFormModal && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowNewRoomFormModal(false);
           }}
@@ -342,7 +345,6 @@ const HomePage = () => {
       )}
       {showRules && (
         <Modal
-          showCloseButton={true}
           emitClose={() => {
             setShowRules(false);
           }}
@@ -374,7 +376,7 @@ const HomePage = () => {
               <div className="flex items-center border rounded-md py-1 px-2 bg-white text-accent1 hover:text-accent2 hover:bg-secondary ml-2 cursor-pointer">
                 <ArrowRightIcon className="h-4 w-4 mr-2" />
                 <a
-                  href={`/rooms/${recentCreatedRoomId}`}
+                  href={`/room/${recentCreatedRoomSid}`}
                   target="_blank"
                   onClick={() => {
                     setShowRoomCreatedNotification(false);
@@ -397,12 +399,22 @@ const HomePage = () => {
         <Notification
           type="error"
           messageTitle="Something went wrong!"
-          messageBody="You can refresh the page or try again later."
+          messageBody={error || "You can refresh the page or try again later."}
           autoFadeout={true}
           onFadedOut={() => {}}
         />
       )}
-    </main>
+
+      {showRoomCreateOverQuotaNotification && (
+        <Notification
+          type="error"
+          messageTitle="Create room failed!"
+          messageBody={error || "You can create only 3 rooms per day."}
+          autoFadeout={false}
+          onFadedOut={() => {}}
+        />
+      )}
+    </PageContainer>
   );
 };
 

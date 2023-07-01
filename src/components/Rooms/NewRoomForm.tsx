@@ -7,13 +7,22 @@ import { createNArrayFrom } from "@/utils/array-utils";
 import { FieldValues, useForm } from "react-hook-form";
 import { maxLength, minLength } from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import SigninWithGoogleButton from "../Layouts/Headers/SigninWithGoogleButton";
+import { signinWithGoogle } from "@/store/authSlice";
+import Notification from "@/components/UIs/Notification";
 
 interface Props {
   onSubmit: (data: FieldValues) => void;
 }
 
 const NewRoomForm = ({ onSubmit }: Props) => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
+  const [loginSuccessfully, setLoginSuccessfully] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -26,6 +35,27 @@ const NewRoomForm = ({ onSubmit }: Props) => {
       onSubmit(data);
     }, 5000);
   };
+
+  if (!user) {
+    return (
+      <div className="p-10">
+        <div className=" text-white text-center">
+          🔒 You need to login to create chat room.
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <SigninWithGoogleButton
+            responsive={false}
+            onClick={() => {
+              dispatch(signinWithGoogle()).then(() => {
+                setLoginSuccessfully(true);
+              });
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-5 md:p-10 w-full md:w-[500px]">
@@ -83,7 +113,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
             <DropdownInput3
               id="size"
               label="Maximum Participants"
-              items={createNArrayFrom(3, 8).map((item) => ({
+              items={createNArrayFrom(3, 3).map((item) => ({
                 value: item.toString(),
                 display: item.toString(),
               }))}
@@ -98,6 +128,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
           id="desc"
           label="Room Tagline & Intro"
           placeholder="Let's make some noise guys"
+          spellCheck={false}
           {...register("desc", {
             required: "This field is required",
             minLength: { ...minLength(5) },
@@ -122,6 +153,16 @@ const NewRoomForm = ({ onSubmit }: Props) => {
       </form>
 
       {loading && <DarkOverlay />}
+
+      {loginSuccessfully && (
+        <Notification
+          type="success"
+          messageTitle="Login successfully!"
+          messageBody="You are now ready to create a chat room."
+          autoFadeout={true}
+          onFadedOut={() => {}}
+        />
+      )}
     </div>
   );
 };

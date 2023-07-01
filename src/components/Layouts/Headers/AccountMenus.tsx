@@ -20,7 +20,7 @@ interface Props {
 }
 
 const AccountMenus = ({ email, displayName, profileURL }: Props) => {
-  console.log("AccountMenus");
+  // console.log("AccountMenus");
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -29,13 +29,11 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
       <div className="flex">
         <Menu.Button className="">
           <div className="flex items-center cursor-pointer select-none group">
-            <Image
+            <img
               src={profileURL}
-              className="rounded-full w-10 h-10 group-hover:scale-105"
-              width={20}
-              height={20}
-              alt=""
+              className="w-10 h-10 object-cover rounded-full"
             />
+
             <ChevronDownIcon
               className="h-5 w-5 text-gray-400 group-hover:text-accent2"
               aria-hidden="true"
@@ -57,26 +55,30 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <div
-                  className={joinClasses(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm select-none cursor-pointer"
-                  )}
-                >
-                  <div>
-                    <Image
-                      src={profileURL}
-                      className="rounded-full w-8 h-8 mr-2"
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
+                <Link href="/profile">
+                  <div
+                    className={joinClasses(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "group flex items-center px-4 py-2 text-sm select-none"
+                    )}
+                  >
+                    <div>
+                      <Image
+                        src={profileURL}
+                        className="rounded-full w-8 h-8 mr-2"
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <div className="text-gray-700 font-bold">
+                        {displayName}
+                      </div>
+                      <div className="text-gray-700">{email}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-gray-700 font-bold">{displayName}</div>
-                    <div className="text-gray-700">{email}</div>
-                  </div>
-                </div>
+                </Link>
               )}
             </Menu.Item>
           </div>
@@ -100,7 +102,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
               )}
             </Menu.Item>
 
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href="/profile"
@@ -116,7 +118,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                   Feature Request
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item>
               {({ active }) => (

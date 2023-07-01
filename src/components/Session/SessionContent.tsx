@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import Avatar from "../UIs/Avatar";
 import { RootState } from "@/store/store";
-import exp from "constants";
 import Joiner from "./Joiner";
 import { useEffect, useState } from "react";
 import { getRandomItem } from "@/utils/array-utils";
 
 const SessionContent = () => {
-  const { room, controls } = useSelector((state: RootState) => state.session);
+  const { room } = useSelector((state: RootState) => state.session);
   const [focused, setFocused] = useState<string>();
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const SessionContent = () => {
     if (room?.joiners) {
       interval = setInterval(() => {
         const userToBeFocused = getRandomItem(room?.joiners || []);
-        console.log(userToBeFocused);
+        // console.log(userToBeFocused);
         setFocused(userToBeFocused?._id || "");
       }, 60000);
     }
@@ -33,6 +32,7 @@ const SessionContent = () => {
           {room?.joiners.map((joiner) => (
             <Joiner
               key={joiner._id}
+              userId={joiner._id}
               name={joiner.dname}
               size={room.joiners.length > 5 ? "md" : "lg"}
               url={joiner.photoURL}

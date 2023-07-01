@@ -13,6 +13,7 @@ const RoomItem = memo((room: Props) => {
   const {
     desc,
     _id,
+    sid,
     topic,
     language,
     level,
@@ -59,14 +60,12 @@ const RoomItem = memo((room: Props) => {
           return (
             <Avatar
               key={item}
+              userId={joiner?._id}
               name={joiner?.dname}
               url={joiner?.photoURL}
               color={joiner?.color}
-              bio=""
-              followers={0}
-              followings={0}
               size={size > 6 ? "sm" : size > 3 ? "md" : "lg"}
-              showMic={false}
+              hilight={false}
             />
           );
         })}
@@ -75,7 +74,7 @@ const RoomItem = memo((room: Props) => {
             key={index}
             name={joiner}
             size={joiners.length > 6 ? "sm" : joiners.length > 3 ? "md" : "lg"}
-            showMic={false}
+
           />
         ))} */}
       </ul>
@@ -86,13 +85,13 @@ const RoomItem = memo((room: Props) => {
         </div>
       ) : (
         <a
-          href={`/rooms/${_id}`}
+          href={`/room/${sid}`}
           target="_blank"
           className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
         >
           Join Now {order}
         </a>
-        // <Link href={`/rooms/${_id}`}>
+        // <Link href={`/room/${_id}`}>
         //   <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
         //     Join Now {order}
         //   </div>

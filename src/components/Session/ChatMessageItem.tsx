@@ -1,19 +1,76 @@
-interface Props {
-  message: string;
-  side: string;
-}
-const ChatMessageItem = ({ message, side }: Props) => {
-  const roundStyle =
-    side === "left"
-      ? "rounded-r-lg rounded-tl-lg"
-      : "rounded-l-lg rounded-tr-lg";
+import { ISessionEventMessage } from "@/types/common";
+import Avatar from "../UIs/Avatar";
+import {
+  ArrowRightOnRectangleIcon,
+  PhoneXMarkIcon,
+} from "@heroicons/react/24/outline";
+
+interface Props extends ISessionEventMessage {}
+
+const ChatMessageItem = ({
+  type,
+  subType,
+  message,
+  sender,
+  isMe,
+  sentAt,
+}: Props) => {
+  const roundStyle = !isMe
+    ? "rounded-r-lg rounded-tl-lg"
+    : "rounded-l-lg rounded-tr-lg";
   return (
-    <li className={`my-1 ${side === "right" && "text-right"}`}>
-      <span
-        className={` bg-white px-3 py-1 text-sm text-gray-500 w-auto shadow ${roundStyle} ml-auto`}
-      >
-        {message}
-      </span>
+    <li className="flex items-center">
+      {!isMe && type === "chat" && (
+        <div className="mr-2">
+          <Avatar
+            userId={sender._id}
+            name={sender.dname}
+            size={"xs"}
+            url={sender.photoURL}
+            color={"red"}
+            hilight={false}
+          />
+        </div>
+      )}
+
+      {type === "chat" && (
+        <div
+          className={`px-3 py-2 shadow max-w-[300px] break-words ${
+            isMe
+              ? "ml-auto bg-blue-500"
+              : "bg-gray-300 text-primary min-w-[200px]"
+          } ${roundStyle}`}
+        >
+          <div
+            className={`flex justify-between text-[10px] ${
+              isMe ? "text-gray-200" : "text-gray-500"
+            }`}
+          >
+            <div className="">{isMe ? "" : sender.dname}</div>
+            <div className="">{sentAt}</div>
+          </div>
+
+          <div className={`text-sm`}>{message}</div>
+        </div>
+      )}
+
+      {type === "event" && (
+        <div
+          className={`px-3 py-2 shadow max-w-[300px] break-words mx-auto rounded-lg text-[12px]`}
+        >
+          <div className=" text-center">{sentAt}</div>
+          <div className="flex gap-x-2">
+            {subType === "join" && (
+              <ArrowRightOnRectangleIcon className="w-5 h-5 text-accent1" />
+            )}
+            {subType === "leave" && (
+              <PhoneXMarkIcon className="w-5 h-5 text-accent1" />
+            )}
+
+            <div className={`text-accent1 italic`}>{message}</div>
+          </div>
+        </div>
+      )}
     </li>
   );
 };

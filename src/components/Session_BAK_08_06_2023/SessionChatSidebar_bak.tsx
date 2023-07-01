@@ -22,7 +22,8 @@ const SessionChatSidebar = () => {
       </div>
       <div className="absolute bottom-0 w-full">
         <div className="flex w-ful">
-          <textarea
+          <input
+            type="text"
             className="w-full text-sm  border-none focus:ring-0 focus:border-transparent text-accent1"
             placeholder="Type a new message"
             spellCheck={false}
