@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 65432",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 65432",
     "lint": "next lint",
     "firebase:deploy:dev:functions": "firebase use yallyo-dev && firebase deploy --only functions",
     "firebase:deploy:prod:functions": "firebase use yallyo && firebase deploy --only functions && firebase use yallyo-dev"
