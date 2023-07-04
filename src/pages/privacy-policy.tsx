@@ -43,9 +43,9 @@ const PrivacyPolicyPage = () => {
                     Personal Information:
                   </strong>
                   When you sign in to Yallyo.com using your Google account, we
-                  collect your Google profile picture, first name, and last
-                  name. This information is used to personalize your experience
-                  on our platform.
+                  collect your Google profile picture, first name, last name and
+                  language preference. This information is used to personalize
+                  your experience on our platform.
                 </span>
               </li>
               <li className="flex gap-x-3">
@@ -82,8 +82,9 @@ const PrivacyPolicyPage = () => {
                   <strong className="font-semibold text-gray-900 mr-2">
                     Personalization:
                   </strong>
-                  We use your Google profile picture, first name, and last name
-                  to personalize your experience on Yallyo.com.
+                  We use your Google profile picture, first name, last name and
+                  language preference to personalize your experience on
+                  Yallyo.com.
                 </span>
               </li>
               <li className="flex gap-x-3">
@@ -138,7 +139,7 @@ const PrivacyPolicyPage = () => {
                   to enable users to sign in to our Website using their Google
                   accounts. By signing in with Google, you authorize us to
                   collect and process your Google profile picture, first name,
-                  and last name.
+                  last name and language preference.
                 </span>
               </li>
               <li className="flex gap-x-3">
@@ -261,7 +262,7 @@ const PrivacyPolicyPage = () => {
             <p className="mt-4">
               If you have any questions, concerns, or suggestions regarding this
               Privacy Policy or our practices, please contact us at
-              dpo@yallyo.com.
+              contact@yallyo.com.
             </p>
           </div>
         </div>
