@@ -19,7 +19,9 @@ const onUserCreated = functions
     functions.logger.info("Create user triggered", { data: user });
     try {
       const { uid, email, displayName, photoURL, providerData } = user;
-      const response = await fetch("https://heyguyz.com/bo/users", {
+      const apiUrl = `${process.env.API_URL}/bo/users`;
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

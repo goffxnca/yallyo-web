@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "firebase:deploy:dev:functions": "firebase use yallyo-dev && firebase deploy --only functions",
-    "firebase:deploy:prod:functions": "firebase use yallyo && firebase deploy --only functions && firebase use yallyo-dev"
+    "firebase:deploy:dev:functions": "firebase use dev && firebase deploy --only functions",
+    "firebase:deploy:prod:functions": "firebase use prod && firebase deploy --only functions && firebase use dev"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

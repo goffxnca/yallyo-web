@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "yallyo-dev"
+    "default": "yallyo-dev",
+    "dev": "yallyo-dev",
+    "prod": "yallyo"
   }
 }
