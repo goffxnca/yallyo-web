@@ -37,7 +37,9 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
         />
         <SessionControlItem
           Icon={<VideoCameraIcon />}
-          disabled={!controls.camOn}
+          disabled={true}
+          // disabled={!controls.camOn}
+          // tooltip={controls.camOn ? "Cam Off" : "Cam On"}
           tooltip={controls.camOn ? "Cam Off" : "Cam On"}
           // onClick={() => {
           //   // dispatch(toggleLocalCam());
