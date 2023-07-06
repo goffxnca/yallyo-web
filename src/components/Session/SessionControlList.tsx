@@ -35,7 +35,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
             onToggleMic(controls.micOn);
           }}
         />
-        <SessionControlItem
+        {/* <SessionControlItem
           Icon={<VideoCameraIcon />}
           disabled={!controls.camOn}
           tooltip={controls.camOn ? "Cam Off" : "Cam On"}
@@ -43,15 +43,15 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
             // dispatch(toggleLocalCam());
             onToggleCam(controls.camOn);
           }}
-        />
-        <SessionControlItem
+        /> */}
+        {/* <SessionControlItem
           Icon={<ComputerDesktopIcon />}
           disabled={true}
           tooltip={"Share screen feature is coming soon"}
           onClick={() => {
             // dispatch(toggleShareScreen());
           }}
-        />
+        /> */}
         <SessionControlItem
           Icon={<ChatBubbleBottomCenterTextIcon />}
           // cross={!controls.chatOn}
