@@ -29,7 +29,7 @@ class Peer2Peer {
   };
 
   mediaStreamConstraints: MediaStreamConstraints = {
-    video: true,
+    video: false,
     audio: true,
   };
 
