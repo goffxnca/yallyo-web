@@ -4,9 +4,9 @@ import { EventEmitter } from "events";
 
 interface Peer2PeerSettings {
   localUserId: string;
-  remoteUserId?: string;
+  camOnOnce: boolean;
   onStatusChange: Function;
-  onLocalVideoStreamed: Function;
+  onLocalMediaStreamed: Function;
   onRemoteVideoStreamed: Function;
   onMediaPermissionRejected: Function;
   onDataChannel: Function;
@@ -28,11 +28,6 @@ class Peer2Peer {
     meterRefreshInverval: null,
   };
 
-  mediaStreamConstraints: MediaStreamConstraints = {
-    video: true,
-    audio: true,
-  };
-
   updateStatus(status: string) {
     this.status = status;
     this.settings?.onStatusChange(status);
@@ -41,7 +36,7 @@ class Peer2Peer {
   async init(settings: Peer2PeerSettings) {
     this.settings = settings;
 
-    await this.renderLocalVideoStream();
+    await this.renderLocalMediaStream();
 
     const { localUserId } = settings;
     const Peer = await import("peerjs");
@@ -97,15 +92,14 @@ class Peer2Peer {
   }
 
   callRemotePeer(remoteId: string) {
-    const { remoteUserId } = this.settings!;
-    console.log(`Calling to ${remoteUserId}`);
+    console.log(`Calling to ${remoteId}`);
     this.updateStatus("CALLING");
 
     const call = this.peer.call(remoteId, this.localStream);
     call.on("stream", (remoteStream: MediaStream) => {
-      const remoteUserVideo = this.getVideoElement(remoteUserId as string);
+      const remoteUserVideo = this.getVideoElement(remoteId as string);
       remoteUserVideo.srcObject = remoteStream;
-      console.log(`Render remote stream for ${remoteUserId} successfully`);
+      console.log(`Render remote stream for ${remoteId} successfully`);
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteVideoStreamed(remoteId);
 
@@ -118,50 +112,25 @@ class Peer2Peer {
     });
   }
 
-  renderLocalVideoStream = async () => {
-    console.log("Request browser permissions for local streaming");
+  renderLocalMediaStream = async () => {
+    console.log("Request browser mic permissions for local media stream");
     try {
-      const stream = await navigator.mediaDevices.getUserMedia(
-        this.mediaStreamConstraints
-      );
+      //Initially only voice call, can upgrade to camera later by user
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: false,
+        audio: true,
+      });
       this.localStream = stream;
 
-      //========Test Sound Meter
-
-      this.micProcesser.audioContext = new AudioContext();
-      console.log("sample rate:" + this.micProcesser.audioContext.sampleRate);
-      this.micProcesser.soundMeter = new SoundMeter(
-        this.micProcesser.audioContext,
-        this.notifySpeak
-      );
-      this.micProcesser.soundMeter.connectToSource(stream, (e: any) => {
-        if (e) {
-          alert(e);
-          return;
-        }
-
-        console.log("connectToSource callback");
-
-        // this.micProcesser.meterRefreshInverval = setInterval(() => {
-        //   // instantMeter.value = instantValueDisplay.innerText =
-        //   //   soundMeter.instant.toFixed(2);
-        //   // slowMeter.value = slowValueDisplay.innerText =
-        //   //   soundMeter.slow.toFixed(2);
-        //   // clipMeter.value = clipValueDisplay.innerText = soundMeter.clip;
-        //   console.log(
-        //     "instantMeter",
-        //     this.micProcesser.soundMeter?.instant.toFixed(2)
-        //   );
-        // }, 5000);
-      });
-
+      //========Sound Meter Connection
+      this.connectSoundMeter(stream);
       //========
 
       const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
       localUserVideo.srcObject = stream;
-      this.settings?.onLocalVideoStreamed();
+      this.settings?.onLocalMediaStreamed();
       console.log("Render local stream successfully");
     } catch (error: unknown) {
       console.error("Render local stream failed", error);
@@ -174,10 +143,12 @@ class Peer2Peer {
           // Handle permission denied error
           // Show a message on the UI indicating that camera/microphone access is required
           if (error.name === "NotAllowedError") {
-            alert("NotAllowedError: You reject by yourself?");
+            // alert("NotAllowedError: You reject by yourself?");
+            console.log("NotAllowedError: You reject by yourself?");
             this.settings?.onMediaPermissionRejected();
           } else if (error.name === "PermissionDeniedError") {
-            alert("PermissionDeniedError: Browser reject it?");
+            // alert("PermissionDeniedError: Browser reject it?");
+            console.log("PermissionDeniedError: Browser reject it?");
           }
         }
       } else {
@@ -186,12 +157,8 @@ class Peer2Peer {
     }
   };
 
-  toggleVideoStream = () => {
+  toggleLocalVideoStream = () => {
     if (this.localStream) {
-      console.log(
-        "this.localStream.getVideoTracks()",
-        this.localStream.getVideoTracks()
-      );
       const [track] = this.localStream.getVideoTracks();
       if (track) {
         const fromStatus = track.enabled ? "on" : "off";
@@ -212,12 +179,9 @@ class Peer2Peer {
     }
   };
 
-  toggleAudioStream = () => {
+  toggleLocalAudioStream = () => {
+    debugger;
     if (this.localStream) {
-      console.log(
-        "this.localStream.getAudioTracks()",
-        this.localStream.getAudioTracks()
-      );
       const [track] = this.localStream.getAudioTracks();
       if (track) {
         const fromStatus = track.enabled ? "on" : "off";
@@ -232,6 +196,7 @@ class Peer2Peer {
           }
         } else {
           if (soundMeter) {
+            alert("sound meter stopoped.");
             soundMeter.script.disconnect();
           }
         }
@@ -251,6 +216,71 @@ class Peer2Peer {
     }
   };
 
+  upgradeLocalStream = async () => {
+    console.log("Request browser cam permissions for local media stream");
+    try {
+      //Upgrade to camera media
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: true,
+      });
+      this.localStream = stream;
+      debugger;
+      const videoTracks = stream.getVideoTracks();
+      this.localStream.addTrack(videoTracks[0]);
+
+      // const audioTracks = stream.getAudioTracks();
+      // this.localStream.addTrack(audioTracks[0]);
+
+      //========Sound Meter Connection
+      // this.connectSoundMeter(this.localStream);
+      //========
+
+      const localUserVideo = this.getVideoElement(
+        this.settings?.localUserId as string
+      );
+
+      localUserVideo.srcObject = null;
+      localUserVideo.srcObject = this.localStream;
+
+      // this.callAllConnectedRemotePeers();
+
+      if (this.settings) {
+        this.settings.camOnOnce = true;
+      }
+
+      console.log("Upgrade local stream successfully");
+    } catch (error: unknown) {
+      console.error("Render local stream failed", error);
+
+      // if (error instanceof DOMException) {
+      //   if (
+      //     error.name === "NotAllowedError" ||
+      //     error.name === "PermissionDeniedError"
+      //   ) {
+      //     // Handle permission denied error
+      //     // Show a message on the UI indicating that camera/microphone access is required
+      //     if (error.name === "NotAllowedError") {
+      //       // alert("NotAllowedError: You reject by yourself?");
+      //       console.log("NotAllowedError: You reject by yourself?");
+      //       this.settings?.onMediaPermissionRejected();
+      //     } else if (error.name === "PermissionDeniedError") {
+      //       // alert("PermissionDeniedError: Browser reject it?");
+      //       console.log("PermissionDeniedError: Browser reject it?");
+      //     }
+      //   }
+      // } else {
+      //   // Handle other generic error that is not related to browser API
+      // }
+    }
+  };
+
+  callAllConnectedRemotePeers = () => {
+    for (let connectionId in this.peer.connections) {
+      this.callRemotePeer(connectionId);
+    }
+  };
+
   disconnect = () => {
     this.peer.destroy();
     this.peer = null;
@@ -261,7 +291,6 @@ class Peer2Peer {
 
     const { soundMeter, audioContext } = this.micProcesser;
     if (soundMeter && audioContext) {
-      alert("clean mic");
       soundMeter.stop();
       audioContext.close();
     }
@@ -290,6 +319,26 @@ class Peer2Peer {
         dataChannel._dc.send(JSON.stringify(data));
       }
     }
+  };
+
+  private connectSoundMeter = (stream: MediaStream) => {
+    //========Sound Meter Connection
+    this.micProcesser.audioContext = new AudioContext();
+    console.log("sample rate:" + this.micProcesser.audioContext.sampleRate);
+    this.micProcesser.soundMeter = new SoundMeter(
+      this.micProcesser.audioContext,
+      this.notifySpeak
+    );
+    this.micProcesser.soundMeter.connectToSource(stream, (error: any) => {
+      if (error) {
+        console.error(
+          "Connect local stream to Sound Meter failed with error:",
+          error
+        );
+        return;
+      }
+    });
+    //========
   };
 
   private notifySpeak = (volume: number) => {

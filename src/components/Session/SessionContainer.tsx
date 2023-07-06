@@ -154,6 +154,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
               <SessionControlList
                 controls={localPeerData.controls}
                 onToggleMic={(current: boolean) => {
+                  p2p.toggleLocalAudioStream();
                   setAmISpeaking(false);
                   const data: ISocketIOMessage = {
                     type: current
@@ -165,7 +166,6 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                     payload: localPeerData?.socketId,
                   };
                   sessionsSocket.emit("clientMessage", data);
-                  p2p.toggleAudioStream();
                 }}
                 onToggleCam={(current: boolean) => {
                   const data: ISocketIOMessage = {
@@ -178,7 +178,31 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                     payload: localPeerData?.socketId,
                   };
                   sessionsSocket.emit("clientMessage", data);
-                  p2p.toggleVideoStream();
+
+                  if (p2p.settings?.camOnOnce) {
+                    alert("toggleLocalVideoStream");
+                    p2p.toggleLocalVideoStream();
+                  } else {
+                    alert("upgradeLocalStream");
+                    p2p.upgradeLocalStream();
+                  }
+
+                  // p2p.upgradeLocalStream().then(() => {
+                  // const toggleCamSuccess = p2p.toggleLocalVideoStream();
+                  // if (toggleCamSuccess) {
+                  //   alert("toggleCamSuccess");
+                  //   const data: ISocketIOMessage = {
+                  //     type: current
+                  //       ? SessionsGatewayEventCode.CAM_OFF
+                  //       : SessionsGatewayEventCode.CAM_ON,
+                  //     message: `User ${user?.uid} turned camara ${
+                  //       current ? "off" : "on"
+                  //     }`,
+                  //     payload: localPeerData?.socketId,
+                  //   };
+                  //   sessionsSocket.emit("clientMessage", data);
+                  // }
+                  // });
                 }}
               />
             )}

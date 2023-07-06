@@ -59,9 +59,9 @@ const RoomSessionPage = () => {
       p2p = new Peer2Peer();
       await p2p.init({
         localUserId: user?.uid as string,
-        remoteUserId: "",
+        camOnOnce: false,
         onStatusChange: setPeerStatus,
-        onLocalVideoStreamed: () => {
+        onLocalMediaStreamed: () => {
           sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
             onConnected: () => {
               console.log("Subscribed /sessions");
@@ -73,10 +73,6 @@ const RoomSessionPage = () => {
               }, 2000);
             },
             onJoin: (joiner: IRoomPeer) => {
-              if (p2p.settings) {
-                p2p.settings.remoteUserId = joiner.userId;
-              }
-
               setTimeout(() => {
                 p2p.callRemotePeer(joiner.userId);
               }, 2000);

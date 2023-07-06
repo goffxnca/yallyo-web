@@ -40,9 +40,9 @@ const MultiplePeers = () => {
     p2p = new Peer2Peer();
     await p2p.init({
       localUserId: user?.uid as string,
-      remoteUserId: "",
+      camOnOnce: false,
       onStatusChange: setPeerStatus,
-      onLocalVideoStreamed: () => {
+      onLocalMediaStreamed: () => {
         sessionsSocket = subscribeSessionsUpdates(
           roomCode as string,
           user!,
@@ -50,10 +50,6 @@ const MultiplePeers = () => {
           {
             onConnected: () => {},
             onJoin: (joiner: IRoomPeer) => {
-              if (p2p.settings) {
-                p2p.settings.remoteUserId = joiner.userId;
-              }
-
               setTimeout(() => {
                 p2p.callRemotePeer(joiner.userId);
               }, 2000);
@@ -152,7 +148,7 @@ const MultiplePeers = () => {
               payload: localPeerData?.socketId,
             };
             sessionsSocket.emit("clientMessage", data);
-            p2p.toggleAudioStream();
+            p2p.toggleLocalAudioStream();
           }}
           onToggleCam={(current: boolean) => {
             const data: ISocketIOMessage = {
@@ -165,7 +161,7 @@ const MultiplePeers = () => {
               payload: localPeerData?.socketId,
             };
             sessionsSocket.emit("clientMessage", data);
-            p2p.toggleVideoStream();
+            p2p.toggleLocalVideoStream();
           }}
         />
       )}
