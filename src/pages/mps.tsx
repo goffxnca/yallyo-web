@@ -57,7 +57,6 @@ const MultiplePeers = () => {
             onLeave: () => {},
           }
         );
-        console.log("Subscribed /sessions");
 
         setTimeout(() => {
           dispatch(fetchPeersAsync(roomCode as string)).then(() => {
@@ -66,11 +65,11 @@ const MultiplePeers = () => {
           console.log("Fetching peers");
         }, 1000);
       },
-      onRemoteVideoStreamed: (remoteId: string) => {
+      onRemoteMediaStreamed: (remoteId: string) => {
         dispatch(removePeerLoading(remoteId));
       },
       onMediaPermissionRejected: () => {},
-      onDataChannel: () => {},
+      onDataChannelReceived: () => {},
     });
 
     setInitializedOnce(true);

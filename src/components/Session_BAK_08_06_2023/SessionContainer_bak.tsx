@@ -140,7 +140,7 @@ const RoomSession = () => {
         }
       };
     } catch (error) {
-      console.log("rejected", error);
+      console.error("rejected", error);
     }
   };
 

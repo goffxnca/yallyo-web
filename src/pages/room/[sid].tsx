@@ -25,12 +25,13 @@ import SessionContainer from "@/components/Session/SessionContainer";
 import RoomInactive from "@/components/Session/Errors/RoomInactive";
 import Modal from "@/components/UIs/Modal";
 import TroubleshootingContent from "@/components/Session/TroubleshootingContent";
+import { CustomError2, PermissionNotAllowed } from "@/types/errors";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
 
 const RoomSessionPage = () => {
-  console.log("RoomSessionPage");
+  // console.log("RoomSessionPage");
 
   const router = useRouter();
 
@@ -45,6 +46,7 @@ const RoomSessionPage = () => {
   const [showPreviewScreen, setShowPreviewScreen] = useState(true); //This gonna always take 5 seconds static
   const [showTroubleshootingModal, setShowTroubleshootingModal] =
     useState<boolean>(false);
+  const [mediaIssueType, setMediaIssueType] = useState("");
 
   const initilizedOnce = useRef(false);
 
@@ -57,60 +59,71 @@ const RoomSessionPage = () => {
       console.log("Initializing room session");
 
       p2p = new Peer2Peer();
-      await p2p.init({
-        localUserId: user?.uid as string,
-        camOnOnce: false,
-        onStatusChange: setPeerStatus,
-        onLocalMediaStreamed: () => {
-          sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
-            onConnected: () => {
-              console.log("Subscribed /sessions");
-              setTimeout(() => {
-                dispatch(fetchPeersAsync(roomId)).then(() => {
-                  console.log("Fetched peers");
-                  dispatch(removePeerLoading(user?.uid as string));
-                });
-              }, 2000);
-            },
-            onJoin: (joiner: IRoomPeer) => {
-              setTimeout(() => {
-                p2p.callRemotePeer(joiner.userId);
-              }, 2000);
-            },
-            onLeave: (payload: any) => {
-              const { socketId, userId, dname } = payload;
-            },
-          });
-        },
-        onRemoteVideoStreamed: (remoteId: string) => {
-          dispatch(removePeerLoading(remoteId));
-        },
-        onMediaPermissionRejected: () => {
-          setShowTroubleshootingModal(true);
-        },
-        onDataChannel: (data: ISocketIOMessage) => {
-          console.log("onDataChannel with data", data);
-          const { type, payload } = data;
 
-          switch (type) {
-            case SessionsGatewayEventCode.SPEAK_ON:
-              dispatch(
-                updateSpeakingStatus({ userId: payload.userId, status: true })
-              );
-              break;
-            case SessionsGatewayEventCode.SPEAK_OFF:
-              dispatch(
-                updateSpeakingStatus({ userId: payload.userId, status: false })
-              );
-              break;
+      try {
+        await p2p.init({
+          localUserId: user?.uid as string,
+          camOnOnce: false,
+          onStatusChange: setPeerStatus,
+          onLocalMediaStreamed: () => {
+            sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
+              onConnected: () => {
+                setTimeout(() => {
+                  dispatch(fetchPeersAsync(roomId)).then(() => {
+                    console.log("Fetched peers");
+                    dispatch(removePeerLoading(user?.uid as string));
+                  });
+                }, 2000);
+              },
+              onJoin: (joiner: IRoomPeer) => {
+                setTimeout(() => {
+                  p2p.callRemotePeer(joiner.userId);
+                }, 2000);
+              },
+              onLeave: (payload: any) => {
+                const { socketId, userId, dname } = payload;
+              },
+            });
+          },
+          onRemoteMediaStreamed: (remoteId: string) => {
+            dispatch(removePeerLoading(remoteId));
+          },
+          onMediaPermissionRejected: (type: string) => {
+            setMediaIssueType(type);
+            setShowTroubleshootingModal(true);
+          },
+          onDataChannelReceived: (data: ISocketIOMessage) => {
+            console.log("onDataChannel with data", data);
+            const { type, payload } = data;
 
-            default:
-              break;
-          }
-        },
-      });
+            switch (type) {
+              case SessionsGatewayEventCode.SPEAK_ON:
+                dispatch(
+                  updateSpeakingStatus({ userId: payload.userId, status: true })
+                );
+                break;
+              case SessionsGatewayEventCode.SPEAK_OFF:
+                dispatch(
+                  updateSpeakingStatus({
+                    userId: payload.userId,
+                    status: false,
+                  })
+                );
+                break;
 
-      initilizedOnce.current = true;
+              default:
+                break;
+            }
+          },
+        });
+        initilizedOnce.current = true;
+      } catch (error: any) {
+        if (error instanceof PermissionNotAllowed) {
+          console.error("Peer2Peer.init failed with error: " + error);
+        } else if (error instanceof CustomError2) {
+          console.error("Peer2Peer.init failed with error: " + error);
+        }
+      }
     }
   }, [user, roomId, dispatch]);
 
@@ -201,9 +214,10 @@ const RoomSessionPage = () => {
         <Modal
           emitClose={() => {
             setShowTroubleshootingModal(false);
+            setMediaIssueType("");
           }}
         >
-          <TroubleshootingContent />
+          <TroubleshootingContent mediaType={mediaIssueType} />
         </Modal>
       )}
     </>

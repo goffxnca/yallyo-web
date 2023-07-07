@@ -46,7 +46,12 @@ const JoinerList = () => {
     }
   }, [joiners]);
 
-  const medias: IMediaControls = { camOn: true, micOn: true, screenOn: false };
+  const medias: IMediaControls = {
+    camOn: true,
+    micOn: true,
+    screenOn: false,
+    speaking: false,
+  };
   return (
     <div className="relative ">
       <SessionControlList

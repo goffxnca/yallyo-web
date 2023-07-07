@@ -20,7 +20,7 @@ export const subscribeRoomsUpdates = (dispatch: any): Socket => {
   const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);
 
   roomsSocket.on("connect", () => {
-    console.log("WebSocket /rooms connection opened");
+    console.log("WebSocket /rooms connection is open");
   });
 
   roomsSocket.on("serverPush", (data) => {
@@ -50,7 +50,7 @@ export const subscribeSessionsUpdates = (
   );
 
   peersSocket.on("connect", () => {
-    console.log("WebSocket /sessions connection opened");
+    console.log("WebSocket /sessions connection is open");
     callbacks.onConnected();
   });
 
@@ -111,8 +111,8 @@ export const subscribeSessionsUpdates = (
     console.log("WebSocket /sessions connection closed");
   });
 
-  peersSocket.on("error2", (data) => {
-    console.error("WebSocket /sessions error22: ", data);
+  peersSocket.on("error", (data) => {
+    console.error("WebSocket /sessions error: ", data);
   });
 
   return peersSocket;

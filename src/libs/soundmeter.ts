@@ -7,10 +7,7 @@ export interface ISoundMeterInterface {
   mic: MediaStreamAudioSourceNode | null;
   onSpeak: Function;
 
-  connectToSource(
-    stream: MediaStream,
-    callback?: (error: Error | null) => void
-  ): void;
+  connectToSource(stream: MediaStream): void;
   stop(): void;
 }
 
@@ -67,32 +64,23 @@ export class SoundMeter implements ISoundMeterInterface {
     };
   }
 
-  connectToSource(
-    stream: MediaStream,
-    callback?: (error: Error | null) => void
-  ): void {
-    console.log("SoundMeter connecting");
+  connectToSource(stream: MediaStream): void {
     try {
       this.mic = this.context.createMediaStreamSource(stream);
       this.mic.connect(this.script);
       // Necessary to make sample run, but should not be.
       this.script.connect(this.context.destination);
-      if (typeof callback !== "undefined") {
-        callback(null);
-      }
-    } catch (e: any) {
-      console.error(e);
-      if (typeof callback !== "undefined") {
-        callback(e);
-      }
+      console.log("Connect SoundMeter successfully");
+    } catch (error: any) {
+      console.error("Connect SoundMeter failed with error: " + error);
     }
   }
 
   stop(): void {
-    console.log("SoundMeter stopping");
     if (this.mic) {
       this.mic.disconnect();
     }
     this.script.disconnect();
+    console.log("Disconnect from SoundMeter successfully");
   }
 }

@@ -107,7 +107,7 @@ const profileSlice = createSlice({
         state.status = "error";
         state.error = action.error.message ?? "Failed to fetch my profile";
         console.error(
-          "fetchShortProfileByIdAsync failed with error:",
+          "fetchShortProfileByIdAsync failed with error: ",
           state.error
         );
       });
@@ -129,7 +129,7 @@ const profileSlice = createSlice({
       .addCase(followAccountAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to follow account";
-        console.error("followAccountAsync failed with error:", state.error);
+        console.error("followAccountAsync failed with error: ", state.error);
       });
 
     builder
@@ -149,7 +149,7 @@ const profileSlice = createSlice({
       .addCase(unfollowAccountAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to unfollow account";
-        console.error("unfollowAccountAsync failed with error:", state.error);
+        console.error("unfollowAccountAsync failed with error: ", state.error);
       });
   },
 });

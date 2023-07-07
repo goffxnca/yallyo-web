@@ -1,5 +1,6 @@
 import { ISoundMeterInterface, SoundMeter } from "@/libs/soundmeter";
 import { ISocketIOMessage, SessionsGatewayEventCode } from "@/types/common";
+import { PermissionNotAllowed } from "@/types/errors";
 import { EventEmitter } from "events";
 
 interface Peer2PeerSettings {
@@ -7,9 +8,9 @@ interface Peer2PeerSettings {
   camOnOnce: boolean;
   onStatusChange: Function;
   onLocalMediaStreamed: Function;
-  onRemoteVideoStreamed: Function;
+  onRemoteMediaStreamed: Function;
   onMediaPermissionRejected: Function;
-  onDataChannel: Function;
+  onDataChannelReceived: Function;
 }
 
 class Peer2Peer {
@@ -36,15 +37,14 @@ class Peer2Peer {
   async init(settings: Peer2PeerSettings) {
     this.settings = settings;
 
-    await this.renderLocalMediaStream();
+    await this.startLocalAudioStream();
 
     const { localUserId } = settings;
+
     const Peer = await import("peerjs");
-    // alert(`Registering user id: ${localUserId} on PeerServerCloud`);
     this.peer = new Peer.default(localUserId);
     console.log(`Registered ${localUserId} for PeerServerCloud`);
 
-    //When remote peer recieving call
     this.peer.on("call", async (call: any) => {
       console.log(`Receiving call from ${call.peer}`);
       this.updateStatus("RECEIVING_CALL");
@@ -56,7 +56,7 @@ class Peer2Peer {
           remoteUserVideo.srcObject = remoteStream;
           console.log(`Accepting call from ${call.peer} successfully`);
           this.updateStatus("CONNECTED");
-          this.settings?.onRemoteVideoStreamed(call.peer);
+          this.settings?.onRemoteMediaStreamed(call.peer);
         });
       } catch (error) {
         console.error(`Accepting call from ${call.peer} failed`, error);
@@ -72,7 +72,7 @@ class Peer2Peer {
       this.updateStatus("CONNECTION");
       conn.on("data", (data: ISocketIOMessage) => {
         if (this.settings) {
-          this.settings.onDataChannel(data);
+          this.settings.onDataChannelReceived(data);
         }
       });
     });
@@ -101,63 +101,87 @@ class Peer2Peer {
       remoteUserVideo.srcObject = remoteStream;
       console.log(`Render remote stream for ${remoteId} successfully`);
       this.updateStatus("CONNECTED");
-      this.settings?.onRemoteVideoStreamed(remoteId);
+      this.settings?.onRemoteMediaStreamed(remoteId);
 
       const conn = this.peer.connect(remoteId, { serialization: "json" });
       conn.on("data", (data: ISocketIOMessage) => {
         if (this.settings) {
-          this.settings.onDataChannel(data);
+          this.settings.onDataChannelReceived(data);
         }
       });
     });
   }
 
-  renderLocalMediaStream = async () => {
-    console.log("Request browser mic permissions for local media stream");
+  startLocalAudioStream = async () => {
+    console.log("startLocalAudioStream");
     try {
-      //Initially only voice call, can upgrade to camera later by user
       const stream = await navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
       });
       this.localStream = stream;
 
-      //========Sound Meter Connection
       this.connectSoundMeter(stream);
-      //========
 
       const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
       localUserVideo.srcObject = stream;
-      this.settings?.onLocalMediaStreamed();
-      console.log("Render local stream successfully");
-    } catch (error: unknown) {
-      console.error("Render local stream failed", error);
 
-      if (error instanceof DOMException) {
-        if (
-          error.name === "NotAllowedError" ||
-          error.name === "PermissionDeniedError"
-        ) {
-          // Handle permission denied error
-          // Show a message on the UI indicating that camera/microphone access is required
-          if (error.name === "NotAllowedError") {
-            // alert("NotAllowedError: You reject by yourself?");
-            console.log("NotAllowedError: You reject by yourself?");
-            this.settings?.onMediaPermissionRejected();
-          } else if (error.name === "PermissionDeniedError") {
-            // alert("PermissionDeniedError: Browser reject it?");
-            console.log("PermissionDeniedError: Browser reject it?");
-          }
-        }
-      } else {
-        // Handle other generic error that is not related to browser API
+      const [audioTrack] = stream.getAudioTracks();
+      console.log(
+        "Start local audio stream successfully using mic: " + audioTrack.label
+      );
+
+      this.settings?.onLocalMediaStreamed();
+    } catch (error: unknown) {
+      this.handleGetUserMediaError(error, "mic");
+    }
+  };
+
+  upgradeToVideoStream = async () => {
+    console.log("upgradeToVideoStream");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+
+      const [videoTrack] = stream.getVideoTracks();
+      if (this.localStream) {
+        this.localStream.addTrack(videoTrack);
       }
+
+      // const audioTracks = stream.getAudioTracks();
+      // this.localStream.addTrack(audioTracks[0]);
+
+      //========Sound Meter Connection
+      // this.connectSoundMeter(this.localStream);
+      //========
+
+      const localUserVideo = this.getVideoElement(
+        this.settings?.localUserId as string
+      );
+
+      localUserVideo.srcObject = null;
+      localUserVideo.srcObject = this.localStream;
+
+      this.reConnectAllRemotePeers();
+
+      if (this.settings) {
+        this.settings.camOnOnce = true;
+      }
+
+      console.log(
+        "Upgrade local to video stream successfully using cam: " +
+          videoTrack.label
+      );
+    } catch (error: unknown) {
+      this.handleGetUserMediaError(error, "cam");
     }
   };
 
   toggleLocalVideoStream = () => {
+    console.log("toggleLocalVideoStream");
     if (this.localStream) {
       const [track] = this.localStream.getVideoTracks();
       if (track) {
@@ -180,7 +204,7 @@ class Peer2Peer {
   };
 
   toggleLocalAudioStream = () => {
-    debugger;
+    console.log("toggleLocalAudioStream");
     if (this.localStream) {
       const [track] = this.localStream.getAudioTracks();
       if (track) {
@@ -193,11 +217,12 @@ class Peer2Peer {
         if (track.enabled) {
           if (soundMeter && audioContext) {
             soundMeter.script.connect(audioContext.destination);
+            console.log("Sound meter is connected");
           }
         } else {
           if (soundMeter) {
-            alert("sound meter stopoped.");
             soundMeter.script.disconnect();
+            console.log("Sound meter is disconnected");
           }
         }
 
@@ -216,66 +241,7 @@ class Peer2Peer {
     }
   };
 
-  upgradeLocalStream = async () => {
-    console.log("Request browser cam permissions for local media stream");
-    try {
-      //Upgrade to camera media
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: true,
-      });
-      this.localStream = stream;
-      debugger;
-      const videoTracks = stream.getVideoTracks();
-      this.localStream.addTrack(videoTracks[0]);
-
-      // const audioTracks = stream.getAudioTracks();
-      // this.localStream.addTrack(audioTracks[0]);
-
-      //========Sound Meter Connection
-      // this.connectSoundMeter(this.localStream);
-      //========
-
-      const localUserVideo = this.getVideoElement(
-        this.settings?.localUserId as string
-      );
-
-      localUserVideo.srcObject = null;
-      localUserVideo.srcObject = this.localStream;
-
-      // this.callAllConnectedRemotePeers();
-
-      if (this.settings) {
-        this.settings.camOnOnce = true;
-      }
-
-      console.log("Upgrade local stream successfully");
-    } catch (error: unknown) {
-      console.error("Render local stream failed", error);
-
-      // if (error instanceof DOMException) {
-      //   if (
-      //     error.name === "NotAllowedError" ||
-      //     error.name === "PermissionDeniedError"
-      //   ) {
-      //     // Handle permission denied error
-      //     // Show a message on the UI indicating that camera/microphone access is required
-      //     if (error.name === "NotAllowedError") {
-      //       // alert("NotAllowedError: You reject by yourself?");
-      //       console.log("NotAllowedError: You reject by yourself?");
-      //       this.settings?.onMediaPermissionRejected();
-      //     } else if (error.name === "PermissionDeniedError") {
-      //       // alert("PermissionDeniedError: Browser reject it?");
-      //       console.log("PermissionDeniedError: Browser reject it?");
-      //     }
-      //   }
-      // } else {
-      //   // Handle other generic error that is not related to browser API
-      // }
-    }
-  };
-
-  callAllConnectedRemotePeers = () => {
+  reConnectAllRemotePeers = () => {
     for (let connectionId in this.peer.connections) {
       this.callRemotePeer(connectionId);
     }
@@ -322,23 +288,13 @@ class Peer2Peer {
   };
 
   private connectSoundMeter = (stream: MediaStream) => {
-    //========Sound Meter Connection
     this.micProcesser.audioContext = new AudioContext();
-    console.log("sample rate:" + this.micProcesser.audioContext.sampleRate);
+    console.log("sample rate: " + this.micProcesser.audioContext.sampleRate);
     this.micProcesser.soundMeter = new SoundMeter(
       this.micProcesser.audioContext,
       this.notifySpeak
     );
-    this.micProcesser.soundMeter.connectToSource(stream, (error: any) => {
-      if (error) {
-        console.error(
-          "Connect local stream to Sound Meter failed with error:",
-          error
-        );
-        return;
-      }
-    });
-    //========
+    this.micProcesser.soundMeter.connectToSource(stream);
   };
 
   private notifySpeak = (volume: number) => {
@@ -347,6 +303,26 @@ class Peer2Peer {
 
   private getVideoElement = (peerId: string) => {
     return document.getElementById(`video-${peerId}`) as HTMLVideoElement;
+  };
+
+  private handleGetUserMediaError = (error: unknown, type: string) => {
+    if (error instanceof DOMException) {
+      if (
+        error.name === "NotAllowedError" ||
+        error.name === "PermissionDeniedError"
+      ) {
+        // Handle permission denied error
+        if (error.name === "NotAllowedError") {
+          console.log("NotAllowedError: Rejected by you?");
+          this.settings?.onMediaPermissionRejected(type);
+        } else if (error.name === "PermissionDeniedError") {
+          console.log("PermissionDeniedError: Rejected by browser?");
+        }
+        throw new PermissionNotAllowed(error.message);
+      }
+    } else {
+      // Handle other generic error that is not related to browser API
+    }
   };
 }
 

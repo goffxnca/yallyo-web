@@ -1,15 +1,20 @@
-const TroubleshootingContent = () => {
+interface Props {
+  mediaType: string;
+}
+const TroubleshootingContent = ({ mediaType }: Props) => {
+  const media = mediaType === "cam" ? "camera" : "microphone";
   return (
     <div className="p-5 md:p-10 w-full md:w-[1000px] text-gray-300 max-h-[600px] overflow-y-scroll">
       <h2 className="text-accent2 text-2xl text-center mb-6">
-        Camera/Microphone Troubleshooting
+        Fixing {mediaType === "mic" ? "Microphone" : "Camera"} Permission Issues
       </h2>
 
-      <p>
-        After declining camera and microphone permissions, it&apos;s important
-        to note that browsers will remember your decision, which can make it
+      <h3 className="font-bold my-4">Why am I seeing this pop-up?</h3>
+      <p className="ml-2">
+        After declining camera/microphone permissions, it&apos;s important to
+        note that browsers will remember your decision, which can make it
         challenging to regain access later on. To help you resolve this issue,
-        here are steps you can follow based on your browser and device type:
+        here are steps you can follow.
       </p>
       <br></br>
 
@@ -27,40 +32,101 @@ const TroubleshootingContent = () => {
         <div className="hidden lg:block">
           <h3 className="font-bold my-4">For Desktop Users:</h3>
           <div className="ml-2 space-y-4">
-            <p>
-              <b>Chrome</b> - Click camera icon with the red cross symbol on the
-              right side of address bar then click &quot;Always Allow
-              https://yallyo.com to access your camera and microphone&quot;.
-            </p>
-            <img
-              src={"/images/chrome-issue1.png"}
-              alt="yeh"
-              className="mx-auto w-1/2"
-            />
-            <p>
-              <b>Safari</b> - Go to Safari Settings by accessing the menu bar at
-              the top of your screen. Then, navigate to the Websites tab and
-              adjust the permissions to &apos;Allow,&apos; for both Camera and
-              Microphone.
-            </p>
-            <img
-              src={"/images/chrome-issue2.png"}
-              alt="yeh"
-              className="mx-auto w-1/2"
-            />
-            <p>
-              <b>Firefox</b> - Do Something...
-            </p>
+            {mediaType === "cam" && (
+              <>
+                <p>
+                  <b>Chrome</b> - Click camera icon with the red cross symbol on
+                  the right side of address bar then click &quot;Always Allow
+                  https://yallyo.com to access your camera and microphone&quot;
+                  and click &quot;Done&quot; then close popup and try to turn
+                  camera on again.
+                </p>
+
+                <img
+                  src={"/images/mediaIssues/desktop-chrome-cam.png"}
+                  alt="yeh"
+                  className="mx-auto w-1/2"
+                />
+                <p>
+                  <b>Safari</b> - To fix camera permission issue for Safari
+                  browser on desktop, please visit{" "}
+                  <a
+                    href="https://support.apple.com/en-kw/guide/safari/ibrwe2159f50/mac"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Safari Official Support Website
+                  </a>
+                </p>
+                <p>
+                  <b>Firefox</b> - To fix camera permission issue for Firefox
+                  browser on desktop, please visit{" "}
+                  <a
+                    href="https://support.mozilla.org/en-US/kb/how-manage-your-camera-and-microphone-permissions"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Firefox Official Support Website
+                  </a>
+                </p>
+              </>
+            )}
+
+            {mediaType === "mic" && (
+              <>
+                <p>
+                  <b>Chrome</b> - Click microphone icon with the red cross
+                  symbol on the right side of address bar then click
+                  &quot;Always Allow https://yallyo.com to access your
+                  microphone&quot; and click &quot;Done&quot; then close popup
+                  and try refresh this page again.
+                </p>
+                <img
+                  src={"/images/mediaIssues/desktop-chrome-mic.png"}
+                  alt="yeh"
+                  className="mx-auto w-1/2"
+                />
+                <p>
+                  <b>Safari</b> - To fix microphone permission issue for Safari
+                  browser on desktop, please visit{" "}
+                  <a
+                    href="https://support.apple.com/en-kw/guide/safari/ibrwe2159f50/mac"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Safari Official Support Website
+                  </a>
+                </p>
+                <p>
+                  <b>Firefox</b> - To fix microphone permission issue for
+                  Firefox browser on desktop, please visit{" "}
+                  <a
+                    href="https://support.mozilla.org/en-US/kb/how-manage-your-camera-and-microphone-permissions"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Firefox Official Support Website
+                  </a>
+                </p>
+              </>
+            )}
           </div>
         </div>
 
         <br></br>
         <p>
           After making the necessary adjustments as suggested, please refresh
-          this page once then your camera and microphone should now work
+          this page once, then your camera and microphone should now work
           properly. However, in some browsers, you may still be prompted to
-          grant access to your cam/mic again. In that case, simply click
-          &apos;Allow,&apos; and you should be good to go.
+          grant access to your camera/microphone again. In that case, simply
+          click &apos;Allow,&apos; and you should be good to go.
+        </p>
+        <br></br>
+        <p>
+          Please note that repeatedly denying camera/microphone permissions can
+          trigger browser security measures, leading to a temporary block of the
+          website. If you encounter this issue, you may need to wait for
+          approximately 24 hours before trying again.
         </p>
       </div>
     </div>

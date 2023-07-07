@@ -24,7 +24,7 @@ interface Props {
 const GAP_PX = 8;
 
 const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
-  console.log("SessionContainer");
+  // console.log("SessionContainer");
 
   const { user } = useSelector((state: RootState) => state.auth);
   const { peers, localControls } = useSelector(
@@ -63,7 +63,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   }, [p2p]);
 
   useEffect(() => {
-    if (p2p) {
+    if (p2p && p2p.peer) {
       p2p.notifySpeakViaAllConnectedDataChannels(amISpeaking);
     }
   }, [amISpeaking, p2p]);
@@ -167,7 +167,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   };
                   sessionsSocket.emit("clientMessage", data);
                 }}
-                onToggleCam={(current: boolean) => {
+                onToggleCam={async (current: boolean) => {
                   const data: ISocketIOMessage = {
                     type: current
                       ? SessionsGatewayEventCode.CAM_OFF
@@ -177,14 +177,20 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                     }`,
                     payload: localPeerData?.socketId,
                   };
-                  sessionsSocket.emit("clientMessage", data);
 
                   if (p2p.settings?.camOnOnce) {
-                    alert("toggleLocalVideoStream");
                     p2p.toggleLocalVideoStream();
+                    sessionsSocket.emit("clientMessage", data);
                   } else {
-                    alert("upgradeLocalStream");
-                    p2p.upgradeLocalStream();
+                    try {
+                      await p2p.upgradeToVideoStream();
+                      sessionsSocket.emit("clientMessage", data);
+                    } catch (error: unknown) {
+                      console.error(
+                        "Peer2Peer.upgradeToVideoStream failed with error: " +
+                          error
+                      );
+                    }
                   }
 
                   // p2p.upgradeLocalStream().then(() => {

@@ -28,7 +28,7 @@ const Header = () => {
             Yallyo.com
           </h1>
           <h2 className="text-gray-400 text-xs md:text-sm">
-            Language Learning Community
+            Language Exchange Community
           </h2>
         </div>
       )}
