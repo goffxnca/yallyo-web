@@ -29,6 +29,11 @@ class Peer2Peer {
     meterRefreshInverval: null,
   };
 
+  mediaStreamConstraints: MediaStreamConstraints = {
+    video: false,
+    audio: true,
+  };
+
   updateStatus(status: string) {
     this.status = status;
     this.settings?.onStatusChange(status);
