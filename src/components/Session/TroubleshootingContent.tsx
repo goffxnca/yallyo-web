@@ -4,7 +4,7 @@ interface Props {
 const TroubleshootingContent = ({ mediaType }: Props) => {
   const media = mediaType === "cam" ? "camera" : "microphone";
   return (
-    <div className="p-5 md:p-10 w-full md:w-[1000px] text-gray-300 max-h-[600px] overflow-y-scroll">
+    <div className="p-5 md:p-10 w-full md:w-[800px] lg:w-[1000px] text-gray-300 max-h-[600px] overflow-y-scroll">
       <h2 className="text-accent2 text-2xl text-center mb-6">
         Fixing {mediaType === "mic" ? "Microphone" : "Camera"} Permission Issues
       </h2>
