@@ -51,13 +51,13 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
 
                 <p>
                   <b>Safari</b> - To fix camera permission issue for Safari
-                  browser on mobile device, please visit{" "}
+                  browser on mobile device, please checkout this{" "}
                   <a
-                    href="https://discussions.apple.com/thread/253478235"
+                    href="https://www.youtube.com/watch?v=BJOUR8tdKRc"
                     target="_blank"
                     className="text-blue-500"
                   >
-                    Safari Official Support Website
+                    Youtube video
                   </a>
                 </p>
               </>
@@ -82,7 +82,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                   issue for Chrome browser on mobile Iphone & Ipad device,
                   please visit{" "}
                   <a
-                    href="https://discussions.apple.com/thread/253203043"
+                    href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DiOS"
                     target="_blank"
                     className="text-blue-500"
                   >
@@ -91,13 +91,13 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                 </p>
                 <p>
                   <b>Safari</b> - To fix microphone permission issue for Safari
-                  browser on mobile device, please visit{" "}
+                  browser on mobile device, please checkout this{" "}
                   <a
-                    href="https://discussions.apple.com/thread/253203043"
+                    href="https://www.youtube.com/watch?v=FxfXPmp4w2Y"
                     target="_blank"
                     className="text-blue-500"
                   >
-                    Safari Official Support Website
+                    Youtube video
                   </a>
                 </p>
               </>
