@@ -22,9 +22,86 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
         <div className="lg:hidden">
           <h3 className="font-bold my-4">For Mobile/Tablet Users:</h3>
           <div className="ml-2 space-y-4">
-            <h4>Chrome</h4>
-            <h4>Safari</h4>
-            <h4>Firefox</h4>
+            {mediaType === "cam" && (
+              <>
+                <p>
+                  <b>Chrome - Android</b> - To fix camera permission issue for
+                  Chrome browser on mobile android device, please visit{" "}
+                  <a
+                    href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DAndroid"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Chrome Official Support Website
+                  </a>
+                </p>
+
+                <p>
+                  <b>Chrome - Iphone & Ipad</b> - To fix camera permission issue
+                  for Chrome browser on mobile Iphone & Ipad device, please
+                  visit{" "}
+                  <a
+                    href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DiOS"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Chrome Official Support Website
+                  </a>
+                </p>
+
+                <p>
+                  <b>Safari</b> - To fix camera permission issue for Safari
+                  browser on mobile device, please visit{" "}
+                  <a
+                    href="https://discussions.apple.com/thread/253478235"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Safari Official Support Website
+                  </a>
+                </p>
+              </>
+            )}
+
+            {mediaType === "mic" && (
+              <>
+                <p>
+                  <b>Chrome - Android</b> - To fix microphone permission issue
+                  for Chrome browser on mobile android device, please visit{" "}
+                  <a
+                    href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DAndroid"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Chrome Official Support Website
+                  </a>
+                </p>
+
+                <p>
+                  <b>Chrome - Iphone & Ipad</b> - To fix microphone permission
+                  issue for Chrome browser on mobile Iphone & Ipad device,
+                  please visit{" "}
+                  <a
+                    href="https://discussions.apple.com/thread/253203043"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Chrome Official Support Website
+                  </a>
+                </p>
+                <p>
+                  <b>Safari</b> - To fix microphone permission issue for Safari
+                  browser on mobile device, please visit{" "}
+                  <a
+                    href="https://discussions.apple.com/thread/253203043"
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    Safari Official Support Website
+                  </a>
+                </p>
+              </>
+            )}
           </div>
         </div>
 
