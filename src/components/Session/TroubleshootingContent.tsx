@@ -25,8 +25,8 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
             {mediaType === "cam" && (
               <>
                 <p>
-                  <b>Chrome - Android</b> - To fix camera permission issue for
-                  Chrome browser on mobile android device, please visit{" "}
+                  <b>Chrome on Android</b> - To fix camera permission issue for
+                  Chrome browser on mobile/tablet android device, please visit{" "}
                   <a
                     href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DAndroid"
                     target="_blank"
@@ -37,9 +37,9 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                 </p>
 
                 <p>
-                  <b>Chrome - Iphone & Ipad</b> - To fix camera permission issue
-                  for Chrome browser on mobile Iphone & Ipad device, please
-                  visit{" "}
+                  <b>Chrome on Iphone & Ipad</b> - To fix camera permission
+                  issue for Chrome browser on mobile Iphone & Ipad device,
+                  please visit{" "}
                   <a
                     href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DiOS"
                     target="_blank"
@@ -51,7 +51,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
 
                 <p>
                   <b>Safari</b> - To fix camera permission issue for Safari
-                  browser on mobile device, please checkout this{" "}
+                  browser on mobile/tablet device, please checkout this{" "}
                   <a
                     href="https://www.youtube.com/watch?v=BJOUR8tdKRc"
                     target="_blank"
@@ -66,8 +66,9 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
             {mediaType === "mic" && (
               <>
                 <p>
-                  <b>Chrome - Android</b> - To fix microphone permission issue
-                  for Chrome browser on mobile android device, please visit{" "}
+                  <b>Chrome on Android</b> - To fix microphone permission issue
+                  for Chrome browser on mobile/tablet android device, please
+                  visit{" "}
                   <a
                     href="https://support.google.com/chrome/answer/2693767?hl=en&co=GENIE.Platform%3DAndroid"
                     target="_blank"
@@ -78,7 +79,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                 </p>
 
                 <p>
-                  <b>Chrome - Iphone & Ipad</b> - To fix microphone permission
+                  <b>Chrome on Iphone & Ipad</b> - To fix microphone permission
                   issue for Chrome browser on mobile Iphone & Ipad device,
                   please visit{" "}
                   <a
@@ -91,7 +92,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                 </p>
                 <p>
                   <b>Safari</b> - To fix microphone permission issue for Safari
-                  browser on mobile device, please checkout this{" "}
+                  browser on mobile/tablet device, please checkout this{" "}
                   <a
                     href="https://www.youtube.com/watch?v=FxfXPmp4w2Y"
                     target="_blank"
