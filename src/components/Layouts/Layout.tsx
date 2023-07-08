@@ -21,6 +21,10 @@ const Layout = ({ children }: Props) => {
       </div>
 
       <div className="fixed bottom-2 right-2 text-xs space-x-4 text-gray-300 ">
+        <a href="/about" target="_blank" className="hover:underline">
+          About Us
+        </a>
+
         <a href="/terms-of-service" target="_blank" className="hover:underline">
           Terms of Service
         </a>
