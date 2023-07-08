@@ -26,10 +26,10 @@ const AboutMe = () => {
             </figcaption>
           </figure>
           <p>
-            👋 Hi there! My name is Goff, and I'm from Thailand 🇹🇭. As a
+            👋 Hi there! My name is Goff, and I&apos;m from Thailand 🇹🇭. As a
             passionate software developer, I love building things that are truly
             useful for people. One thing that brings me immense joy is learning
-            English. I've tried various platforms in my quest to master the
+            English. I&apos;ve tried various platforms in my quest to master the
             language, but none of them worked the way I wanted. So, I made a
             decision to invest a lot of my free time into creating this
             platform.
@@ -42,22 +42,23 @@ const AboutMe = () => {
             with real people. Personally, I used to spend a lot of time only
             reading books, but when it came to actually speaking with
             foreigners, I found myself struggling to express myself fluently.
-            That's when it struck me that engaging in conversations with natives
-            or people from different cultures could significantly enhance
-            English learning.
+            That&apos;s when it struck me that engaging in conversations with
+            natives or people from different cultures could significantly
+            enhance English learning.
           </p>
 
           <p>
-            Now, I must admit, I'm quite the introverted person. I have only a
-            handful of close friends in real life that I can count on. Building
-            this platform has become a means for me to connect with people and
-            expand my social circle ❤️. Through this platform, you can enjoy
-            voice calls, video calls, and group chat rooms. Currently, we allow
-            a maximum of five people in each room, and we primarily support
-            English, Chinese, and Spanish—the most widely spoken languages in
-            the world. However, I'm open to adding more languages and other
-            features if there is a demand for them. Feel free to join our
-            vibrant and like-minded community on our Facebook group,{" "}
+            Now, I must admit, I&apos;m quite the introverted person. I have
+            only a handful of close friends in real life that I can count on.
+            Building this platform has become a means for me to connect with
+            people and expand my social circle ❤️. Through this platform, you
+            can enjoy voice calls, video calls, and group chat rooms. Currently,
+            we allow a maximum of five people in each room, and we primarily
+            support English, Chinese, and Spanish—the most widely spoken
+            languages in the world. However, I&apos;m open to adding more
+            languages and other features if there is a demand for them. Feel
+            free to join our vibrant and like-minded community on our Facebook
+            group,{" "}
             <a
               href="https://www.facebook.com/groups/yallyo.community"
               target="_blank"
@@ -65,7 +66,7 @@ const AboutMe = () => {
             >
               Yallyo - Language Exchange International Community
             </a>{" "}
-            Also, don't forget to show your support by liking, sharing, and
+            Also, don&apos;t forget to show your support by liking, sharing, and
             following the{" "}
             <a
               href="https://www.facebook.com/yallyo.official/"
