@@ -73,14 +73,14 @@ class Peer2Peer {
     });
 
     //The callee receive data channel connection
-    this.peer.on("connection", (conn: any) => {
-      this.updateStatus("CONNECTION");
-      conn.on("data", (data: ISocketIOMessage) => {
-        if (this.settings) {
-          this.settings.onDataChannelReceived(data);
-        }
-      });
-    });
+    // this.peer.on("connection", (conn: any) => {
+    //   this.updateStatus("CONNECTION");
+    //   conn.on("data", (data: ISocketIOMessage) => {
+    //     if (this.settings) {
+    //       this.settings.onDataChannelReceived(data);
+    //     }
+    //   });
+    // });
 
     this.peer.on("disconnected", () => {
       this.updateStatus("DISCONNECTED");
@@ -108,12 +108,12 @@ class Peer2Peer {
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteMediaStreamed(remoteId);
 
-      const conn = this.peer.connect(remoteId, { serialization: "json" });
-      conn.on("data", (data: ISocketIOMessage) => {
-        if (this.settings) {
-          this.settings.onDataChannelReceived(data);
-        }
-      });
+      // const conn = this.peer.connect(remoteId, { serialization: "json" });
+      // conn.on("data", (data: ISocketIOMessage) => {
+      //   if (this.settings) {
+      //     this.settings.onDataChannelReceived(data);
+      //   }
+      // });
     });
   }
 
