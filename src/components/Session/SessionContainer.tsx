@@ -232,6 +232,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   showStatusIndicator={true}
                   isMe={true}
                   speaking={amISpeaking}
+                  muted={true}
                 />
 
                 {peers
@@ -257,6 +258,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                         showStatusIndicator={true}
                         isMe={false}
                         speaking={peer.controls.speaking}
+                        muted={false}
                       />
                     );
                   })}

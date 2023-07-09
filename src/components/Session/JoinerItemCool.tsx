@@ -14,6 +14,7 @@ interface Props {
   showStatusIndicator: boolean;
   isMe: boolean;
   speaking: boolean;
+  muted: boolean;
 }
 const JoinerItemCool = ({
   userId,
@@ -25,6 +26,7 @@ const JoinerItemCool = ({
   showStatusIndicator,
   isMe,
   speaking,
+  muted,
 }: Props) => {
   return (
     <div
@@ -102,7 +104,7 @@ const JoinerItemCool = ({
                   height: boxSize,
                 }}
                 className="rounded-lg"
-                // muted={true}
+                muted={muted}
               />
             </div>
 
