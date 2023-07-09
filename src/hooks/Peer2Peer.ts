@@ -131,7 +131,7 @@ class Peer2Peer {
       const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
-      localUserVideo.srcObject = stream;
+      localUserVideo.srcObject = this.localStream;
 
       const [audioTrack] = stream.getAudioTracks();
       console.log(
