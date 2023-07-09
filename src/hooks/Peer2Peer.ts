@@ -121,7 +121,7 @@ class Peer2Peer {
     console.log("startLocalAudioStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: false,
+        video: true,
         audio: true,
       });
       this.localStream = stream;
