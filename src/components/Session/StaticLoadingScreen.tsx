@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import DarkOverlay from "../Layouts/Overlay";
 
 interface Props {
-  onPreviewFinished: Function;
+  onLoadingFinished: Function;
 }
 
-const PreviewScreen = ({ onPreviewFinished }: Props) => {
+const StaticLoadingScreen = ({ onLoadingFinished }: Props) => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setShowLoading(false);
-      onPreviewFinished();
+      onLoadingFinished();
     }, 5000);
   }, []);
 
@@ -23,4 +23,4 @@ const PreviewScreen = ({ onPreviewFinished }: Props) => {
   );
 };
 
-export default PreviewScreen;
+export default StaticLoadingScreen;

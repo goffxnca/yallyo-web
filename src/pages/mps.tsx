@@ -15,7 +15,7 @@ import {
 } from "@/types/common";
 import SessionControlList from "@/components/Session/SessionControlList";
 import VideoStreamItem from "@/components/Session/VideoStreamItem";
-import PreviewScreen from "@/components/Session/PreviewScreen";
+import StaticLoadingScreen from "@/components/Session/StaticLoadingScreen";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -30,7 +30,7 @@ const MultiplePeers = () => {
   const [roomCode, setRoomCode] = useState("");
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
   const [initilizedOnce, setInitializedOnce] = useState(false);
-  const [showPreviewScreen, setShowPreviewScreen] = useState(true);
+  const [showStaticLoadingScreen, setShowStaticLoadingScreen] = useState(true); //This gonna always take 5 seconds static loading
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -84,11 +84,17 @@ const MultiplePeers = () => {
 
   useEffect(() => {
     console.log("111111111==========");
-    if (user && roomCode && !showPreviewScreen && !initilizedOnce) {
+    if (user && roomCode && !showStaticLoadingScreen && !initilizedOnce) {
       console.log("222222222??????==========");
       initRoomSession();
     }
-  }, [user, roomCode, showPreviewScreen, initilizedOnce, initRoomSession]);
+  }, [
+    user,
+    roomCode,
+    showStaticLoadingScreen,
+    initilizedOnce,
+    initRoomSession,
+  ]);
 
   useEffect(() => {
     if (peerStatus) {
@@ -120,11 +126,11 @@ const MultiplePeers = () => {
     return <div className="text-white">Auth Required</div>;
   }
 
-  if (showPreviewScreen) {
+  if (showStaticLoadingScreen) {
     return (
-      <PreviewScreen
-        onPreviewFinished={() => {
-          setShowPreviewScreen(false);
+      <StaticLoadingScreen
+        onLoadingFinished={() => {
+          setShowStaticLoadingScreen(false);
         }}
       />
     );

@@ -18,7 +18,7 @@ import {
   SessionsGatewayEventCode,
 } from "@/types/common";
 
-import PreviewScreen from "@/components/Session/PreviewScreen";
+import StaticLoadingScreen from "@/components/Session/StaticLoadingScreen";
 import AuthRequired from "@/components/Session/Errors/AuthRequired";
 import RoomNotFound from "@/components/Session/Errors/RoomNotFound";
 import SessionContainer from "@/components/Session/SessionContainer";
@@ -43,7 +43,7 @@ const RoomSessionPage = () => {
   const [roomId, setRoomId] = useState("");
   // const [initilizedOnce, setInitializedOnce] = useState(false);
   const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
-  const [showPreviewScreen, setShowPreviewScreen] = useState(true); //This gonna always take 5 seconds static
+  const [showStaticLoadingScreen, setShowStaticLoadingScreen] = useState(true); //This gonna always take 5 seconds static loading
   const [showTroubleshootingModal, setShowTroubleshootingModal] =
     useState<boolean>(false);
   const [mediaIssueType, setMediaIssueType] = useState("");
@@ -149,10 +149,10 @@ const RoomSessionPage = () => {
   }, [room]);
 
   useEffect(() => {
-    if (user && room && !showPreviewScreen && !initilizedOnce.current) {
+    if (user && room && !showStaticLoadingScreen && !initilizedOnce.current) {
       initRoomSession();
     }
-  }, [user, room, showPreviewScreen, initRoomSession]);
+  }, [user, room, showStaticLoadingScreen, initRoomSession]);
 
   useEffect(() => {
     if (peerStatus) {
@@ -173,11 +173,11 @@ const RoomSessionPage = () => {
     };
   }, []);
 
-  if (showPreviewScreen) {
+  if (showStaticLoadingScreen) {
     return (
-      <PreviewScreen
-        onPreviewFinished={() => {
-          setShowPreviewScreen(false);
+      <StaticLoadingScreen
+        onLoadingFinished={() => {
+          setShowStaticLoadingScreen(false);
         }}
       />
     );
