@@ -121,19 +121,26 @@ class Peer2Peer {
     console.log("startLocalAudioStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
         audio: true,
+        video: false,
       });
+
+      const [audioTrack] = stream.getAudioTracks();
+      if (!audioTrack) {
+        return console.error(
+          "startLocalAudioStream failed because no audio track found"
+        );
+      }
+
       this.localStream = stream;
 
       // this.connectSoundMeter(stream);
 
-      const localUserVideo = this.getVideoElement(
+      const localUserVideo = this.getAudioElement(
         this.settings?.localUserId as string
       );
-      localUserVideo.srcObject = this.localStream;
+      localUserVideo.srcObject = stream;
 
-      const [audioTrack] = stream.getAudioTracks();
       console.log(
         "Start local audio stream successfully using mic: " + audioTrack.label
       );
@@ -148,6 +155,7 @@ class Peer2Peer {
     console.log("upgradeToVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
         video: true,
       });
 
@@ -167,7 +175,12 @@ class Peer2Peer {
         this.settings?.localUserId as string
       );
 
-      localUserVideo.srcObject = null;
+      const localAudioVideo = this.getAudioElement(
+        this.settings?.localUserId as string
+      );
+
+      localAudioVideo.srcObject = null;
+      // localUserVideo.srcObject = null;
       localUserVideo.srcObject = this.localStream;
 
       this.reConnectAllRemotePeers();
@@ -308,6 +321,10 @@ class Peer2Peer {
 
   private getVideoElement = (peerId: string) => {
     return document.getElementById(`video-${peerId}`) as HTMLVideoElement;
+  };
+
+  private getAudioElement = (peerId: string) => {
+    return document.getElementById(`audio-${peerId}`) as HTMLVideoElement;
   };
 
   private handleGetUserMediaError = (error: unknown, type: string) => {
