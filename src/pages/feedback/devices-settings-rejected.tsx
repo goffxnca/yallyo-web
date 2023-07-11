@@ -11,8 +11,8 @@ const DeviceSettingsRejected = () => {
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
         <div className=" text-white text-center">
-          👋 Sorry, You cannot join the room due to a rejection of the input
-          device settings.
+          👋 Sorry, You cannot join the room without settings proper input
+          devices.
         </div>
         <div className="flex justify-center mt-4">
           <Button text="Go Back Home Page" emitClick={handleGoHomeClick} />

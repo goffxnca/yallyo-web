@@ -26,7 +26,7 @@ import RoomInactive from "@/components/Session/Errors/RoomInactive";
 import Modal from "@/components/UIs/Modal";
 import TroubleshootingContent from "@/components/Session/TroubleshootingContent";
 import { CustomError2, PermissionNotAllowed } from "@/types/errors";
-import PreviewMediaDevices from "@/components/Session/PreviewMediaDevices";
+import InputDevicesSettings from "@/components/Session/InputDevicesSettings";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -45,7 +45,8 @@ const RoomSessionPage = () => {
   // const [initilizedOnce, setInitializedOnce] = useState(false);
   const [roomFetchedOnce, setRoomFetchedOnce] = useState(false);
   const [showStaticLoadingScreen, setShowStaticLoadingScreen] = useState(true); //This gonna always take 5 seconds static loading
-  const [showPreviewDevicesModal, setShowPreviewDevicesModal] = useState(true);
+  const [showDevicesSettingsModal, setShowDevicesSettingsModal] =
+    useState(true);
   const [showTroubleshootingModal, setShowTroubleshootingModal] =
     useState<boolean>(false);
   const [mediaIssueType, setMediaIssueType] = useState("");
@@ -156,7 +157,7 @@ const RoomSessionPage = () => {
       room &&
       !initilizedOnce.current &&
       !showStaticLoadingScreen &&
-      !showPreviewDevicesModal
+      !showDevicesSettingsModal
     ) {
       initRoomSession();
     }
@@ -164,7 +165,7 @@ const RoomSessionPage = () => {
     user,
     room,
     showStaticLoadingScreen,
-    showPreviewDevicesModal,
+    showDevicesSettingsModal,
     initRoomSession,
   ]);
 
@@ -219,18 +220,18 @@ const RoomSessionPage = () => {
     return (window.location.href = "/feedback/room-full");
   }
 
-  if (showPreviewDevicesModal) {
+  if (showDevicesSettingsModal) {
     return (
       <Modal
         emitClose={() => {
           window.location.href = "/feedback/devices-settings-rejected";
         }}
       >
-        <PreviewMediaDevices
+        <InputDevicesSettings
           micRequired={true}
-          camRequired={false}
-          onDeviceIsReady={() => {
-            setShowPreviewDevicesModal(false);
+          camRequired={true}
+          onDevicesReady={() => {
+            setShowDevicesSettingsModal(false);
           }}
         />
       </Modal>

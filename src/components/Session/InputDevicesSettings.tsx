@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowPathIcon,
   CheckIcon,
@@ -22,13 +22,13 @@ import { checkMediaAccess } from "@/utils/webrct-utils";
 interface Props {
   micRequired: boolean;
   camRequired: boolean;
-  onDeviceIsReady: Function;
+  onDevicesReady: Function;
 }
 
-const PreviewMediaDevices = ({
+const InputDevicesSettings = ({
   micRequired,
   camRequired,
-  onDeviceIsReady,
+  onDevicesReady,
 }: Props) => {
   console.log("PreviewMediaDevices");
   const { account, status } = useSelector((state: RootState) => state.account);
@@ -51,10 +51,13 @@ const PreviewMediaDevices = ({
 
   let isDevicesReady = false;
   if (camRequired) {
-    isDevicesReady = micAllowedOnce && camIsOn;
+    isDevicesReady = micAllowedOnce && camAllowedOnce;
   } else {
     isDevicesReady = micAllowedOnce;
   }
+
+  const micIsAllowedAndMuted = micAllowedOnce && !micIsOn;
+  const camIsAllowedAndMuted = camAllowedOnce && !camIsOn;
 
   // useEffect(() => {
   //   dispatch(fetchShortProfileByIdAsync(userId));
@@ -63,10 +66,10 @@ const PreviewMediaDevices = ({
   const onButtonSubmitClick = () => {
     if (isDevicesReady) {
       //go in the room
-      onDeviceIsReady();
+      onDevicesReady();
     } else {
       if (camRequired) {
-        requestCameraPermission();
+        requestMicrophoneAndCameraPermissions();
       } else {
         requestMicPermission();
       }
@@ -94,6 +97,17 @@ const PreviewMediaDevices = ({
   //   }
   // }, []);
 
+  const localStream = useRef<MediaStream | null>(null);
+  useEffect(() => {
+    return () => {
+      alert("clean settings modal...");
+      if (localStream && localStream.current) {
+        localStream.current.getTracks().forEach((track) => track.stop());
+        localStream.current = null;
+      }
+    };
+  }, []);
+
   const requestMicPermission = async () => {
     if (micIsOn) {
       return setMicIsOn(false);
@@ -103,6 +117,7 @@ const PreviewMediaDevices = ({
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      localStream.current = stream;
 
       const [audioTrack] = stream.getAudioTracks();
       if (audioTrack) {
@@ -122,11 +137,16 @@ const PreviewMediaDevices = ({
   };
 
   const requestCameraPermission = async () => {
+    if (camIsOn) {
+      return setCamIsOn(false);
+    }
+
     console.log("requestCameraPermission");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
+      localStream.current = stream;
 
       const [videoTrack] = stream.getVideoTracks();
 
@@ -145,6 +165,48 @@ const PreviewMediaDevices = ({
     }
   };
 
+  const requestMicrophoneAndCameraPermissions = async () => {
+    console.log("requestMicrophoneAndCameraPermissions");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      localStream.current = stream;
+
+      const [audioTrack] = stream.getAudioTracks();
+      if (audioTrack) {
+        const audioPreview = getAudioElement();
+        audioPreview.srcObject = stream;
+
+        setMicAllowedOnce(true);
+        setMicIsOn(true);
+        setMicName(audioTrack.label);
+        console.log("requestMicrophoneAndCameraPermissions success for audio");
+      } else {
+        console.error(
+          "requestMicrophoneAndCameraPermissions failed: No audio track found"
+        );
+      }
+
+      const [videoTrack] = stream.getVideoTracks();
+      if (videoTrack) {
+        const videoPreview = getVideoElement();
+        videoPreview.srcObject = stream;
+        setCamAllowedOnce(true);
+        setCamIsOn(true);
+        setCamName(videoTrack.label);
+        console.log("requestMicrophoneAndCameraPermissions success for video");
+      } else {
+        console.error(
+          "requestMicrophoneAndCameraPermissions failed: No video track found"
+        );
+      }
+    } catch (error: unknown) {
+      console.error("requestMicrophoneAndCameraPermissions failed");
+    }
+  };
+
   const boxSize = 200;
 
   const getVideoElement = () => {
@@ -157,7 +219,7 @@ const PreviewMediaDevices = ({
 
   return (
     <div className="p-5 lg:px-10 w-[500px] space-y-6 text-center">
-      <h2 className="text-accent2 text-3xl text-center">
+      <h2 className="text-accent2 text-2xl text-center">
         {camRequired ? "Microphone & Camera " : "Microphone"} Settings
       </h2>
       {/* Medias Preview */}
@@ -238,13 +300,7 @@ const PreviewMediaDevices = ({
                   // onToggleCam(controls.camOn);
                   requestCameraPermission();
                 }}
-                bgClasses={
-                  camRequired
-                    ? camIsOn
-                      ? "bg-green-400"
-                      : "bg-red-400"
-                    : "bg-gray-400"
-                }
+                bgClasses={`${camAllowedOnce ? "bg-green-400" : "bg-red-400"}`}
               />
             )}
           </div>
@@ -256,13 +312,13 @@ const PreviewMediaDevices = ({
       {!isDevicesReady && (
         <div className="text-white space-y-10">
           <h3 className="text-lg font-bold">
-            {camRequired ? "Camera and Microphone are" : "Microphone is"}{" "}
-            required for this room
+            {camRequired ? "Microphone and Camera are" : "Microphone is"}{" "}
+            required for joining this room
           </h3>
           <p>
-            In order for others to {camRequired ? "see and hear" : "hear"} you,
+            In order for others to {camRequired ? "hear and see" : "hear"} you,
             your browser will request{" "}
-            {camRequired ? "camera and microphone" : "microphone"} access.
+            {camRequired ? "microphone and camera" : "microphone"} access.
           </p>
         </div>
       )}
@@ -270,14 +326,40 @@ const PreviewMediaDevices = ({
       {isDevicesReady && (
         <div className="text-white">
           <h3 className="text-lg font-bold mb-2 text-green-500">
-            Your Microphone is now ready
+            {isDevicesReady &&
+              camRequired &&
+              " Your Microphone and Camera are now ready"}
+
+            {isDevicesReady && !camRequired && " Your Microphone is now ready"}
           </h3>
           <div className="text-sm">
             <p>Microphone: {micName || "Please turn on"}</p>
             {camRequired && <p>Camera: {camName || "Please turn on"}</p>}
-            {micAllowedOnce && !micIsOn && (
-              <p className="text-gray-500 text-xs italic">
-                **You are going to join the room with muted microphone.
+            {isDevicesReady && micIsOn && camIsOn && (
+              <p className="text-gray-500 text-xs italic mt-4">
+                **You are going to join the room with active microphone and
+                camera.
+              </p>
+            )}
+
+            {isDevicesReady && micIsOn && !camIsOn && (
+              <p className="text-gray-500 text-xs italic mt-4">
+                **You are going to join the room with active microphone and
+                camera turned off.
+              </p>
+            )}
+
+            {isDevicesReady && !micIsOn && camIsOn && (
+              <p className="text-gray-500 text-xs italic mt-4">
+                **You are going to join the room with muted microphone and
+                camera turned on.
+              </p>
+            )}
+
+            {isDevicesReady && !micIsOn && !camIsOn && (
+              <p className="text-gray-500 text-xs italic mt-4">
+                **You are going to join the room with microphone and camera
+                turned off.
               </p>
             )}
           </div>
@@ -318,4 +400,4 @@ const PreviewMediaDevices = ({
   );
 };
 
-export default PreviewMediaDevices;
+export default InputDevicesSettings;
