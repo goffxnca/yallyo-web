@@ -104,64 +104,69 @@ const InputDevicesSettings = ({
       if (localStream && localStream.current) {
         localStream.current.getTracks().forEach((track) => track.stop());
         localStream.current = null;
+
+        const videoPreview = getVideoElement();
+        if (videoPreview) {
+          videoPreview.srcObject = null;
+        }
       }
     };
   }, []);
 
   const requestMicPermission = async () => {
-    if (micIsOn) {
-      return setMicIsOn(false);
-    }
-    console.log("requestMicPermission");
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-      localStream.current = stream;
+    if (micAllowedOnce) {
+      toggleMic();
+    } else {
+      console.log("requestMicPermission");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        localStream.current = stream;
 
-      const [audioTrack] = stream.getAudioTracks();
-      if (audioTrack) {
-        const audioPreview = getAudioElement();
-        audioPreview.srcObject = stream;
+        const [audioTrack] = stream.getAudioTracks();
+        if (audioTrack) {
+          const videoPreview = getVideoElement();
+          videoPreview.srcObject = stream;
 
-        setMicAllowedOnce(true);
-        setMicIsOn(true);
-        setMicName(audioTrack.label);
-        console.log("requestMicPermission success");
-      } else {
-        console.error("requestMicPermission failed: No audio track found");
+          setMicAllowedOnce(true);
+          setMicIsOn(true);
+          setMicName(audioTrack.label);
+          console.log("requestMicPermission success");
+        } else {
+          console.error("requestMicPermission failed: No audio track found");
+        }
+      } catch (error: unknown) {
+        console.error("requestMicPermission failed");
       }
-    } catch (error: unknown) {
-      console.error("requestMicPermission failed");
     }
   };
 
   const requestCameraPermission = async () => {
-    if (camIsOn) {
-      return setCamIsOn(false);
-    }
+    if (camAllowedOnce) {
+      toggleCam();
+    } else {
+      console.log("requestCameraPermission");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        localStream.current = stream;
 
-    console.log("requestCameraPermission");
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
-      localStream.current = stream;
-
-      const [videoTrack] = stream.getVideoTracks();
-
-      if (videoTrack) {
-        const videoPreview = getVideoElement();
-        videoPreview.srcObject = stream;
-        setCamAllowedOnce(true);
-        setCamIsOn(true);
-        setCamName(videoTrack.label);
-        console.log("requestCameraPermission success");
-      } else {
-        console.error("requestCameraPermission failed: No video track found");
+        const [videoTrack] = stream.getVideoTracks();
+        if (videoTrack) {
+          const videoPreview = getVideoElement();
+          videoPreview.srcObject = stream;
+          setCamAllowedOnce(true);
+          setCamIsOn(true);
+          setCamName(videoTrack.label);
+          console.log("requestCameraPermission success");
+        } else {
+          console.error("requestCameraPermission failed: No video track found");
+        }
+      } catch (error: unknown) {
+        console.error("requestCameraPermission failed");
       }
-    } catch (error: unknown) {
-      console.error("requestCameraPermission failed");
     }
   };
 
@@ -176,7 +181,7 @@ const InputDevicesSettings = ({
 
       const [audioTrack] = stream.getAudioTracks();
       if (audioTrack) {
-        const audioPreview = getAudioElement();
+        const audioPreview = getVideoElement();
         audioPreview.srcObject = stream;
 
         setMicAllowedOnce(true);
@@ -207,14 +212,46 @@ const InputDevicesSettings = ({
     }
   };
 
+  const toggleMic = () => {
+    if (localStream && localStream.current) {
+      const [audioTrack] = localStream.current.getAudioTracks();
+      if (micIsOn) {
+        if (audioTrack) {
+          setMicIsOn(false);
+          console.log("toggleMic off success");
+        } else {
+          console.error("toggleMic failed: No audio track found");
+        }
+      } else {
+        setMicIsOn(true);
+        console.log("toggleMic on success");
+      }
+    }
+  };
+
+  const toggleCam = () => {
+    if (localStream && localStream.current) {
+      const [videoTrack] = localStream.current.getVideoTracks();
+      if (videoTrack) {
+        if (camIsOn) {
+          videoTrack.enabled = false;
+          setCamIsOn(false);
+          console.log("toggleCam off success");
+        } else {
+          videoTrack.enabled = true;
+          setCamIsOn(true);
+          console.log("toggleCam on success");
+        }
+      } else {
+        console.error("toggleCam failed: No audio track found");
+      }
+    }
+  };
+
   const boxSize = 200;
 
   const getVideoElement = () => {
     return document.getElementById(`video-preview`) as HTMLVideoElement;
-  };
-
-  const getAudioElement = () => {
-    return document.getElementById(`audio-preview`) as HTMLVideoElement;
   };
 
   return (
@@ -223,7 +260,7 @@ const InputDevicesSettings = ({
         {camRequired ? "Microphone & Camera " : "Microphone"} Settings
       </h2>
       {/* Medias Preview */}
-      <div className="relative  bg-black rounded-lg ">
+      <div className="relative bg-black rounded-lg h-[200px]">
         <div className="bg-red-gray-300 flex justify-center">
           <div className="relative h-full w-full">
             <div className="rounded-lg overflow-hidden z-20">
@@ -243,17 +280,17 @@ const InputDevicesSettings = ({
                   height: boxSize,
                 }}
                 // className="rounded-lg"
-                // muted={muted}
+                muted={true}
                 className="mx-auto"
               />
             </div>
 
-            <audio
+            {/* <audio
               className="hidden"
               id={`audio-preview`}
               controls={true}
               autoPlay={true}
-            ></audio>
+            ></audio> */}
 
             {/* {displayName && (
               <JoinerItemCoolFooter
