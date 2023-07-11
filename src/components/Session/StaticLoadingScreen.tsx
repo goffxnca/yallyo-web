@@ -13,7 +13,7 @@ const StaticLoadingScreen = ({ onLoadingFinished }: Props) => {
     setTimeout(() => {
       setShowLoading(false);
       onLoadingFinished();
-    }, 5000);
+    }, 1000);
   }, []);
 
   return (

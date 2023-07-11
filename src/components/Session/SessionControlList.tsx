@@ -57,7 +57,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
         />
         <SessionControlItem
           Icon={<PhoneIcon />}
-          bgColor="bg-red-500"
+          bgClasses="bg-red-500"
           tooltip="Hang Up"
           onClick={() => {
             window.location.href = "/feedback/session-leave";

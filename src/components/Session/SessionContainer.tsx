@@ -24,7 +24,7 @@ interface Props {
 const GAP_PX = 8;
 
 const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
-  // console.log("SessionContainer");
+  console.log("SessionContainer");
 
   const { user } = useSelector((state: RootState) => state.auth);
   const { peers, localControls } = useSelector(

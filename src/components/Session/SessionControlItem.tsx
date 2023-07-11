@@ -4,7 +4,7 @@ interface Props {
   Icon: React.ReactElement;
   disabled?: boolean;
   pendingNum?: number;
-  bgColor?: string;
+  bgClasses?: string;
   tooltip?: string;
   onClick?: Function;
 }
@@ -14,7 +14,7 @@ const SessionControlItem = React.memo(
     Icon,
     disabled = false,
     pendingNum = 0,
-    bgColor,
+    bgClasses,
     tooltip,
     onClick,
   }: Props) => {
@@ -26,7 +26,7 @@ const SessionControlItem = React.memo(
 
       <div
         className={`relative p-4 rounded-md cursor-pointer hover:bg-gray-400 group ${
-          bgColor && bgColor
+          bgClasses && bgClasses
         }`}
         onClick={() => {
           onClick && onClick();
