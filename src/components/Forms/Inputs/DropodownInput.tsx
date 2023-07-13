@@ -20,7 +20,7 @@ const DropdownInput = ({ id, label, items, onChange }: Props) => {
   ];
 
   return (
-    <BaseInput label={label}>
+    <BaseInput id={id} label={label}>
       <div className="mt-2">
         <Listbox value={selected} onChange={setSelected}>
           {({ open }) => (
