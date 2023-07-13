@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
-
 import SessionControlItem from "./SessionControlItem";
 import { updateDeviceSettings } from "@/store/sessionSlice";
 
@@ -36,7 +35,8 @@ const InputDevicesSettings = ({
   const [camId, setCamId] = useState("");
   const [camName, setCamName] = useState("");
 
-  const loading = false;
+  const [loading, setLoading] = useState(false);
+
   const boxSize = 200;
 
   let isDevicesReady = false;
@@ -48,6 +48,7 @@ const InputDevicesSettings = ({
 
   const onButtonSubmitClick = () => {
     if (isDevicesReady) {
+      setLoading(true);
       dispatch(
         updateDeviceSettings({
           micOn: micIsOn,
@@ -58,6 +59,7 @@ const InputDevicesSettings = ({
       );
       setTimeout(() => {
         onDevicesReady();
+        setLoading(false);
       }, 5000);
     } else {
       if (camRequired) {
@@ -87,6 +89,7 @@ const InputDevicesSettings = ({
       toggleMic();
     } else {
       console.log("requestMicPermission");
+      setLoading(true);
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
@@ -116,6 +119,7 @@ const InputDevicesSettings = ({
         console.error("requestMicPermission failed");
         window.location.href = "/feedback/devices-settings-rejected";
       }
+      setLoading(false);
     }
   };
 
@@ -124,6 +128,7 @@ const InputDevicesSettings = ({
       toggleCam();
     } else {
       console.log("requestCameraPermission");
+      setLoading(true);
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
@@ -153,11 +158,13 @@ const InputDevicesSettings = ({
         console.error("requestCameraPermission failed");
         window.location.href = "/feedback/devices-settings-rejected";
       }
+      setLoading(false);
     }
   };
 
   const requestMicrophoneAndCameraPermissions = async () => {
     console.log("requestMicrophoneAndCameraPermissions");
+    setLoading(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -199,6 +206,7 @@ const InputDevicesSettings = ({
       console.error("requestMicrophoneAndCameraPermissions failed");
       window.location.href = "/feedback/devices-settings-rejected";
     }
+    setLoading(false);
   };
 
   const toggleMic = () => {
@@ -346,32 +354,53 @@ const InputDevicesSettings = ({
           <div className="text-sm">
             <p>Microphone: {micName || "Please turn on"}</p>
             {camRequired && <p>Camera: {camName || "Please turn on"}</p>}
-            {isDevicesReady && micIsOn && camIsOn && (
-              <p className="text-gray-500 text-xs italic mt-4">
-                **You are going to join the room with active microphone and
-                camera.
-              </p>
+
+            {isDevicesReady && camRequired && (
+              <div>
+                {micIsOn && camIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone and camera
+                    on.
+                  </p>
+                )}
+
+                {micIsOn && !camIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone on and
+                    camera off.
+                  </p>
+                )}
+
+                {!micIsOn && camIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone off and
+                    camera on.
+                  </p>
+                )}
+
+                {!micIsOn && !camIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone and camera
+                    off.
+                  </p>
+                )}
+              </div>
             )}
 
-            {isDevicesReady && micIsOn && !camIsOn && (
-              <p className="text-gray-500 text-xs italic mt-4">
-                **You are going to join the room with active microphone and
-                camera turned off.
-              </p>
-            )}
+            {isDevicesReady && !camRequired && (
+              <div>
+                {micIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone on.
+                  </p>
+                )}
 
-            {isDevicesReady && !micIsOn && camIsOn && (
-              <p className="text-gray-500 text-xs italic mt-4">
-                **You are going to join the room with muted microphone and
-                camera turned on.
-              </p>
-            )}
-
-            {isDevicesReady && !micIsOn && !camIsOn && (
-              <p className="text-gray-500 text-xs italic mt-4">
-                **You are going to join the room with microphone and camera
-                turned off.
-              </p>
+                {!micIsOn && (
+                  <p className="text-gray-500 text-xs italic mt-4">
+                    **You are going to join the room with microphone off.
+                  </p>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -390,10 +419,8 @@ const InputDevicesSettings = ({
 
           <span className="text-md">
             {isDevicesReady
-              ? "Enter room"
-              : loading
-              ? "Requesting"
-              : "Request Access"}
+              ? `Enter${loading ? "ing" : ""} room`
+              : `Request${loading ? "ing" : ""} Access`}
           </span>
         </button>
       </div>
