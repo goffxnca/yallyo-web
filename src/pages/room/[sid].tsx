@@ -69,6 +69,7 @@ const RoomSessionPage = () => {
         await p2p.init({
           localUserId: user?.uid as string,
           camOnOnce: false,
+          deviceSettings: inputDeviceSettings,
           onStatusChange: setPeerStatus,
           onLocalMediaStreamed: () => {
             sessionsSocket = subscribeSessionsUpdates(

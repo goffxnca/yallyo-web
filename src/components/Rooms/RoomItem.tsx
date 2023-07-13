@@ -83,7 +83,7 @@ const RoomItem = memo((room: Props) => {
           />
         ))} */}
       </ul>
-      <div className="flex items-center text-white">
+      <div className="relative flex items-center text-white">
         {/* <div>bottom left</div> */}
         {isFullRoom ? (
           <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
@@ -104,13 +104,13 @@ const RoomItem = memo((room: Props) => {
           //   </div>
           // </Link>
         )}
-        <div className="text-gray-500">
-          <div className="flex">
+        <div className="absolute right-0 bottom-0 text-gray-500">
+          <div className="flex space-x-1">
             {room && room.features && room.features.audio && (
-              <MicrophoneIcon className="w-4 h-4" />
+              <MicrophoneIcon className="w-5 h-5" />
             )}
             {room && room.features && room.features.video && (
-              <VideoCameraIcon className="w-4 h-4" />
+              <VideoCameraIcon className="w-5 h-5" />
             )}
           </div>
         </div>

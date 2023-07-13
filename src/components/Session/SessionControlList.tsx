@@ -19,50 +19,62 @@ interface Props {
 }
 
 const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
-  const { messages } = useSelector((state: RootState) => state.session);
+  const { messages, room } = useSelector((state: RootState) => state.session);
+
   const dispatch: AppDispatch = useDispatch();
 
   return (
     <div className="flex justify-center absolute top-20 left-0 right-0 z-20">
       <div className="flex items-center justify-center bg-secondary text-white rounded-md ">
         {/* <div className="text-white">{JSON.stringify(controls)}</div> */}
-        <SessionControlItem
-          Icon={<MicrophoneIcon />}
-          disabled={!controls.micOn}
-          tooltip={controls.micOn ? "Mute" : "Unmute"}
-          onClick={() => {
-            // dispatch(toggleLocalCam());
-            onToggleMic(controls.micOn);
-          }}
-        />
-        <SessionControlItem
-          Icon={<VideoCameraIcon />}
-          disabled={!controls.camOn}
-          tooltip={controls.camOn ? "Cam Off" : "Cam On"}
-          // tooltip={"Camera feature is coming soon"}
-          onClick={() => {
-            // dispatch(toggleLocalCam());
-            onToggleCam(controls.camOn);
-          }}
-        />
 
-        <SessionControlItem
-          Icon={<ChatBubbleBottomCenterTextIcon />}
-          // cross={!controls.chatOn}
-          // tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
-          pendingNum={messages.filter((message) => !message.read).length}
-          onClick={() => {
-            dispatch(toggleLocalChat());
-          }}
-        />
-        <SessionControlItem
-          Icon={<PhoneIcon />}
-          bgClasses="bg-red-500"
-          tooltip="Hang Up"
-          onClick={() => {
-            window.location.href = "/feedback/session-leave";
-          }}
-        />
+        {room && room.features && (
+          <>
+            {room.features.audio && (
+              <SessionControlItem
+                Icon={<MicrophoneIcon />}
+                disabled={!controls.micOn}
+                tooltip={controls.micOn ? "Mute" : "Unmute"}
+                onClick={() => {
+                  // dispatch(toggleLocalCam());
+                  onToggleMic(controls.micOn);
+                }}
+              />
+            )}
+
+            {room.features.video && (
+              <SessionControlItem
+                Icon={<VideoCameraIcon />}
+                disabled={!controls.camOn}
+                tooltip={controls.camOn ? "Cam Off" : "Cam On"}
+                // tooltip={"Camera feature is coming soon"}
+                onClick={() => {
+                  // dispatch(toggleLocalCam());
+                  onToggleCam(controls.camOn);
+                }}
+              />
+            )}
+
+            <SessionControlItem
+              Icon={<ComputerDesktopIcon />}
+              disabled={true}
+              tooltip={"Share screen is not supported yet"}
+              onClick={() => {}}
+            />
+
+            {room.features.chat && (
+              <SessionControlItem
+                Icon={<ChatBubbleBottomCenterTextIcon />}
+                // cross={!controls.chatOn}
+                // tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
+                pendingNum={messages.filter((message) => !message.read).length}
+                onClick={() => {
+                  dispatch(toggleLocalChat());
+                }}
+              />
+            )}
+          </>
+        )}
 
         {/* <div className="p-2 mx-1 rounded-md relative cursor-pointer">
           <MicrophoneIcon className="w-6 h-6" />
@@ -86,6 +98,15 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
           <PhoneIcon className="w-6 h-6 text-white" />
         </div> */}
       </div>
+
+      <SessionControlItem
+        Icon={<PhoneIcon />}
+        bgClasses="bg-red-500 ml-4 text-white"
+        tooltip="Hang Up"
+        onClick={() => {
+          window.location.href = "/feedback/session-leave";
+        }}
+      />
     </div>
   );
 };

@@ -24,7 +24,7 @@ interface Props {
 const GAP_PX = 8;
 
 const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
-  console.log("SessionContainer");
+  // console.log("SessionContainer");
 
   const { user } = useSelector((state: RootState) => state.auth);
   const { peers, localControls } = useSelector(
@@ -182,15 +182,17 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                     p2p.toggleLocalVideoStream();
                     sessionsSocket.emit("clientMessage", data);
                   } else {
-                    try {
-                      await p2p.upgradeToVideoStream();
-                      sessionsSocket.emit("clientMessage", data);
-                    } catch (error: unknown) {
-                      console.error(
-                        "Peer2Peer.upgradeToVideoStream failed with error: " +
-                          error
-                      );
-                    }
+                    p2p.upgradeToAudioAndVideoStream();
+                    sessionsSocket.emit("clientMessage", data);
+                    // try {
+                    //   await p2p.upgradeToVideoStream();
+                    //   sessionsSocket.emit("clientMessage", data);
+                    // } catch (error: unknown) {
+                    //   console.error(
+                    //     "Peer2Peer.upgradeToVideoStream failed with error: " +
+                    //       error
+                    //   );
+                    // }
                   }
 
                   // p2p.upgradeLocalStream().then(() => {

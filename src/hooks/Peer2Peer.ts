@@ -1,10 +1,12 @@
 import { ISoundMeterInterface, SoundMeter } from "@/libs/soundmeter";
 import { ISocketIOMessage, SessionsGatewayEventCode } from "@/types/common";
 import { PermissionNotAllowed } from "@/types/errors";
+import { InputDevicesSettings } from "@/types/frontend";
 import { EventEmitter } from "events";
 
 interface Peer2PeerSettings {
   localUserId: string;
+  deviceSettings: InputDevicesSettings;
   camOnOnce: boolean;
   onStatusChange: Function;
   onLocalMediaStreamed: Function;
@@ -42,7 +44,11 @@ class Peer2Peer {
   async init(settings: Peer2PeerSettings) {
     this.settings = settings;
 
-    await this.startLocalAudioStream();
+    if (this.settings.deviceSettings.camId) {
+      await this.startLocalAudioAndVideoStream();
+    } else {
+      await this.startLocalAudioStream();
+    }
 
     const { localUserId } = settings;
 
@@ -132,7 +138,10 @@ class Peer2Peer {
         );
       }
 
-      this.localStream = stream;
+      if (!this.settings?.deviceSettings.micOn) {
+        // alert("immediately turned of mic1");
+        audioTrack.enabled = false;
+      }
 
       // this.connectSoundMeter(stream);
 
@@ -140,6 +149,7 @@ class Peer2Peer {
         this.settings?.localUserId as string
       );
       localUserVideo.srcObject = stream;
+      this.localStream = stream;
 
       console.log(
         "Start local audio stream successfully using mic: " + audioTrack.label
@@ -151,75 +161,146 @@ class Peer2Peer {
     }
   };
 
-  upgradeToVideoStream = async () => {
-    console.log("upgradeToVideoStream");
+  startLocalAudioAndVideoStream = async () => {
+    console.log("startLocalAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: true,
       });
 
-      const [videoTrack] = stream.getVideoTracks();
-      if (this.localStream) {
-        this.localStream.addTrack(videoTrack);
+      const [audioTrack] = stream.getAudioTracks();
+      if (!audioTrack) {
+        return console.error(
+          "startLocalAudioAndVideoStream failed because no audio track found"
+        );
+      }
+      if (!this.settings?.deviceSettings.micOn) {
+        // alert("immediately turned off mic2");
+        audioTrack.enabled = false;
       }
 
-      // const audioTracks = stream.getAudioTracks();
-      // this.localStream.addTrack(audioTracks[0]);
+      const [videoTrack] = stream.getVideoTracks();
+      if (!videoTrack) {
+        return console.error(
+          "startLocalAudioAndVideoStream failed because no video track found"
+        );
+      }
+      if (!this.settings?.deviceSettings.camOn) {
+        alert("immediately turned off cam2");
+        videoTrack.enabled = false;
+      }
 
-      //========Sound Meter Connection
-      // this.connectSoundMeter(this.localStream);
-      //========
-
+      // this.connectSoundMeter(stream);
       const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
-
-      const localAudioVideo = this.getAudioElement(
-        this.settings?.localUserId as string
-      );
-
-      localAudioVideo.srcObject = null;
-      // localUserVideo.srcObject = null;
-      localUserVideo.srcObject = this.localStream;
-
-      this.reConnectAllRemotePeers();
+      localUserVideo.srcObject = stream;
+      this.localStream = stream;
 
       if (this.settings) {
         this.settings.camOnOnce = true;
       }
 
       console.log(
-        "Upgrade local to video stream successfully using cam: " +
-          videoTrack.label
+        `startLocalAudioAndVideoStream successfully using mic: ${audioTrack.label} cam: ${videoTrack.label}`
       );
+
+      this.settings?.onLocalMediaStreamed();
     } catch (error: unknown) {
-      this.handleGetUserMediaError(error, "cam");
+      console.error("startLocalAudioAndVideoStream failed with error:" + error);
+      // this.handleGetUserMediaError(error, "mic");
     }
   };
 
-  toggleLocalVideoStream = () => {
-    console.log("toggleLocalVideoStream");
-    if (this.localStream) {
-      const [track] = this.localStream.getVideoTracks();
-      if (track) {
-        const fromStatus = track.enabled ? "on" : "off";
-        const toStatus = !track.enabled ? "on" : "off";
+  upgradeToAudioAndVideoStream = async () => {
+    console.log("upgradeToAudioAndVideoStream");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
 
-        track.enabled = !track.enabled;
-        // track.stop();
-        console.log(
-          `Toggle video stream success from ${fromStatus} to ${toStatus}`
-        );
-      } else {
-        console.error(
-          "Toggle video stream failed: local video track not found"
+      const [audioTrack] = stream.getAudioTracks();
+      if (!audioTrack) {
+        return console.error(
+          "upgradeToAudioAndVideoStream failed because no audio track found"
         );
       }
-    } else {
-      console.error("Toggle video stream failed: local stream not found");
+
+      const [videoTrack] = stream.getVideoTracks();
+      if (!videoTrack) {
+        return console.error(
+          "upgradeToAudioAndVideoStream failed because no video track found"
+        );
+      }
+
+      // this.connectSoundMeter(stream);
+      const localUserVideo = this.getVideoElement(
+        this.settings?.localUserId as string
+      );
+      localUserVideo.srcObject = stream;
+      this.localStream = stream;
+
+      if (this.settings) {
+        this.settings.camOnOnce = true;
+      }
+
+      console.log(
+        `upgradeToAudioAndVideoStream successfully using mic: ${audioTrack.label} cam: ${videoTrack.label}`
+      );
+    } catch (error: unknown) {
+      console.error("upgradeToAudioAndVideoStream failed with error:" + error);
+      // this.handleGetUserMediaError(error, "mic");
     }
   };
+
+  // upgradeToLocalVideoStream = async () => {
+  //   console.log("upgradeToVideoStream");
+  //   try {
+  //     const stream = await navigator.mediaDevices.getUserMedia({
+  //       audio: true,
+  //       video: true,
+  //     });
+
+  //     const [videoTrack] = stream.getVideoTracks();
+  //     if (this.localStream) {
+  //       this.localStream.addTrack(videoTrack);
+  //     }
+
+  //     // const audioTracks = stream.getAudioTracks();
+  //     // this.localStream.addTrack(audioTracks[0]);
+
+  //     //========Sound Meter Connection
+  //     // this.connectSoundMeter(this.localStream);
+  //     //========
+
+  //     const localUserVideo = this.getVideoElement(
+  //       this.settings?.localUserId as string
+  //     );
+
+  //     const localAudioVideo = this.getAudioElement(
+  //       this.settings?.localUserId as string
+  //     );
+
+  //     localAudioVideo.srcObject = null;
+  //     // localUserVideo.srcObject = null;
+  //     localUserVideo.srcObject = this.localStream;
+
+  //     this.reConnectAllRemotePeers();
+
+  //     if (this.settings) {
+  //       this.settings.camOnOnce = true;
+  //     }
+
+  //     console.log(
+  //       "Upgrade local to video stream successfully using cam: " +
+  //         videoTrack.label
+  //     );
+  //   } catch (error: unknown) {
+  //     this.handleGetUserMediaError(error, "cam");
+  //   }
+  // };
 
   toggleLocalAudioStream = () => {
     console.log("toggleLocalAudioStream");
@@ -247,15 +328,38 @@ class Peer2Peer {
         //TODO: need to re-test whether it use property enabled or muted
         // track.stop();
         console.log(
-          `Toggle audio stream success from ${fromStatus} to ${toStatus}`
+          `Toggle local audio stream success from ${fromStatus} to ${toStatus}`
         );
       } else {
         console.error(
-          "Toggle audio stream failed: local audio track not found"
+          "Toggle local audio stream failed: local audio track not found"
         );
       }
     } else {
       console.error("Toggle audio stream failed: local stream not found");
+    }
+  };
+
+  toggleLocalVideoStream = () => {
+    console.log("toggleLocalVideoStream");
+    if (this.localStream) {
+      const [track] = this.localStream.getVideoTracks();
+      if (track) {
+        const fromStatus = track.enabled ? "on" : "off";
+        const toStatus = !track.enabled ? "on" : "off";
+
+        track.enabled = !track.enabled;
+        // track.stop();
+        console.log(
+          `Toggle local video stream success from ${fromStatus} to ${toStatus}`
+        );
+      } else {
+        console.error(
+          "Toggle local video stream failed: local video track not found"
+        );
+      }
+    } else {
+      console.error("Toggle local video stream failed: local stream not found");
     }
   };
 

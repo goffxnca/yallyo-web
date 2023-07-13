@@ -20,7 +20,7 @@ const InputDevicesSettings = ({
   camRequired,
   onDevicesReady,
 }: Props) => {
-  console.log("InputDevicesSettings");
+  // console.log("InputDevicesSettings");
   const dispatch: AppDispatch = useDispatch();
   const localStream = useRef<MediaStream | null>(null);
 
