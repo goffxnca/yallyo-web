@@ -34,6 +34,12 @@ export interface IFollow {
 
 export type TMinimalUser = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
 
+export interface IRoomFeatures {
+  chat: boolean;
+  audio: boolean;
+  video: boolean;
+}
+
 export interface IRoom extends IDbDocument {
   //sid is for short friendly id
   sid: string;
@@ -44,6 +50,7 @@ export interface IRoom extends IDbDocument {
   joiners: TMinimalUser[];
   size: number;
   order: string;
+  features: IRoomFeatures;
 }
 
 export interface IRoomSocketUpdate extends IRoom {

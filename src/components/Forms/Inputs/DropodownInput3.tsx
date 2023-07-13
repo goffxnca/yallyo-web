@@ -14,7 +14,7 @@ interface Props {
 const DropdownInput3 = React.forwardRef<HTMLSelectElement, Props>(
   ({ id, label, items, defaultVal, error, onChange }, ref) => {
     return (
-      <BaseInput label={label} error={error}>
+      <BaseInput id={id} label={label} error={error}>
         <select
           id={id}
           name={id}

@@ -5,7 +5,11 @@ import {
   IRoom,
   IRoomPeer,
 } from "@/types/common";
-import { IAsyncState, LocalControls } from "@/types/frontend";
+import {
+  IAsyncState,
+  InputDevicesSettings,
+  LocalControls,
+} from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as _ from "lodash";
@@ -15,6 +19,7 @@ interface SessionState extends IAsyncState {
   room?: IRoom;
   peers: IRoomPeer[];
   localControls: LocalControls;
+  inputDeviceSettings: InputDevicesSettings;
   messages: ISessionEventMessage[];
 }
 
@@ -24,6 +29,12 @@ const initialState: SessionState = {
   peers: [],
   localControls: {
     chatOn: false,
+  },
+  inputDeviceSettings: {
+    micOn: false,
+    camOn: false,
+    micId: "",
+    camId: "",
   },
   messages: [],
 };
@@ -102,6 +113,12 @@ const sessionSlice = createSlice({
         read: true,
       }));
     },
+    updateDeviceSettings(state, action: PayloadAction<InputDevicesSettings>) {
+      state.inputDeviceSettings = {
+        ...state.inputDeviceSettings,
+        ...action.payload,
+      };
+    },
     toggleMic(state, action: PayloadAction<any>) {
       const { socketId, status } = action.payload;
       updateMediaControls(state, socketId, { micOn: status });
@@ -110,7 +127,6 @@ const sessionSlice = createSlice({
       const { socketId, status } = action.payload;
       updateMediaControls(state, socketId, { camOn: status });
     },
-
     addPeer(state, action: PayloadAction<IRoomPeer>) {
       // state.peers = [...state.peers, { ...action.payload, status: "joining" }];
       const existingPeer = state.peers.find(
@@ -272,6 +288,7 @@ const updateSpeakingControls = (
 
 export const {
   toggleLocalChat,
+  updateDeviceSettings,
   toggleMic,
   toggleCam,
   addPeer,

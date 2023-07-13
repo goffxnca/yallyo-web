@@ -1,23 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowPathIcon,
-  CheckIcon,
   MicrophoneIcon,
-  MinusIcon,
-  PlusIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import {
-  fetchShortProfileByIdAsync,
-  followAccountAsync,
-  unfollowAccountAsync,
-} from "@/store/accountSlice";
-import DarkOverlay from "../Layouts/Overlay";
-import Notification from "../UIs/Notification";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+
 import SessionControlItem from "./SessionControlItem";
-import { checkMediaAccess } from "@/utils/webrct-utils";
+import { updateDeviceSettings } from "@/store/sessionSlice";
 
 interface Props {
   micRequired: boolean;
@@ -30,24 +21,23 @@ const InputDevicesSettings = ({
   camRequired,
   onDevicesReady,
 }: Props) => {
-  console.log("PreviewMediaDevices");
-  const { account, status } = useSelector((state: RootState) => state.account);
-  const { user } = useSelector((state: RootState) => state.auth);
+  console.log("InputDevicesSettings");
   const dispatch: AppDispatch = useDispatch();
-  const [showSuccessFollowModal, setShowSuccessFollowModal] = useState(false);
-  const [showSuccessUnFollowModal, setShowSuccessUnFollowModal] =
-    useState(false);
+  const localStream = useRef<MediaStream | null>(null);
 
   const [micAllowedOnce, setMicAllowedOnce] = useState(false);
   const [camAllowedOnce, setCamAllowedOnce] = useState(false);
 
   const [micIsOn, setMicIsOn] = useState(false);
-  const [camIsOn, setCamIsOn] = useState(false);
-
+  const [micId, setMicId] = useState("");
   const [micName, setMicName] = useState("");
+
+  const [camIsOn, setCamIsOn] = useState(false);
+  const [camId, setCamId] = useState("");
   const [camName, setCamName] = useState("");
 
   const loading = false;
+  const boxSize = 200;
 
   let isDevicesReady = false;
   if (camRequired) {
@@ -56,17 +46,19 @@ const InputDevicesSettings = ({
     isDevicesReady = micAllowedOnce;
   }
 
-  const micIsAllowedAndMuted = micAllowedOnce && !micIsOn;
-  const camIsAllowedAndMuted = camAllowedOnce && !camIsOn;
-
-  // useEffect(() => {
-  //   dispatch(fetchShortProfileByIdAsync(userId));
-  // }, []);
-
   const onButtonSubmitClick = () => {
     if (isDevicesReady) {
-      //go in the room
-      onDevicesReady();
+      dispatch(
+        updateDeviceSettings({
+          micOn: micIsOn,
+          micId: micId,
+          camOn: camIsOn,
+          camId: camId,
+        })
+      );
+      setTimeout(() => {
+        onDevicesReady();
+      }, 5000);
     } else {
       if (camRequired) {
         requestMicrophoneAndCameraPermissions();
@@ -76,31 +68,8 @@ const InputDevicesSettings = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     // if (DetectRTC.isWebRTCSupported) {
-  //     //   console.log("WebRTC is supported!");
-  //     // } else {
-  //     //   console.log("WebRTC is not supported!");
-  //     // }
-  //     // console.log(DetectRTC);
-  //     checkMediaAccess().then((result) => {
-  //       const { audioGranted, videoGranted } = result;
-  //       if (audioGranted) {
-  //         setMicAllowed(true);
-  //       }
-
-  //       if (videoGranted) {
-  //         setCamAllowed(true);
-  //       }
-  //     });
-  //   }
-  // }, []);
-
-  const localStream = useRef<MediaStream | null>(null);
   useEffect(() => {
     return () => {
-      alert("clean settings modal...");
       if (localStream && localStream.current) {
         localStream.current.getTracks().forEach((track) => track.stop());
         localStream.current = null;
@@ -122,15 +91,22 @@ const InputDevicesSettings = ({
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
         });
-        localStream.current = stream;
+
+        const videoPreview = getVideoElement();
 
         const [audioTrack] = stream.getAudioTracks();
         if (audioTrack) {
-          const videoPreview = getVideoElement();
-          videoPreview.srcObject = stream;
+          if (localStream.current) {
+            localStream.current.addTrack(audioTrack);
+            videoPreview.srcObject = localStream.current;
+          } else {
+            localStream.current = stream;
+            videoPreview.srcObject = stream;
+          }
 
           setMicAllowedOnce(true);
           setMicIsOn(true);
+          setMicId(audioTrack.id);
           setMicName(audioTrack.label);
           console.log("requestMicPermission success");
         } else {
@@ -138,6 +114,7 @@ const InputDevicesSettings = ({
         }
       } catch (error: unknown) {
         console.error("requestMicPermission failed");
+        window.location.href = "/feedback/devices-settings-rejected";
       }
     }
   };
@@ -151,14 +128,22 @@ const InputDevicesSettings = ({
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
-        localStream.current = stream;
+
+        const videoPreview = getVideoElement();
 
         const [videoTrack] = stream.getVideoTracks();
         if (videoTrack) {
-          const videoPreview = getVideoElement();
-          videoPreview.srcObject = stream;
+          if (localStream.current) {
+            localStream.current.addTrack(videoTrack);
+            videoPreview.srcObject = localStream.current;
+          } else {
+            localStream.current = stream;
+            videoPreview.srcObject = stream;
+          }
+
           setCamAllowedOnce(true);
           setCamIsOn(true);
+          setCamId(videoTrack.id);
           setCamName(videoTrack.label);
           console.log("requestCameraPermission success");
         } else {
@@ -166,6 +151,7 @@ const InputDevicesSettings = ({
         }
       } catch (error: unknown) {
         console.error("requestCameraPermission failed");
+        window.location.href = "/feedback/devices-settings-rejected";
       }
     }
   };
@@ -186,6 +172,7 @@ const InputDevicesSettings = ({
 
         setMicAllowedOnce(true);
         setMicIsOn(true);
+        setMicId(audioTrack.id);
         setMicName(audioTrack.label);
         console.log("requestMicrophoneAndCameraPermissions success for audio");
       } else {
@@ -200,6 +187,7 @@ const InputDevicesSettings = ({
         videoPreview.srcObject = stream;
         setCamAllowedOnce(true);
         setCamIsOn(true);
+        setCamId(videoTrack.id);
         setCamName(videoTrack.label);
         console.log("requestMicrophoneAndCameraPermissions success for video");
       } else {
@@ -209,6 +197,7 @@ const InputDevicesSettings = ({
       }
     } catch (error: unknown) {
       console.error("requestMicrophoneAndCameraPermissions failed");
+      window.location.href = "/feedback/devices-settings-rejected";
     }
   };
 
@@ -243,12 +232,10 @@ const InputDevicesSettings = ({
           console.log("toggleCam on success");
         }
       } else {
-        console.error("toggleCam failed: No audio track found");
+        console.error("toggleCam failed: No video track found");
       }
     }
   };
-
-  const boxSize = 200;
 
   const getVideoElement = () => {
     return document.getElementById(`video-preview`) as HTMLVideoElement;
@@ -259,7 +246,7 @@ const InputDevicesSettings = ({
       <h2 className="text-accent2 text-2xl text-center">
         {camRequired ? "Microphone & Camera " : "Microphone"} Settings
       </h2>
-      {/* Medias Preview */}
+      {/* Media Preview */}
       <div className="relative bg-black rounded-lg h-[200px]">
         <div className="bg-red-gray-300 flex justify-center">
           <div className="relative h-full w-full">
@@ -305,15 +292,12 @@ const InputDevicesSettings = ({
         {/* Devices Toggling */}
         <div className="flex justify-center absolute bottom-2 left-0 right-0 z-20">
           <div className="flex items-center justify-center text-white rounded-md space-x-2">
-            {/* <div className="text-white">{JSON.stringify(controls)}</div> */}
             {micRequired && (
               <SessionControlItem
                 Icon={<MicrophoneIcon />}
                 disabled={!micIsOn}
-                // tooltip={controls.micOn ? "Mute" : "Unmute"}
+                tooltip={micIsOn ? "Mute" : "Unmute"}
                 onClick={() => {
-                  // dispatch(toggleLocalCam());
-                  // onToggleMic(controls.micOn);
                   requestMicPermission();
                 }}
                 bgClasses={`${micAllowedOnce ? "bg-green-400" : "bg-red-400"}`}
@@ -324,17 +308,8 @@ const InputDevicesSettings = ({
               <SessionControlItem
                 Icon={<VideoCameraIcon />}
                 disabled={!camIsOn}
-                tooltip={
-                  camRequired
-                    ? camIsOn
-                      ? "Cam Off"
-                      : "Cam On"
-                    : "Cam is not required by this room"
-                }
-                // tooltip={"Camera feature is coming soon"}
+                tooltip={camIsOn ? "Cam Off" : "Cam On"}
                 onClick={() => {
-                  // dispatch(toggleLocalCam());
-                  // onToggleCam(controls.camOn);
                   requestCameraPermission();
                 }}
                 bgClasses={`${camAllowedOnce ? "bg-green-400" : "bg-red-400"}`}
@@ -345,7 +320,6 @@ const InputDevicesSettings = ({
       </div>
 
       {/* Descriptions */}
-
       {!isDevicesReady && (
         <div className="text-white space-y-10">
           <h3 className="text-lg font-bold">
@@ -423,16 +397,6 @@ const InputDevicesSettings = ({
           </span>
         </button>
       </div>
-
-      {showSuccessUnFollowModal && (
-        <Notification
-          type="success"
-          messageTitle="Unfollow successfully"
-          messageBody={`You are now no longer following ${account?.dname} account.`}
-          autoFadeout={true}
-          onFadedOut={() => {}}
-        />
-      )}
     </div>
   );
 };

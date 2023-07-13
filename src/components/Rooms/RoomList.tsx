@@ -34,6 +34,7 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
           size={room.size}
           createdByMe={room.createdBy === user?.uid}
           order={room.order}
+          features={room.features}
           active={room.active}
           createdAt={room.createdAt}
           createdBy={room.createdBy}

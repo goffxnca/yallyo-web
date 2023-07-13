@@ -13,7 +13,7 @@ interface Props {
 const TextInput = React.forwardRef<HTMLInputElement, Props>(
   ({ id, label, placeholder, spellCheck, onChange, error }, ref) => {
     return (
-      <BaseInput label={label} error={error}>
+      <BaseInput id={id} label={label} error={error}>
         <input
           id={id}
           name={id}

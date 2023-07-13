@@ -37,7 +37,9 @@ const RoomSessionPage = () => {
   const router = useRouter();
 
   const { user } = useSelector((state: RootState) => state.auth);
-  const { room } = useSelector((state: RootState) => state.session);
+  const { room, inputDeviceSettings } = useSelector(
+    (state: RootState) => state.session
+  );
 
   const [peerStatus, setPeerStatus] = useState("");
   const [roomSid, setRoomSid] = useState("");
@@ -69,24 +71,30 @@ const RoomSessionPage = () => {
           camOnOnce: false,
           onStatusChange: setPeerStatus,
           onLocalMediaStreamed: () => {
-            sessionsSocket = subscribeSessionsUpdates(roomId, user!, dispatch, {
-              onConnected: () => {
-                setTimeout(() => {
-                  dispatch(fetchPeersAsync(roomId)).then(() => {
-                    console.log("Fetched peers");
-                    dispatch(removePeerLoading(user?.uid as string));
-                  });
-                }, 2000);
-              },
-              onJoin: (joiner: IRoomPeer) => {
-                setTimeout(() => {
-                  p2p.callRemotePeer(joiner.userId);
-                }, 2000);
-              },
-              onLeave: (payload: any) => {
-                const { socketId, userId, dname } = payload;
-              },
-            });
+            sessionsSocket = subscribeSessionsUpdates(
+              roomId,
+              user!,
+              inputDeviceSettings,
+              dispatch,
+              {
+                onConnected: () => {
+                  setTimeout(() => {
+                    dispatch(fetchPeersAsync(roomId)).then(() => {
+                      console.log("Fetched peers");
+                      dispatch(removePeerLoading(user?.uid as string));
+                    });
+                  }, 2000);
+                },
+                onJoin: (joiner: IRoomPeer) => {
+                  setTimeout(() => {
+                    p2p.callRemotePeer(joiner.userId);
+                  }, 2000);
+                },
+                onLeave: (payload: any) => {
+                  const { socketId, userId, dname } = payload;
+                },
+              }
+            );
           },
           onRemoteMediaStreamed: (remoteId: string) => {
             dispatch(removePeerLoading(remoteId));
@@ -128,7 +136,7 @@ const RoomSessionPage = () => {
         }
       }
     }
-  }, [user, roomId, dispatch]);
+  }, [user, roomId, inputDeviceSettings, dispatch]);
 
   useEffect(() => {
     const { sid } = router.query;

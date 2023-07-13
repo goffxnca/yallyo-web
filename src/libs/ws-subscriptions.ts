@@ -14,7 +14,7 @@ import {
   toggleCam,
   toggleMic,
 } from "@/store/sessionSlice";
-import { IFirebaseUser } from "@/types/frontend";
+import { IFirebaseUser, InputDevicesSettings } from "@/types/frontend";
 
 export const subscribeRoomsUpdates = (dispatch: any): Socket => {
   const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);
@@ -42,11 +42,14 @@ export const subscribeRoomsUpdates = (dispatch: any): Socket => {
 export const subscribeSessionsUpdates = (
   roomId: string,
   user: IFirebaseUser,
+  deviceSettings: InputDevicesSettings,
   dispatch: any,
   callbacks: { onConnected: Function; onJoin: Function; onLeave: Function }
 ): Socket => {
   const peersSocket = io(
-    `${ENVS.API_WS_URL}/sessions?rid=${roomId}&uid=${user.uid}&dname=${user.displayName}`
+    `${ENVS.API_WS_URL}/sessions?rid=${roomId}&uid=${user.uid}&mon=${
+      deviceSettings.micOn ? 1 : 0
+    }&con=${deviceSettings.camOn ? 1 : 0}`
   );
 
   peersSocket.on("connect", () => {

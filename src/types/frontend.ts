@@ -30,6 +30,12 @@ export interface IDropdownItem {
 export interface LocalControls {
   chatOn: boolean;
 }
+export interface InputDevicesSettings {
+  micOn: boolean;
+  micId: string;
+  camOn: boolean;
+  camId: string;
+}
 
 export interface IFirebaseUser {
   uid: string;

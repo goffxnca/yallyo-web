@@ -22,7 +22,9 @@ let sessionsSocket: Socket;
 
 const MultiplePeers = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { peers } = useSelector((state: RootState) => state.session);
+  const { peers, inputDeviceSettings } = useSelector(
+    (state: RootState) => state.session
+  );
 
   const router = useRouter();
 
@@ -46,6 +48,7 @@ const MultiplePeers = () => {
         sessionsSocket = subscribeSessionsUpdates(
           roomCode as string,
           user!,
+          inputDeviceSettings,
           dispatch,
           {
             onConnected: () => {},

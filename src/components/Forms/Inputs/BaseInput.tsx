@@ -1,14 +1,15 @@
 interface Props {
+  id: string;
   label: string;
   error?: string;
   children: React.ReactNode;
 }
 
-const BaseInput = ({ label, error, children }: Props) => {
+const BaseInput = ({ id, label, error, children }: Props) => {
   return (
     <div>
       <label
-        htmlFor="email"
+        htmlFor={id}
         className="block text-sm font-medium leading-6 text-white"
       >
         {label}

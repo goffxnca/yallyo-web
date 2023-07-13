@@ -1,7 +1,12 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import TextInput from "../Forms/Inputs/TextInput";
 import { useState } from "react";
-import { LANGAUGE_LEVEL, LANGUAGES, TOPICS } from "@/utils/constants";
+import {
+  LANGAUGE_LEVEL,
+  LANGUAGES,
+  ROOM_TYPES,
+  TOPICS,
+} from "@/utils/constants";
 import DropdownInput3 from "../Forms/Inputs/DropodownInput3";
 import { createNArrayFrom } from "@/utils/array-utils";
 import { FieldValues, useForm } from "react-hook-form";
@@ -12,6 +17,8 @@ import { RootState, AppDispatch } from "@/store/store";
 import SigninWithGoogleButton from "../Layouts/Headers/SigninWithGoogleButton";
 import { signinWithGoogle } from "@/store/authSlice";
 import Notification from "@/components/UIs/Notification";
+import RadioGroupInput from "../Forms/Inputs/RadioGroupInput";
+import { IRoomFeatures } from "@/types/common";
 
 interface Props {
   onSubmit: (data: FieldValues) => void;
@@ -30,9 +37,19 @@ const NewRoomForm = ({ onSubmit }: Props) => {
   } = useForm();
 
   const onFormSubmit = (data: FieldValues) => {
+    console.log("data", data);
+
+    const features: IRoomFeatures = {
+      chat: true,
+      audio: true,
+      video: data.roomType === "video",
+    };
+
+    const formData = { ...data, features };
+
     setLoading(true);
     setTimeout(() => {
-      onSubmit(data);
+      onSubmit(formData);
     }, 5000);
   };
 
@@ -124,9 +141,28 @@ const NewRoomForm = ({ onSubmit }: Props) => {
             />
           </div>
         </div>
+
+        <div className="flex gap-x-2">
+          <div className="w-full">
+            <RadioGroupInput
+              id="roomType"
+              label="Room Type"
+              items={ROOM_TYPES.map(({ value, display }) => ({
+                value: value,
+                display: display,
+              }))}
+              {...register("roomType", {
+                required: "This field is required",
+              })}
+              defaultVal="voice"
+              error={errors.roomType?.message?.toString()}
+            />
+          </div>
+        </div>
+
         <TextInput
           id="desc"
-          label="Room Tagline & Intro"
+          label="Room Introduction"
           placeholder="Let's make some noise guys"
           spellCheck={false}
           {...register("desc", {

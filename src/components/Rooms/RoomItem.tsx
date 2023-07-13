@@ -1,7 +1,11 @@
 import Avatar from "../UIs/Avatar";
 import { createNArray } from "@/utils/array-utils";
 import { useEffect, memo, useState } from "react";
-import { NoSymbolIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  MicrophoneIcon,
+  NoSymbolIcon,
+  VideoCameraIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { IRoom } from "@/types/common";
 
@@ -20,6 +24,7 @@ const RoomItem = memo((room: Props) => {
     joiners,
     order,
     size,
+    features,
     createdByMe,
   } = room;
   const isFullRoom = size === joiners.length;
@@ -78,25 +83,38 @@ const RoomItem = memo((room: Props) => {
           />
         ))} */}
       </ul>
-      {isFullRoom ? (
-        <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
-          <NoSymbolIcon className="h-5 w-5 mr-2" />
-          <span className="text-md">Full Room</span>
+      <div className="flex items-center text-white">
+        {/* <div>bottom left</div> */}
+        {isFullRoom ? (
+          <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
+            <NoSymbolIcon className="h-5 w-5 mr-2" />
+            <span className="text-md">Full Room</span>
+          </div>
+        ) : (
+          <a
+            href={`/room/${sid}`}
+            target="_blank"
+            className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
+          >
+            Join Now
+          </a>
+          // <Link href={`/room/${_id}`}>
+          //   <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
+          //     Join Now {order}
+          //   </div>
+          // </Link>
+        )}
+        <div className="text-gray-500">
+          <div className="flex">
+            {room && room.features && room.features.audio && (
+              <MicrophoneIcon className="w-4 h-4" />
+            )}
+            {room && room.features && room.features.video && (
+              <VideoCameraIcon className="w-4 h-4" />
+            )}
+          </div>
         </div>
-      ) : (
-        <a
-          href={`/room/${sid}`}
-          target="_blank"
-          className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
-        >
-          Join Now
-        </a>
-        // <Link href={`/room/${_id}`}>
-        //   <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
-        //     Join Now {order}
-        //   </div>
-        // </Link>
-      )}
+      </div>
     </li>
   );
 });

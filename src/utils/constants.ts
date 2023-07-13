@@ -221,6 +221,11 @@ const AVATARS = [
   "https://lh3.googleusercontent.com/a/AGNmyxabKJiFD4CVNQCPvVTUV3OYJEZx63pdnq2r37EQ",
 ];
 
+const ROOM_TYPES = [
+  { value: "voice", display: "Voice Only" },
+  { value: "video", display: "Voice + Video" },
+];
+
 const ENVS = {
   API_URL: process.env.NEXT_PUBLIC_API_URL!,
   API_WS_URL: process.env.NEXT_PUBLIC_API_WS_URL!,
@@ -229,4 +234,12 @@ const ENVS = {
   CREATE_ROOM_QUOTA: +(process.env.NEXT_PUBLIC_CREATE_ROOM_QUOTA || 5),
 };
 
-export { LANGUAGES, JOINERS, LANGAUGE_LEVEL, TOPICS, AVATARS, ENVS };
+export {
+  LANGUAGES,
+  JOINERS,
+  LANGAUGE_LEVEL,
+  TOPICS,
+  ROOM_TYPES,
+  AVATARS,
+  ENVS,
+};
