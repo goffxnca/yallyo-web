@@ -36,8 +36,8 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               <SessionControlItem
                 Icon={<MicrophoneIcon />}
                 disabled={!controls.micOn}
-                tooltip={controls.micOn ? "Mute" : "Unmute"}
-                mobileTooltip={controls.micOn ? "Unmuted" : "Muted"}
+                hoverTooltip={controls.micOn ? "Mute" : "Unmute"}
+                actionedTooltip={controls.micOn ? "Unmuted" : "Muted"}
                 onClick={() => {
                   // dispatch(toggleLocalCam());
                   onToggleMic(controls.micOn);
@@ -49,8 +49,8 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               <SessionControlItem
                 Icon={<VideoCameraIcon />}
                 disabled={!controls.camOn}
-                tooltip={controls.camOn ? "Camera Off" : "Camera On"}
-                mobileTooltip={controls.camOn ? "Camera On" : "Camera Off"}
+                hoverTooltip={controls.camOn ? "Camera Off" : "Camera On"}
+                actionedTooltip={controls.camOn ? "Camera On" : "Camera Off"}
                 // tooltip={"Camera feature is coming soon"}
                 onClick={() => {
                   // dispatch(toggleLocalCam());
@@ -63,7 +63,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               <SessionControlItem
                 Icon={<ChatBubbleBottomCenterTextIcon />}
                 // cross={!controls.chatOn}
-                tooltip={localControls.chatOn ? "Hide Chat" : "Show Chat"}
+                hoverTooltip={localControls.chatOn ? "Hide Chat" : "Show Chat"}
                 // mobileTooltip={localControls.chatOn ? "Show Chat" : "Hide Chat"}
                 pendingNum={messages.filter((message) => !message.read).length}
                 onClick={() => {
@@ -75,8 +75,8 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
             <SessionControlItem
               Icon={<ComputerDesktopIcon />}
               disabled={true}
-              tooltip={"Share screen is not supported yet"}
-              mobileTooltip={"Share screen is not supported yet"}
+              hoverTooltip={"Share screen is not supported yet"}
+              actionedTooltip={"Share screen is not supported yet"}
               onClick={() => {}}
             />
           </>
@@ -108,7 +108,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
       <SessionControlItem
         Icon={<PhoneIcon />}
         bgClasses="bg-red-500 ml-4 text-white"
-        tooltip="Hang Up"
+        hoverTooltip="Hang Up"
         onClick={() => {
           window.location.href = "/feedback/session-leave";
         }}

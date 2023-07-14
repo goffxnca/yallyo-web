@@ -5,8 +5,8 @@ interface Props {
   disabled?: boolean;
   pendingNum?: number;
   bgClasses?: string;
-  tooltip?: string;
-  mobileTooltip?: string;
+  hoverTooltip?: string;
+  actionedTooltip?: string;
   onClick?: Function;
 }
 
@@ -16,17 +16,17 @@ const SessionControlItem = React.memo(
     disabled = false,
     pendingNum = 0,
     bgClasses,
-    tooltip,
-    mobileTooltip,
+    hoverTooltip,
+    actionedTooltip,
     onClick,
   }: Props) => {
-    const [mobileTooltipVisible, setMobileTooltipVisible] = useState(false);
+    const [actionedTooltipVisible, setActionedTooltipVisible] = useState(false);
 
     const showMobileTooltip = () => {
-      setMobileTooltipVisible(true);
+      setActionedTooltipVisible(true);
       setTimeout(() => {
-        setMobileTooltipVisible(false);
-      }, 3000);
+        setActionedTooltipVisible(false);
+      }, 1500);
     };
 
     return (
@@ -36,7 +36,7 @@ const SessionControlItem = React.memo(
       // </div>
 
       <div
-        className={`relative p-4 rounded-md cursor-pointer hover:bg-gray-400 group ${
+        className={`relative p-4 rounded-md cursor-pointer lg:hover:bg-gray-400 group ${
           bgClasses && bgClasses
         }`}
         onClick={() => {
@@ -67,16 +67,18 @@ const SessionControlItem = React.memo(
           </div>
         )}
 
-        <div className="hidden lg:block">
-          <div className="hidden absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
-            {tooltip}
+        {!actionedTooltipVisible && (
+          <div className="hidden lg:block">
+            <div className="hidden absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
+              {hoverTooltip}
+            </div>
           </div>
-        </div>
+        )}
 
-        {mobileTooltipVisible && (
-          <div className="block lg:hidden">
-            <div className="absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-red-500 px-2 rounded-md whitespace-nowrap">
-              {mobileTooltip}
+        {actionedTooltipVisible && (
+          <div className="block">
+            <div className="absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-white text-green-500 px-2 rounded-md whitespace-nowrap">
+              {actionedTooltip}
             </div>
           </div>
         )}
