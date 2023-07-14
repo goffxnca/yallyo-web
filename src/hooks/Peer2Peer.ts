@@ -187,7 +187,7 @@ class Peer2Peer {
         );
       }
       if (!this.settings?.deviceSettings.camOn) {
-        alert("immediately turned off cam2");
+        // alert("immediately turned off cam2");
         videoTrack.enabled = false;
       }
 

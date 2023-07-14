@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface Props {
   Icon: React.ReactElement;
@@ -18,6 +18,15 @@ const SessionControlItem = React.memo(
     tooltip,
     onClick,
   }: Props) => {
+    const [mobileTooltipVisible, setMobileTooltipVisible] = useState(false);
+
+    const showMobileTooltip = () => {
+      setMobileTooltipVisible(true);
+      setTimeout(() => {
+        setMobileTooltipVisible(false);
+      }, 3000);
+    };
+
     return (
       // <div className="p-3 mx-1 rounded-md">
       //   {/* <Icon className="w-6 h-6" /> */}
@@ -29,6 +38,7 @@ const SessionControlItem = React.memo(
           bgClasses && bgClasses
         }`}
         onClick={() => {
+          showMobileTooltip();
           onClick && onClick();
         }}
       >
@@ -55,11 +65,19 @@ const SessionControlItem = React.memo(
           </div>
         )}
 
-        {/* <div className="hidden lg:block"> */}
-        <div className="hidden absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
-          {tooltip}
+        <div className="hidden lg:block">
+          <div className="hidden absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
+            {tooltip}
+          </div>
         </div>
-        {/* </div> */}
+
+        {mobileTooltipVisible && (
+          <div className="block lg:hidden">
+            <div className="absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-red-500 px-2 rounded-md whitespace-nowrap">
+              {tooltip}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
