@@ -299,8 +299,12 @@ const ProfileForm = () => {
         <div className={`mt-6 flex items-center justify-end gap-x-6`}>
           <button
             type="submit"
-            className={`flex rounded-md bg-accent1 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-black focus-visible:outline focus-visible:outline-2 ${
+            className={`flex rounded-md px-6 py-3 text-sm font-semibold shadow-sm select-none ${
               !isDirty && "opacity-25"
+            } ${
+              loading
+                ? "bg-accent2 text-secondary pointer-events-none"
+                : "bg-accent1 text-white"
             }`}
             disabled={!isDirty || loading}
           >

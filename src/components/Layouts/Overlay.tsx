@@ -8,7 +8,7 @@ const DarkOverlay = ({ text }: Props) => {
       <div className="loading-spinner">
         <div className="loading-spinner__dot1"></div>
         <div className="loading-spinner__dot2"></div>
-        <div className="text-white text-sm mt-4">{text || "Loading..."}</div>
+        <div className="text-white text-sm mt-4">{text ?? "Loading..."}</div>
       </div>
     </div>
   );

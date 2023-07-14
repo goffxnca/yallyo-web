@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import SessionControlItem from "./SessionControlItem";
 import { updateDeviceSettings } from "@/store/sessionSlice";
+import DarkOverlay from "../Layouts/Overlay";
 
 interface Props {
   micRequired: boolean;
@@ -47,6 +48,7 @@ const InputDevicesSettings = ({
   }
 
   const onButtonSubmitClick = () => {
+    console.log("onButtonSubmitClick");
     if (isDevicesReady) {
       setLoading(true);
       dispatch(
@@ -298,7 +300,11 @@ const InputDevicesSettings = ({
         </div>
 
         {/* Devices Toggling */}
-        <div className="flex justify-center absolute bottom-2 left-0 right-0 z-20">
+        <div
+          className={`flex justify-center absolute ${
+            !camRequired && "top-2"
+          } bottom-2 left-0 right-0 z-20`}
+        >
           <div className="flex items-center justify-center text-white rounded-md space-x-2">
             {micRequired && (
               <SessionControlItem
@@ -408,10 +414,13 @@ const InputDevicesSettings = ({
 
       <div>
         <button
-          className={`flex w-full justify-center rounded-md bg-accent1 px-3 py-3 text-sm font-semibold text-white shadow-sm ${
-            loading && "bg-accent2 text-secondary"
+          className={`flex w-full justify-center rounded-md  px-3 py-3 text-sm font-semibold shadow-sm select-none ${
+            loading
+              ? "bg-accent2 text-secondary pointer-events-none"
+              : "bg-accent1 text-white"
           }`}
           onClick={onButtonSubmitClick}
+          disabled={loading}
         >
           {loading && (
             <div className="animate-pulse">
@@ -426,6 +435,8 @@ const InputDevicesSettings = ({
           </span>
         </button>
       </div>
+
+      {loading && <DarkOverlay text="" />}
     </div>
   );
 };

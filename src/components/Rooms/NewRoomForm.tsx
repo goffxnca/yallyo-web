@@ -175,7 +175,12 @@ const NewRoomForm = ({ onSubmit }: Props) => {
         <div>
           <button
             type="submit"
-            className="flex w-full justify-center rounded-md bg-accent1 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent2"
+            className={`flex w-full justify-center rounded-md px-3 py-3 text-sm font-semibold shadow-sm select-none ${
+              loading
+                ? "bg-accent2 text-secondary pointer-events-none"
+                : "bg-accent1 text-white"
+            }`}
+            disabled={loading}
           >
             {loading && (
               <div className="animate-pulse">
@@ -183,12 +188,14 @@ const NewRoomForm = ({ onSubmit }: Props) => {
               </div>
             )}
 
-            <span className="text-md">{loading ? "Creating" : "Create"}</span>
+            <span className="text-md">
+              {loading ? "Creating Room" : "Create Room"}
+            </span>
           </button>
         </div>
       </form>
 
-      {loading && <DarkOverlay />}
+      {loading && <DarkOverlay text="" />}
 
       {loginSuccessfully && (
         <Notification
