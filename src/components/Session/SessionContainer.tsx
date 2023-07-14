@@ -7,14 +7,15 @@ import {
 } from "@/types/common";
 
 import { joinClasses } from "@/utils/jsx-utils";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Socket } from "socket.io-client";
 import Peer2Peer from "@/hooks/Peer2Peer";
 import JoinerItemCool from "./JoinerItemCool";
-
+import { useMediaQuery } from "usehooks-ts";
+import { RootState, AppDispatch } from "@/store/store";
 import SessionChatSidebar from "./SessionChatSidebar/SessionChatSidebar";
+import { toggleLocalChat } from "@/store/sessionSlice";
 
 interface Props {
   sessionsSocket: Socket;
@@ -31,6 +32,9 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
     (state: RootState) => state.session
   );
 
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const dispatch: AppDispatch = useDispatch();
+
   const [localPeerData, setLocalPeerData] = useState<IRoomPeer>();
   const [amISpeaking, setAmISpeaking] = useState(false);
 
@@ -40,6 +44,12 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
       setLocalPeerData(myPeerInfo);
     }
   }, [user, peers]);
+
+  useEffect(() => {
+    if (isDesktop) {
+      dispatch(toggleLocalChat());
+    }
+  }, [isDesktop, dispatch]);
 
   useEffect(() => {
     if (p2p) {

@@ -113,6 +113,8 @@ const InputDevicesSettings = ({
           setMicIsOn(true);
           setMicId(audioTrack.id);
           setMicName(audioTrack.label);
+
+          await renderAudioVisualizer(stream);
           console.log("requestMicPermission success");
         } else {
           console.error("requestMicPermission failed: No audio track found");
@@ -247,8 +249,34 @@ const InputDevicesSettings = ({
     }
   };
 
+  const renderAudioVisualizer = async (audioStream: MediaStream) => {
+    debugger;
+    const meterElement = document.getElementById(
+      "volume-meter"
+    ) as HTMLMeterElement;
+
+    const audioContext = new AudioContext();
+    await audioContext.audioWorklet.addModule("/volume-meter.js");
+    const micNode = audioContext.createMediaStreamSource(audioStream);
+    const volumeMeterNode = new AudioWorkletNode(audioContext, "volume-meter");
+    volumeMeterNode.port.onmessage = ({ data }) => {
+      meterElement.value = data * 500;
+    };
+    micNode.connect(volumeMeterNode).connect(audioContext.destination);
+  };
+
   const getVideoElement = () => {
     return document.getElementById(`video-preview`) as HTMLVideoElement;
+  };
+
+  const getIndicatorColor = (value: number) => {
+    if (value <= 33) {
+      return "bg-gray-400";
+    } else if (value <= 66) {
+      return "bg-yellow-400";
+    } else {
+      return "bg-green-400";
+    }
   };
 
   return (
@@ -440,6 +468,21 @@ const InputDevicesSettings = ({
               : `Request${loading ? "ing" : ""} Access`}
           </span>
         </button>
+      </div>
+
+      <div className={`flex items-center ${!micIsOn && ""}`}>
+        <MicrophoneIcon className="w-5 h-5 text-white" />
+        <input
+          id="volume-meter"
+          className="w-full bg-green"
+          // className={`w-full ${getIndicatorColor(value)}`}
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="1"
+          disabled
+        />
       </div>
 
       {loading && <DarkOverlay text="" />}
