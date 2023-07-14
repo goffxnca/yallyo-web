@@ -139,7 +139,7 @@ class Peer2Peer {
       }
 
       if (!this.settings?.deviceSettings.micOn) {
-        // alert("immediately turned of mic1");
+        alert("immediately turned of mic1");
         audioTrack.enabled = false;
       }
 
@@ -176,7 +176,7 @@ class Peer2Peer {
         );
       }
       if (!this.settings?.deviceSettings.micOn) {
-        // alert("immediately turned off mic2");
+        alert("immediately turned off mic2");
         audioTrack.enabled = false;
       }
 
@@ -187,7 +187,7 @@ class Peer2Peer {
         );
       }
       if (!this.settings?.deviceSettings.camOn) {
-        // alert("immediately turned off cam2");
+        alert("immediately turned off cam2");
         videoTrack.enabled = false;
       }
 
