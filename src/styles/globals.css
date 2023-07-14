@@ -123,3 +123,10 @@ textarea {
     height: -webkit-fill-available;
   }
 }
+
+.mic-bar {
+  width: calc(10% - 10px);
+  height: 10px;
+  display: inline-block;
+  margin: 5px;
+}

@@ -9,6 +9,7 @@ import { AppDispatch } from "@/store/store";
 import SessionControlItem from "./SessionControlItem";
 import { updateDeviceSettings } from "@/store/sessionSlice";
 import DarkOverlay from "../Layouts/Overlay";
+import AudioLevel from "./AudioLevel";
 
 interface Props {
   micRequired: boolean;
@@ -37,6 +38,10 @@ const InputDevicesSettings = ({
   const [camName, setCamName] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  const micNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const volumeMeterNodeRef = useRef<AudioWorkletNode | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
 
   const boxSize = 200;
 
@@ -82,6 +87,16 @@ const InputDevicesSettings = ({
         if (videoPreview) {
           videoPreview.srcObject = null;
         }
+      }
+
+      const micNode = micNodeRef.current;
+      const volumeMeterNode = volumeMeterNodeRef.current;
+      const audioContext = audioContextRef.current;
+
+      if (micNode && volumeMeterNode && audioContext) {
+        micNode.disconnect();
+        volumeMeterNode.disconnect();
+        audioContext.close();
       }
     };
   }, []);
@@ -154,6 +169,7 @@ const InputDevicesSettings = ({
           setCamIsOn(true);
           setCamId(videoTrack.id);
           setCamName(videoTrack.label);
+
           console.log("requestCameraPermission success");
         } else {
           console.error("requestCameraPermission failed: No video track found");
@@ -185,6 +201,8 @@ const InputDevicesSettings = ({
         setMicIsOn(true);
         setMicId(audioTrack.id);
         setMicName(audioTrack.label);
+
+        await renderAudioVisualizer(stream);
         console.log("requestMicrophoneAndCameraPermissions success for audio");
       } else {
         console.error(
@@ -250,33 +268,41 @@ const InputDevicesSettings = ({
   };
 
   const renderAudioVisualizer = async (audioStream: MediaStream) => {
-    debugger;
-    const meterElement = document.getElementById(
-      "volume-meter"
-    ) as HTMLMeterElement;
+    // const meterElement = document.getElementById(
+    //   "volume-meter"
+    // ) as HTMLMeterElement;
 
     const audioContext = new AudioContext();
     await audioContext.audioWorklet.addModule("/volume-meter.js");
     const micNode = audioContext.createMediaStreamSource(audioStream);
     const volumeMeterNode = new AudioWorkletNode(audioContext, "volume-meter");
     volumeMeterNode.port.onmessage = ({ data }) => {
-      meterElement.value = data * 500;
+      // meterElement.value = data * 500;
+      console.log(`data: ${data} data*500: ${data * 500}`);
+      const volume = data * 500;
+      calculateAudioLevelBar(volume);
     };
     micNode.connect(volumeMeterNode).connect(audioContext.destination);
+
+    audioContextRef.current = audioContext;
+    micNodeRef.current = micNode;
+    volumeMeterNodeRef.current = volumeMeterNode;
   };
+
+  function calculateAudioLevelBar(volume: number) {
+    const allBars = [...(document.querySelectorAll(".mic-bar") as any)];
+    const numberOfBarsToColor = Math.round(volume / 10);
+    const barsToColor = allBars.slice(0, numberOfBarsToColor);
+    for (const bar of allBars) {
+      bar.style.backgroundColor = "#e6e7e8";
+    }
+    for (const bar of barsToColor) {
+      bar.style.backgroundColor = "#69ce2b";
+    }
+  }
 
   const getVideoElement = () => {
     return document.getElementById(`video-preview`) as HTMLVideoElement;
-  };
-
-  const getIndicatorColor = (value: number) => {
-    if (value <= 33) {
-      return "bg-gray-400";
-    } else if (value <= 66) {
-      return "bg-yellow-400";
-    } else {
-      return "bg-green-400";
-    }
   };
 
   return (
@@ -470,11 +496,16 @@ const InputDevicesSettings = ({
         </button>
       </div>
 
-      <div className={`flex items-center ${!micIsOn && ""}`}>
-        <MicrophoneIcon className="w-5 h-5 text-white" />
-        <input
+      {micIsOn && (
+        <div className={`flex items-center`}>
+          <div>
+            <MicrophoneIcon className="w-5 h-5 text-white" />
+          </div>
+          <AudioLevel />
+
+          {/* <input
           id="volume-meter"
-          className="w-full bg-green"
+          className="w-full bg-green-500 text-green-500"
           // className={`w-full ${getIndicatorColor(value)}`}
           type="range"
           min="0"
@@ -482,8 +513,9 @@ const InputDevicesSettings = ({
           value="0"
           step="1"
           disabled
-        />
-      </div>
+        /> */}
+        </div>
+      )}
 
       {loading && <DarkOverlay text="" />}
     </div>
