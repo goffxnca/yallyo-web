@@ -128,7 +128,6 @@ class Peer2Peer {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: false,
       });
 
       const [audioTrack] = stream.getAudioTracks();
