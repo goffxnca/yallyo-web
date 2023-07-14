@@ -311,6 +311,7 @@ const InputDevicesSettings = ({
                 Icon={<MicrophoneIcon />}
                 disabled={!micIsOn}
                 tooltip={micIsOn ? "Mute" : "Unmute"}
+                mobileTooltip={!loading ? (micIsOn ? "Unmuted" : "Muted") : ""}
                 onClick={() => {
                   requestMicPermission();
                 }}
@@ -322,7 +323,10 @@ const InputDevicesSettings = ({
               <SessionControlItem
                 Icon={<VideoCameraIcon />}
                 disabled={!camIsOn}
-                tooltip={camIsOn ? "Cam Off" : "Cam On"}
+                tooltip={camIsOn ? "Camera Off" : "Camera On"}
+                mobileTooltip={
+                  !loading ? (camIsOn ? "Camera On" : "Camera Off") : ""
+                }
                 onClick={() => {
                   requestCameraPermission();
                 }}

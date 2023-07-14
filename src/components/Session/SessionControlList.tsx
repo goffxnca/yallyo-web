@@ -37,6 +37,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
                 Icon={<MicrophoneIcon />}
                 disabled={!controls.micOn}
                 tooltip={controls.micOn ? "Mute" : "Unmute"}
+                mobileTooltip={controls.micOn ? "Unmuted" : "Muted"}
                 onClick={() => {
                   // dispatch(toggleLocalCam());
                   onToggleMic(controls.micOn);
@@ -49,6 +50,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
                 Icon={<VideoCameraIcon />}
                 disabled={!controls.camOn}
                 tooltip={controls.camOn ? "Camera Off" : "Camera On"}
+                mobileTooltip={controls.camOn ? "Camera On" : "Camera Off"}
                 // tooltip={"Camera feature is coming soon"}
                 onClick={() => {
                   // dispatch(toggleLocalCam());
@@ -62,6 +64,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
                 Icon={<ChatBubbleBottomCenterTextIcon />}
                 // cross={!controls.chatOn}
                 tooltip={localControls.chatOn ? "Hide Chat" : "Show Chat"}
+                // mobileTooltip={localControls.chatOn ? "Show Chat" : "Hide Chat"}
                 pendingNum={messages.filter((message) => !message.read).length}
                 onClick={() => {
                   dispatch(toggleLocalChat());
@@ -73,6 +76,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               Icon={<ComputerDesktopIcon />}
               disabled={true}
               tooltip={"Share screen is not supported yet"}
+              mobileTooltip={"Share screen is not supported yet"}
               onClick={() => {}}
             />
           </>

@@ -6,6 +6,7 @@ interface Props {
   pendingNum?: number;
   bgClasses?: string;
   tooltip?: string;
+  mobileTooltip?: string;
   onClick?: Function;
 }
 
@@ -16,6 +17,7 @@ const SessionControlItem = React.memo(
     pendingNum = 0,
     bgClasses,
     tooltip,
+    mobileTooltip,
     onClick,
   }: Props) => {
     const [mobileTooltipVisible, setMobileTooltipVisible] = useState(false);
@@ -74,7 +76,7 @@ const SessionControlItem = React.memo(
         {mobileTooltipVisible && (
           <div className="block lg:hidden">
             <div className="absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-red-500 px-2 rounded-md whitespace-nowrap">
-              {tooltip}
+              {mobileTooltip}
             </div>
           </div>
         )}
