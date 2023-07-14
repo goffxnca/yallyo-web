@@ -90,8 +90,6 @@ const JoinerItemCool = ({
             <div className="rounded-lg overflow-hidden z-20">
               <video
                 id={`video-${userId}`}
-                autoPlay
-                playsInline
                 controls={false}
                 //   style={{
                 //     objectFit: "cover",
@@ -104,6 +102,8 @@ const JoinerItemCool = ({
                   height: boxSize,
                 }}
                 className="rounded-lg"
+                playsInline
+                autoPlay
                 muted={muted}
               />
             </div>
@@ -113,6 +113,7 @@ const JoinerItemCool = ({
               id={`audio-${userId}`}
               controls={true}
               autoPlay={true}
+              muted={muted}
             ></audio>
 
             {displayName && (

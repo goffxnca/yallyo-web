@@ -408,7 +408,7 @@ const InputDevicesSettings = ({
 
       <div>
         <button
-          className="flex w-full justify-center rounded-md bg-accent1 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent2"
+          className="flex w-full justify-center rounded-md bg-accent1 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-accent2 hover:text-secondary"
           onClick={onButtonSubmitClick}
         >
           {loading && (
