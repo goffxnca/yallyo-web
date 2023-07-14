@@ -55,13 +55,6 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               />
             )}
 
-            <SessionControlItem
-              Icon={<ComputerDesktopIcon />}
-              disabled={true}
-              tooltip={"Share screen is not supported yet"}
-              onClick={() => {}}
-            />
-
             {room.features.chat && (
               <SessionControlItem
                 Icon={<ChatBubbleBottomCenterTextIcon />}
@@ -73,6 +66,13 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
                 }}
               />
             )}
+
+            <SessionControlItem
+              Icon={<ComputerDesktopIcon />}
+              disabled={true}
+              tooltip={"Share screen is not supported yet"}
+              onClick={() => {}}
+            />
           </>
         )}
 
