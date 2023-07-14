@@ -55,9 +55,11 @@ const SessionControlItem = React.memo(
           </div>
         )}
 
-        <div className="hidden absolute -top-8 left-0 text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
+        {/* <div className="hidden lg:block"> */}
+        <div className="hidden absolute -bottom-8 left-[50%] transform translate-x-[-50%] text-sm bg-secondary px-2 rounded-md group-hover:block whitespace-nowrap">
           {tooltip}
         </div>
+        {/* </div> */}
       </div>
     );
   }

@@ -19,7 +19,9 @@ interface Props {
 }
 
 const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
-  const { messages, room } = useSelector((state: RootState) => state.session);
+  const { messages, room, localControls } = useSelector(
+    (state: RootState) => state.session
+  );
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -46,7 +48,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               <SessionControlItem
                 Icon={<VideoCameraIcon />}
                 disabled={!controls.camOn}
-                tooltip={controls.camOn ? "Cam Off" : "Cam On"}
+                tooltip={controls.camOn ? "Camera Off" : "Camera On"}
                 // tooltip={"Camera feature is coming soon"}
                 onClick={() => {
                   // dispatch(toggleLocalCam());
@@ -59,7 +61,7 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
               <SessionControlItem
                 Icon={<ChatBubbleBottomCenterTextIcon />}
                 // cross={!controls.chatOn}
-                // tooltip={controls.chatOn ? "Hide Chat Messags" : "Show Chat Messags"}
+                tooltip={localControls.chatOn ? "Hide Chat" : "Show Chat"}
                 pendingNum={messages.filter((message) => !message.read).length}
                 onClick={() => {
                   dispatch(toggleLocalChat());
