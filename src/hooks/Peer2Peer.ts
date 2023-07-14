@@ -145,10 +145,10 @@ class Peer2Peer {
 
       // this.connectSoundMeter(stream);
 
-      const localUserAudio = this.getAudioElement(
+      const localUserVideo = this.getVideoElement(
         this.settings?.localUserId as string
       );
-      localUserAudio.srcObject = stream;
+      localUserVideo.srcObject = stream;
       this.localStream = stream;
 
       console.log(
