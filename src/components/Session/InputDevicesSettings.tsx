@@ -129,7 +129,7 @@ const InputDevicesSettings = ({
           setMicId(audioTrack.id);
           setMicName(audioTrack.label);
 
-          await renderAudioVisualizer(stream);
+          // await renderAudioVisualizer(stream);
           console.log("requestMicPermission success");
         } else {
           console.error("requestMicPermission failed: No audio track found");
@@ -202,7 +202,7 @@ const InputDevicesSettings = ({
         setMicId(audioTrack.id);
         setMicName(audioTrack.label);
 
-        await renderAudioVisualizer(stream);
+        // await renderAudioVisualizer(stream);
         console.log("requestMicrophoneAndCameraPermissions success for audio");
       } else {
         console.error(
