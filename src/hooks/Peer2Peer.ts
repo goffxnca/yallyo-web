@@ -114,8 +114,14 @@ class Peer2Peer {
 
     const call = this.peer.call(remoteId, this.localStream);
     call.on("stream", (remoteStream: MediaStream) => {
-      const remoteUserVideo = this.getVideoElement(remoteId as string);
-      remoteUserVideo.srcObject = remoteStream;
+      if (this.settings?.deviceSettings.camId) {
+        const remoteUserVideo = this.getVideoElement(remoteId as string);
+        remoteUserVideo.srcObject = remoteStream;
+      } else {
+        const remoteUserAudio = this.getAudioElement(remoteId as string);
+        remoteUserAudio.srcObject = remoteStream;
+      }
+
       console.log(`Render remote stream for ${remoteId} successfully`);
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteMediaStreamed(remoteId);
