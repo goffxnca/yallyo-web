@@ -63,7 +63,7 @@ const JoinerItemCool = ({
       >
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
-          {controls && !controls.camOn && (
+          {/* {controls && !controls.camOn && (
             <div className="w-full h-full ">
               <div className="text-white flex justify-center items-center h-full">
                 <div className="text-white flex justify-center">
@@ -84,13 +84,13 @@ const JoinerItemCool = ({
                 isMe={isMe}
               />
             </div>
-          )}
+          )} */}
 
           <div className="relative h-full w-full">
             <div className="rounded-lg overflow-hidden z-20">
               <video
                 id={`video-${userId}`}
-                controls={false}
+                controls={true}
                 //   style={{
                 //     objectFit: "cover",
                 //     width: "100%",
