@@ -109,7 +109,7 @@ const JoinerItemCool = ({
             </div> */}
 
             <audio
-              className="hidden"
+              // className="hidden"
               id={`audio-${userId}`}
               controls={true}
               autoPlay={true}
