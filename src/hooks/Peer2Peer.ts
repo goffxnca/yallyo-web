@@ -211,6 +211,11 @@ class Peer2Peer {
       localUserVideo.srcObject = stream;
       this.localStream = stream;
 
+      if (!this.settings?.deviceSettings.camOn) {
+        alert("KUY");
+        localUserVideo.play();
+      }
+
       if (this.settings) {
         this.settings.camOnOnce = true;
       }
