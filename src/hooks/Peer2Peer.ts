@@ -66,6 +66,7 @@ class Peer2Peer {
           if (this.settings?.deviceSettings.camId) {
             const remoteUserVideo = this.getVideoElement(call.peer);
             remoteUserVideo.srcObject = remoteStream;
+            remoteUserVideo.play();
           } else {
             const remoteUserAudio = this.getAudioElement(call.peer);
             remoteUserAudio.srcObject = remoteStream;
@@ -117,6 +118,7 @@ class Peer2Peer {
       if (this.settings?.deviceSettings.camId) {
         const remoteUserVideo = this.getVideoElement(remoteId as string);
         remoteUserVideo.srcObject = remoteStream;
+        remoteUserVideo.play();
       } else {
         const remoteUserAudio = this.getAudioElement(remoteId as string);
         remoteUserAudio.srcObject = remoteStream;
@@ -213,7 +215,7 @@ class Peer2Peer {
 
       if (!this.settings?.deviceSettings.camOn) {
         setTimeout(() => {
-          alert("KUY");
+          alert("KUY2");
           localUserVideo.play();
         }, 20000);
       }
