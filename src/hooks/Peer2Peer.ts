@@ -211,7 +211,7 @@ class Peer2Peer {
       localUserVideo.srcObject = stream;
       this.localStream = stream;
 
-      if (this.settings) {
+      if (this.settings && this.settings?.deviceSettings.camOn) {
         this.settings.camOnOnce = true;
       }
 
@@ -231,17 +231,11 @@ class Peer2Peer {
     console.log("upgradeToAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
         video: true,
       });
 
-      const [audioTrack] = stream.getAudioTracks();
-      if (!audioTrack) {
-        return console.error(
-          "upgradeToAudioAndVideoStream failed because no audio track found"
-        );
-      }
-
+      const [audioTrack] = (this.localStream &&
+        this.localStream.getVideoTracks()) || [null];
       const [videoTrack] = stream.getVideoTracks();
       if (!videoTrack) {
         return console.error(
@@ -249,19 +243,23 @@ class Peer2Peer {
         );
       }
 
+      this.localStream?.addTrack(videoTrack);
+
       // this.connectSoundMeter(stream);
-      const localUserVideo = this.getVideoElement(
-        this.settings?.localUserId as string
-      );
-      localUserVideo.srcObject = stream;
-      this.localStream = stream;
+      // const localUserVideo = this.getVideoElement(
+      //   this.settings?.localUserId as string
+      // );
+      // localUserVideo.srcObject = stream;
+      // this.localStream = stream;
 
       if (this.settings) {
         this.settings.camOnOnce = true;
       }
 
       console.log(
-        `upgradeToAudioAndVideoStream successfully using mic: ${audioTrack.label} cam: ${videoTrack.label}`
+        `upgradeToAudioAndVideoStream successfully using mic: ${
+          audioTrack && audioTrack.label
+        } cam: ${videoTrack.label}`
       );
     } catch (error: unknown) {
       console.error("upgradeToAudioAndVideoStream failed with error:" + error);
