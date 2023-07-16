@@ -116,11 +116,11 @@ const MultiplePeers = () => {
   useEffect(() => {
     return () => {
       if (sessionsSocket) {
-        alert("clean sessionsSocket");
+        // alert("clean sessionsSocket");
         sessionsSocket.disconnect();
       }
       if (p2p.peer) {
-        alert("clean p2p");
+        // alert("clean p2p");
         p2p.disconnect();
       }
     };

@@ -66,7 +66,16 @@ class Peer2Peer {
           if (this.settings?.deviceSettings.camId) {
             const remoteUserVideo = this.getVideoElement(call.peer);
             remoteUserVideo.srcObject = remoteStream;
-            remoteUserVideo.play();
+
+            if (this.isSafari()) {
+              alert(
+                "this is safari browser receiving peer1 stream and run play"
+              );
+
+              remoteUserVideo.play().then(() => {
+                console.log("Run .play for Safari browser");
+              });
+            }
           } else {
             const remoteUserAudio = this.getAudioElement(call.peer);
             remoteUserAudio.srcObject = remoteStream;
@@ -118,7 +127,13 @@ class Peer2Peer {
       if (this.settings?.deviceSettings.camId) {
         const remoteUserVideo = this.getVideoElement(remoteId as string);
         remoteUserVideo.srcObject = remoteStream;
-        remoteUserVideo.play();
+
+        if (this.isSafari()) {
+          alert("this is safari browser receiving peer2 stream and run play");
+          remoteUserVideo.play().then(() => {
+            console.log("Run .play for Safari browser");
+          });
+        }
       } else {
         const remoteUserAudio = this.getAudioElement(remoteId as string);
         remoteUserAudio.srcObject = remoteStream;
@@ -138,7 +153,6 @@ class Peer2Peer {
   }
 
   startLocalAudioStream = async () => {
-    alert("startLocalAudioStream run");
     console.log("startLocalAudioStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -153,7 +167,6 @@ class Peer2Peer {
       }
 
       if (!this.settings?.deviceSettings.micOn) {
-        alert("immediately turned of mic1");
         audioTrack.enabled = false;
       }
 
@@ -176,7 +189,6 @@ class Peer2Peer {
   };
 
   startLocalAudioAndVideoStream = async () => {
-    alert("startLocalAudioAndVideoStream run");
     console.log("startLocalAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -191,7 +203,6 @@ class Peer2Peer {
         );
       }
       if (!this.settings?.deviceSettings.micOn) {
-        alert("immediately turned off mic2");
         audioTrack.enabled = false;
       }
 
@@ -202,7 +213,6 @@ class Peer2Peer {
         );
       }
       if (!this.settings?.deviceSettings.camOn) {
-        alert("immediately turned off cam2");
         videoTrack.enabled = false;
       }
 
@@ -229,7 +239,6 @@ class Peer2Peer {
   };
 
   upgradeToAudioAndVideoStream = async () => {
-    alert("Upgrade run");
     console.log("upgradeToAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -446,6 +455,9 @@ class Peer2Peer {
   private getAudioElement = (peerId: string) => {
     return document.getElementById(`audio-${peerId}`) as HTMLVideoElement;
   };
+
+  private isSafari = () =>
+    window ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false;
 
   private handleGetUserMediaError = (error: unknown, type: string) => {
     if (error instanceof DOMException) {

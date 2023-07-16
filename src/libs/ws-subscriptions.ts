@@ -49,7 +49,7 @@ export const subscribeSessionsUpdates = (
   const peersSocket = io(
     `${ENVS.API_WS_URL}/sessions?rid=${roomId}&uid=${user.uid}&mon=${
       deviceSettings.micOn ? 1 : 0
-    }&con=${deviceSettings.camOn ? 1 : 0}`
+    }&con=${deviceSettings.camOn ? 1 : 0}&dname=${user.displayName}`
   );
 
   peersSocket.on("connect", () => {
