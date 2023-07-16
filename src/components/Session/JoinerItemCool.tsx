@@ -63,8 +63,8 @@ const JoinerItemCool = ({
       >
         {/* James Doe */}
         <div className="relative w-full overflow-hidden">
-          {/* {controls && !controls.camOn && (
-            <div className="w-full h-full ">
+          {controls && !controls.camOn && (
+            <div className="w-full h-full bg-transparent">
               <div className="text-white flex justify-center items-center h-full">
                 <div className="text-white flex justify-center">
                   <Avatar
@@ -84,7 +84,7 @@ const JoinerItemCool = ({
                 isMe={isMe}
               />
             </div>
-          )} */}
+          )}
 
           <div className="relative h-full w-full">
             <div className="rounded-lg overflow-hidden z-20">
