@@ -68,10 +68,6 @@ class Peer2Peer {
             remoteUserVideo.srcObject = remoteStream;
 
             if (this.isSafari()) {
-              alert(
-                "this is safari browser receiving peer1 stream and run play"
-              );
-
               remoteUserVideo.play().then(() => {
                 console.log("Run .play for Safari browser");
               });
@@ -129,7 +125,6 @@ class Peer2Peer {
         remoteUserVideo.srcObject = remoteStream;
 
         if (this.isSafari()) {
-          alert("this is safari browser receiving peer2 stream and run play");
           remoteUserVideo.play().then(() => {
             console.log("Run .play for Safari browser");
           });
