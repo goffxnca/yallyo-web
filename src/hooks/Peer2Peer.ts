@@ -457,7 +457,10 @@ class Peer2Peer {
   };
 
   private isSafari = () =>
-    window ? /^((?!chrome|android).)*safari/i.test(navigator.userAgent) : false;
+    navigator
+      ? navigator.userAgent.indexOf("Safari") > -1 &&
+        navigator.userAgent.indexOf("Chrome") <= -1
+      : false;
 
   private handleGetUserMediaError = (error: unknown, type: string) => {
     if (error instanceof DOMException) {
