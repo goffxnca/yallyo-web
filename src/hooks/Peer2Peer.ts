@@ -136,6 +136,7 @@ class Peer2Peer {
   }
 
   startLocalAudioStream = async () => {
+    alert("startLocalAudioStream run");
     console.log("startLocalAudioStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -173,6 +174,7 @@ class Peer2Peer {
   };
 
   startLocalAudioAndVideoStream = async () => {
+    alert("startLocalAudioAndVideoStream run");
     console.log("startLocalAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -225,6 +227,7 @@ class Peer2Peer {
   };
 
   upgradeToAudioAndVideoStream = async () => {
+    alert("Upgrade run");
     console.log("upgradeToAudioAndVideoStream");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
