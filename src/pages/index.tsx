@@ -2,6 +2,7 @@ import Friends from "@/components/Friends/FriendList";
 import PillItem from "@/components/UIs/PillItem";
 import RoomList from "@/components/Rooms/RoomList";
 import { useEffect, useRef, useState } from "react";
+import Head from "next/head";
 
 import Modal from "@/components/UIs/Modal";
 import NewRoomForm from "@/components/Rooms/NewRoomForm";
@@ -179,6 +180,14 @@ const HomePage = () => {
 
   return (
     <PageContainer>
+      <Head>
+        <title>Yallyo.com | Talk with new friends online worldwide</title>
+        <meta
+          name="description"
+          content="Yallyo.com is a platform designed for language learners to practice speaking English with native speakers and individuals from diverse cultures around the world. Connect with real people and engage in voice calls, video calls, and group chat rooms. Start improving your English fluency today and make meaningful connections. Join our international community and make English learning accessible to everyone, regardless of their location. Discover a new way to learn and connect on Yallyo.com"
+        />
+        <link rel="canonical" href="https://yallyo.com" />
+      </Head>
       <HeaderControls
         onClickCreateRoom={() => {
           setShowNewRoomFormModal(true);
