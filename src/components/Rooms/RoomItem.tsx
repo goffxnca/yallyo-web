@@ -4,13 +4,19 @@ import { useEffect, memo, useState } from "react";
 import {
   MicrophoneIcon,
   NoSymbolIcon,
+  TrashIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { IRoom } from "@/types/common";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { deleteRoomAsync } from "@/store/roomSlice";
+import { useMediaQuery } from "usehooks-ts";
 
 interface Props extends IRoom {
   createdByMe: boolean;
+  currentLoggedInUserIsAdmin: boolean;
 }
 
 const RoomItem = memo((room: Props) => {
@@ -25,11 +31,18 @@ const RoomItem = memo((room: Props) => {
     order,
     size,
     features,
+    createdBy,
     createdByMe,
+    currentLoggedInUserIsAdmin,
   } = room;
-  const isFullRoom = size === joiners.length;
 
+  const dispatch: AppDispatch = useDispatch();
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const { status } = useSelector((state: RootState) => state.room);
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+
+  const isFullRoom = size === joiners.length;
+  const isLoading = status === "loading";
 
   useEffect(() => {
     setIsAnimating(true);
@@ -84,7 +97,17 @@ const RoomItem = memo((room: Props) => {
         ))} */}
       </ul>
       <div className="relative flex items-center text-white">
-        {/* <div>bottom left</div> */}
+        {currentLoggedInUserIsAdmin && (
+          <div className="absolute left-0 bottom-0 text-gray-500">
+            <TrashIcon
+              className="w-5 h-5 text-gray-500 hover:text-white cursor-pointer"
+              onClick={() => {
+                dispatch(deleteRoomAsync(_id));
+              }}
+            />
+            {isLoading && <div className="text-white">Loading...</div>}
+          </div>
+        )}
         {isFullRoom ? (
           <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
             <NoSymbolIcon className="h-5 w-5 mr-2" />
@@ -93,7 +116,7 @@ const RoomItem = memo((room: Props) => {
         ) : (
           <a
             href={`/room/${sid}`}
-            // target="_blank"
+            target={isDesktop ? "_blank" : "_self"}
             className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
           >
             Join Now

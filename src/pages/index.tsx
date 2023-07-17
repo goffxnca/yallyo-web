@@ -8,10 +8,9 @@ import NewRoomForm from "@/components/Rooms/NewRoomForm";
 import HeaderControls from "@/components/UIs/HeaderControls";
 import Rules from "@/components/Rules";
 import { ENVS, LANGAUGE_LEVEL, TOPICS } from "@/utils/constants";
-import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createRoom,
+  createRoomAsync,
   fetchRoomsAsync,
   fetchRoomsGroupedByLanguageAsync,
   updateFilters,
@@ -165,7 +164,7 @@ const HomePage = () => {
       return;
     }
 
-    dispatch(createRoom(data))
+    dispatch(createRoomAsync(data))
       .unwrap()
       .then((createdRoom) => {
         setShowNewRoomFormModal(false);

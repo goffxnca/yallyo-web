@@ -33,7 +33,7 @@ const initialState: RoomState = {
 };
 
 export const fetchRoomsAsync = createAsyncThunk(
-  "room/fetchRooms",
+  "fetchRoomsAsync",
   async (options: RoomFetchOptions) => {
     const endpoint = `${ENVS.API_URL}/rooms?language=${options.filters?.language}&level=${options.filters?.level}&topic=${options.filters?.topic}&pnum=${options.pagination.pnum}&psize=${options.pagination.psize}`;
 
@@ -48,7 +48,7 @@ export const fetchRoomsAsync = createAsyncThunk(
 );
 
 export const fetchRoomsGroupedByLanguageAsync = createAsyncThunk(
-  "room/fetchRoomsGroupedByLanguage",
+  "fetchRoomsGroupedByLanguageAsync",
   async () => {
     const endpoint = `${ENVS.API_URL}/rooms/groupedByLanguage`;
     const response = await fetch(endpoint);
@@ -62,8 +62,8 @@ export const fetchRoomsGroupedByLanguageAsync = createAsyncThunk(
   }
 );
 
-export const createRoom = createAsyncThunk(
-  "room/createRoom",
+export const createRoomAsync = createAsyncThunk(
+  "createRoomAsync",
   async (room: any, thunkAPI) => {
     const payload: IRoom = {
       ...room,
@@ -88,6 +88,27 @@ export const createRoom = createAsyncThunk(
     }
     const createdRoom = await response.json();
     return createdRoom as IRoom;
+  }
+);
+
+export const deleteRoomAsync = createAsyncThunk(
+  "deleteRoomAsync",
+  async (roomId: string, thunkAPI) => {
+    const currentState = thunkAPI.getState() as RootState;
+
+    const endpoint = `${ENVS.API_URL}/rooms/${roomId}`;
+    const response = await fetch(endpoint, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${currentState.auth.user?.idToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const deletedRoom = await response.json();
+    return deletedRoom as IRoom;
   }
 );
 
@@ -244,17 +265,29 @@ const roomSlice = createSlice({
       });
 
     builder
-      .addCase(createRoom.pending, (state) => {
+      .addCase(createRoomAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(createRoom.fulfilled, (state, action) => {
+      .addCase(createRoomAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.recentCreatedRoomSid = action.payload.sid!;
         // state.rooms = [action.payload, ...state.rooms];
       })
-      .addCase(createRoom.rejected, (state, action) => {
+      .addCase(createRoomAsync.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message ?? "Failed to create room";
+      });
+
+    builder
+      .addCase(deleteRoomAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteRoomAsync.fulfilled, (state, action) => {
+        state.status = "success";
+      })
+      .addCase(deleteRoomAsync.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message ?? "Failed to delete room";
       });
   },
 });

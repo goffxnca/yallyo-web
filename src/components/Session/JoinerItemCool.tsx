@@ -13,6 +13,7 @@ interface Props {
   photoUrl: string;
   showStatusIndicator: boolean;
   isMe: boolean;
+  isHost: boolean;
   speaking: boolean;
   muted: boolean;
 }
@@ -25,6 +26,7 @@ const JoinerItemCool = ({
   photoUrl,
   showStatusIndicator,
   isMe,
+  isHost,
   speaking,
   muted,
 }: Props) => {
@@ -57,12 +59,18 @@ const JoinerItemCool = ({
         width: boxSize,
       }}
     >
-      {/* //Video From Camera */}
+      {/* Joiner */}
       <div
         className={`flex items-stretch justify-center h-full w-full bg-secondary rounded-lg overflow-hidden `}
       >
-        {/* James Doe */}
         <div className="relative w-full overflow-hidden">
+          {isHost && (
+            <div className="absolute right-2 top-2 text-accent2 text-[10px] z-30 bg-black rounded-md px-2">
+              Host
+            </div>
+          )}
+
+          {/* Avatar Mode */}
           {controls && !controls.camOn && (
             <div className="w-full h-full">
               <div className="text-white flex justify-center items-center h-full">
@@ -77,15 +85,10 @@ const JoinerItemCool = ({
                   />
                 </div>
               </div>
-
-              <JoinerItemCoolFooter
-                controls={controls}
-                displayName={displayName}
-                isMe={isMe}
-              />
             </div>
           )}
 
+          {/* Video Mode */}
           <div className="relative h-full w-full">
             <div className="rounded-lg overflow-hidden z-20">
               <video
@@ -115,16 +118,16 @@ const JoinerItemCool = ({
               autoPlay={true}
               muted={muted}
             ></audio>
-
-            {displayName && (
-              <JoinerItemCoolFooter
-                controls={controls}
-                displayName={displayName}
-                isMe={isMe}
-              />
-            )}
           </div>
         </div>
+
+        {displayName && (
+          <JoinerItemCoolFooter
+            controls={controls}
+            displayName={displayName}
+            isMe={isMe}
+          />
+        )}
       </div>
 
       {showStatusIndicator && status !== "connected" && (

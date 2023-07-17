@@ -6,7 +6,7 @@
 // import { AudioWorkletProcessor } from "standardized-audio-context";
 
 const SMOOTHING_FACTOR = 0.8;
-const FRAME_PER_SECOND = 10;
+const FRAME_PER_SECOND = 5;
 const FRAME_INTERVAL = 1 / FRAME_PER_SECOND;
 
 /**
@@ -15,7 +15,7 @@ const FRAME_INTERVAL = 1 / FRAME_PER_SECOND;
  * @class VolumeMeter
  * @extends AudioWorkletProcessor
  */
-class VolumeMeter extends AudioWorkletProcessor {
+class VolumeMeter5FPS extends AudioWorkletProcessor {
   constructor() {
     super();
     this._lastUpdate = currentTime;
@@ -37,6 +37,9 @@ class VolumeMeter extends AudioWorkletProcessor {
   process(inputs, outputs) {
     // This example only handles mono channel.
     const inputChannelData = inputs[0][0];
+    if (!inputChannelData) {
+      return;
+    }
 
     // Post a message to the node every 16ms.
     if (currentTime - this._lastUpdate > FRAME_INTERVAL) {
@@ -49,4 +52,4 @@ class VolumeMeter extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor("volume-meter", VolumeMeter);
+registerProcessor("volume-meter-5fps", VolumeMeter5FPS);

@@ -28,7 +28,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   // console.log("SessionContainer");
 
   const { user } = useSelector((state: RootState) => state.auth);
-  const { peers, localControls } = useSelector(
+  const { peers, localControls, room } = useSelector(
     (state: RootState) => state.session
   );
 
@@ -45,6 +45,8 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
     }
   }, [user, peers]);
 
+  const isMicOn = localPeerData && localPeerData.controls.micOn;
+
   useEffect(() => {
     if (isDesktop) {
       dispatch(toggleLocalChat());
@@ -52,25 +54,33 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
   }, [isDesktop, dispatch]);
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     if (p2p) {
-      let timeout: NodeJS.Timeout;
       const speakHandler = (volume: number) => {
         if (timeout) {
           clearTimeout(timeout);
         }
-        setAmISpeaking(true);
-        timeout = setTimeout(() => {
+
+        if (isMicOn) {
+          setAmISpeaking(true);
+          timeout = setTimeout(() => {
+            setAmISpeaking(false);
+          }, 2000);
+        } else {
           setAmISpeaking(false);
-        }, 2000);
+        }
       };
 
       p2p.events.on("speak", speakHandler);
 
       return () => {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
         p2p.events.off("speak", speakHandler);
       };
     }
-  }, [p2p]);
+  }, [p2p, isMicOn]);
 
   useEffect(() => {
     if (p2p && p2p.peer) {
@@ -243,6 +253,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   photoUrl={user?.photoURL!}
                   showStatusIndicator={true}
                   isMe={true}
+                  isHost={room?.createdBy === user?.uid}
                   speaking={amISpeaking}
                   muted={true}
                 />
@@ -269,6 +280,7 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                         photoUrl={peer.userInfo.photoURL}
                         showStatusIndicator={true}
                         isMe={false}
+                        isHost={room?.createdBy === peer.userId}
                         speaking={peer.controls.speaking}
                         muted={false}
                       />

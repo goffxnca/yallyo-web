@@ -16,6 +16,8 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
 
   const { user } = useSelector((state: RootState) => state.auth);
 
+  const isAdmin = user?.email === "goffxnca@gmail.com";
+
   return (
     <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
       {showOnTop &&
@@ -38,6 +40,7 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
           active={room.active}
           createdAt={room.createdAt}
           createdBy={room.createdBy}
+          currentLoggedInUserIsAdmin={isAdmin}
         ></RoomItem>
       ))}
 

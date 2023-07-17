@@ -273,12 +273,15 @@ const InputDevicesSettings = ({
     // ) as HTMLMeterElement;
 
     const audioContext = new AudioContext();
-    await audioContext.audioWorklet.addModule("/volume-meter.js");
+    await audioContext.audioWorklet.addModule("/volume-meter-10fps.js");
     const micNode = audioContext.createMediaStreamSource(audioStream);
-    const volumeMeterNode = new AudioWorkletNode(audioContext, "volume-meter");
+    const volumeMeterNode = new AudioWorkletNode(
+      audioContext,
+      "volume-meter-10fps"
+    );
     volumeMeterNode.port.onmessage = ({ data }) => {
       // meterElement.value = data * 500;
-      console.log(`data: ${data} data*500: ${data * 500}`);
+      // console.log(`data: ${data} data*500: ${data * 500}`);
       const volume = data * 500;
       calculateAudioLevelBar(volume);
     };

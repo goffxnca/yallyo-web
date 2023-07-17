@@ -23,12 +23,14 @@ class Peer2Peer {
   events = new EventEmitter();
   micProcesser: {
     audioContext: AudioContext | null;
-    soundMeter: ISoundMeterInterface | null;
-    meterRefreshInverval: NodeJS.Timeout | null;
+    volumeMeterNode: AudioWorkletNode | null;
+    micNode: MediaStreamAudioSourceNode | null;
+    // soundMeter: ISoundMeterInterface | null;
   } = {
     audioContext: null,
-    soundMeter: null,
-    meterRefreshInverval: null,
+    volumeMeterNode: null,
+    micNode: null,
+    // soundMeter: null,
   };
 
   mediaStreamConstraints: MediaStreamConstraints = {
@@ -90,15 +92,14 @@ class Peer2Peer {
       this.updateStatus("OPEN");
     });
 
-    //The callee receive data channel connection
-    // this.peer.on("connection", (conn: any) => {
-    //   this.updateStatus("CONNECTION");
-    //   conn.on("data", (data: ISocketIOMessage) => {
-    //     if (this.settings) {
-    //       this.settings.onDataChannelReceived(data);
-    //     }
-    //   });
-    // });
+    // The callee receive data channel connection
+    this.peer.on("connection", (conn: any) => {
+      conn.on("data", (data: ISocketIOMessage) => {
+        if (this.settings) {
+          this.settings.onDataChannelReceived(data);
+        }
+      });
+    });
 
     this.peer.on("disconnected", () => {
       this.updateStatus("DISCONNECTED");
@@ -138,12 +139,12 @@ class Peer2Peer {
       this.updateStatus("CONNECTED");
       this.settings?.onRemoteMediaStreamed(remoteId);
 
-      // const conn = this.peer.connect(remoteId, { serialization: "json" });
-      // conn.on("data", (data: ISocketIOMessage) => {
-      //   if (this.settings) {
-      //     this.settings.onDataChannelReceived(data);
-      //   }
-      // });
+      const conn = this.peer.connect(remoteId, { serialization: "json" });
+      conn.on("data", (data: ISocketIOMessage) => {
+        if (this.settings) {
+          this.settings.onDataChannelReceived(data);
+        }
+      });
     });
   }
 
@@ -172,6 +173,8 @@ class Peer2Peer {
       );
       localUserVideo.srcObject = stream;
       this.localStream = stream;
+
+      await this.renderAudioVisualizer(stream);
 
       console.log(
         "Start local audio stream successfully using mic: " + audioTrack.label
@@ -221,6 +224,8 @@ class Peer2Peer {
       if (this.settings) {
         this.settings.camOnOnce = true;
       }
+
+      await this.renderAudioVisualizer(stream);
 
       console.log(
         `startLocalAudioAndVideoStream successfully using mic: ${audioTrack.label} cam: ${videoTrack.label}`
@@ -332,18 +337,18 @@ class Peer2Peer {
 
         track.enabled = !track.enabled;
 
-        const { soundMeter, audioContext } = this.micProcesser;
-        if (track.enabled) {
-          if (soundMeter && audioContext) {
-            soundMeter.script.connect(audioContext.destination);
-            console.log("Sound meter is connected");
-          }
-        } else {
-          if (soundMeter) {
-            soundMeter.script.disconnect();
-            console.log("Sound meter is disconnected");
-          }
-        }
+        // const { soundMeter, audioContext } = this.micProcesser;
+        // if (track.enabled) {
+        //   if (soundMeter && audioContext) {
+        //     soundMeter.script.connect(audioContext.destination);
+        //     console.log("Sound meter is connected");
+        //   }
+        // } else {
+        //   if (soundMeter) {
+        //     soundMeter.script.disconnect();
+        //     console.log("Sound meter is disconnected");
+        //   }
+        // }
 
         //TODO: need to re-test whether it use property enabled or muted
         // track.stop();
@@ -397,9 +402,16 @@ class Peer2Peer {
       this.localStream = null;
     }
 
-    const { soundMeter, audioContext } = this.micProcesser;
-    if (soundMeter && audioContext) {
-      soundMeter.stop();
+    // const { soundMeter, audioContext } = this.micProcesser;
+    // if (soundMeter && audioContext) {
+    //   soundMeter.stop();
+    //   audioContext.close();
+    // }
+
+    const { micNode, volumeMeterNode, audioContext } = this.micProcesser;
+    if (micNode && volumeMeterNode && audioContext) {
+      micNode.disconnect();
+      volumeMeterNode.disconnect();
       audioContext.close();
     }
 
@@ -429,14 +441,39 @@ class Peer2Peer {
     }
   };
 
-  private connectSoundMeter = (stream: MediaStream) => {
-    this.micProcesser.audioContext = new AudioContext();
-    console.log("sample rate: " + this.micProcesser.audioContext.sampleRate);
-    this.micProcesser.soundMeter = new SoundMeter(
-      this.micProcesser.audioContext,
-      this.notifySpeak
+  // private connectSoundMeter = (stream: MediaStream) => {
+  //   this.micProcesser.audioContext = new AudioContext();
+  //   console.log("sample rate: " + this.micProcesser.audioContext.sampleRate);
+  //   this.micProcesser.soundMeter = new SoundMeter(
+  //     this.micProcesser.audioContext,
+  //     this.notifySpeak
+  //   );
+  //   this.micProcesser.soundMeter.connectToSource(stream);
+  // };
+
+  private renderAudioVisualizer = async (audioStream: MediaStream) => {
+    const audioContext = new AudioContext();
+    await audioContext.audioWorklet.addModule("/volume-meter-5fps.js");
+    const micNode = audioContext.createMediaStreamSource(audioStream);
+    const volumeMeterNode = new AudioWorkletNode(
+      audioContext,
+      "volume-meter-5fps"
     );
-    this.micProcesser.soundMeter.connectToSource(stream);
+    volumeMeterNode.port.onmessage = ({ data }) => {
+      // meterElement.value = data * 500;
+      const volume = data * 500;
+      // console.log("recieving volume:", volume);
+
+      if (volume > 10) {
+        // console.log("speaking with volume:", volume);
+        this.notifySpeak(volume);
+      }
+    };
+    micNode.connect(volumeMeterNode).connect(audioContext.destination);
+
+    this.micProcesser.audioContext = audioContext;
+    this.micProcesser.micNode = micNode;
+    this.micProcesser.volumeMeterNode = volumeMeterNode;
   };
 
   private notifySpeak = (volume: number) => {
