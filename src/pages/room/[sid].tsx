@@ -237,8 +237,8 @@ const RoomSessionPage = () => {
         }}
       >
         <InputDevicesSettings
-          micRequired={room.features.audio}
-          camRequired={room.features.video}
+          micRequired={room.features && room.features.audio}
+          camRequired={room.features && room.features.video}
           onDevicesReady={() => {
             setShowDevicesSettingsModal(false);
           }}
