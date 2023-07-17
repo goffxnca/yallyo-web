@@ -3,6 +3,7 @@ const LANGUAGES = [
   "English",
   "Chinese",
   "Spanish",
+  "Thai",
   // "Hindi",
   // "Arabic",
   // "Bengali",
@@ -100,6 +101,7 @@ const LANGUAGES = [
   // "Swahili",
   // "Swedish",
   // "Tagalog (Filipino)",
+
   // "Tajik",
   // "Tatar",
   // "Tswana",
