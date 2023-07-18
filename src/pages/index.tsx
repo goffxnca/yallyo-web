@@ -244,7 +244,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
+        {/* 
         <div className="my-2"></div>
 
         <div>
@@ -259,7 +259,7 @@ const HomePage = () => {
               />
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="my-2"></div>
 
