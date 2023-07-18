@@ -67,7 +67,7 @@ const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
             dispatch(resetAccount());
           }}
         >
-          <UserProfile userId={userId} name={name} url={url} />
+          <UserProfile userId={userId} name={name} color={color} url={url} />
         </Modal>
       )}
     </div>
