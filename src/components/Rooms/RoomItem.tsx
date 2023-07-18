@@ -129,7 +129,7 @@ const RoomItem = memo((room: Props) => {
         )}
         <div className="absolute right-0 bottom-0 text-gray-500">
           <div className="flex space-x-1">
-            {room && room.features && room.features.audio && (
+            {room && room.features && !room.features.video && (
               <MicrophoneIcon className="w-5 h-5" />
             )}
             {room && room.features && room.features.video && (
