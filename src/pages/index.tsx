@@ -29,6 +29,7 @@ import {
   addCreateRoomQuota,
   readCurrentCreateRoomQuotaCount,
 } from "@/utils/localstorage-utils";
+import Lobby from "@/components/Lobby/Lobby";
 
 const HomePage = () => {
   // console.log("HomePage");
@@ -297,6 +298,7 @@ const HomePage = () => {
         {status} {rooms.length}
       </div> */}
 
+      <Lobby />
       <RoomList
         rooms={rooms}
         isLoading={status === "loading"}
