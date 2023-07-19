@@ -17,22 +17,21 @@ const AboutMe = () => {
             <img
               className="mx-auto h-32 w-32  object-cover rounded-full"
               src={
-                "https://lh3.googleusercontent.com/a/AAcHTtdRhn6N4-jTDcJJirqfuXFnYdZd3q2dkGRqjxo_9CMhCYI=s96-c"
+                "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F16ecc797-c281-4d9e-9b6f-62e7ef49f318.jpeg?alt=media"
               }
               alt=""
             />
             <figcaption className="text-center text-accent2">
-              Goff J.- Yallyo Founder
+              Obiyofin J.- Yallyo Founder
             </figcaption>
           </figure>
           <p>
-            👋 Hi there! My name is Goff, and I&apos;m from Thailand 🇹🇭. As a
-            passionate software developer, I love building things that are truly
-            useful for people. One thing that brings me immense joy is learning
-            English. I&apos;ve tried various platforms in my quest to master the
-            language, but none of them worked the way I wanted. So, I made a
-            decision to invest a lot of my free time into creating this
-            platform.
+            👋 Hi there! My name is Obiyofin, As a passionate software
+            developer, I love building things that are truly useful for people.
+            One thing that brings me immense joy is learning English. I&apos;ve
+            tried various platforms in my quest to master the language, but none
+            of them worked the way I wanted. So, I made a decision to invest a
+            lot of my free time into creating this platform.
           </p>
 
           <p>

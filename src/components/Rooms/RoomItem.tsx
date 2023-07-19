@@ -116,7 +116,7 @@ const RoomItem = memo((room: Props) => {
         ) : (
           <a
             href={`/room/${sid}`}
-            target={isDesktop ? "_blank" : "_self"}
+            // target={isDesktop ? "_blank" : "_self"}
             className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
           >
             Join Now
@@ -129,7 +129,7 @@ const RoomItem = memo((room: Props) => {
         )}
         <div className="absolute right-0 bottom-0 text-gray-500">
           <div className="flex space-x-1">
-            {room && room.features && room.features.audio && (
+            {room && room.features && !room.features.video && (
               <MicrophoneIcon className="w-5 h-5" />
             )}
             {room && room.features && room.features.video && (

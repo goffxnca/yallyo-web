@@ -9,21 +9,23 @@ import {
 } from "@/store/accountSlice";
 import DarkOverlay from "../Layouts/Overlay";
 import Notification from "../UIs/Notification";
+import { convertFullnameToAbbr } from "@/utils/string-utils";
 
 interface Props {
   userId: string;
   name: string;
+  color: string;
   url: string;
 }
 
-const UserProfile = ({ userId, name, url }: Props) => {
+const UserProfile = ({ userId, name, color, url }: Props) => {
   const { account, status } = useSelector((state: RootState) => state.account);
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch: AppDispatch = useDispatch();
   const [showSuccessFollowModal, setShowSuccessFollowModal] = useState(false);
   const [showSuccessUnFollowModal, setShowSuccessUnFollowModal] =
     useState(false);
-
+  const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const isMe = account?._id === user?.uid;
 
   useEffect(() => {
@@ -40,11 +42,20 @@ const UserProfile = ({ userId, name, url }: Props) => {
               name ? "" : "border border-dashed border-gray-600"
             } select-none cursor-pointer`}
             style={{
+              backgroundColor: !url && name ? color : "",
               backgroundImage: url ? `url(${url})` : "",
               backgroundSize: "cover",
               backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
-          ></div>
+          >
+            {/* Black Circle */}
+            {name && !url && (
+              <div>
+                {nameAbbr && <div className="text-3xl">{nameAbbr}</div>}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
