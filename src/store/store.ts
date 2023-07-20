@@ -10,6 +10,7 @@ import sessionSlice from "./sessionSlice";
 import authSlice from "./authSlice";
 import profileSlice from "./profileSlice";
 import accountSlice from "./accountSlice";
+import lobbyChatSlice from "./lobbyChatSlice";
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   session: sessionSlice,
   profile: profileSlice,
   account: accountSlice,
+  lobbyChat: lobbyChatSlice,
 });
 
 const store = configureStore({

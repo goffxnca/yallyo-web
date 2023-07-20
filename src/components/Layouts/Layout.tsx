@@ -15,12 +15,8 @@ const Layout = ({ children }: Props) => {
       <Header />
       <main className="flex-grow">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
-      <div className="text-gray-300 fixed bottom-2 left-2 text-xs">
-        v{publicRuntimeConfig.version}:
-        {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
-      </div>
 
-      <div className="fixed bottom-2 right-2 text-xs space-x-4 text-gray-300 ">
+      <div className="fixed bottom-0 right-0 text-xs space-x-4 text-gray-500 bg-secondary rounded-md px-2">
         <a href="/about" target="_blank" className="hover:underline">
           About Us
         </a>
@@ -32,6 +28,11 @@ const Layout = ({ children }: Props) => {
         <a href="/privacy-policy" target="_blank" className="hover:underline">
           Privacy Policy
         </a>
+
+        <span className="text-xs">
+          v{publicRuntimeConfig.version}:
+          {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
+        </span>
       </div>
     </div>
   );

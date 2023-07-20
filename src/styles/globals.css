@@ -61,12 +61,12 @@ textarea {
 }
 
 .loading-spinner__dot1 {
-  left: 6px;
+  /* left: 6px; */
   animation: loading-spinner__moveDot1 2s infinite;
 }
 
 .loading-spinner__dot2 {
-  left: 6px;
+  /* left: 6px; */
   animation: loading-spinner__moveDot2 1s infinite;
 }
 

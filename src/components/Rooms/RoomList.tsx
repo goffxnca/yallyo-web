@@ -19,7 +19,7 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
   const isAdmin = user?.email === "goffxnca@gmail.com";
 
   return (
-    <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+    <ul className="grid md:grid-cols-2 lg:grid-cols-3  gap-4">
       {showOnTop &&
         isLoading &&
         createNArray(10).map((item) => <RoomItemSkeleton key={item} />)}

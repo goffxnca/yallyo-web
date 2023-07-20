@@ -3,6 +3,7 @@ import { updateRooms } from "../store/roomSlice";
 import { ENVS } from "../utils/constants";
 import {
   ISocketIOMessage,
+  LobbyChatGatewayEventCode,
   RoomsGatewayEventCode,
   SessionsGatewayEventCode,
 } from "@/types/common";
@@ -15,6 +16,7 @@ import {
   toggleMic,
 } from "@/store/sessionSlice";
 import { IFirebaseUser, InputDevicesSettings } from "@/types/frontend";
+import { addLobbyChatMessage } from "@/store/lobbyChatSlice";
 
 export const subscribeRoomsUpdates = (dispatch: any): Socket => {
   const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);
@@ -119,4 +121,27 @@ export const subscribeSessionsUpdates = (
   });
 
   return peersSocket;
+};
+
+export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
+  const lobbyChatSocket = io(`${ENVS.API_WS_URL}/lobby-chat`);
+
+  lobbyChatSocket.on("connect", () => {
+    console.log("WebSocket /lobby-chat connection is open");
+  });
+
+  lobbyChatSocket.on("serverPush", (data: ISocketIOMessage) => {
+    console.log("serverPush", data);
+
+    const { type, message, payload } = data;
+    if (type === LobbyChatGatewayEventCode.SEND) {
+      dispatch(addLobbyChatMessage(payload));
+    }
+  });
+
+  lobbyChatSocket.on("disconnect", () => {
+    console.log("WebSocket  /lobby-chat connection closed");
+  });
+
+  return lobbyChatSocket;
 };

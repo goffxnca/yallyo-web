@@ -57,6 +57,17 @@ export interface IRoomSocketUpdate extends IRoom {
   updateStatus: "C" | "U" | "D";
 }
 
+export type LobbyChatType = "message" | "sticker" | "image";
+export interface ILobbyChat extends IDbDocument {
+  type: LobbyChatType;
+  message: string;
+  sender: TMinimalUser;
+}
+
+export interface ILobbyChatSocketUpdate extends ILobbyChat {
+  updateStatus: "C" | "U" | "D";
+}
+
 export interface IPagination {
   pnum: number;
   psize: number;
@@ -70,7 +81,10 @@ export interface IRoomFilter {
 
 //Room Sessions
 export interface ISocketIOMessage {
-  type: RoomsGatewayEventCode | SessionsGatewayEventCode;
+  type:
+    | RoomsGatewayEventCode
+    | SessionsGatewayEventCode
+    | LobbyChatGatewayEventCode;
   message?: string;
   payload?: any;
 }
@@ -111,6 +125,10 @@ export interface ISessionEventMessage {
 
 export enum RoomsGatewayEventCode {
   UPDATE = "update",
+}
+
+export enum LobbyChatGatewayEventCode {
+  SEND = "send",
 }
 
 export enum SessionsGatewayEventCode {
