@@ -247,9 +247,7 @@ const HomePage = () => {
 
         <div
           className={`${
-            showLobby
-              ? "w-full md:2/3 lg:w-3/4 ml-auto"
-              : "w-full md:2/3 lg:w-3/4 ml-auto"
+            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-16"
           }`}
         >
           <HeaderControls
