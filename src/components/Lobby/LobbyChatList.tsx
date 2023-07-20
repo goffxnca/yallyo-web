@@ -21,7 +21,7 @@ interface Props {
   showFullLobby: boolean;
 }
 
-const Lobby = ({
+const LobbyChatList = ({
   lobbyChats,
   isLoading,
   onLoadMore,
@@ -172,4 +172,4 @@ const Lobby = ({
   );
 };
 
-export default Lobby;
+export default LobbyChatList;

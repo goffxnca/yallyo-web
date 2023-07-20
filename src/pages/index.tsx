@@ -33,7 +33,7 @@ import {
   addCreateRoomQuota,
   readCurrentCreateRoomQuotaCount,
 } from "@/utils/localstorage-utils";
-import Lobby from "@/components/Lobby/Lobby";
+import LobbyChatList from "@/components/Lobby/LobbyChatList";
 import {
   createLobbyChatAsync,
   fetchLobbyChatAsync,
@@ -219,7 +219,7 @@ const HomePage = () => {
           showLobby ? "w-11/12 mr-10 md:w-1/2 lg:w-1/4" : "w-16"
         } `}
       >
-        <Lobby
+        <LobbyChatList
           lobbyChats={lobbyChats}
           isLoading={lobbyChatStatus === "loading"}
           onLoadMore={loadMoreLobbyChatMessages}

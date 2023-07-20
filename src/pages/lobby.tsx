@@ -1,5 +1,5 @@
 import PageContainer from "@/components/Layouts/PageContainer";
-import Lobby from "@/components/Lobby/Lobby";
+import Lobby from "@/components/Lobby/LobbyChatList";
 import {
   createLobbyChatAsync,
   fetchLobbyChatAsync,

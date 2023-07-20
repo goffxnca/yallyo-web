@@ -87,7 +87,7 @@ const LobbyChatListMobile = ({
 
         {/* Submit */}
 
-        <div className="absolute left-0 bottom-14 w-full  px-2">
+        <div className="fixed left-0 bottom-16 w-full  px-2">
           <form
             onSubmit={handleSubmit}
             className="flex justify-between gap-x-1  relative"
@@ -97,7 +97,7 @@ const LobbyChatListMobile = ({
               className="w-full border-secondary  focus:ring-0 focus:border-4 focus:border-accent2 text-secondary pr-10 rounded-lg"
               placeholder="Send a message"
               spellCheck="false"
-              style={{ fontSize: 14 }}
+              // style={{ fontSize: 14 }}
               ref={textboxRef}
               onFocus={() => {
                 if (!user) {
