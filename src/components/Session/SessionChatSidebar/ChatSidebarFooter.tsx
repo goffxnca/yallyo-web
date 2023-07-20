@@ -19,7 +19,7 @@ const ChatSidebarFooter = ({ onSendMessage }: Props) => {
 
   return (
     <div
-      className="w-full bg-secondary"
+      className="w-full bg-secondary mb-14"
       style={{
         borderTop: 1,
         borderColor: "darkgray",

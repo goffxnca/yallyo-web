@@ -46,22 +46,22 @@ const MobileNavigators = () => {
             </Link>
           </li>
           <li
-            className={`border-r border-gray-500 w-1/4 py-2 ${
-              isSession && "text-accent2"
+            className={`border-r border-gray-500 w-1/4 py-2  ${
+              isSession ? "text-accent2" : "text-gray-500"
             }`}
           >
             <div className="flex items-center justify-center">
-              <PhoneIcon className="w-6 h-6" />
+              <PhoneIcon className="w-6 h-6 " />
             </div>
-            <div className={`text-xs ${isSession && "text-accent2"}`}>
+            <div
+              className={`text-xs  ${
+                isSession ? "text-accent2" : "text-gray-500"
+              }`}
+            >
               Session
             </div>
           </li>
-          <li
-            className={`border-r border-gray-500 w-1/4 py-2 ${
-              isProfile && "text-accent2"
-            }`}
-          >
+          <li className={`w-1/4 py-2 ${isProfile && "text-accent2"}`}>
             <Link href="/profile">
               <div className="flex items-center justify-center">
                 <Cog6ToothIcon className="w-6 h-6" />

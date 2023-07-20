@@ -87,7 +87,7 @@ const LobbyChatListMobile = ({
 
         {/* Submit */}
 
-        <div className="fixed left-0 bottom-16 w-full  px-2">
+        <div className="fixed left-0 bottom-16 w-full px-4">
           <form
             onSubmit={handleSubmit}
             className="flex justify-between gap-x-1  relative"
