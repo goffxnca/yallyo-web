@@ -9,9 +9,10 @@ interface Props {
   rooms: IRoom[];
   isLoading: boolean;
   showOnTop: boolean;
+  showFullLobby: boolean;
 }
 
-const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
+const RoomList = ({ rooms, isLoading, showOnTop, showFullLobby }: Props) => {
   // console.log("RoomList");
 
   const { user } = useSelector((state: RootState) => state.auth);
@@ -19,7 +20,11 @@ const RoomList = ({ rooms, isLoading, showOnTop }: Props) => {
   const isAdmin = user?.email === "goffxnca@gmail.com";
 
   return (
-    <ul className="grid md:grid-cols-2 lg:grid-cols-3  gap-4">
+    <ul
+      className={`grid md:grid-cols-2 ${
+        !showFullLobby && "lg:grid-cols-3"
+      }  gap-4`}
+    >
       {showOnTop &&
         isLoading &&
         createNArray(10).map((item) => <RoomItemSkeleton key={item} />)}

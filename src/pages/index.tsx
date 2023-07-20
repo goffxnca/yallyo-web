@@ -378,6 +378,7 @@ const HomePage = () => {
               (!!currentLang || !!currentLevel || !!currentTopic) &&
               roomCurrentPage === 1
             }
+            showFullLobby={showLobby}
           ></RoomList>
 
           {showFriendPopup && (

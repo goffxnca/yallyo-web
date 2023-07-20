@@ -1,4 +1,4 @@
-// Room slice is collection of actions for chat rooms list in homepage
+// LobbyChat slice is collection of actions for chat rooms list in homepage
 import { IAsyncState } from "@/types/frontend";
 import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
