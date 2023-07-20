@@ -78,7 +78,7 @@ const lobbyChatSlice = createSlice({
         state.canLoadMore = action.payload.length === ENVS.ROOMS_ITEMS;
         if (action.payload.length > 0) {
           state.lobbyChats = [
-            ...orderBy(action.payload, "message"),
+            ...orderBy(action.payload, "createdAt"),
             ...state.lobbyChats,
           ];
         } else {
