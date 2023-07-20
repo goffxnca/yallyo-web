@@ -1,0 +1,80 @@
+import {
+  ChatBubbleBottomCenterIcon,
+  Cog6ToothIcon,
+  HomeIcon,
+  PhoneIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+const MobileNavigators = () => {
+  const router = useRouter();
+  const isHome = router.pathname === "/";
+  const isLobby = router.pathname === "/lobby";
+  const isSession = router.pathname.startsWith("/room");
+  const isProfile = router.pathname === "/profile";
+
+  return (
+    <div className="fixed left bottom-0 text-white z-40 bg-secondary w-full border-t border-gray-500">
+      <nav>
+        <ul className="flex text-center">
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2 ${
+              isHome && "text-accent2"
+            }`}
+          >
+            <Link href="/">
+              <div className="flex items-center justify-center">
+                <HomeIcon className="w-6 h-6" />
+              </div>
+              <div className={`text-xs ${isHome && "text-accent2"}`}>Home</div>
+            </Link>
+          </li>
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2 ${
+              isLobby && "text-accent2"
+            }`}
+          >
+            <Link href="/lobby">
+              <div className="flex items-center justify-center">
+                <ChatBubbleBottomCenterIcon className="w-6 h-6" />
+              </div>
+              <div className={`text-xs ${isLobby && "text-accent2"}`}>
+                Lobby
+              </div>
+            </Link>
+          </li>
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2 ${
+              isSession && "text-accent2"
+            }`}
+          >
+            <div className="flex items-center justify-center">
+              <PhoneIcon className="w-6 h-6" />
+            </div>
+            <div className={`text-xs ${isSession && "text-accent2"}`}>
+              Session
+            </div>
+          </li>
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2 ${
+              isProfile && "text-accent2"
+            }`}
+          >
+            <Link href="/profile">
+              <div className="flex items-center justify-center">
+                <Cog6ToothIcon className="w-6 h-6" />
+              </div>
+              <div className={`text-xs ${isProfile && "text-accent2"}`}>
+                Settings
+              </div>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
+export default MobileNavigators;

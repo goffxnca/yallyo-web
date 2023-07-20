@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Header from "./Headers/Header";
 import getConfig from "next/config";
+import MobileNavigators from "../mobileNavs/MobileNavigators";
 const { publicRuntimeConfig } = getConfig();
 
 interface Props {
@@ -33,6 +34,10 @@ const Layout = ({ children }: Props) => {
           v{publicRuntimeConfig.version}:
           {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
         </span>
+      </div>
+
+      <div className="md:hidden">
+        <MobileNavigators />
       </div>
     </div>
   );
