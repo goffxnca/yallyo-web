@@ -159,10 +159,8 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
           "GdO0ZIw71DV6Gy80mxkuG17acWf2"
       ) {
         if (
-          (window as any)["screenOptions"]["uid"] ===
-            "lrw1X4kWWLatBUXfGbidYzgreL43" ||
-          (window as any)["screenOptions"]["uid"] ===
-            "GdO0ZIw71DV6Gy80mxkuG17acWf2"
+          (window as any)["screenOptions"]["uid"] !==
+          (lobbyChat.sender._id! as string)
         ) {
           if (!("Notification" in window)) {
             // Check if the browser supports notifications
