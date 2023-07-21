@@ -139,17 +139,8 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
     if (type === LobbyChatGatewayEventCode.SEND) {
       dispatch(addLobbyChatMessage(payload));
 
-      // Notification.requestPermission().then((permission) => {
-      //   if (permission === "granted") {
-      //     const notificaiton = new Notification(`New Lobby Message`, {
-      //       body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-      //       icon: lobbyChat.sender.photoURL,
-      //       requireInteraction: true,
-      //     });
-      //   }
-      // });
-
-      //I dont care if someone come across this code and be like "tf" haha
+      //Sorry if you come across this code and be like "TF" haha :D
+      //1: Check that current logged user exist and is one of the admin user ids
       if (
         (window &&
           (window as any)["screenOptions"] &&
@@ -158,10 +149,12 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
         (window as any)["screenOptions"]["uid"] ===
           "GdO0ZIw71DV6Gy80mxkuG17acWf2"
       ) {
+        //2: Show notification only those who are not the sender
         if (
           (window as any)["screenOptions"]["uid"] !==
           (lobbyChat.sender._id! as string)
         ) {
+          //3: Browser must support notification features
           if (!("Notification" in window)) {
             // Check if the browser supports notifications
             // alert("This browser does not support desktop notification");
@@ -169,35 +162,25 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
           } else if (Notification.permission === "granted") {
             // Check whether notification permissions have already been granted;
             // if so, create a notification
-            const notification = new Notification(`New Lobby Message`, {
+            const notificaiton = new Notification(`New Lobby Message`, {
               body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
               icon: lobbyChat.sender.photoURL,
-              requireInteraction: true,
+              // requireInteraction: true,
             });
-            notification.onclick = function () {
-              this.close();
-            };
-            // …
           } else if (Notification.permission !== "denied") {
             // We need to ask the user for permission
             Notification.requestPermission().then((permission) => {
               // If the user accepts, let's create a notification
               if (permission === "granted") {
-                const notification = new Notification(`New Lobby Message`, {
+                const notificaiton = new Notification(`New Lobby Message`, {
                   body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
                   icon: lobbyChat.sender.photoURL,
-                  requireInteraction: true,
+                  // requireInteraction: true,
                 });
-                notification.onclick = function () {
-                  this.close();
-                };
               }
             });
           }
         }
-      } else {
-        // alert("not target user");
-        // console.log("")
       }
     }
   });
