@@ -2,6 +2,7 @@ import { Socket, io } from "socket.io-client";
 import { updateRooms } from "../store/roomSlice";
 import { ENVS } from "../utils/constants";
 import {
+  ILobbyChat,
   ISocketIOMessage,
   LobbyChatGatewayEventCode,
   RoomsGatewayEventCode,
@@ -134,14 +135,19 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
     console.log("serverPush", data);
 
     const { type, message, payload } = data;
+    const lobbyChat = payload as ILobbyChat;
     if (type === LobbyChatGatewayEventCode.SEND) {
       dispatch(addLobbyChatMessage(payload));
 
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
-          const notificaiton = new Notification("Test Noti", {
-            body: "This is the body of notification",
-          });
+          const notificaiton = new Notification(
+            `New Lobby Message from ${lobbyChat.sender.dname}`,
+            {
+              body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
+              image: lobbyChat.sender.photoURL,
+            }
+          );
         }
       });
     }
