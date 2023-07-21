@@ -158,7 +158,7 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
         const notificaiton = new Notification(`New Lobby Message2`, {
           body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
           // icon: lobbyChat.sender.photoURL,
-          // requireInteraction: true,
+          requireInteraction: true,
         });
         // …
       } else if (Notification.permission !== "denied") {
@@ -169,7 +169,7 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
             const notificaiton = new Notification(`New Lobby Message1`, {
               body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
               // icon: lobbyChat.sender.photoURL,
-              // requireInteraction: true,
+              requireInteraction: true,
             });
           }
         });
