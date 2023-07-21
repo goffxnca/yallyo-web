@@ -136,6 +136,14 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
     const { type, message, payload } = data;
     if (type === LobbyChatGatewayEventCode.SEND) {
       dispatch(addLobbyChatMessage(payload));
+
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notificaiton = new Notification("Test Noti", {
+            body: "This is the body of notification",
+          });
+        }
+      });
     }
   });
 
