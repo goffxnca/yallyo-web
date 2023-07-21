@@ -25,6 +25,8 @@ const Auth = React.memo(() => {
           idToken: (user as any).accessToken,
         };
         dispatch(assignSuccessAuth(auth));
+        //Yeah this line is kind of cool right? 😎
+        (window as any)["screenOptions"] = auth;
       } else {
         dispatch(assignErrorAuth());
       }

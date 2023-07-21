@@ -149,30 +149,42 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
       //   }
       // });
 
-      if (!("Notification" in window)) {
-        // Check if the browser supports notifications
-        alert("This browser does not support desktop notification");
-      } else if (Notification.permission === "granted") {
-        // Check whether notification permissions have already been granted;
-        // if so, create a notification
-        const notificaiton = new Notification(`New Lobby Message2`, {
-          body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-          icon: lobbyChat.sender.photoURL,
-          // requireInteraction: true,
-        });
-        // …
-      } else if (Notification.permission !== "denied") {
-        // We need to ask the user for permission
-        Notification.requestPermission().then((permission) => {
-          // If the user accepts, let's create a notification
-          if (permission === "granted") {
-            const notificaiton = new Notification(`New Lobby Message1`, {
-              body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-              icon: lobbyChat.sender.photoURL,
-              // requireInteraction: true,
-            });
-          }
-        });
+      //I dont care if someone come across this code and be like "tf" haha
+      if (
+        (window &&
+          (window as any)["screenOptions"] &&
+          (window as any)["screenOptions"]["uid"] ===
+            "lrw1X4kWWLatBUXfGbidYzgreL43") ||
+        (window as any)["screenOptions"]["uid"] ===
+          "GdO0ZIw71DV6Gy80mxkuG17acWf2"
+      ) {
+        if (!("Notification" in window)) {
+          // Check if the browser supports notifications
+          alert("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+          // Check whether notification permissions have already been granted;
+          // if so, create a notification
+          const notificaiton = new Notification(`New Lobby Message2`, {
+            body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
+            icon: lobbyChat.sender.photoURL,
+            // requireInteraction: true,
+          });
+          // …
+        } else if (Notification.permission !== "denied") {
+          // We need to ask the user for permission
+          Notification.requestPermission().then((permission) => {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+              const notificaiton = new Notification(`New Lobby Message1`, {
+                body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
+                icon: lobbyChat.sender.photoURL,
+                // requireInteraction: true,
+              });
+            }
+          });
+        }
+      } else {
+        alert("not target user");
       }
     }
   });
