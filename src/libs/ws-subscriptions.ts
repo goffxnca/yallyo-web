@@ -169,22 +169,28 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
           } else if (Notification.permission === "granted") {
             // Check whether notification permissions have already been granted;
             // if so, create a notification
-            const notificaiton = new Notification(`New Lobby Message`, {
+            const notification = new Notification(`New Lobby Message`, {
               body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
               icon: lobbyChat.sender.photoURL,
-              // requireInteraction: true,
+              requireInteraction: true,
             });
+            notification.onclick = function () {
+              this.close();
+            };
             // …
           } else if (Notification.permission !== "denied") {
             // We need to ask the user for permission
             Notification.requestPermission().then((permission) => {
               // If the user accepts, let's create a notification
               if (permission === "granted") {
-                const notificaiton = new Notification(`New Lobby Message`, {
+                const notification = new Notification(`New Lobby Message`, {
                   body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
                   icon: lobbyChat.sender.photoURL,
-                  // requireInteraction: true,
+                  requireInteraction: true,
                 });
+                notification.onclick = function () {
+                  this.close();
+                };
               }
             });
           }
