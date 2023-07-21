@@ -157,8 +157,8 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
         // if so, create a notification
         const notificaiton = new Notification(`New Lobby Message2`, {
           body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-          icon: lobbyChat.sender.photoURL,
-          requireInteraction: true,
+          // icon: lobbyChat.sender.photoURL,
+          // requireInteraction: true,
         });
         // …
       } else if (Notification.permission !== "denied") {
@@ -168,8 +168,8 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
           if (permission === "granted") {
             const notificaiton = new Notification(`New Lobby Message1`, {
               body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-              icon: lobbyChat.sender.photoURL,
-              requireInteraction: true,
+              // icon: lobbyChat.sender.photoURL,
+              // requireInteraction: true,
             });
           }
         });
