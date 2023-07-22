@@ -37,15 +37,16 @@ const LobbyChatListMobile = ({
   );
 
   useEffect(() => {
-    if (lastAddedItemId) {
-      const scrollToBottom = () => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth",
-        });
-      };
+    const scrollToBottom = () => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    };
+
+    setTimeout(() => {
       scrollToBottom();
-    }
+    }, 500);
   }, [lastAddedItemId]);
 
   const handleSubmit = (e: any) => {
@@ -91,7 +92,7 @@ const LobbyChatListMobile = ({
               : isSameDate(message.createdAt, prevMessage!.createdAt);
 
             return (
-              <>
+              <div key={message._id}>
                 {!iSameDateAsPrevMessage && (
                   <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
                     <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary z-10 text-gray-500 font-semibold">
@@ -105,7 +106,6 @@ const LobbyChatListMobile = ({
                   </div>
                 )}
                 <LobbyChatItem
-                  key={message._id}
                   _id={message._id}
                   type={message.type}
                   message={message.message}
@@ -114,7 +114,7 @@ const LobbyChatListMobile = ({
                   createdBy={message.createdBy}
                   active={message.active}
                 />
-              </>
+              </div>
             );
           })}
         </ul>
