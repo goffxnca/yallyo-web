@@ -12,7 +12,8 @@ import { signoutFromGoogle } from "@/store/authSlice";
 import DarkOverlay from "../Overlay";
 import { joinClasses } from "@/utils/jsx-utils";
 import Link from "next/link";
-
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
 interface Props {
   email: string;
   displayName: string;
@@ -142,6 +143,11 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                 </div>
               )}
             </Menu.Item>
+
+            <div className="block lg:hidden text-xs text-center p-2 text-gray-200">
+              v{publicRuntimeConfig.version}:
+              {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
+            </div>
           </div>
           {/* Group with line separator by using div */}
         </Menu.Items>

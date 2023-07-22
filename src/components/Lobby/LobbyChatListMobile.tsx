@@ -95,12 +95,12 @@ const LobbyChatListMobile = ({
               <div key={message._id}>
                 {!iSameDateAsPrevMessage && (
                   <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
-                    <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary z-10 text-gray-500 font-semibold">
+                    <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary text-gray-500 font-semibold">
                       {friendlyDate(message.createdAt)}
                     </div>
 
                     <div
-                      className="absolute top-2  left-0 w-full  border-gray-500 opacity-20 z-0"
+                      className="absolute top-2  left-0 w-full border-gray-500 opacity-20"
                       style={{ borderBottomWidth: 0.1 }}
                     ></div>
                   </div>
