@@ -1,7 +1,7 @@
 import { ILobbyChat } from "@/types/common";
-import { randomBoolean } from "@/utils/bool-utils";
 import LobbyChatItem from "./LobbyChatItem";
 import {
+  ArrowPathIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   PaperAirplaneIcon,
@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { ChevronDoubleUpIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   lobbyChats: ILobbyChat[];
@@ -33,10 +34,14 @@ const LobbyChatList = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const textboxRef = useRef<HTMLInputElement>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
   const { user } = useSelector((state: RootState) => state.auth);
+  const { lastAddedItemId } = useSelector(
+    (state: RootState) => state.lobbyChat
+  );
 
   useEffect(() => {
-    if (lobbyChats.length > 0) {
+    if (lastAddedItemId) {
       const scrollToBottom = () => {
         if (scrollContainerRef && scrollContainerRef.current) {
           scrollContainerRef.current.scrollTo({
@@ -47,7 +52,7 @@ const LobbyChatList = ({
       };
       scrollToBottom();
     }
-  }, [lobbyChats.length]);
+  }, [lastAddedItemId]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -92,18 +97,27 @@ const LobbyChatList = ({
         }`}
         ref={scrollContainerRef}
       >
-        {/* {canLoadMore && (
+        {showFullLobby && canLoadMore && (
           <div className="flex justify-center">
             <button
-              className="text-sm px-2 py-1 bg-gray-200 rounded-b-lg text-center text-secondary"
+              className="text-sm px-2 py-1 rounded-b-lg text-center text-secondary"
               onClick={() => {
                 onLoadMore();
               }}
             >
-              Previous Messages
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <ArrowPathIcon className="h-5 w-5 animate-spin text-gray-500" />
+                </div>
+              ) : (
+                <div className="flex text-gray-500">
+                  <ChevronDoubleUpIcon className="h-5 w-5" />
+                  <span>Previous Messages</span>
+                </div>
+              )}
             </button>
           </div>
-        )} */}
+        )}
 
         <ul className="space-y-2 mb-10 px-4 pb-20">
           {lobbyChats.map((message) => {

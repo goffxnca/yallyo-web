@@ -1,5 +1,4 @@
 import PageContainer from "@/components/Layouts/PageContainer";
-import Lobby from "@/components/Lobby/LobbyChatList";
 import {
   createLobbyChatAsync,
   fetchLobbyChatAsync,
@@ -16,7 +15,17 @@ const LobbyPage = () => {
     lobbyChats,
     status: lobbyChatStatus,
     canLoadMore: canLoadLobbyChatMore,
+    lastFetchedItemId,
   } = useSelector((state: RootState) => state.lobbyChat);
+
+  const loadMoreLobbyChatMessages = () => {
+    dispatch(
+      fetchLobbyChatAsync({
+        psize: 5,
+        cursor: lastFetchedItemId,
+      })
+    );
+  };
 
   // Subscribe to room update
   useEffect(() => {
@@ -27,13 +36,14 @@ const LobbyPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // alert("fetching lobby slice");
-    dispatch(
-      fetchLobbyChatAsync({
-        pnum: 1,
-        psize: 30,
-      })
-    );
+    if (dispatch) {
+      dispatch(
+        fetchLobbyChatAsync({
+          psize: 20,
+          cursor: "",
+        })
+      );
+    }
   }, [dispatch]);
 
   return (
@@ -41,7 +51,7 @@ const LobbyPage = () => {
       <LobbyChatListMobile
         lobbyChats={lobbyChats}
         isLoading={lobbyChatStatus === "loading"}
-        onLoadMore={() => {}}
+        onLoadMore={loadMoreLobbyChatMessages}
         canLoadMore={canLoadLobbyChatMore}
         onSendMessage={(message: string) => {
           dispatch(createLobbyChatAsync({ message, type: "message" }));

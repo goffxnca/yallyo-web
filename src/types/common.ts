@@ -73,6 +73,11 @@ export interface IPagination {
   psize: number;
 }
 
+export interface IPaginationCursorBased {
+  psize: number;
+  cursor?: string;
+}
+
 export interface IRoomFilter {
   language?: string;
   level?: string;
