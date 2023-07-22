@@ -4,24 +4,30 @@ import { ENVS } from "@/utils/constants";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { orderBy } from "lodash";
 import { RootState } from "./store";
-import { ILobbyChat, IPagination } from "@/types/common";
+import { ILobbyChat, IPaginationCursorBased } from "@/types/common";
 
 interface LobbyChatState extends IAsyncState {
   lobbyChats: ILobbyChat[];
   canLoadMore: boolean;
+  lastFetchedItemId: string;
+  lastAddedItemId: string;
 }
 
 const initialState: LobbyChatState = {
   lobbyChats: [],
   canLoadMore: true,
+  lastFetchedItemId: "",
+  lastAddedItemId: "",
   status: "idle", //TODO: this status is buggy because all of async functions here that run simutinously migth overwrite each others status
   error: "",
 };
 
 export const fetchLobbyChatAsync = createAsyncThunk(
   "fetchLobbyChatAsync",
-  async (pagination: IPagination) => {
-    const endpoint = `${ENVS.API_URL}/lobby-chat?pnum=${pagination.pnum}&psize=${pagination.psize}`;
+  async (
+    pagination: IPaginationCursorBased
+  ): Promise<{ pagination: IPaginationCursorBased; data: ILobbyChat[] }> => {
+    const endpoint = `${ENVS.API_URL}/lobby-chat?psize=${pagination.psize}&cursor=${pagination.cursor}`;
 
     const response = await fetch(endpoint);
 
@@ -29,7 +35,7 @@ export const fetchLobbyChatAsync = createAsyncThunk(
       throw new Error(response.statusText);
     }
     const data = await response.json();
-    return data as ILobbyChat[];
+    return { data, pagination };
   }
 );
 
@@ -62,6 +68,7 @@ const lobbyChatSlice = createSlice({
   reducers: {
     addLobbyChatMessage(state, action: PayloadAction<ILobbyChat>) {
       state.lobbyChats.push(action.payload);
+      state.lastAddedItemId = action.payload._id;
     },
     resetLobbyChat(state) {
       state = initialState;
@@ -75,16 +82,18 @@ const lobbyChatSlice = createSlice({
       })
       .addCase(fetchLobbyChatAsync.fulfilled, (state, action) => {
         state.status = "success";
-        state.canLoadMore = action.payload.length === ENVS.ROOMS_ITEMS;
-        if (action.payload.length > 0) {
-          //For Pagination
-          // state.lobbyChats = [
-          //   ...orderBy(action.payload, "createdAt"),
-          //   ...state.lobbyChats,
-          // ];
+        state.canLoadMore =
+          action.payload.data.length === action.payload.pagination.psize;
+        if (action.payload.data.length > 0) {
+          state.lobbyChats = [
+            ...orderBy(action.payload.data, "createdAt"),
+            ...state.lobbyChats,
+          ];
 
-          //Without Pagination
-          state.lobbyChats = [...orderBy(action.payload, "createdAt")];
+          if (action.payload.data.length > 0) {
+            const lastItemIndex = action.payload.data.length - 1;
+            state.lastFetchedItemId = action.payload.data[lastItemIndex]._id;
+          }
         } else {
           state.canLoadMore = false;
         }

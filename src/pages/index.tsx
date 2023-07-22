@@ -55,6 +55,7 @@ const HomePage = () => {
     lobbyChats,
     status: lobbyChatStatus,
     canLoadMore: canLoadLobbyChatMore,
+    lastFetchedItemId,
   } = useSelector((state: RootState) => state.lobbyChat);
 
   const dispatch: AppDispatch = useDispatch();
@@ -65,12 +66,12 @@ const HomePage = () => {
   const [showRules, setShowRules] = useState<boolean>(false);
 
   const [roomCurrentPage, setRoomCurrentPage] = useState(1);
-  const [lobbyChatCurrentPage, setLobbyChatCurrentPage] = useState(1);
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
 
   const [showLobby, setShowLobby] = useState(true);
+
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
   const [showRoomCreatedNotification, setShowRoomCreatedNotification] =
@@ -90,7 +91,12 @@ const HomePage = () => {
   };
 
   const loadMoreLobbyChatMessages = () => {
-    setLobbyChatCurrentPage(lobbyChatCurrentPage + 1);
+    dispatch(
+      fetchLobbyChatAsync({
+        psize: 5,
+        cursor: lastFetchedItemId,
+      })
+    );
   };
 
   useIntersectionObserver({
@@ -182,14 +188,15 @@ const HomePage = () => {
   }, [dispatch, roomCurrentPage, currentLang, currentLevel, currentTopic]);
 
   useEffect(() => {
-    // alert("fetching lobby slice");
-    dispatch(
-      fetchLobbyChatAsync({
-        pnum: lobbyChatCurrentPage,
-        psize: 30,
-      })
-    );
-  }, [dispatch, lobbyChatCurrentPage]);
+    if (dispatch) {
+      dispatch(
+        fetchLobbyChatAsync({
+          psize: 20,
+          cursor: "",
+        })
+      );
+    }
+  }, [dispatch]);
 
   const onFormSubmit = (data: FieldValues) => {
     if (readCurrentCreateRoomQuotaCount() === ENVS.CREATE_ROOM_QUOTA) {

@@ -1,15 +1,15 @@
 import { ILobbyChat } from "@/types/common";
-import { randomBoolean } from "@/utils/bool-utils";
+
 import LobbyChatItem from "./LobbyChatItem";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  PaperAirplaneIcon,
-} from "@heroicons/react/24/solid";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import {
+  ArrowPathIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/outline";
 
 interface Props {
   lobbyChats: ILobbyChat[];
@@ -29,10 +29,14 @@ const LobbyChatListMobile = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const textboxRef = useRef<HTMLInputElement>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
   const { user } = useSelector((state: RootState) => state.auth);
+  const { lastAddedItemId } = useSelector(
+    (state: RootState) => state.lobbyChat
+  );
 
   useEffect(() => {
-    if (lobbyChats.length > 0) {
+    if (lastAddedItemId) {
       const scrollToBottom = () => {
         window.scrollTo({
           top: document.body.scrollHeight,
@@ -41,7 +45,7 @@ const LobbyChatListMobile = ({
       };
       scrollToBottom();
     }
-  }, [lobbyChats.length]);
+  }, [lastAddedItemId]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -55,18 +59,27 @@ const LobbyChatListMobile = ({
   return (
     <section className="relative w-full rounded-md bg-secondary">
       <div className={`h-full overflow-y-scroll pt-2`} ref={scrollContainerRef}>
-        {/* {canLoadMore && (
+        {canLoadMore && (
           <div className="flex justify-center">
             <button
-              className="text-sm px-2 py-1 bg-gray-200 rounded-b-lg text-center text-secondary"
+              className="text-sm px-2 py-1 rounded-b-lg text-center text-secondary"
               onClick={() => {
                 onLoadMore();
               }}
             >
-              Previous Messages
+              {isLoading ? (
+                <div className="animate-pulse">
+                  <ArrowPathIcon className="h-5 w-5 animate-spin text-gray-500" />
+                </div>
+              ) : (
+                <div className="flex text-gray-500">
+                  <ChevronDoubleUpIcon className="h-5 w-5" />
+                  <span>Previous Messages</span>
+                </div>
+              )}
             </button>
           </div>
-        )} */}
+        )}
 
         <ul className="space-y-2 mb-10 px-4 pb-20">
           {lobbyChats.map((message) => {
