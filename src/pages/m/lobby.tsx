@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import LobbyChatListMobile from "@/components/Lobby/LobbyChatListMobile";
 import { subscribeLobbyChatUpdates } from "@/libs/ws-subscriptions";
 
-const LobbyPage = () => {
+const MobileLobbyPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const {
     lobbyChats,
@@ -61,4 +61,4 @@ const LobbyPage = () => {
   );
 };
 
-export default LobbyPage;
+export default MobileLobbyPage;

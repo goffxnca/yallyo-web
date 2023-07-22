@@ -36,7 +36,7 @@ const MobileNavigators = () => {
               isLobby && "text-accent2"
             }`}
           >
-            <Link href="/lobby">
+            <Link href="/m/lobby">
               <div className="flex items-center justify-center">
                 <ChatBubbleBottomCenterIcon className="w-6 h-6" />
               </div>

@@ -11,6 +11,7 @@ import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { ChevronDoubleUpIcon } from "@heroicons/react/24/outline";
+import { friendlyDate, isSameDate } from "@/utils/date-utils";
 
 interface Props {
   lobbyChats: ILobbyChat[];
@@ -120,18 +121,38 @@ const LobbyChatList = ({
         )}
 
         <ul className="space-y-2 mb-10 px-4 pb-20">
-          {lobbyChats.map((message) => {
+          {lobbyChats.map((message, index) => {
+            const isFirstMessage = index === 0;
+            const prevMessage = isFirstMessage ? null : lobbyChats[index - 1];
+            const iSameDateAsPrevMessage = isFirstMessage
+              ? false
+              : isSameDate(message.createdAt, prevMessage!.createdAt);
+
             return (
-              <LobbyChatItem
-                key={message._id}
-                _id={message._id}
-                type={message.type}
-                message={message.message}
-                sender={message.sender}
-                createdAt={message.createdAt}
-                createdBy={message.createdBy}
-                active={message.active}
-              />
+              <>
+                {!iSameDateAsPrevMessage && (
+                  <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
+                    <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary z-10 text-gray-500 font-semibold">
+                      {friendlyDate(message.createdAt)}
+                    </div>
+
+                    <div
+                      className="absolute top-2  left-0 w-full  border-gray-500 opacity-20 z-0"
+                      style={{ borderBottomWidth: 0.1 }}
+                    ></div>
+                  </div>
+                )}
+                <LobbyChatItem
+                  key={message._id}
+                  _id={message._id}
+                  type={message.type}
+                  message={message.message}
+                  sender={message.sender}
+                  createdAt={message.createdAt}
+                  createdBy={message.createdBy}
+                  active={message.active}
+                />
+              </>
             );
           })}
         </ul>
