@@ -70,7 +70,7 @@ const RoomItem = memo((room: Props) => {
       </div>
 
       <div className=" text-accent2 text-sm italic">
-        ({topic}) {desc}
+        {topic ? (desc ? `(${topic}) ${desc}` : topic) : "Any Topics"}
       </div>
       <ul className="flex flex-wrap justify-center gap-2">
         {createNArray(size).map((item, index) => {

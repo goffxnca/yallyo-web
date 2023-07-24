@@ -314,58 +314,62 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            {/* 
-        <div className="my-2"></div>
 
-        <div>
-          <div className="text-white text-sm">Levels:</div>
-          <div className="flex items-center flex-wrap">
-            {LANGAUGE_LEVEL.map((level, index) => (
-              <PillItem
-                key={index}
-                title={level}
-                active={level === currentLevel}
-                onEmitSelect={setCurrentLevel}
-              />
-            ))}
-          </div>
-        </div> */}
+            <div className="my-2"></div>
+
+            <div>
+              <div className="text-white text-sm">Levels:</div>
+              <div className="flex items-center flex-wrap">
+                {LANGAUGE_LEVEL.map((level, index) => (
+                  <PillItem
+                    key={index}
+                    title={level}
+                    active={level === currentLevel}
+                    onEmitSelect={setCurrentLevel}
+                  />
+                ))}
+              </div>
+            </div>
 
             <div className="my-2"></div>
 
             <div>
               <div className="text-white text-sm">Topics:</div>
               <div className="flex items-center flex-wrap">
-                {/* {!showFullTopics && currentTopic && (
-              <PillItem
-                title={currentTopic}
-                active={true}
-                onEmitSelect={setCurrentTopic}
-              />
-            )} */}
+                {showFullTopics
+                  ? TOPICS.map((topic, index) => (
+                      <PillItem
+                        key={topic + Math.random()}
+                        title={topic}
+                        active={topic === currentTopic}
+                        onEmitSelect={setCurrentTopic}
+                      />
+                    ))
+                  : TOPICS.slice(0, 3).map((topic, index) => {
+                      return (
+                        <PillItem
+                          key={topic + Math.random()}
+                          title={topic}
+                          active={topic === currentTopic}
+                          onEmitSelect={setCurrentTopic}
+                        />
+                      );
+                    })}
 
-                {TOPICS.map((topic, index) => (
-                  <PillItem
-                    key={index}
-                    title={topic}
-                    active={topic === currentTopic}
-                    onEmitSelect={setCurrentTopic}
-                  />
-                ))}
                 <div
                   className="flex items-center ml-2 cursor-pointer text-gray-500 hover:text-accent2"
                   onClick={() => {
                     setShowFullTopics(!showFullTopics);
                   }}
                 >
-                  {/* <span className="text-xs">
-                {showFullTopics ? "Collapse" : `Show Al ${TOPICS.length - 6}+`}
-              </span> */}
-                  {/* {showFullTopics ? (
-                <ChevronUpIcon className=" h-5 w-5" />
-              ) : (
-                <ChevronDownIcon className=" h-5 w-5" />
-              )} */}
+                  <span className="text-xs">
+                    {showFullTopics ? "Collapse" : `Show All Topics`}
+                  </span>
+                  {showFullTopics ? (
+                    <ChevronUpIcon className=" h-5 w-5" />
+                  ) : (
+                    <ChevronDownIcon className=" h-5 w-5" />
+                  )}
                 </div>
               </div>
             </div>

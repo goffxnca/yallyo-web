@@ -119,9 +119,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
                 value: topic,
                 display: topic,
               }))}
-              {...register("topic", {
-                required: "Topic is required",
-              })}
+              {...register("topic", {})}
               error={errors.topic?.message?.toString()}
             />
           </div>
@@ -163,10 +161,10 @@ const NewRoomForm = ({ onSubmit }: Props) => {
         <TextInput
           id="desc"
           label="Room Introduction"
-          placeholder="Let's make some noise guys"
+          placeholder="Let's make some noise"
           spellCheck={false}
           {...register("desc", {
-            required: "This field is required",
+            // required: "This field is required",
             minLength: { ...minLength(5) },
             maxLength: { ...maxLength(50) },
           })}
