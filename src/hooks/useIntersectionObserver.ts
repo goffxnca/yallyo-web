@@ -21,14 +21,14 @@ const useIntersectionObserver = ({
   deps,
 }: Props) => {
   const onIntersectingDebounce = _.debounce(() => {
-    console.log("intersecting");
+    // console.log("intersecting");
     onIntersecting();
   }, 1000);
 
   useEffect(() => {
     let observer: IntersectionObserver;
     if (targetRef.current && requiredCondition) {
-      console.log("useIntersectionObserver useEffect ran...");
+      // console.log("useIntersectionObserver useEffect ran...");
       observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {
           document.querySelector("html")!.style.overflow = "hidden";

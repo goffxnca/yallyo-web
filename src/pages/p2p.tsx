@@ -21,20 +21,20 @@ const P2PPage = () => {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    console.log("STATUS", status);
+    // console.log("STATUS", status);
   }, [status]);
 
   useEffect(() => {
     if (typeof window !== "undefined" && user) {
       const init = async () => {
-        console.log("init...");
+        // console.log("init...");
         const { query } = router;
         const { toid } = query;
-        console.log("toid", toid);
+        // console.log("toid", toid);
         const Peer = await import("peerjs");
         const peer = new Peer.default(user.uid);
         setPeer(peer as any);
-        console.log(peer);
+        // console.log(peer);
 
         signalingServer = new SignalingServer();
         signalingServer.initAgola({

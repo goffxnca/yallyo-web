@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const DealsPage = () => {
-  console.log("TestPage");
+  // console.log("TestPage");
   const router = useRouter();
 
   useEffect(() => {
-    console.log("TestPage's useEffect ");
+    // console.log("TestPage's useEffect ");
   }, []);
   return (
     <div className="text-white mt-20">

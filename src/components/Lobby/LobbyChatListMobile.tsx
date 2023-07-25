@@ -110,6 +110,7 @@ const LobbyChatListMobile = ({
                   type={message.type}
                   message={message.message}
                   sender={message.sender}
+                  flag={message.flag}
                   createdAt={message.createdAt}
                   createdBy={message.createdBy}
                   active={message.active}

@@ -40,12 +40,12 @@ const subscribeRoomMessages = (
   );
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
-    console.log("1");
+    // console.log("1");
     const roomMessages: IRoomMessage[] = [];
     // snapshot.forEach((doc) => {
     //   roomMessages.push(doc.data() as RoomMessage);
     // });
-    console.log(roomMessages.length);
+    // console.log(roomMessages.length);
     callback(roomMessages);
   });
 

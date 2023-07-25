@@ -3,7 +3,6 @@ const friendlyDate = (isoDate: string) => {
   const options = { month: "long", day: "numeric", year: "numeric" };
 
   const formattedDate = dateObject.toLocaleDateString("en-US", options as any);
-  console.log(formattedDate); // Output: "July 22, 2023"
   return formattedDate;
 };
 
@@ -18,4 +17,13 @@ function isSameDate(iosDate1: string, isoDate2: string) {
   );
 }
 
-export { friendlyDate, isSameDate };
+function formatDateTo12Hour(date: Date) {
+  const formattedDate = date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+  return formattedDate;
+}
+
+export { friendlyDate, isSameDate, formatDateTo12Hour };

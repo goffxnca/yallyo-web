@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const MobileNavigators = () => {
   const router = useRouter();
   const isHome = router.pathname === "/";
-  const isLobby = router.pathname === "/lobby";
+  const isLobby = router.pathname === "/m/lobby";
   const isSession = router.pathname.startsWith("/room");
   const isProfile = router.pathname === "/profile";
 

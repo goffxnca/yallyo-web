@@ -36,7 +36,7 @@ const MobilePhonePattern = (title: string) => ({
 const extractOnlyDirtiedField = (formData: any, dirtyFields: any) => {
   const mapResult: any = {};
   for (const [key, value] of Object.entries(dirtyFields)) {
-    console.log(`${key}: ${value}`);
+    // console.log(`${key}: ${value}`);
     mapResult[key] = formData[key];
   }
   return mapResult;

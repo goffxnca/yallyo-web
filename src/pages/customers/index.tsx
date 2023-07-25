@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import TestPage from "./deals";
 
 const CustomerPage = () => {
-  console.log("CustomerPage ");
+  // console.log("CustomerPage ");
   const router = useRouter();
 
   useEffect(() => {
-    console.log("CustomerPage's useEffect ");
+    // console.log("CustomerPage's useEffect ");
   }, []);
   return (
     <div className="text-white mt-20">

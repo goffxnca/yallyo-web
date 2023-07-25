@@ -62,6 +62,7 @@ export interface ILobbyChat extends IDbDocument {
   type: LobbyChatType;
   message: string;
   sender: TMinimalUser;
+  flag: string;
 }
 
 export interface ILobbyChatSocketUpdate extends ILobbyChat {
