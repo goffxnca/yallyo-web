@@ -85,10 +85,17 @@ const lobbyChatStockSlice = createSlice({
         state.canLoadMore =
           action.payload.data.length === action.payload.pagination.psize;
         if (action.payload.data.length > 0) {
-          state.lobbyChatsStock = [
-            ...orderBy(action.payload.data, "createdAt"),
-            ...state.lobbyChatsStock,
-          ];
+          //If cursor provided that means its trigger from "Previous Messages" button
+          if (action.payload.pagination.cursor) {
+            state.lobbyChatsStock = [
+              ...orderBy(action.payload.data, "createdAt"),
+              ...state.lobbyChatsStock,
+            ];
+          } else {
+            state.lobbyChatsStock = [
+              ...orderBy(action.payload.data, "createdAt"),
+            ];
+          }
 
           if (action.payload.data.length > 0) {
             const lastItemIndex = action.payload.data.length - 1;
