@@ -18,6 +18,7 @@ interface Props {
   onLoadMore: Function;
   canLoadMore: boolean;
   onSendMessage: Function;
+  lastAddedItemId: string;
 }
 
 const LobbyChatListMobile = ({
@@ -26,15 +27,13 @@ const LobbyChatListMobile = ({
   onLoadMore,
   canLoadMore,
   onSendMessage,
+  lastAddedItemId,
 }: Props) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const textboxRef = useRef<HTMLInputElement>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const { user } = useSelector((state: RootState) => state.auth);
-  const { lastAddedItemId } = useSelector(
-    (state: RootState) => state.lobbyChat
-  );
 
   useEffect(() => {
     const scrollToBottom = () => {

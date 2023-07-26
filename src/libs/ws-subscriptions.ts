@@ -18,6 +18,7 @@ import {
 } from "@/store/sessionSlice";
 import { IFirebaseUser, InputDevicesSettings } from "@/types/frontend";
 import { addLobbyChatMessage } from "@/store/lobbyChatSlice";
+import { addLobbyChatStockMessage } from "@/store/lobbyChatStockSlice";
 
 export const subscribeRoomsUpdates = (dispatch: any): Socket => {
   const roomsSocket = io(`${ENVS.API_WS_URL}/rooms`);
@@ -190,4 +191,28 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
   });
 
   return lobbyChatSocket;
+};
+
+export const subscribeLobbyChatStockUpdates = (dispatch: any): Socket => {
+  const lobbyChatStockSocket = io(`${ENVS.API_WS_URL}/lobby-chat-stock`);
+
+  lobbyChatStockSocket.on("connect", () => {
+    console.log("WebSocket /lobby-chat-stock connection is open");
+  });
+
+  lobbyChatStockSocket.on("serverPush", (data: ISocketIOMessage) => {
+    console.log("serverPush", data);
+
+    const { type, message, payload } = data;
+    const lobbyChat = payload as ILobbyChat;
+    if (type === LobbyChatGatewayEventCode.SEND) {
+      dispatch(addLobbyChatStockMessage(payload));
+    }
+  });
+
+  lobbyChatStockSocket.on("disconnect", () => {
+    console.log("WebSocket  /lobby-chat-stock connection closed");
+  });
+
+  return lobbyChatStockSocket;
 };

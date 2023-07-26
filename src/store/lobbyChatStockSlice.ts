@@ -6,15 +6,15 @@ import { orderBy } from "lodash";
 import { RootState } from "./store";
 import { ILobbyChat, IPaginationCursorBased } from "@/types/common";
 
-interface LobbyChatState extends IAsyncState {
-  lobbyChats: ILobbyChat[];
+interface LobbyChatStockState extends IAsyncState {
+  lobbyChatsStock: ILobbyChat[];
   canLoadMore: boolean;
   lastFetchedItemId: string;
   lastAddedItemId: string;
 }
 
-const initialState: LobbyChatState = {
-  lobbyChats: [],
+const initialState: LobbyChatStockState = {
+  lobbyChatsStock: [],
   canLoadMore: true,
   lastFetchedItemId: "",
   lastAddedItemId: "",
@@ -22,12 +22,12 @@ const initialState: LobbyChatState = {
   error: "",
 };
 
-export const fetchLobbyChatAsync = createAsyncThunk(
-  "fetchLobbyChatAsync",
+export const fetchLobbyChatStockAsync = createAsyncThunk(
+  "fetchLobbyChatStockAsync",
   async (
     pagination: IPaginationCursorBased
   ): Promise<{ pagination: IPaginationCursorBased; data: ILobbyChat[] }> => {
-    const endpoint = `${ENVS.API_URL}/lobby-chat?psize=${pagination.psize}&cursor=${pagination.cursor}`;
+    const endpoint = `${ENVS.API_URL}/lobby-chat/stock?psize=${pagination.psize}&cursor=${pagination.cursor}`;
 
     const response = await fetch(endpoint);
 
@@ -39,12 +39,12 @@ export const fetchLobbyChatAsync = createAsyncThunk(
   }
 );
 
-export const createLobbyChatAsync = createAsyncThunk(
-  "createLobbyChatAsync",
+export const createLobbyChatStockAsync = createAsyncThunk(
+  "createLobbyChatStockAsync",
   async (payload: Pick<ILobbyChat, "message" | "type">, thunkAPI) => {
     const currentState = thunkAPI.getState() as RootState;
 
-    const endpoint = `${ENVS.API_URL}/lobby-chat`;
+    const endpoint = `${ENVS.API_URL}/lobby-chat/stock`;
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -62,12 +62,12 @@ export const createLobbyChatAsync = createAsyncThunk(
   }
 );
 
-const lobbyChatSlice = createSlice({
-  name: "lobbyChat",
+const lobbyChatStockSlice = createSlice({
+  name: "lobbyChatStock",
   initialState,
   reducers: {
-    addLobbyChatMessage(state, action: PayloadAction<ILobbyChat>) {
-      state.lobbyChats.push(action.payload);
+    addLobbyChatStockMessage(state, action: PayloadAction<ILobbyChat>) {
+      state.lobbyChatsStock.push(action.payload);
       state.lastAddedItemId = action.payload._id;
     },
     resetLobbyChat(state) {
@@ -76,18 +76,18 @@ const lobbyChatSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchLobbyChatAsync.pending, (state, action) => {
+      .addCase(fetchLobbyChatStockAsync.pending, (state, action) => {
         state.status = "loading";
         state.canLoadMore = true;
       })
-      .addCase(fetchLobbyChatAsync.fulfilled, (state, action) => {
+      .addCase(fetchLobbyChatStockAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.canLoadMore =
           action.payload.data.length === action.payload.pagination.psize;
         if (action.payload.data.length > 0) {
-          state.lobbyChats = [
+          state.lobbyChatsStock = [
             ...orderBy(action.payload.data, "createdAt"),
-            ...state.lobbyChats,
+            ...state.lobbyChatsStock,
           ];
 
           if (action.payload.data.length > 0) {
@@ -98,24 +98,27 @@ const lobbyChatSlice = createSlice({
           state.canLoadMore = false;
         }
       })
-      .addCase(fetchLobbyChatAsync.rejected, (state, action) => {
+      .addCase(fetchLobbyChatStockAsync.rejected, (state, action) => {
         state.status = "error";
-        state.error = action.error.message ?? "Failed to fetch lobby chat";
+        state.error =
+          action.error.message ?? "Failed to fetch lobby chat stock";
       });
 
     builder
-      .addCase(createLobbyChatAsync.pending, (state) => {
+      .addCase(createLobbyChatStockAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(createLobbyChatAsync.fulfilled, (state, action) => {
+      .addCase(createLobbyChatStockAsync.fulfilled, (state, action) => {
         state.status = "success";
       })
-      .addCase(createLobbyChatAsync.rejected, (state, action) => {
+      .addCase(createLobbyChatStockAsync.rejected, (state, action) => {
         state.status = "error";
-        state.error = action.error.message ?? "Failed to create lobby chat";
+        state.error =
+          action.error.message ?? "Failed to create lobby chat stock";
       });
   },
 });
 
-export const { addLobbyChatMessage, resetLobbyChat } = lobbyChatSlice.actions;
-export default lobbyChatSlice.reducer;
+export const { addLobbyChatStockMessage, resetLobbyChat } =
+  lobbyChatStockSlice.actions;
+export default lobbyChatStockSlice.reducer;

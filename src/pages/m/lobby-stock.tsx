@@ -1,45 +1,45 @@
 import PageContainer from "@/components/Layouts/PageContainer";
-import {
-  createLobbyChatAsync,
-  fetchLobbyChatAsync,
-} from "@/store/lobbyChatSlice";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import LobbyChatListMobile from "@/components/Lobby/LobbyChatListMobile";
-import { subscribeLobbyChatUpdates } from "@/libs/ws-subscriptions";
+import { subscribeLobbyChatStockUpdates } from "@/libs/ws-subscriptions";
+import {
+  createLobbyChatStockAsync,
+  fetchLobbyChatStockAsync,
+} from "@/store/lobbyChatStockSlice";
 
-const MobileLobbyPage = () => {
+const MobileLobbyStockPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const {
-    lobbyChats,
+    lobbyChatsStock,
     status: lobbyChatStatus,
     canLoadMore: canLoadLobbyChatMore,
     lastFetchedItemId,
     lastAddedItemId,
-  } = useSelector((state: RootState) => state.lobbyChat);
+  } = useSelector((state: RootState) => state.lobbyChatStock);
 
   const loadMoreLobbyChatMessages = () => {
     dispatch(
-      fetchLobbyChatAsync({
-        psize: 5,
+      fetchLobbyChatStockAsync({
+        psize: 10,
         cursor: lastFetchedItemId,
       })
     );
   };
 
-  // Subscribe to room update
   useEffect(() => {
-    const lobbyChatSocket = subscribeLobbyChatUpdates(dispatch);
+    const lobbyChatStockSocket = subscribeLobbyChatStockUpdates(dispatch);
     return () => {
-      lobbyChatSocket.disconnect();
+      lobbyChatStockSocket.disconnect();
     };
   }, [dispatch]);
 
   useEffect(() => {
     if (dispatch) {
       dispatch(
-        fetchLobbyChatAsync({
+        fetchLobbyChatStockAsync({
           psize: 20,
           cursor: "",
         })
@@ -49,13 +49,16 @@ const MobileLobbyPage = () => {
 
   return (
     <PageContainer>
+      <h2 className="text-2xl text-white fixed top-16 left-20 z-50">
+        Lobby Chat Messagges (STOCK)
+      </h2>
       <LobbyChatListMobile
-        lobbyChats={lobbyChats}
+        lobbyChats={lobbyChatsStock}
         isLoading={lobbyChatStatus === "loading"}
         onLoadMore={loadMoreLobbyChatMessages}
         canLoadMore={canLoadLobbyChatMore}
         onSendMessage={(message: string) => {
-          dispatch(createLobbyChatAsync({ message, type: "message" }));
+          dispatch(createLobbyChatStockAsync({ message, type: "message" }));
         }}
         lastAddedItemId={lastAddedItemId}
       />
@@ -63,4 +66,4 @@ const MobileLobbyPage = () => {
   );
 };
 
-export default MobileLobbyPage;
+export default MobileLobbyStockPage;

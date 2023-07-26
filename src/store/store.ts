@@ -11,6 +11,7 @@ import authSlice from "./authSlice";
 import profileSlice from "./profileSlice";
 import accountSlice from "./accountSlice";
 import lobbyChatSlice from "./lobbyChatSlice";
+import lobbyChatStockSlice from "./lobbyChatStockSlice";
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   profile: profileSlice,
   account: accountSlice,
   lobbyChat: lobbyChatSlice,
+  lobbyChatStock: lobbyChatStockSlice,
 });
 
 const store = configureStore({
