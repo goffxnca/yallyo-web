@@ -82,7 +82,7 @@ const LobbyChatListMobile = ({
           </div>
         )}
 
-        <ul className="space-y-2 mb-10 px-4 pb-20">
+        <ul className="space-y-2 mb-10 px-2 pb-20">
           {lobbyChats.map((message, index) => {
             const isFirstMessage = index === 0;
             const prevMessage = isFirstMessage ? null : lobbyChats[index - 1];

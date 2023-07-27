@@ -223,7 +223,7 @@ const HomePage = () => {
       {/* LEFT */}
       <div
         className={`hidden md:block fixed left-0 top-0 z-20 ${
-          showLobby ? "w-11/12 mr-10 md:w-1/2 lg:w-1/4" : "w-16"
+          showLobby ? "w-11/12 mr-10 md:w-1/2 lg:w-1/4" : "w-14"
         } `}
       >
         <LobbyChatList
@@ -254,7 +254,7 @@ const HomePage = () => {
 
         <div
           className={`${
-            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-16"
+            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-14"
           }`}
         >
           <HeaderControls

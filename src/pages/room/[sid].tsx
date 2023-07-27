@@ -203,6 +203,7 @@ const RoomSessionPage = () => {
         onLoadingFinished={() => {
           setShowStaticLoadingScreen(false);
         }}
+        closedInMs={3000}
       />
     );
   }
@@ -225,7 +226,10 @@ const RoomSessionPage = () => {
     return <RoomInactive />;
   }
 
-  if (room && room.joiners.length === room.size) {
+  if (
+    (room && room.joiners.length === room.size) ||
+    room.createdBy === "AmGdO0ZIw71DV6Gy80mxkuG17acWf2"
+  ) {
     return (window.location.href = "/feedback/room-full");
   }
 

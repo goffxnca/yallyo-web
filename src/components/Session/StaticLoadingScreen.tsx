@@ -4,16 +4,20 @@ import DarkOverlay from "../Layouts/Overlay";
 
 interface Props {
   onLoadingFinished: Function;
+  closedInMs?: number;
 }
 
-const StaticLoadingScreen = ({ onLoadingFinished }: Props) => {
+const StaticLoadingScreen = ({
+  onLoadingFinished,
+  closedInMs = 1000,
+}: Props) => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setShowLoading(false);
       onLoadingFinished();
-    }, 1000);
+    }, closedInMs);
   }, []);
 
   return (

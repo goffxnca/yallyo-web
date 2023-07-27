@@ -6,7 +6,7 @@ interface Props extends ILobbyChat {}
 
 const LobbyChatItem = ({ message, type, sender, createdAt }: Props) => {
   return (
-    <li className="flex items-center hover:bg-primary">
+    <li className="flex items-center hover:bg-primary py-1 px-2 rounded-md">
       <div className="">
         <Avatar
           userId={sender._id}

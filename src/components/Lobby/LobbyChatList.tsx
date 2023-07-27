@@ -121,7 +121,7 @@ const LobbyChatList = ({
           </div>
         )}
 
-        <ul className="space-y-2 mb-10 px-4 pb-20">
+        <ul className="space-y-2 mb-10 px-1 pb-20">
           {lobbyChats.map((message, index) => {
             const isFirstMessage = index === 0;
             const prevMessage = isFirstMessage ? null : lobbyChats[index - 1];
@@ -131,7 +131,7 @@ const LobbyChatList = ({
 
             return (
               <div key={message._id}>
-                {!iSameDateAsPrevMessage && (
+                {showFullLobby && !iSameDateAsPrevMessage && (
                   <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
                     <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary text-gray-500 font-semibold">
                       {friendlyDate(message.createdAt)}
