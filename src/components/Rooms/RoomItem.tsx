@@ -111,7 +111,7 @@ const RoomItem = memo((room: Props) => {
         {isFullRoom ? (
           <div className="m-auto flex items-center text-gray-500 border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-not-allowed hover:text-gray-400">
             <NoSymbolIcon className="h-5 w-5 mr-2" />
-            <span className="text-md">Full Room</span>
+            <span className="text-md select-none">Full Room</span>
           </div>
         ) : (
           <a

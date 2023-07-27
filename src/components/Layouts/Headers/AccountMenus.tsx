@@ -144,7 +144,7 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
               )}
             </Menu.Item>
 
-            <div className="block lg:hidden text-xs text-center p-2 text-gray-200">
+            <div className="block lg:hidden text-xs text-center p-2 text-gray-300">
               v{publicRuntimeConfig.version}:
               {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
             </div>
