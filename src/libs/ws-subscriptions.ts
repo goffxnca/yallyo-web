@@ -2,7 +2,6 @@ import { Socket, io } from "socket.io-client";
 import { updateRooms } from "../store/roomSlice";
 import { ENVS } from "../utils/constants";
 import {
-  ILobbyChat,
   ISocketIOMessage,
   LobbyChatGatewayEventCode,
   RoomsGatewayEventCode,
@@ -136,53 +135,8 @@ export const subscribeLobbyChatUpdates = (dispatch: any): Socket => {
     console.log("serverPush", data);
 
     const { type, message, payload } = data;
-    const lobbyChat = payload as ILobbyChat;
     if (type === LobbyChatGatewayEventCode.SEND) {
       dispatch(addLobbyChatMessage(payload));
-
-      //Sorry if you come across this code and be like "TF" haha :D
-      //1: Check that current logged user exist and is one of the admin user ids
-      if (
-        (window &&
-          (window as any)["screenOptions"] &&
-          (window as any)["screenOptions"]["uid"] ===
-            "lrw1X4kWWLatBUXfGbidYzgreL43") ||
-        (window as any)["screenOptions"]["uid"] ===
-          "GdO0ZIw71DV6Gy80mxkuG17acWf2"
-      ) {
-        //2: Show notification only those who are not the sender
-        if (
-          (window as any)["screenOptions"]["uid"] !==
-          (lobbyChat.sender._id! as string)
-        ) {
-          //3: Browser must support notification features
-          if (!("Notification" in window)) {
-            // Check if the browser supports notifications
-            // alert("This browser does not support desktop notification");
-            console.log("This browser does not support desktop notification");
-          } else if (Notification.permission === "granted") {
-            // Check whether notification permissions have already been granted;
-            // if so, create a notification
-            const notificaiton = new Notification(`New Lobby Message`, {
-              body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-              icon: lobbyChat.sender.photoURL,
-              // requireInteraction: true,
-            });
-          } else if (Notification.permission !== "denied") {
-            // We need to ask the user for permission
-            Notification.requestPermission().then((permission) => {
-              // If the user accepts, let's create a notification
-              if (permission === "granted") {
-                const notificaiton = new Notification(`New Lobby Message`, {
-                  body: `${lobbyChat.sender.dname}: ${lobbyChat.message}`,
-                  icon: lobbyChat.sender.photoURL,
-                  // requireInteraction: true,
-                });
-              }
-            });
-          }
-        }
-      }
     }
   });
 
@@ -204,7 +158,6 @@ export const subscribeLobbyChatStockUpdates = (dispatch: any): Socket => {
     console.log("serverPush", data);
 
     const { type, message, payload } = data;
-    const lobbyChat = payload as ILobbyChat;
     if (type === LobbyChatGatewayEventCode.SEND) {
       dispatch(addLobbyChatStockMessage(payload));
     }

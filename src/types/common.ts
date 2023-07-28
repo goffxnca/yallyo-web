@@ -157,4 +157,5 @@ export enum AdminGatewayEventCode {
   USER_CREATE_ROOM = "create_room",
   USER_JOIN_ROOM = "join_room",
   USER_LEAVE_ROOM = "leave_room",
+  USER_SEND_LOBBY_MESSAGE = "send_lobby_message",
 }
