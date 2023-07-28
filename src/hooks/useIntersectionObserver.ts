@@ -46,7 +46,7 @@ const useIntersectionObserver = ({
 
     return () => {
       if (targetRef.current && requiredCondition && observer) {
-        console.log("useIntersectionObserver useEffect clenaup ran...");
+        // console.log("useIntersectionObserver useEffect clenaup ran...");
         observer.unobserve(targetRef.current);
       }
     };

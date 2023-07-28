@@ -90,7 +90,8 @@ export interface ISocketIOMessage {
   type:
     | RoomsGatewayEventCode
     | SessionsGatewayEventCode
-    | LobbyChatGatewayEventCode;
+    | LobbyChatGatewayEventCode
+    | AdminGatewayEventCode;
   message?: string;
   payload?: any;
 }
@@ -148,4 +149,12 @@ export enum SessionsGatewayEventCode {
   SEND_MSG = "send_msg",
   SPEAK_ON = "speak_on",
   SPEAK_OFF = "speak_off",
+}
+
+export enum AdminGatewayEventCode {
+  USER_CREATE_ACCOUNT = "create_account",
+  USER_UPDATE_PROFILE = "update_profile",
+  USER_CREATE_ROOM = "create_room",
+  USER_JOIN_ROOM = "join_room",
+  USER_LEAVE_ROOM = "leave_room",
 }
