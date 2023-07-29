@@ -51,7 +51,7 @@ const JoinerItemCool = ({
       // )}
 
       className={`relative rounded-lg overflow-hidden  ${
-        speaking && "border-4 border-accent2"
+        speaking && controls.camOn && "border-4 border-accent2"
       } ${status !== "connected" && "opacity-60"}`}
       style={{
         //   backgroundColor: getRandomColor() || "red",

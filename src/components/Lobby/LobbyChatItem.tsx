@@ -28,8 +28,8 @@ const LobbyChatItem = ({ message, type, sender, createdAt }: Props) => {
         </div>
       </div>
 
-      <div className="text-[10px] text-gray-500 w-12 ml-auto text-right">
-        {formatDateTo12Hour(new Date(createdAt))}
+      <div className="text-[10px] text-gray-500 w-40 ml-auto text-right">
+        {formatDateTo12Hour(new Date(createdAt))} -{createdAt}
       </div>
     </li>
   );

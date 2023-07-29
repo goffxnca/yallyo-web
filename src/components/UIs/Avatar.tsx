@@ -40,7 +40,9 @@ const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
       className={`relative flex justify-center items-center text-white ${avatarSize} ${
         hilight && "scale-125"
       } rounded-full ${name ? "" : "border border-dashed border-gray-600"}
-       hover:scale-125 select-none cursor-pointer`}
+       hover:scale-125 select-none cursor-pointer ${
+         hilight && "border-4 border-accent2"
+       }`}
       onClick={() => {
         if (name) {
           setShowProfile(true);
