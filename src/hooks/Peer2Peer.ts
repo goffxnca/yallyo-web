@@ -238,6 +238,46 @@ class Peer2Peer {
     }
   };
 
+  shareScreen = async () => {
+    console.log("shareScreen");
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        audio: true,
+        video: true,
+      });
+
+      // const [audioTrack] = stream.getAudioTracks();
+      // if (!audioTrack) {
+      //   return console.error(
+      //     "upgradeToAudioAndVideoStream failed because no audio track found"
+      //   );
+      // }
+
+      const [videoTrack] = stream.getVideoTracks();
+      if (!videoTrack) {
+        return console.error("shareScreen failed because no video track found");
+      }
+
+      // // this.connectSoundMeter(stream);
+      const localUserVideo = this.getVideoElement(
+        this.settings?.localUserId as string
+      );
+      localUserVideo.srcObject = stream;
+      this.localStream = stream;
+
+      this.reConnectAllRemotePeers();
+
+      // if (this.settings) {
+      //   this.settings.camOnOnce = true;
+      // }
+
+      console.log(`shareScreen successfully`);
+    } catch (error: unknown) {
+      console.error("upgradeToAudioAndVideoStream failed with error:" + error);
+      // this.handleGetUserMediaError(error, "mic");
+    }
+  };
+
   upgradeToAudioAndVideoStream = async () => {
     console.log("upgradeToAudioAndVideoStream");
     try {

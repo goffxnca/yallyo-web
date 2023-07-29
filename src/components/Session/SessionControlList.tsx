@@ -16,9 +16,15 @@ interface Props {
   controls: IMediaControls;
   onToggleCam: Function;
   onToggleMic: Function;
+  onToggleScreen: Function;
 }
 
-const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
+const SessionControlList = ({
+  controls,
+  onToggleCam,
+  onToggleMic,
+  onToggleScreen,
+}: Props) => {
   const { messages, room, localControls } = useSelector(
     (state: RootState) => state.session
   );
@@ -74,10 +80,15 @@ const SessionControlList = ({ controls, onToggleCam, onToggleMic }: Props) => {
 
             <SessionControlItem
               Icon={<ComputerDesktopIcon />}
-              disabled={true}
-              hoverTooltip={"Share screen is not supported yet"}
-              actionedTooltip={"Share screen is not supported yet"}
-              onClick={() => {}}
+              hoverTooltip={
+                localControls.chatOn ? "Stop Sharing Screen" : "Share Screen"
+              }
+              actionedTooltip={
+                controls.camOn ? "Sharing Screen" : "Sharing Screen Stopped"
+              }
+              onClick={() => {
+                onToggleScreen();
+              }}
             />
           </>
         )}
