@@ -66,9 +66,9 @@ const LobbyChatList = ({
   };
 
   return (
-    <section className="w-full rounded-md bg-secondary absolute inset-0">
+    <section className="w-full rounded-md bg-secondary">
       <div className="flex flex-col h-screen">
-        {/* Header */}
+        {/* Sticky Header */}
         <div className="pt-16">
           <div
             className={`flex items-center justify-center relative ${
@@ -97,6 +97,7 @@ const LobbyChatList = ({
           </div>
         </div>
 
+        {/* Scrollable Content */}
         <div
           className={`flex-1  overflow-y-scroll pt-2 ${
             showFullLobby && " border-r border-gray-600"
@@ -163,7 +164,7 @@ const LobbyChatList = ({
           </ul>
         </div>
 
-        {/* Submit */}
+        {/* Footer */}
         {showFullLobby && (
           <div className="w-full">
             <form
