@@ -3,30 +3,30 @@ import { createNArray } from "@/utils/array-utils";
 const PerfectLayout = () => {
   return (
     <div className="text-white fixed top-0 left-0 w-full bg-blue-500 ">
-      <div className="bg-red-200">
+      <div className="bg-red-200 h-12">
         <div>Header</div>
       </div>
       <div className="flex h-screen">
-        <div className="w-1/6 bg-green-200  overflow-scroll">
+        <div className="w-3/12 bg-green-200  overflow-scroll">
           {createNArray(100).map((value, index) => (
             <div key={index} className="">
-              Left Sidebar
+              Room {index}
             </div>
           ))}
         </div>
 
-        <div className="w-4/6 bg-green-200 overflow-scroll">
+        <div className="w-6/12 bg-secondary overflow-scroll">
           {createNArray(100).map((value, index) => (
             <div key={index} className="">
-              Main
+              Member {index}
             </div>
           ))}
         </div>
 
-        <div className="w-1/6 bg-purple-200 overflow-scroll">
+        <div className="w-3/12 bg-green-200 overflow-scroll border-b">
           {createNArray(100).map((value, index) => (
             <div key={index} className="">
-              Left Sidebar
+              Message {index}
             </div>
           ))}
         </div>
