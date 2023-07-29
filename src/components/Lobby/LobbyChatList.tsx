@@ -66,101 +66,106 @@ const LobbyChatList = ({
   };
 
   return (
-    <section className="relative w-full rounded-md bg-secondary h-screen pt-16">
-      <div
-        className={`flex items-center justify-center relative ${
-          showFullLobby && " border-r border-gray-600"
-        }`}
-      >
-        <h2 className="text-accent1 h-8 text-center border-b border-gray-600 bg-opacity-90 py-1 font-bold w-full">
-          {showFullLobby && "Lobby"}
-        </h2>
-        {/* <ChevronRightIcon className="w-6 h-6 absolute right-0 text-white" /> */}
-        {showFullLobby ? (
-          <ChevronLeftIcon
-            className="w-6 h-6 absolute right-0 text-white cursor-pointer"
-            onClick={() => {
-              onToggleLobby();
-            }}
-          />
-        ) : (
-          <ChevronRightIcon
-            className="w-6 h-6 absolute right-0 text-white cursor-pointer"
-            onClick={() => {
-              onToggleLobby();
-            }}
-          />
-        )}
-      </div>
-
-      <div
-        className={`h-full overflow-y-scroll pt-2 ${
-          showFullLobby && " border-r border-gray-600"
-        }`}
-        ref={scrollContainerRef}
-      >
-        {showFullLobby && canLoadMore && (
-          <div className="flex justify-center">
-            <button
-              className="text-sm px-2 py-1 rounded-b-lg text-center text-secondary"
-              onClick={() => {
-                onLoadMore();
-              }}
-            >
-              {isLoading ? (
-                <div className="animate-pulse">
-                  <ArrowPathIcon className="h-5 w-5 animate-spin text-gray-500" />
-                </div>
-              ) : (
-                <div className="flex text-gray-500">
-                  <ChevronDoubleUpIcon className="h-5 w-5" />
-                  <span>Previous Messages</span>
-                </div>
-              )}
-            </button>
+    <section className="relative w-full rounded-md bg-secondary">
+      <div className="flex flex-col h-screen">
+        {/* Header */}
+        <div className="bg-purple-400 pt-16">
+          <div
+            className={`flex items-center justify-center relative ${
+              showFullLobby && " border-r border-gray-600"
+            }`}
+          >
+            <h2 className="text-accent1 h-8 text-center border-b border-gray-600 bg-opacity-90 py-1 font-bold w-full">
+              {showFullLobby && "Lobby"}
+            </h2>
+            {/* <ChevronRightIcon className="w-6 h-6 absolute right-0 text-white" /> */}
+            {showFullLobby ? (
+              <ChevronLeftIcon
+                className="w-6 h-6 absolute right-0 text-white cursor-pointer"
+                onClick={() => {
+                  onToggleLobby();
+                }}
+              />
+            ) : (
+              <ChevronRightIcon
+                className="w-6 h-6 absolute right-0 text-white cursor-pointer"
+                onClick={() => {
+                  onToggleLobby();
+                }}
+              />
+            )}
           </div>
-        )}
+        </div>
 
-        <ul className="space-y-2 mb-10 px-1 pb-20">
-          {lobbyChats.map((message, index) => {
-            const isFirstMessage = index === 0;
-            const prevMessage = isFirstMessage ? null : lobbyChats[index - 1];
-            const iSameDateAsPrevMessage = isFirstMessage
-              ? false
-              : isSameDate(message.createdAt, prevMessage!.createdAt);
-
-            return (
-              <div key={message._id}>
-                {showFullLobby && !iSameDateAsPrevMessage && (
-                  <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
-                    <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary text-gray-500 font-semibold">
-                      {friendlyDate(message.createdAt)}
-                    </div>
-
-                    <div
-                      className="absolute top-2  left-0 w-full border-gray-500 opacity-20"
-                      style={{ borderBottomWidth: 0.1 }}
-                    ></div>
+        <div
+          className={`flex-1  overflow-y-scroll pt-2 ${
+            showFullLobby && " border-r border-gray-600"
+          }`}
+          ref={scrollContainerRef}
+        >
+          {showFullLobby && canLoadMore && (
+            <div className="flex justify-center">
+              <button
+                className="text-sm px-2 py-1 rounded-b-lg text-center text-secondary"
+                onClick={() => {
+                  onLoadMore();
+                }}
+              >
+                {isLoading ? (
+                  <div className="animate-pulse">
+                    <ArrowPathIcon className="h-5 w-5 animate-spin text-gray-500" />
+                  </div>
+                ) : (
+                  <div className="flex text-gray-500">
+                    <ChevronDoubleUpIcon className="h-5 w-5" />
+                    <span>Previous Messages</span>
                   </div>
                 )}
-                <LobbyChatItem
-                  _id={message._id}
-                  type={message.type}
-                  message={message.message}
-                  sender={message.sender}
-                  flag={message.flag}
-                  createdAt={message.createdAt}
-                  createdBy={message.createdBy}
-                  active={message.active}
-                />
-              </div>
-            );
-          })}
-        </ul>
+              </button>
+            </div>
+          )}
+
+          <ul className="space-y-2 mb-10 px-1 pb-20">
+            {lobbyChats.map((message, index) => {
+              const isFirstMessage = index === 0;
+              const prevMessage = isFirstMessage ? null : lobbyChats[index - 1];
+              const iSameDateAsPrevMessage = isFirstMessage
+                ? false
+                : isSameDate(message.createdAt, prevMessage!.createdAt);
+
+              return (
+                <div key={message._id}>
+                  {showFullLobby && !iSameDateAsPrevMessage && (
+                    <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
+                      <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-24 bg-secondary text-gray-500 font-semibold">
+                        {friendlyDate(message.createdAt)}
+                      </div>
+
+                      <div
+                        className="absolute top-2  left-0 w-full border-gray-500 opacity-20"
+                        style={{ borderBottomWidth: 0.1 }}
+                      ></div>
+                    </div>
+                  )}
+                  <LobbyChatItem
+                    _id={message._id}
+                    type={message.type}
+                    message={message.message}
+                    sender={message.sender}
+                    flag={message.flag}
+                    createdAt={message.createdAt}
+                    createdBy={message.createdBy}
+                    active={message.active}
+                  />
+                </div>
+              );
+            })}
+          </ul>
+        </div>
 
         {/* Submit */}
         {showFullLobby && (
-          <div className="absolute left-0 bottom-0 w-full">
+          <div className="w-full">
             <form
               onSubmit={handleSubmit}
               className="flex justify-between gap-x-1  relative"
@@ -190,20 +195,20 @@ const LobbyChatList = ({
             </form>
           </div>
         )}
-      </div>
 
-      {showLoginModal && (
-        <LoginModal
-          message="To access the lobby area and send messages, please log in."
-          onCloseModal={() => {
-            setShowLoginModal(false);
-          }}
-          onLoginSucceed={() => {
-            setShowLoginModal(false);
-            textboxRef.current?.focus();
-          }}
-        />
-      )}
+        {showLoginModal && (
+          <LoginModal
+            message="To access the lobby area and send messages, please log in."
+            onCloseModal={() => {
+              setShowLoginModal(false);
+            }}
+            onLoginSucceed={() => {
+              setShowLoginModal(false);
+              textboxRef.current?.focus();
+            }}
+          />
+        )}
+      </div>
     </section>
   );
 };

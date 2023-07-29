@@ -223,7 +223,7 @@ const HomePage = () => {
       {/* LEFT */}
       <div
         className={`hidden md:block fixed left-0 top-0 z-20 ${
-          showLobby ? "w-11/12 mr-10 md:w-1/2 lg:w-1/4" : "w-14"
+          showLobby ? "md:w-1/2 lg:w-1/4" : "w-14"
         } `}
       >
         <LobbyChatList
