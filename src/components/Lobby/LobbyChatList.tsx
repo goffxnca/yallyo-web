@@ -66,10 +66,10 @@ const LobbyChatList = ({
   };
 
   return (
-    <section className="relative w-full rounded-md bg-secondary">
+    <section className="w-full rounded-md bg-secondary absolute inset-0">
       <div className="flex flex-col h-screen">
         {/* Header */}
-        <div className="bg-purple-400 pt-16">
+        <div className="pt-16">
           <div
             className={`flex items-center justify-center relative ${
               showFullLobby && " border-r border-gray-600"

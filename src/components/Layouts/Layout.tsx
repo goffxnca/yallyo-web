@@ -12,6 +12,8 @@ const Layout = ({ children }: Props) => {
   // console.log("Layout");
   // return <div className="p-10 md:p-20 max-w-[1240px] m-auto">{children}</div>;
   return (
+    // this will use the whole viewport even in mobile
+    // <div className="absolute inset-0">
     <div className="h-screen flex flex-col">
       <Header />
       <main className="flex-grow">{children}</main>
@@ -40,6 +42,7 @@ const Layout = ({ children }: Props) => {
         <MobileNavigators />
       </div>
     </div>
+    // </div>
   );
 };
 
