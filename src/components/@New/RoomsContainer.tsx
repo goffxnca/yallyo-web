@@ -1,7 +1,3 @@
-import {
-  setCurrentActiveRoomId,
-  toggleRoomContainer,
-} from "@/store/layoutSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { createNArray } from "@/utils/array-utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
@@ -12,10 +8,6 @@ import { fetchRoomsAsync } from "@/store/roomSlice";
 import { ENVS } from "@/utils/constants";
 
 const RoomsContainer = () => {
-  const { roomsContainerExpanded, currentActiveRoomId } = useSelector(
-    (state: RootState) => state.layout
-  );
-
   const {
     rooms,
     roomsGroupedByLanguage,
@@ -45,33 +37,7 @@ const RoomsContainer = () => {
   }, [dispatch]);
 
   return (
-    <div
-      className={`${roomsContainerExpanded ? "w-3/12" : "w-[50px]"} ${
-        !currentActiveRoomId && "flex-1"
-      }  overflow-scroll`}
-    >
-      <div className="text-right">
-        {roomsContainerExpanded ? (
-          <button
-            onClick={() => {
-              dispatch(toggleRoomContainer());
-            }}
-            className=""
-          >
-            <ChevronLeftIcon className="w-5 h-5" />
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              dispatch(toggleRoomContainer());
-            }}
-            className=""
-          >
-            <ChevronRightIcon className="w-5 h-5" />
-          </button>
-        )}
-      </div>
-
+    <div className={`flex-1 bg-secondary overflow-scroll z-20`}>
       {/* {createNArray(100).map((value, index) => (
         <div
           key={index}

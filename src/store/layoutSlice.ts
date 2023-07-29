@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface LayoutState {
-  roomsContainerExpanded: boolean;
+  sessionContainerExpanded: boolean;
   lobbyContainerExpanded: boolean;
   currentActiveRoomId: string;
 }
 
 const initialState: LayoutState = {
-  roomsContainerExpanded: true,
-  lobbyContainerExpanded: true,
+  sessionContainerExpanded: false,
+  lobbyContainerExpanded: false,
   currentActiveRoomId: "",
 };
 
@@ -16,11 +16,11 @@ const layoutSlice = createSlice({
   name: "layout",
   initialState,
   reducers: {
-    toggleRoomContainer(state) {
-      state.roomsContainerExpanded = !state.roomsContainerExpanded;
-    },
     toggleLobbyContainer(state) {
       state.lobbyContainerExpanded = !state.lobbyContainerExpanded;
+    },
+    toggleSessionContainer(state) {
+      state.sessionContainerExpanded = !state.sessionContainerExpanded;
     },
     setCurrentActiveRoomId(state, action: PayloadAction<string>) {
       state.currentActiveRoomId = action.payload;
@@ -29,7 +29,7 @@ const layoutSlice = createSlice({
 });
 
 export const {
-  toggleRoomContainer,
+  toggleSessionContainer,
   toggleLobbyContainer,
   setCurrentActiveRoomId,
 } = layoutSlice.actions;
