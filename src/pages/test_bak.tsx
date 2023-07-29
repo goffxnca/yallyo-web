@@ -108,6 +108,7 @@ const JoinerList2 = () => {
       <SessionControlList
         onToggleCam={() => {}}
         onToggleMic={() => {}}
+        onToggleScreen={() => {}}
         controls={medias}
       />
       <div className="text-white absolute bottom-0 right-0">

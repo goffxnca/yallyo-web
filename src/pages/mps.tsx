@@ -172,6 +172,7 @@ const MultiplePeers = () => {
             sessionsSocket.emit("clientMessage", data);
             p2p.toggleLocalVideoStream();
           }}
+          onToggleScreen={() => {}}
         />
       )}
 
