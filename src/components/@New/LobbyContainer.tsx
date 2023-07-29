@@ -15,7 +15,7 @@ const LobbyContainer = () => {
     <div
       className={`${
         lobbyContainerExpanded ? "w-3/12" : "w-[50px]"
-      } bg-green-200  overflow-scroll`}
+      } overflow-scroll`}
     >
       {lobbyContainerExpanded ? (
         <button

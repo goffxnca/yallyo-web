@@ -5,7 +5,7 @@ import SessionContainer from "@/components/@New/SessionContainer";
 
 const Perfect2Page = () => {
   return (
-    <div className="text-white fixed top-0 left-0 w-full bg-blue-500 ">
+    <div className="text-white fixed top-0 left-0 w-full">
       <HeaderContainer />
       <div className="flex h-screen">
         <RoomsContainer />
