@@ -67,7 +67,7 @@ const LobbyChatList = ({
 
   return (
     <section className="w-full rounded-md bg-secondary">
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-[calc(100dvh)]">
         {/* Sticky Header */}
         <div className="pt-16">
           <div
