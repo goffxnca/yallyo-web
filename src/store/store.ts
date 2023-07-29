@@ -12,10 +12,12 @@ import profileSlice from "./profileSlice";
 import accountSlice from "./accountSlice";
 import lobbyChatSlice from "./lobbyChatSlice";
 import lobbyChatStockSlice from "./lobbyChatStockSlice";
+import layoutSlice from "./layoutSlice";
 
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authSlice,
+  layout: layoutSlice,
   room: roomReducer,
   session: sessionSlice,
   profile: profileSlice,
