@@ -1,7 +1,9 @@
+import Header from "../Layouts/Headers/Header";
+
 const HeaderContainer = () => {
   return (
-    <div className="bg-red-200 h-12">
-      <div>Header</div>
+    <div className="bg-red-200 h-16">
+      <Header />
     </div>
   );
 };
