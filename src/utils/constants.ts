@@ -64,7 +64,7 @@ const LANGUAGES = [
   // "Kirundi",
   // "Kurdish",
   // "Kyrgyz",
-  // "Lao",
+  "Lao",
   // "Latin",
   // "Latvian",
   // "Lithuanian",
