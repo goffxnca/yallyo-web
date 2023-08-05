@@ -26,11 +26,11 @@ const AboutMe = () => {
             </figcaption>
           </figure>
           <p>
-            👋 Greetings! I am Goff Phattharawit, the Founder of Yallyo. As a
-            dedicated software developer, my passion lies in creating impactful
-            solutions that enrich people&apos;s lives. Language learning has
-            always been close to my heart, and I am thrilled to introduce you to
-            the world of Yallyo.
+            👋 Hi there! My name is Goff Phattharawit, the Founder of Yallyo. As
+            a dedicated software developer, my passion lies in creating
+            impactful solutions that enrich people&apos;s lives. Language
+            learning has always been close to my heart, and I am thrilled to
+            introduce you to the world of Yallyo.
           </p>
 
           <p>
@@ -98,9 +98,9 @@ const AboutMe = () => {
           </p>
 
           <p>
-            Together, let's make a positive impact on the world of language
-            learning. I invite you to be a part of Yallyo's vision and embark on
-            a journey of growth and exploration. See you on Yallyo!
+            Together, let&apos;s make a positive impact on the world of language
+            learning. I invite you to be a part of Yallyo&apos;s vision and
+            embark on a journey of growth and exploration. See you on Yallyo!
           </p>
 
           <div className="flex justify-center mt-4">
