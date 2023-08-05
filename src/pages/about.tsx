@@ -17,12 +17,12 @@ const AboutMe = () => {
             <img
               className="mx-auto h-32 w-32  object-cover rounded-full"
               src={
-                "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F16ecc797-c281-4d9e-9b6f-62e7ef49f318.jpeg?alt=media"
+                "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media"
               }
-              alt=""
+              alt="Founder of Yallyo Platform"
             />
             <figcaption className="text-center text-accent2">
-              Obiyofin J.- Yallyo Founder
+              Goff Phattharawit - Yallyo Founder
             </figcaption>
           </figure>
           <p>

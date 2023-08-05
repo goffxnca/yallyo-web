@@ -244,10 +244,12 @@ const HomePage = () => {
       {/* RIGHT */}
       <PageContainer>
         <Head>
-          <title>Yallyo.com | Talk with new friends online worldwide</title>
+          <title>
+            Yallyo.com | Practice English Speaking with Strangers Worldwide!
+          </title>
           <meta
             name="description"
-            content="Yallyo.com is a platform designed for language learners to practice speaking English with native speakers and individuals from diverse cultures around the world. Connect with real people and engage in voice calls, video calls, and group chat rooms. Start improving your English fluency today and make meaningful connections. Join our international community and make English learning accessible to everyone, regardless of their location. Discover a new way to learn and connect on Yallyo.com"
+            content="Join Yallyo.com, the Global Platform for English Language Practice and Cultural Exchange. Connect with native English speakers and diverse language learners worldwide through voice and video calls, and engaging group chat rooms. Enhance your English fluency while making meaningful connections across borders. Join our international community and embark on a journey of learning and cultural understanding. Discover a new world of language practice and global friendships on Yallyo.com."
           />
           <link rel="canonical" href="https://yallyo.com" />
         </Head>

@@ -27,6 +27,7 @@ import Modal from "@/components/UIs/Modal";
 import TroubleshootingContent from "@/components/Session/TroubleshootingContent";
 import { CustomError2, PermissionNotAllowed } from "@/types/errors";
 import InputDevicesSettings from "@/components/Session/InputDevicesSettings";
+import Head from "next/head";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -255,6 +256,18 @@ const RoomSessionPage = () => {
 
   return (
     <>
+      <Head>
+        <title>
+          {inputDeviceSettings && inputDeviceSettings.camId ? "Video" : "Voice"}
+          Room: {room.topic}/{room.sid} | Yallyo.com
+        </title>
+        <meta
+          name="description"
+          content="Join Yallyo.com, the Global Platform for English Language Practice and Cultural Exchange. Connect with native English speakers and diverse language learners worldwide through voice and video calls, and engaging group chat rooms. Enhance your English fluency while making meaningful connections across borders. Join our international community and embark on a journey of learning and cultural understanding. Discover a new world of language practice and global friendships on Yallyo.com."
+        />
+        <meta name="robots" content="noindex, nofollow"></meta>
+      </Head>
+
       <SessionContainer sessionsSocket={sessionsSocket} p2p={p2p} />
       {showTroubleshootingModal && (
         <Modal
