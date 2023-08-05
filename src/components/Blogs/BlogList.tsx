@@ -1,6 +1,7 @@
 import { BLOGS } from "@/utils/constants";
 import Link from "next/link";
 import Avatar from "../UIs/Avatar";
+import Separator from "../Layouts/Headers/Separator";
 
 const BlogList = () => {
   return (
@@ -15,10 +16,7 @@ const BlogList = () => {
         </p>
       </div>
 
-      <div className="my-8 flex justify-center">
-        <div className="border-b-4 border-accent2 w-40"></div>
-        <div className="border-b-4 border-accent1 w-40"></div>
-      </div>
+      <Separator />
 
       <ul className="grid md:grid-cols-2 gap-4">
         {BLOGS.map((blog) => (
@@ -53,7 +51,7 @@ const BlogList = () => {
                         <div className="ml-4">{blog.author.displayName}</div>
                       </div>
 
-                      <div>12, August, 2023</div>
+                      <div>{blog.publishedAt}</div>
                     </footer>
                   </div>
                 </div>

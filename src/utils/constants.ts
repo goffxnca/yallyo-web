@@ -271,6 +271,7 @@ const BLOGS: IBlog[] = [
       uid: "",
       idToken: "",
     },
+    publishedAt: "2023-08-05",
   },
   {
     id: "blog2",
@@ -289,6 +290,7 @@ const BLOGS: IBlog[] = [
       uid: "",
       idToken: "",
     },
+    publishedAt: "2023-08-04",
   },
   {
     id: "blog3",
@@ -307,6 +309,7 @@ const BLOGS: IBlog[] = [
       uid: "",
       idToken: "",
     },
+    publishedAt: "2023-08-06",
   },
 ];
 

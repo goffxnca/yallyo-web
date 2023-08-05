@@ -15,7 +15,8 @@ const Blog1Page = () => {
       <BlogHeader
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
         heroImageUrl="https://pbs.twimg.com/media/F2qUj96bgAEjrKE?format=jpg&name=medium"
-        heroImageAlt="Yallyo How to dddd"
+        heroImageAlt="Illustration of global conversations connecting strangers worldwide for English practice on Yallyo"
+        publishedAt="2023-08-05"
       />
       <BlogSection
         title="Introduction"
@@ -25,6 +26,8 @@ const Blog1Page = () => {
         title="The Power of Global Conversations"
         paragraph1="Yallyo, the revolutionary voice-chat platform, takes this concept of connecting with strangers to a whole new level. Its primary mission is to bridge linguistic gaps and encourage intercultural dialogues. Through its video/voice chat system, users can create rooms based on their language preferences, proficiency levels, and chosen topics of discussion. The platform's versatility allows participants to choose between voice-only or voice + video interactions, ensuring a comfortable and personalized experience for everyone involved."
         paragraph2="Research by the University of Chicago's Nicholas Epley and Juliana Schroeder also supports the idea that global conversations can enhance our lives. Their studies revealed that commuters who engaged in conversations with nearby strangers during their journey reported finding their commute more enjoyable than those who remained silent. The results demonstrate that talking to strangers from different cultures can lead to a sense of connection and joy."
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fworld_map_conversations.png?alt=media"
+        imageAlt="World map with speech bubbles connecting different countries in global conversations"
       />
       <BlogSection
         title="Creating Connections and Friendships"

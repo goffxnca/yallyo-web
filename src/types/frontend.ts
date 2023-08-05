@@ -52,4 +52,5 @@ export interface IBlog {
   thumbnail: string;
   slug: string;
   author: IFirebaseUser;
+  publishedAt: string;
 }

@@ -5,9 +5,15 @@ interface Props {
   title: string;
   heroImageUrl: string;
   heroImageAlt: string;
+  publishedAt: string;
 }
 
-const BlogHeader = ({ title, heroImageUrl, heroImageAlt }: Props) => {
+const BlogHeader = ({
+  title,
+  heroImageUrl,
+  heroImageAlt,
+  publishedAt,
+}: Props) => {
   return (
     <header>
       <h1 className="text-2xl  lg:text-4xl font-bold text-[#14171a]">
@@ -38,7 +44,7 @@ const BlogHeader = ({ title, heroImageUrl, heroImageAlt }: Props) => {
             <p className="pt-2 md:pt-0">
               Published on{" "}
               <time itemProp="datePublished" dateTime="YYYY-MM-DD">
-                {friendlyDate(new Date().toUTCString())}
+                {publishedAt}
               </time>
             </p>
           </div>

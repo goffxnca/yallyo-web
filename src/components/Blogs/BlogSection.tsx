@@ -2,15 +2,30 @@ interface Props {
   title: string;
   paragraph1: string;
   paragraph2?: string;
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
-const BlogSection = ({ title, paragraph1, paragraph2 }: Props) => {
+const BlogSection = ({
+  title,
+  paragraph1,
+  paragraph2,
+  imageUrl,
+  imageAlt,
+}: Props) => {
   return (
     <section className="">
       <h2 className="text-lg font-bold mb-2">{title}</h2>
       <p dangerouslySetInnerHTML={{ __html: paragraph1 }}></p>
       {paragraph2 && (
         <p dangerouslySetInnerHTML={{ __html: paragraph2 }} className="mt-4" />
+      )}
+
+      {/* Section Image */}
+      {imageUrl && imageAlt && (
+        <div className="mt-10 flex justify-center">
+          <img src={imageUrl} alt={imageAlt} />
+        </div>
       )}
     </section>
   );

@@ -15,6 +15,7 @@ const Blog1Page = () => {
         title="Finding Your Voice: Enhancing English Fluency Through Yallyo's Voice Chat"
         heroImageUrl=""
         heroImageAlt=""
+        publishedAt="2023-08-10"
       />
       <BlogSection
         title="Introduction"
