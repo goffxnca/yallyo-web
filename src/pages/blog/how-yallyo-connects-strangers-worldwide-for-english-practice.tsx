@@ -12,7 +12,11 @@ const Blog1Page = () => {
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
         desc="Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures."
       />
-      <BlogHeader title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice" />
+      <BlogHeader
+        title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
+        heroImageUrl="https://pbs.twimg.com/media/F2qUj96bgAEjrKE?format=jpg&name=medium"
+        heroImageAlt="Yallyo How to dddd"
+      />
       <BlogSection
         title="Introduction"
         paragraph1="Have you ever wondered how often you chat with the strangers you encounter during the course of your day? Fascinating research from <a href='https://www.inc.com/minda-zetlin/happy-happier-talking-to-strangers-initiating-conversations.html' target='_blank' class='blog-link'>inc.com</a> shows that even brief conversations with the person who takes your coffee order or the stranger seated next to you during your commute can have a measurable improvement in your mood. This discovery challenges our expectations that such interactions may lead to negative experiences. In fact, psychologists at the University of British Columbia in Vancouver conducted experiments that shed light on the positive impact of engaging with strangers."

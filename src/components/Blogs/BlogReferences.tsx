@@ -8,7 +8,7 @@ const BlogReferences = ({ sources }: Props) => {
       <h2 className="text-lg font-bold mb-2">Reference Sources</h2>
       <ul>
         {sources.map((source, index) => (
-          <li key={index}>
+          <li key={index} className="my-2">
             <a
               href={source.link}
               className="text-blue-400 underline italic"

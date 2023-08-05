@@ -3,9 +3,11 @@ import Avatar from "../UIs/Avatar";
 
 interface Props {
   title: string;
+  heroImageUrl: string;
+  heroImageAlt: string;
 }
 
-const BlogHeader = ({ title }: Props) => {
+const BlogHeader = ({ title, heroImageUrl, heroImageAlt }: Props) => {
   return (
     <header>
       <h1 className="text-2xl  lg:text-4xl font-bold text-[#14171a]">
@@ -19,7 +21,7 @@ const BlogHeader = ({ title }: Props) => {
             <Avatar
               userId={"admin"}
               name="Goff Phattharawit"
-              size="md"
+              size="sm"
               url="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media"
               color=""
               hilight={false}
@@ -40,6 +42,11 @@ const BlogHeader = ({ title }: Props) => {
             </p>
           </div>
         </address>
+      </div>
+
+      {/* Hero Image */}
+      <div className="mt-10">
+        <img src={heroImageUrl} alt={heroImageAlt} />
       </div>
     </header>
   );
