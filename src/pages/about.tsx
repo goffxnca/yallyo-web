@@ -12,7 +12,7 @@ const AboutMe = () => {
   return (
     <PageContainer>
       <div className="flex justify-center">
-        <div className="text-gray-300 bg-secondary p-10 rounded-3xl lg:w-[1000px] space-y-10">
+        <div className="text-gray-300 bg-secondary p-10 rounded-3xl lg:w-[1000px] space-y-6">
           <figure>
             <img
               className="mx-auto h-32 w-32  object-cover rounded-full"
@@ -21,43 +21,62 @@ const AboutMe = () => {
               }
               alt="Founder of Yallyo Platform"
             />
-            <figcaption className="text-center text-accent2">
+            <figcaption className="text-center text-accent2 mt-2">
               Goff Phattharawit - Yallyo Founder
             </figcaption>
           </figure>
           <p>
-            👋 Hi there! My name is Obiyofin, As a passionate software
-            developer, I love building things that are truly useful for people.
-            One thing that brings me immense joy is learning English. I&apos;ve
-            tried various platforms in my quest to master the language, but none
-            of them worked the way I wanted. So, I made a decision to invest a
-            lot of my free time into creating this platform.
+            👋 Greetings! I am Goff Phattharawit, the Founder of Yallyo. As a
+            dedicated software developer, my passion lies in creating impactful
+            solutions that enrich people&apos;s lives. Language learning has
+            always been close to my heart, and I am thrilled to introduce you to
+            the world of Yallyo.
           </p>
 
           <p>
-            This platform has been inspired by the fantastic designs of major
-            social media platform out there. My vision is to provide an
-            opportunity for everyone to learn English and practice speaking it
-            with real people. Personally, I used to spend a lot of time only
-            reading books, but when it came to actually speaking with
-            foreigners, I found myself struggling to express myself fluently.
-            That&apos;s when it struck me that engaging in conversations with
-            natives or people from different cultures could significantly
-            enhance English learning.
+            The idea behind Yallyo was born out of my personal journey to master
+            the English language. I explored numerous platforms, but none seemed
+            to offer what I truly needed. Determined to bridge this gap, I
+            invested countless hours crafting a platform that revolutionizes
+            language practice.
           </p>
 
           <p>
-            Now, I must admit, I&apos;m quite the introverted person. I have
-            only a handful of close friends in real life that I can count on.
-            Building this platform has become a means for me to connect with
-            people and expand my social circle ❤️. Through this platform, you
-            can enjoy voice calls, video calls, and group chat rooms. Currently,
-            we allow a maximum of five people in each room, and we primarily
-            support English, Chinese, and Spanish—the most widely spoken
-            languages in the world. However, I&apos;m open to adding more
-            languages and other features if there is a demand for them. Feel
-            free to join our vibrant and like-minded community on our Facebook
-            group,{" "}
+            Yallyo is inspired by the brilliance of major social media
+            platforms, but it goes beyond being just a virtual space. It is a
+            platform designed to facilitate genuine connections and
+            conversations that transcend borders and cultures.
+          </p>
+
+          <p>
+            As someone who once struggled to express myself fluently, I
+            understand the importance of engaging in real-life conversations
+            with native speakers. Yallyo aims to provide language learners with
+            an immersive environment where they can practice speaking English
+            with confidence.
+          </p>
+
+          <p>
+            Building this platform has not only been a professional endeavor but
+            also a personal one. As an introverted individual with a small
+            circle of close friends, Yallyo has opened doors to a whole new
+            world of connections. It has become a means for me to expand my
+            social horizons and create meaningful relationships with fellow
+            language enthusiasts.
+          </p>
+
+          <p>
+            At Yallyo, we foster an inclusive and supportive community where
+            learners can engage in voice calls, video calls, and group chat
+            rooms. Currently, we offer support for English, Chinese, and
+            Spanish—the most widely spoken languages worldwide. However, I am
+            eager to incorporate more languages and features based on your
+            valuable feedback and needs.
+          </p>
+
+          <p>
+            Join us on our journey of language discovery and cultural
+            understanding. Our vibrant Facebook group,{" "}
             <a
               href="https://www.facebook.com/groups/yallyo.community"
               target="_blank"
@@ -65,22 +84,23 @@ const AboutMe = () => {
             >
               Yallyo - Language Exchange International Community
             </a>{" "}
-            Also, don&apos;t forget to show your support by liking, sharing, and
-            following the{" "}
+            is the perfect place to connect with like-minded individuals. Your
+            support on the{" "}
             <a
               href="https://www.facebook.com/yallyo.official/"
               target="_blank"
               className="text-blue-400"
             >
               Yallyo Official Facebook Fanpage
-            </a>
-            . Your engagement would be greatly appreciated as it helps us reach
-            more language enthusiasts and create a thriving community.
+            </a>{" "}
+            goes a long way in helping us reach more language enthusiasts and
+            build a thriving community.
           </p>
 
           <p>
-            Join us on our language learning journey to make a positive impact
-            together! Cheers! 🍺 See you there!
+            Together, let's make a positive impact on the world of language
+            learning. I invite you to be a part of Yallyo's vision and embark on
+            a journey of growth and exploration. See you on Yallyo!
           </p>
 
           <div className="flex justify-center mt-4">
