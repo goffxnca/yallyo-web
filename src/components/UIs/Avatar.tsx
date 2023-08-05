@@ -14,9 +14,18 @@ interface Props {
   url: string;
   color: string;
   hilight: boolean;
+  clickable?: boolean;
 }
 
-const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
+const Avatar = ({
+  userId,
+  name,
+  size,
+  url,
+  color,
+  hilight,
+  clickable = true,
+}: Props) => {
   const nameAbbr = name ? convertFullnameToAbbr(name) : "";
   const [bgColor, setBgColor] = useState("white");
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -62,7 +71,7 @@ const Avatar = ({ userId, name, size, url, color, hilight }: Props) => {
       {/* Black Circle */}
       {name && !url && <div>{nameAbbr && <div>{nameAbbr}</div>}</div>}
 
-      {showProfile && (
+      {clickable && showProfile && (
         <Modal
           emitClose={() => {
             setShowProfile(false);
