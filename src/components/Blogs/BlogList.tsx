@@ -8,7 +8,7 @@ interface Props {
 const BlogList = ({ x }: Props) => {
   return (
     <div>
-      <ul className="flex gap-2">
+      <ul className="md:flex gap-2">
         <li className="w-full bg-gray-200 rounded-lg p-2">
           <Link
             href="/blog/how-yallyo-connects-strangers-worldwide-for-english-practice"
