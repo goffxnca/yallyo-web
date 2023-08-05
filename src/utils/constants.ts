@@ -138,8 +138,8 @@ const JOINERS = [
 
 const TOPICS = [
   "Technology",
+  "Gaming",
   "Science",
-  "Politics",
   "Entertainment",
   "Music",
   "Art",
@@ -156,7 +156,7 @@ const TOPICS = [
   "Investing",
   "Marketing",
   "Social Media",
-  "Gaming",
+  "Politics",
 ];
 
 // const TOPICS = [
