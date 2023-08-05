@@ -2,8 +2,8 @@ import {
   ChatBubbleBottomCenterIcon,
   Cog6ToothIcon,
   HomeIcon,
+  NewspaperIcon,
   PhoneIcon,
-  UserIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,6 +13,7 @@ const MobileNavigators = () => {
   const isHome = router.pathname === "/";
   const isLobby = router.pathname === "/m/lobby";
   const isSession = router.pathname.startsWith("/room");
+  const isBlog = router.pathname.startsWith("/blog");
   const isProfile = router.pathname === "/profile";
 
   return (
@@ -45,21 +46,36 @@ const MobileNavigators = () => {
               </div>
             </Link>
           </li>
-          <li
-            className={`border-r border-gray-500 w-1/4 py-2  ${
-              isSession ? "text-accent2" : "text-gray-500"
-            }`}
-          >
-            <div className="flex items-center justify-center">
-              <PhoneIcon className="w-6 h-6 " />
-            </div>
-            <div
-              className={`text-xs  ${
+          {isSession && (
+            <li
+              className={`border-r border-gray-500 w-1/4 py-2  ${
                 isSession ? "text-accent2" : "text-gray-500"
               }`}
             >
-              Session
-            </div>
+              <div className="flex items-center justify-center">
+                <PhoneIcon className="w-6 h-6 " />
+              </div>
+              <div
+                className={`text-xs  ${
+                  isSession ? "text-accent2" : "text-gray-500"
+                }`}
+              >
+                Session
+              </div>
+            </li>
+          )}
+
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2 ${
+              isBlog && "text-accent2"
+            }`}
+          >
+            <Link href="/blog">
+              <div className="flex items-center justify-center">
+                <NewspaperIcon className="w-6 h-6" />
+              </div>
+              <div className={`text-xs ${isBlog && "text-accent2"}`}>Blog</div>
+            </Link>
           </li>
           <li className={`w-1/4 py-2 ${isProfile && "text-accent2"}`}>
             <Link href="/profile">

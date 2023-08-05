@@ -15,8 +15,8 @@ const Blog1Page = () => {
       />
       <BlogHeader
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
-        heroImageUrl="https://pbs.twimg.com/media/F2qUj96bgAEjrKE?format=jpg&name=medium"
-        heroImageAlt="Illustration of global conversations connecting strangers worldwide for English practice on Yallyo"
+        heroImageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_hero_image.png?alt=media"
+        heroImageAlt="Practice English Speaking with Strangers - Yallyo"
         publishedAt="2023-08-05"
       />
       <BlogSection

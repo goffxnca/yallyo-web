@@ -273,44 +273,6 @@ const BLOGS: IBlog[] = [
     },
     publishedAt: "2023-08-05",
   },
-  {
-    id: "blog2",
-    title:
-      "Finding Your Voice: Enhancing English Fluency Through Yallyo's Voice Chat",
-    intro:
-      "Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures.",
-    thumbnail:
-      "https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/358631452_144435535334368_8956554982190586981_n.png?stp=dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=8631f5&_nc_ohc=nzbpDCJkz0QAX_mrcz3&_nc_ht=scontent.fbkk28-1.fna&oh=00_AfBL34JpEEbpp27WG6zSzyKGzss93RNP5cMS3DCcO6Njzg&oe=64D3C64F",
-    slug: "/blog/enhancing-english-fluency-through-yallyo-s-voice",
-    author: {
-      displayName: "Goff Phattharawit",
-      photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
-      email: "",
-      uid: "",
-      idToken: "",
-    },
-    publishedAt: "2023-08-04",
-  },
-  {
-    id: "blog3",
-    title:
-      "Finding Your Voice: Enhancing English Fluency Through Yallyo's Voice Chat",
-    intro:
-      "Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures.",
-    thumbnail:
-      "https://scontent.fbkk28-1.fna.fbcdn.net/v/t39.30808-6/358631452_144435535334368_8956554982190586981_n.png?stp=dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=8631f5&_nc_ohc=nzbpDCJkz0QAX_mrcz3&_nc_ht=scontent.fbkk28-1.fna&oh=00_AfBL34JpEEbpp27WG6zSzyKGzss93RNP5cMS3DCcO6Njzg&oe=64D3C64F",
-    slug: "/blog/enhancing-english-fluency-through-yallyo-s-voice",
-    author: {
-      displayName: "Goff Phattharawit",
-      photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
-      email: "",
-      uid: "",
-      idToken: "",
-    },
-    publishedAt: "2023-08-06",
-  },
 ];
 
 export {
