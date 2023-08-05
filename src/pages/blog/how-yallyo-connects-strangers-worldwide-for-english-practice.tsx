@@ -4,6 +4,7 @@ import BlogHeader from "@/components/Blogs/BlogHeader";
 import BlogMeta from "@/components/Blogs/BlogMeta";
 import BlogReferences from "@/components/Blogs/BlogReferences";
 import BlogSection from "@/components/Blogs/BlogSection";
+import Link from "next/link";
 
 const Blog1Page = () => {
   return (
@@ -59,10 +60,22 @@ const Blog1Page = () => {
       <BlogSection
         title="Building a Supportive Community"
         paragraph1="Beyond language practice, Yallyo's community is built on kindness and mutual support. Users cheer each other on during language challenges, celebrate milestones together, and provide encouragement during moments of uncertainty. This sense of camaraderie strengthens the learning experience and makes Yallyo a welcoming place for language learners of all backgrounds."
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fsupportive_community_learning_english.png?alt=media"
+        imageAlt="Building a Supportive Community - People holding hands each other with a goal of learning English and creating a supportive environment"
       />
       <BlogSection
         title="Conclusion"
         paragraph1="In conclusion, Yallyo's innovative approach to language practice has transformed how individuals from around the world learn and improve their English-speaking skills. By providing a platform for global conversations and fostering intercultural connections, Yallyo breaks the ice, paving the way for meaningful relationships and authentic language practice. As the platform continues to grow and evolve, its commitment to facilitating cross-cultural learning experiences remains unwavering. With Yallyo, language learners embark on a journey of self-discovery, understanding, and friendship that knows no borders. Start breaking the ice today and join Yallyo's vibrant community for a world of endless possibilities in English language practice."
+        bottomSlot={
+          <div className="flex justify-center my-4">
+            <Link
+              className="rounded-md px-3 py-3 text-sm font-semibold shadow-sm select-none bg-accent1 text-white"
+              href="/"
+            >
+              Join Yallyo
+            </Link>
+          </div>
+        }
       />
 
       <BlogReferences

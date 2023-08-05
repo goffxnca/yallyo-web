@@ -1,9 +1,12 @@
+import { ReactNode } from "react";
+
 interface Props {
   title: string;
   paragraph1: string;
   paragraph2?: string;
   imageUrl?: string;
   imageAlt?: string;
+  bottomSlot?: ReactNode;
 }
 
 const BlogSection = ({
@@ -12,6 +15,7 @@ const BlogSection = ({
   paragraph2,
   imageUrl,
   imageAlt,
+  bottomSlot,
 }: Props) => {
   return (
     <section className="">
@@ -27,6 +31,8 @@ const BlogSection = ({
           <img src={imageUrl} alt={imageAlt} />
         </div>
       )}
+
+      {bottomSlot && bottomSlot}
     </section>
   );
 };
