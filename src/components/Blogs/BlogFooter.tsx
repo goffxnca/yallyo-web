@@ -4,12 +4,14 @@
 //   paragraph2?: string;
 // }
 
+import Link from "next/link";
+
 const BlogFooter = () => {
   return (
     <footer className="">
-      <a href="/blog" className="underline">
+      <Link href="/blog" className="underline">
         Back To Blog List
-      </a>
+      </Link>
     </footer>
   );
 };
