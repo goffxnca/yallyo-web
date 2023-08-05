@@ -37,6 +37,8 @@ const Blog1Page = () => {
       <BlogSection
         title="The Lobby: Where Conversations Begin"
         paragraph1="Before entering a language practice room, users often gather in the Yallyo lobby. This informal space allows individuals to break the ice, engage in casual conversations, and meet potential language partners. The lobby serves as a virtual meeting point, where users can interact with a diverse community of learners, sparking friendships and discussions that extend beyond language practice."
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_lobby_mobile_and_ipad.png?alt=media"
+        imageAlt="Yallyo Lobby - Mobile and iPad UI with people gathering for casual conversations before entering chat rooms"
       />
       <BlogSection
         title="Language Proficiency and Topics: Tailoring the Experience"
