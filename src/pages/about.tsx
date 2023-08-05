@@ -11,7 +11,7 @@ const AboutMe = () => {
 
   return (
     <PageContainer>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-10 md:mb-0">
         <div className="text-gray-300 bg-secondary p-4 md:p-10 rounded-3xl lg:w-[1000px] space-y-6">
           <figure>
             <img
@@ -22,7 +22,7 @@ const AboutMe = () => {
               alt="Founder of Yallyo Platform"
             />
             <figcaption className="text-center text-accent2 mt-2">
-              Goff Phattharawit - Yallyo Founder
+              Yallyo Founder
             </figcaption>
           </figure>
           <p>
