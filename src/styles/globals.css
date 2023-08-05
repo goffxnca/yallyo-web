@@ -130,3 +130,7 @@ textarea {
   display: inline-block;
   margin: 5px;
 }
+
+.blog-link {
+  color: #60a5fa;
+}

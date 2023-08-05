@@ -2,6 +2,7 @@ import BlogContainer from "@/components/Blogs/BlogContainer";
 import BlogFooter from "@/components/Blogs/BlogFooter";
 import BlogHeader from "@/components/Blogs/BlogHeader";
 import BlogMeta from "@/components/Blogs/BlogMeta";
+import BlogReferences from "@/components/Blogs/BlogReferences";
 import BlogSection from "@/components/Blogs/BlogSection";
 
 const Blog1Page = () => {
@@ -14,7 +15,7 @@ const Blog1Page = () => {
       <BlogHeader title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice" />
       <BlogSection
         title="Introduction"
-        paragraph1="Have you ever wondered how often you chat with the strangers you encounter during the course of your day? Fascinating research from inc.com shows that even brief conversations with the person who takes your coffee order or the stranger seated next to you during your commute can have a measurable improvement in your mood. This discovery challenges our expectations that such interactions may lead to negative experiences. In fact, psychologists at the University of British Columbia in Vancouver conducted experiments that shed light on the positive impact of engaging with strangers."
+        paragraph1="Have you ever wondered how often you chat with the strangers you encounter during the course of your day? Fascinating research from <a href='https://www.inc.com/minda-zetlin/happy-happier-talking-to-strangers-initiating-conversations.html' target='_blank' class='blog-link'>inc.com</a> shows that even brief conversations with the person who takes your coffee order or the stranger seated next to you during your commute can have a measurable improvement in your mood. This discovery challenges our expectations that such interactions may lead to negative experiences. In fact, psychologists at the University of British Columbia in Vancouver conducted experiments that shed light on the positive impact of engaging with strangers."
       />
       <BlogSection
         title="The Power of Global Conversations"
@@ -24,7 +25,7 @@ const Blog1Page = () => {
       <BlogSection
         title="Creating Connections and Friendships"
         paragraph1="Yallyo's vision is rooted in fostering connections and friendships beyond borders. Founded by Goff Phattharawit, an introverted software developer from Thailand, the platform is a testament to the power of building meaningful relationships across geographical boundaries. Through Yallyo, individuals who might have never crossed paths in real life now have the chance to form connections that transcend distance and cultural differences."
-        paragraph2="According to the inc.com article, our social anxiety often causes us to underestimate others' interest in connecting. However, by forcing ourselves to initiate conversations, we can discover the joy of making new friends and forming connections that positively impact our lives."
+        paragraph2="According to the mentioned inc.com article earlier, our social anxiety often causes us to underestimate others' interest in connecting. However, by forcing ourselves to initiate conversations, we can discover the joy of making new friends and forming connections that positively impact our lives."
       />
       <BlogSection
         title="The Lobby: Where Conversations Begin"
@@ -53,6 +54,25 @@ const Blog1Page = () => {
       <BlogSection
         title="Conclusion"
         paragraph1="In conclusion, Yallyo's innovative approach to language practice has transformed how individuals from around the world learn and improve their English-speaking skills. By providing a platform for global conversations and fostering intercultural connections, Yallyo breaks the ice, paving the way for meaningful relationships and authentic language practice. As the platform continues to grow and evolve, its commitment to facilitating cross-cultural learning experiences remains unwavering. With Yallyo, language learners embark on a journey of self-discovery, understanding, and friendship that knows no borders. Start breaking the ice today and join Yallyo's vibrant community for a world of endless possibilities in English language practice."
+      />
+
+      <BlogReferences
+        sources={[
+          {
+            link: "https://www.inc.com/minda-zetlin/happy-happier-talking-to-strangers-initiating-conversations.html",
+            title:
+              "Talking With Strangers Is Scientifically Proven to Make You Happy | inc.com",
+          },
+          {
+            link: "https://www.npr.org/sections/health-shots/2019/07/26/744267015/want-to-feel-happier-today-try-talking-to-a-stranger",
+            title:
+              "Want To Feel Happier Today? Try Talking To A Stranger | NPR",
+          },
+          {
+            link: "https://psycnet.apa.org/doiLanding?doi=10.1037%2Fa0037323",
+            title: "Mistakenly seeking solitude. | APA PsycNET",
+          },
+        ]}
       />
       <BlogFooter />
     </BlogContainer>
