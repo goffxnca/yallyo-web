@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Header from "./Headers/Header";
 import getConfig from "next/config";
 import MobileNavigators from "../mobileNavs/MobileNavigators";
+import Link from "next/link";
 const { publicRuntimeConfig } = getConfig();
 
 interface Props {
@@ -18,17 +19,21 @@ const Layout = ({ children }: Props) => {
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
 
       <div className="fixed bottom-0 right-0 text-xs space-x-4 text-gray-500 bg-secondary rounded-md px-2">
-        <a href="/about" target="_blank" className="hover:underline">
+        <Link href="/about" className="hover:underline">
           About Us
-        </a>
+        </Link>
 
-        <a href="/terms-of-service" target="_blank" className="hover:underline">
+        <Link href="/blog" className="hover:underline">
+          Blog
+        </Link>
+
+        <Link href="/terms-of-service" className="hover:underline">
           Terms of Service
-        </a>
+        </Link>
 
-        <a href="/privacy-policy" target="_blank" className="hover:underline">
+        <Link href="/privacy-policy" className="hover:underline">
           Privacy Policy
-        </a>
+        </Link>
 
         <span className="text-xs">
           v{publicRuntimeConfig.version}:

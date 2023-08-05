@@ -44,3 +44,12 @@ export interface IFirebaseUser {
   photoURL: string;
   idToken: string;
 }
+
+export interface IBlog {
+  id: string;
+  title: string;
+  intro: string;
+  thumbnail: string;
+  slug: string;
+  author: IFirebaseUser;
+}
