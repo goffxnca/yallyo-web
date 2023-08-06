@@ -10,6 +10,7 @@ const Blog1Page = () => {
       <BlogMeta
         title="Finding Your Voice: Enhancing English Fluency Through Yallyo's Voice Chat"
         desc="Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures."
+        imageUrl=""
       />
       <BlogHeader
         title="Finding Your Voice: Enhancing English Fluency Through Yallyo's Voice Chat"

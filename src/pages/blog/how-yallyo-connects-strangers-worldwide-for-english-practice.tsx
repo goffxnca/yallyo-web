@@ -12,6 +12,7 @@ const Blog1Page = () => {
       <BlogMeta
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
         desc="Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures."
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_hero_image.png?alt=media"
       />
       <BlogHeader
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
