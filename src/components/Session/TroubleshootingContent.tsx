@@ -122,7 +122,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
 
                 <img
                   src={"/images/mediaIssues/desktop-chrome-cam.png"}
-                  alt="yeh"
+                  alt="User Avatar"
                   className="mx-auto w-1/2"
                 />
                 <p>
@@ -161,7 +161,7 @@ const TroubleshootingContent = ({ mediaType }: Props) => {
                 </p>
                 <img
                   src={"/images/mediaIssues/desktop-chrome-mic.png"}
-                  alt="yeh"
+                  alt="User Avatar"
                   className="mx-auto w-1/2"
                 />
                 <p>

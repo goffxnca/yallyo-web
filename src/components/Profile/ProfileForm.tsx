@@ -93,7 +93,7 @@ const ProfileForm = () => {
                 <img
                   className="mx-auto h-32 w-32  object-cover rounded-full"
                   src={profile.photoURL}
-                  alt=""
+                  alt="User Avatar"
                 />
                 <h3 className="mt-6 text-2xl font-semibold leading-7 tracking-tight text-accent2">
                   {profile.dname}

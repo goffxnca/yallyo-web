@@ -220,8 +220,20 @@ const HomePage = () => {
 
   return (
     <>
+      <Head>
+        <title>
+          Yallyo.com | Practice English Speaking with Strangers Worldwide!
+        </title>
+        <meta
+          name="description"
+          content="Join Yallyo.com, the Global Platform for English Language Practice and Cultural Exchange. Connect with native English speakers and diverse language learners worldwide through voice and video calls, and engaging group chat rooms. Enhance your English fluency while making meaningful connections across borders. Join our international community and embark on a journey of learning and cultural understanding. Discover a new world of language practice and global friendships on Yallyo.com."
+        />
+      </Head>
+
+      <h1>Yallyo.com | Practice English Speaking with Strangers Worldwide!</h1>
+
       {/* LEFT */}
-      <div
+      <aside
         className={`hidden md:block fixed left-0 top-0 z-20 ${
           showLobby ? "md:w-1/2 lg:w-1/4" : "w-14"
         } `}
@@ -239,21 +251,10 @@ const HomePage = () => {
           }}
           showFullLobby={showLobby}
         />
-      </div>
+      </aside>
 
       {/* RIGHT */}
       <PageContainer>
-        <Head>
-          <title>
-            Yallyo.com | Practice English Speaking with Strangers Worldwide!
-          </title>
-          <meta
-            name="description"
-            content="Join Yallyo.com, the Global Platform for English Language Practice and Cultural Exchange. Connect with native English speakers and diverse language learners worldwide through voice and video calls, and engaging group chat rooms. Enhance your English fluency while making meaningful connections across borders. Join our international community and embark on a journey of learning and cultural understanding. Discover a new world of language practice and global friendships on Yallyo.com."
-          />
-          <link rel="canonical" href="https://yallyo.com" />
-        </Head>
-
         <div
           className={`${
             showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-14"
@@ -272,8 +273,9 @@ const HomePage = () => {
             {/* <div className="text-white">CurrentPage: {currentPage}</div> */}
 
             <div className="my-2"></div>
+            <h2>Filters & Search</h2>
             <div>
-              <div className="text-white text-sm">Languages:</div>
+              <h3 className="text-white text-sm">Languages:</h3>
               <div className="flex flex-wrap items-center">
                 {/* {!showFullLangs && currentLang && (
               <PillItem
@@ -320,7 +322,7 @@ const HomePage = () => {
             <div className="my-2"></div>
 
             <div>
-              <div className="text-white text-sm">Levels:</div>
+              <h3 className="text-white text-sm">Levels:</h3>
               <div className="flex items-center flex-wrap">
                 {LANGAUGE_LEVEL.map((level, index) => (
                   <PillItem
@@ -336,7 +338,7 @@ const HomePage = () => {
             <div className="my-2"></div>
 
             <div>
-              <div className="text-white text-sm">Topics:</div>
+              <h3 className="text-white text-sm">Topics:</h3>
               <div className="flex items-center flex-wrap">
                 {showFullTopics
                   ? TOPICS.map((topic, index) => (
@@ -384,6 +386,7 @@ const HomePage = () => {
 
           <div className="my-2"></div>
 
+          <h2>Room List</h2>
           <RoomList
             rooms={rooms}
             isLoading={status === "loading"}

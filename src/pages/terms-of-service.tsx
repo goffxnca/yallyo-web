@@ -2,10 +2,19 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid";
+import Head from "next/head";
 
 const TermsOfService = () => {
   return (
     <div className="bg-white px-6 py-32 lg:px-8">
+      <Head>
+        <title>Yallyo.com Terms of Service | Access and Use Agreement</title>
+        <meta
+          name="description"
+          content="Read the Yallyo.com Terms of Service carefully before using our platform. These terms govern your access and usage of the website. Understand your rights, responsibilities, and prohibited activities to ensure a smooth and enjoyable experience on Yallyo.com."
+        />
+      </Head>
+
       <div className="mx-auto max-w-6xl text-base leading-7 text-gray-700">
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Terms of Service

@@ -1,5 +1,6 @@
 import Button from "@/components/Forms/Button";
 import PageContainer from "@/components/Layouts/PageContainer";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 const AboutMe = () => {
@@ -11,6 +12,17 @@ const AboutMe = () => {
 
   return (
     <PageContainer>
+      <Head>
+        <title>
+          Meet the Founder of Yallyo | Goff Phattharawit | Language Learning
+          Enthusiast
+        </title>
+        <meta
+          name="description"
+          content="Discover the visionary behind Yallyo, Goff Phattharawit, a dedicated software developer and language learning enthusiast. Learn how his personal journey to master English led to the creation of Yallyo, a platform that fosters genuine connections and conversations with native speakers worldwide. Join our inclusive community and embark on a journey of growth and cultural understanding. Connect with like-minded language learners on our vibrant Facebook group, Yallyo - Language Exchange International Community."
+        />
+      </Head>
+
       <div className="flex justify-center mb-10 md:mb-0">
         <div className="text-gray-300 bg-secondary p-4 md:p-10 rounded-3xl lg:w-[1000px] space-y-6">
           <figure>

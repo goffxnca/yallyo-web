@@ -2,10 +2,20 @@ import {
   CheckCircleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/20/solid";
+import Head from "next/head";
 
 const PrivacyPolicyPage = () => {
   return (
     <div className="bg-white px-6 py-32 lg:px-8">
+      <Head>
+        <title>
+          Yallyo.com Privacy Policy | How We Protect Your Information
+        </title>
+        <meta
+          name="description"
+          content="Read the Yallyo.com Privacy Policy to understand how we collect, use, and safeguard your information when you access our services. Learn about our data security measures and how we ensure your privacy. Make informed decisions about sharing your personal data with us to enhance your experience on Yallyo.com."
+        />
+      </Head>
       <div className="mx-auto max-w-6xl text-base leading-7 text-gray-700">
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Privacy Policy
@@ -133,22 +143,6 @@ const PrivacyPolicyPage = () => {
                 />
                 <span>
                   <strong className="font-semibold text-gray-900 mr-2">
-                    Firebase Authentication:
-                  </strong>
-                  We use Firebase Authentication, a service provided by Google,
-                  to enable users to sign in to our Website using their Google
-                  accounts. By signing in with Google, you authorize us to
-                  collect and process your Google profile picture, first name,
-                  last name and language preference.
-                </span>
-              </li>
-              <li className="flex gap-x-3">
-                <CheckCircleIcon
-                  className="mt-1 h-5 w-5 flex-none text-accent1"
-                  aria-hidden="true"
-                />
-                <span>
-                  <strong className="font-semibold text-gray-900 mr-2">
                     Google Analytics::
                   </strong>
                   We use Google Analytics to analyze user behavior and website
@@ -165,11 +159,13 @@ const PrivacyPolicyPage = () => {
                 />
                 <span>
                   <strong className="font-semibold text-gray-900 mr-2">
-                    Google Search Console:
+                    Facebook Pixel:
                   </strong>
-                  We use Google Search Console to monitor and improve the
-                  visibility of our Website in search results. It does not
-                  involve the collection or processing of user data.
+                  We have implemented Facebook Pixel on our Website to measure
+                  the effectiveness of our advertising efforts, analyze user
+                  behavior, and understand the actions taken by users on our
+                  Website. This data helps us optimize our Facebook ads and
+                  deliver more relevant content to our users.
                 </span>
               </li>
 
@@ -186,6 +182,22 @@ const PrivacyPolicyPage = () => {
                   emails and notifications to users. Email addresses and
                   communication sent through our platform may be processed and
                   stored by SendGrid.
+                </span>
+              </li>
+
+              <li className="flex gap-x-3">
+                <CheckCircleIcon
+                  className="mt-1 h-5 w-5 flex-none text-accent1"
+                  aria-hidden="true"
+                />
+                <span>
+                  <strong className="font-semibold text-gray-900 mr-2">
+                    LogRocket:
+                  </strong>
+                  We utilize LogRocket to enhance our website&apos;s performance
+                  and provide better user experience. LogRocket may collect user
+                  interaction data and application logs to identify and
+                  troubleshoot issues for improvement.
                 </span>
               </li>
             </ul>

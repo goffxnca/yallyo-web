@@ -99,6 +99,7 @@ const ProfileImageInput = ({
         <img
           src={fileUrl}
           className="w-16 h-16 object-cover rounded-full border-2 border-accent2"
+          alt="User Avatar"
         />
 
         <button

@@ -24,12 +24,12 @@ const Header = () => {
 
       {isAuthChecked && (
         <div className="absolute left-[50%] transform translate-x-[-50%] text-center hidden md:block">
-          <h1 className="text-gray-100 font-semibold text-lg md:text-2xl">
+          <div className="text-gray-100 font-semibold text-lg md:text-2xl">
             Yallyo.com
-          </h1>
-          <h2 className="text-gray-400 text-xs md:text-sm">
+          </div>
+          <div className="text-gray-400 text-xs md:text-sm">
             Practice English Speaking with Strangers Worldwide!
-          </h2>
+          </div>
         </div>
       )}
 
