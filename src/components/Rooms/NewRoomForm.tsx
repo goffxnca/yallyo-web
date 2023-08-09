@@ -12,23 +12,18 @@ import { createNArrayFrom } from "@/utils/array-utils";
 import { FieldValues, useForm } from "react-hook-form";
 import { maxLength, minLength } from "@/utils/form-utils";
 import DarkOverlay from "../Layouts/Overlay";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
-import SigninWithGoogleButton from "../Layouts/Headers/SigninWithGoogleButton";
-import { signinWithGoogle } from "@/store/authSlice";
 import Notification from "@/components/UIs/Notification";
 import RadioGroupInput from "../Forms/Inputs/RadioGroupInput";
 import { IRoomFeatures } from "@/types/common";
+import Loading from "../UIs/Loading";
 
 interface Props {
   onSubmit: (data: FieldValues) => void;
 }
 
 const NewRoomForm = ({ onSubmit }: Props) => {
-  const { user } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
   const [loginSuccessfully, setLoginSuccessfully] = useState(false);
-  const dispatch: AppDispatch = useDispatch();
 
   const {
     register,
@@ -52,27 +47,6 @@ const NewRoomForm = ({ onSubmit }: Props) => {
       onSubmit(formData);
     }, 5000);
   };
-
-  if (!user) {
-    return (
-      <div className="p-10">
-        <div className=" text-white text-center">
-          🔒 You need to login to create chat room.
-        </div>
-
-        <div className="flex justify-center mt-4">
-          <SigninWithGoogleButton
-            responsive={false}
-            onClick={() => {
-              dispatch(signinWithGoogle()).then(() => {
-                setLoginSuccessfully(true);
-              });
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="p-5 md:p-10 w-full md:w-[500px]">
@@ -180,11 +154,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
             }`}
             disabled={loading}
           >
-            {loading && (
-              <div className="animate-pulse">
-                <ArrowPathIcon className="h-5 w-5 mr-2 animate-spin" />
-              </div>
-            )}
+            {loading && <Loading />}
 
             <span className="text-md">
               {loading ? "Creating Room" : "Create Room"}

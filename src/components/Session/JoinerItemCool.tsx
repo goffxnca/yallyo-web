@@ -8,6 +8,7 @@ interface Props {
   userId: string;
   status: string;
   displayName: string;
+  color: string;
   controls: IMediaControls;
   boxSize: string;
   photoUrl: string;
@@ -21,6 +22,7 @@ const JoinerItemCool = ({
   userId,
   status,
   displayName,
+  color,
   controls,
   boxSize,
   photoUrl,
@@ -80,7 +82,7 @@ const JoinerItemCool = ({
                     name={displayName}
                     size="lg"
                     url={photoUrl}
-                    color={getRandomColor()}
+                    color={color}
                     hilight={speaking}
                   />
                 </div>

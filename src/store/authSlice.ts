@@ -1,17 +1,25 @@
 // Auth slice is collection of actions for authentication
 import { IAsyncState, IFirebaseUser } from "@/types/frontend";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signInWithPopup, signOut } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import { auth, googleAuthProvider } from "../../firebase";
+import { generateRandomAlphaNumeric } from "@/utils/string-utils";
 
 interface AuthState extends IAsyncState {
   user: IFirebaseUser | null;
+  isGeneratingTempUser: boolean;
 }
 
 const initialState: AuthState = {
   status: "idle",
   error: "",
   user: null,
+  isGeneratingTempUser: false,
 };
 
 export const signinWithGoogle = createAsyncThunk(
@@ -25,6 +33,41 @@ export const signoutFromGoogle = createAsyncThunk("auth/signOut", async () => {
   await signOut(auth);
 });
 
+export const generateTempUserAsync = createAsyncThunk(
+  "auth/generateTempUserAsync",
+  async () => {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const email = `${generateRandomAlphaNumeric(7)}@yallyo.com`;
+        const password = "123456789";
+
+        const generatedUser = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        await signOut(auth);
+
+        setTimeout(async () => {
+          try {
+            const signInResult = await signInWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            resolve(signInResult.user.displayName!); // Resolve the Promise to indicate completion and return display name to show in alert
+          } catch (error) {
+            reject(error); // Reject the Promise if an error occurs
+          }
+        }, 5000);
+      } catch (error) {
+        reject(error); // Reject the Promise if an error occurs
+      }
+    });
+  }
+);
+
 const sessionSlice = createSlice({
   name: "auth",
   initialState,
@@ -33,8 +76,9 @@ const sessionSlice = createSlice({
       state.user = action.payload;
       state.status = "success";
     },
-    assignErrorAuth(_) {
-      return { ...initialState, status: "error" };
+    assignErrorAuth(state) {
+      // return { ...initialState, status: "error" };
+      state.user = null;
     },
   },
   extraReducers(builder) {
@@ -53,6 +97,19 @@ const sessionSlice = createSlice({
           state.status = "error";
           state.error = action.error.message ?? "Failed to signin with Google";
         }
+      });
+
+    builder
+      .addCase(generateTempUserAsync.pending, (state) => {
+        state.isGeneratingTempUser = true;
+      })
+      .addCase(generateTempUserAsync.fulfilled, (state) => {
+        state.isGeneratingTempUser = false;
+      })
+      .addCase(generateTempUserAsync.rejected, (state, action) => {
+        state.isGeneratingTempUser = false;
+        state.error =
+          action.error.message ?? "Failed to generate temporary user";
       });
 
     builder

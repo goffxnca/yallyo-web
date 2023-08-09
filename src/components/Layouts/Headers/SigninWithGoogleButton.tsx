@@ -18,7 +18,7 @@ const SigninWithGoogleButton = ({ responsive, onClick }: Props) => {
   //   );
   return (
     <button
-      className="flex items-center bg-[#4285F4] rounded-sm border  border-[#4285F4] google-button animate-bounce group"
+      className="flex items-center bg-[#4285F4] rounded-sm border  border-[#4285F4] google-button group"
       onClick={() => {
         onClick();
       }}

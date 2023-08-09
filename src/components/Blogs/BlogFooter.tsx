@@ -1,17 +1,26 @@
-// interface Props {
-//   title: string;
-//   paragraph1: string;
-//   paragraph2?: string;
-// }
-
 import Link from "next/link";
+import BlogNatigator from "./BlogNavigator";
+import {
+  ClipboardDocumentListIcon,
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 
 const BlogFooter = () => {
   return (
     <footer className="">
-      <Link href="/blog" className="underline">
-        Back To Blog List
-      </Link>
+      <BlogNatigator />
+      <div className="flex items-center space-x-1 mt-10">
+        <Link href="/blog" className="underline">
+          Back To Blog List
+        </Link>
+        <ClipboardDocumentListIcon className="w-6 h-6" />
+      </div>
+      <div className="flex items-center space-x-1">
+        <Link href="/" className="underline">
+          Back To Home Page
+        </Link>
+        <HomeIcon className="w-6 h-6" />
+      </div>
     </footer>
   );
 };

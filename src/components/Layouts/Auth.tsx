@@ -16,13 +16,16 @@ const Auth = React.memo(() => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("@@@@onAuthStateChanged", user);
-      if (user) {
+
+      if (user && user.displayName && user.photoURL) {
+        debugger;
         const auth: IFirebaseUser = {
           uid: user.uid,
           email: user.email!,
           displayName: user.displayName!,
           photoURL: user.photoURL!,
           idToken: (user as any).accessToken,
+          type1: "", //TODO read claim
         };
         dispatch(assignSuccessAuth(auth));
         //Yeah this line is kind of cool right? 😎

@@ -5,7 +5,7 @@ import {
   ArrowLeftOnRectangleIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
+
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { signoutFromGoogle } from "@/store/authSlice";
@@ -65,12 +65,10 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
                     )}
                   >
                     <div>
-                      <Image
+                      <img
                         src={profileURL}
-                        className="rounded-full w-8 h-8 mr-2"
-                        width={20}
-                        height={20}
-                        alt=""
+                        className="w-10 h-10 object-cover rounded-full mr-2"
+                        alt="User Avatar"
                       />
                     </div>
                     <div>

@@ -21,6 +21,7 @@ export interface IUser extends IDbDocument {
   followers: number;
   followings: number;
   provider: string;
+  type1: string; // t=temp, f=fake, p=perminent
   //This flag is not meant to be use as schema, just utility flag
   isFollowing?: boolean;
 }

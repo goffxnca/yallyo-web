@@ -17,6 +17,7 @@ import { useMediaQuery } from "usehooks-ts";
 interface Props extends IRoom {
   createdByMe: boolean;
   currentLoggedInUserIsAdmin: boolean;
+  onClickJoin: Function;
 }
 
 const RoomItem = memo((room: Props) => {
@@ -114,13 +115,16 @@ const RoomItem = memo((room: Props) => {
             <span className="text-md select-none">Full Room</span>
           </div>
         ) : (
-          <a
-            href={`/room/${sid}`}
+          <span
+            // href={`/room/${sid}`}
             // target={isDesktop ? "_blank" : "_self"}
             className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2"
+            onClick={() => {
+              room.onClickJoin(sid);
+            }}
           >
             Join Now
-          </a>
+          </span>
           // <Link href={`/room/${_id}`}>
           //   <div className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:text-accent2">
           //     Join Now {order}

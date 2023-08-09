@@ -1,10 +1,10 @@
+import BlogCTAButton from "@/components/Blogs/BlogCTAButton";
 import BlogContainer from "@/components/Blogs/BlogContainer";
 import BlogFooter from "@/components/Blogs/BlogFooter";
 import BlogHeader from "@/components/Blogs/BlogHeader";
 import BlogMeta from "@/components/Blogs/BlogMeta";
 import BlogReferences from "@/components/Blogs/BlogReferences";
 import BlogSection from "@/components/Blogs/BlogSection";
-import Link from "next/link";
 
 const Blog1Page = () => {
   return (
@@ -12,11 +12,11 @@ const Blog1Page = () => {
       <BlogMeta
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
         desc="Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures."
-        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_hero_image.png?alt=media"
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fpractice_english_speaking_with_strangers_yallyo.jpg?alt=media"
       />
       <BlogHeader
         title="Break the Ice: How Yallyo Connects Strangers Worldwide for English Practice"
-        heroImageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_hero_image.png?alt=media"
+        heroImageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fpractice_english_speaking_with_strangers_yallyo.jpg?alt=media"
         heroImageAlt="Practice English Speaking with Strangers - Yallyo"
         publishedAt="2023-08-05"
       />
@@ -46,14 +46,19 @@ const Blog1Page = () => {
         title="Language Proficiency and Topics: Tailoring the Experience"
         paragraph1="One of Yallyo's standout features is its support for different language proficiency levels and a wide range of topics. Users can select their language level, ranging from beginner to native, ensuring that they engage with participants who are at a similar stage of language learning. Moreover, the platform offers an extensive list of topics, including technology, gaming, entertainment, food, travel, and more. These options empower users to find discussions that resonate with their interests, making language practice more engaging and enjoyable."
       />
-      <BlogSection
-        title="Enhancing Conversations with Multimedia"
-        paragraph1="Yallyo recognizes that effective language practice goes beyond verbal communication. For this reason, the platform supports multimedia interactions. Participants can share screens to enhance discussions about specific topics, making learning more immersive and dynamic. While screen sharing is currently available only on desktop, Yallyo's commitment to improving user experience means that mobile users can expect this feature soon."
-      />
+
       <BlogSection
         title="Embracing Diversity: Fostering Cultural Understanding"
         paragraph1="Engaging with strangers from different cultural backgrounds can lead to profound cross-cultural learning experiences. Yallyo embraces diversity and encourages users to share aspects of their culture, including traditions, festivals, and customs. This exchange of knowledge fosters cultural understanding and opens participants' minds to perspectives they may not have encountered otherwise."
       />
+
+      <BlogSection
+        title="Enhancing Conversations with Multimedia"
+        paragraph1="Yallyo recognizes that effective language practice goes beyond verbal communication. For this reason, the platform supports multimedia interactions. Participants can share screens to enhance discussions about specific topics, making learning more immersive and dynamic. While screen sharing is currently available only on desktop, Yallyo's commitment to improving user experience means that mobile users can expect this feature soon."
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fyallyo_screen_sharing.png?alt=media"
+        imageAlt="Yallyo's screen sharing feature in action: Two screenshots demonstrate how users can share their screens during language exchange sessions, enhancing the interactive learning experience"
+      />
+
       <BlogSection
         title="Navigating Language Levels: Progress and Growth"
         paragraph1="Yallyo's language levels provide a structured path for language learners. Starting as beginners, users can steadily progress to more advanced levels, tracking their language growth along the way. Each interaction on Yallyo offers an opportunity for users to refine their pronunciation, expand their vocabulary, and become more confident in their English-speaking abilities."
@@ -67,16 +72,7 @@ const Blog1Page = () => {
       <BlogSection
         title="Conclusion"
         paragraph1="In conclusion, Yallyo's innovative approach to language practice has transformed how individuals from around the world learn and improve their English-speaking skills. By providing a platform for global conversations and fostering intercultural connections, Yallyo breaks the ice, paving the way for meaningful relationships and authentic language practice. As the platform continues to grow and evolve, its commitment to facilitating cross-cultural learning experiences remains unwavering. With Yallyo, language learners embark on a journey of self-discovery, understanding, and friendship that knows no borders. Start breaking the ice today and join Yallyo's vibrant community for a world of endless possibilities in English language practice."
-        bottomSlot={
-          <div className="flex justify-center my-4">
-            <Link
-              className="rounded-md px-3 py-3 text-sm font-semibold shadow-sm select-none bg-accent1 text-white"
-              href="/"
-            >
-              Join Yallyo
-            </Link>
-          </div>
-        }
+        bottomSlot={<BlogCTAButton />}
       />
 
       <BlogReferences

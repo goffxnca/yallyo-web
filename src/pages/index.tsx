@@ -38,9 +38,12 @@ import {
   createLobbyChatAsync,
   fetchLobbyChatAsync,
 } from "@/store/lobbyChatSlice";
+import LoginModal from "@/components/Modals/LoginModal";
 
 const HomePage = () => {
   // console.log("HomePage");
+
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const {
     rooms,
@@ -61,6 +64,7 @@ const HomePage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const [showFriendPopup, setShowFriendPopup] = useState<boolean>(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [showNewRoomFormModal, setShowNewRoomFormModal] =
     useState<boolean>(false);
   const [showRules, setShowRules] = useState<boolean>(false);
@@ -262,7 +266,11 @@ const HomePage = () => {
         >
           <HeaderControls
             onClickCreateRoom={() => {
-              setShowNewRoomFormModal(true);
+              if (user) {
+                setShowNewRoomFormModal(true);
+              } else {
+                setShowLoginModal(true);
+              }
             }}
             onClickShowRules={() => {
               setShowRules(true);
@@ -273,7 +281,7 @@ const HomePage = () => {
             {/* <div className="text-white">CurrentPage: {currentPage}</div> */}
 
             <div className="my-2"></div>
-            <h2>Filters & Search</h2>
+            <h2 className="bg-primary select-none">Filters & Search</h2>
             <div>
               <h3 className="text-white text-sm">Languages:</h3>
               <div className="flex flex-wrap items-center">
@@ -386,7 +394,7 @@ const HomePage = () => {
 
           <div className="my-2"></div>
 
-          <h2>Room List</h2>
+          <h2 className="bg-primar select-none">Room List</h2>
           <RoomList
             rooms={rooms}
             isLoading={status === "loading"}
@@ -425,7 +433,19 @@ const HomePage = () => {
           </div>
         )} */}
 
-          {showNewRoomFormModal && (
+          {showLoginModal && (
+            <LoginModal
+              onCloseModal={() => {
+                setShowLoginModal(false);
+              }}
+              onLoginSucceed={() => {
+                setShowLoginModal(false);
+                setShowNewRoomFormModal(true);
+              }}
+            />
+          )}
+
+          {showNewRoomFormModal && user && (
             <Modal
               emitClose={() => {
                 setShowNewRoomFormModal(false);
@@ -434,6 +454,7 @@ const HomePage = () => {
               <NewRoomForm onSubmit={onFormSubmit} />
             </Modal>
           )}
+
           {showRules && (
             <Modal
               emitClose={() => {

@@ -261,7 +261,7 @@ const BLOGS: IBlog[] = [
     intro:
       "Discover how Yallyo, a revolutionary voice-chat platform, connects strangers worldwide for English language practice. Engage in global conversations, break the ice, and form meaningful connections across cultures.",
     thumbnail:
-      "https://pbs.twimg.com/media/F2qUj96bgAEjrKE?format=jpg&name=medium",
+      "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fpractice_english_speaking_with_strangers_yallyo.jpg?alt=media",
     slug: "/blog/how-yallyo-connects-strangers-worldwide-for-english-practice",
     author: {
       displayName: "Goff Phattharawit",
@@ -270,8 +270,28 @@ const BLOGS: IBlog[] = [
       email: "",
       uid: "",
       idToken: "",
+      type1: "",
     },
     publishedAt: "2023-08-05",
+  },
+  {
+    id: "blog2",
+    title: "Cultural Insights: Discover the Power of Language Exchange",
+    intro:
+      "Explore Yallyo's language exchange, fostering cross-cultural connections, immersive conversations, friendships, and the transformative potential of authentic communication. Meet Sarah, Ahmed, and Dr.Elena Brenton.",
+    thumbnail:
+      "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdiverse_cultural_gathering_yallyo.jpg?alt=media",
+    slug: "/blog/cultural-insights-discover-the-power-of-language-exchange",
+    author: {
+      displayName: "Goff Phattharawit",
+      photoURL:
+        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
+      email: "",
+      uid: "",
+      idToken: "",
+      type1: "",
+    },
+    publishedAt: "2023-08-09",
   },
 ];
 

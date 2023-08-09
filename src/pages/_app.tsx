@@ -5,8 +5,7 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import Auth from "@/components/Layouts/Auth";
 import store from "@/store/store";
-import LogRocket from "logrocket";
-import { useEffect } from "react";
+import Alert from "@/components/Layouts/Alert";
 
 export default function App({ Component, pageProps }: AppProps) {
   // useEffect(() => {
@@ -21,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Auth />
+      <Alert />
       {noLayout ? (
         <Component {...pageProps} />
       ) : (

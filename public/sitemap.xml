@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.yallyo.com/</loc>
+    <loc>https://yallyo.com/</loc>
   </url>
   <url>
-    <loc>https://www.yallyo.com/blog</loc>
+    <loc>https://yallyo.com/blog</loc>
   </url>
   <url>
-    <loc>https://www.yallyo.com/blog/how-yallyo-connects-strangers-worldwide-for-english-practice</loc>
+    <loc>https://yallyo.com/blog/how-yallyo-connects-strangers-worldwide-for-english-practice</loc>
+  </url>
+    <url>
+    <loc>https://yallyo.com/blog/cultural-insights-discover-the-power-of-language-exchange</loc>
   </url>
   <url>
-    <loc>https://www.yallyo.com/about</loc>
+    <loc>https://yallyo.com/about</loc>
   </url>
   <url>
-    <loc>https://www.yallyo.com/privacy-policy</loc>
+    <loc>https://yallyo.com/privacy-policy</loc>
   </url>
   <url>
-    <loc>https://www.yallyo.com/terms-of-service</loc>
+    <loc>https://yallyo.com/terms-of-service</loc>
   </url>
 </urlset>

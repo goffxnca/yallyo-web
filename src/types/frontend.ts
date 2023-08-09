@@ -43,6 +43,7 @@ export interface IFirebaseUser {
   email: string;
   photoURL: string;
   idToken: string;
+  type1: string;
 }
 
 export interface IBlog {
@@ -53,4 +54,12 @@ export interface IBlog {
   slug: string;
   author: IFirebaseUser;
   publishedAt: string;
+}
+
+export interface IAlert {
+  mode: "info" | "success" | "warning" | "error";
+  title: string;
+  message: string;
+  buttonText: string;
+  buttonLink: string;
 }

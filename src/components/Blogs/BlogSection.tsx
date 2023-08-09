@@ -19,7 +19,7 @@ const BlogSection = ({
 }: Props) => {
   return (
     <section className="">
-      <h2 className="text-lg font-bold mb-2">{title}</h2>
+      {title && <h2 className="text-lg font-bold mb-2">{title}</h2>}
       <p dangerouslySetInnerHTML={{ __html: paragraph1 }}></p>
       {paragraph2 && (
         <p dangerouslySetInnerHTML={{ __html: paragraph2 }} className="mt-4" />
@@ -28,7 +28,7 @@ const BlogSection = ({
       {/* Section Image */}
       {imageUrl && imageAlt && (
         <div className="mt-10 flex justify-center">
-          <img src={imageUrl} alt={imageAlt} />
+          <img src={imageUrl} alt={imageAlt} className="max-w-[500px]" />
         </div>
       )}
 

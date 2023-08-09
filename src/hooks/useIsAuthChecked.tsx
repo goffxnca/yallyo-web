@@ -3,7 +3,8 @@ import { RootState } from "@/store/store";
 
 const useIsAuthChecked = () => {
   const { status } = useSelector((state: RootState) => state.auth);
-  return status === "success" || status === "error";
+  // return status === "success" || status === "error";
+  return true;
 };
 
 export default useIsAuthChecked;

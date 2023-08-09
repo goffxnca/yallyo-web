@@ -1,16 +1,17 @@
-import { signinWithGoogle } from "@/store/authSlice";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-import SigninWithGoogleButton from "./SigninWithGoogleButton";
+import { useState } from "react";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 import AccountMenus from "./AccountMenus";
 import LogoSection from "./LogoSection";
 import useIsAuthChecked from "@/hooks/useIsAuthChecked";
+import LoginModal from "@/components/Modals/LoginModal";
 
 const Header = () => {
   // console.log("Header");
-  const dispatch: AppDispatch = useDispatch();
+
   const authState = useSelector((state: RootState) => state.auth);
   const isAuthChecked = useIsAuthChecked();
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   return (
     <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 w-full border-b border-gray-600 bg-opacity-90 z-30">
@@ -36,12 +37,14 @@ const Header = () => {
       {isAuthChecked && (
         <>
           {!authState.user && (
-            <SigninWithGoogleButton
-              responsive={true}
+            <button
+              className="text-white border border-gray-200 rounded-md px-4 py-2 hover:bg-accent1 hover:border-none"
               onClick={() => {
-                dispatch(signinWithGoogle());
+                setShowLoginModal(true);
               }}
-            />
+            >
+              Sign In
+            </button>
           )}
 
           {authState.user?.photoURL && (
@@ -52,6 +55,17 @@ const Header = () => {
             />
           )}
         </>
+      )}
+
+      {showLoginModal && (
+        <LoginModal
+          onCloseModal={() => {
+            setShowLoginModal(false);
+          }}
+          onLoginSucceed={() => {
+            setShowLoginModal(false);
+          }}
+        />
       )}
     </div>
   );

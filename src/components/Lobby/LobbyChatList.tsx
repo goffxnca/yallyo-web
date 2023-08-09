@@ -199,7 +199,6 @@ const LobbyChatList = ({
 
         {showLoginModal && (
           <LoginModal
-            message="To access the lobby area and send messages, please log in."
             onCloseModal={() => {
               setShowLoginModal(false);
             }}
