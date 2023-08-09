@@ -1,9 +1,10 @@
 import Link from "next/link";
-import BlogNatigator from "./BlogNavigator";
+
 import {
   ClipboardDocumentListIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
+import BlogNatigator from "./BlogNavigator";
 
 const BlogFooter = () => {
   return (

@@ -11,7 +11,7 @@ const BlogNatigator = () => {
       <ul>
         {BLOGS.filter((blog) => blog.slug !== router.asPath).map((blog) => (
           <li key={blog.id}>
-            <Link href={`/${blog.slug}`} className="underline">
+            <Link href={`${blog.slug}`} className="underline">
               {blog.title}
             </Link>
           </li>
