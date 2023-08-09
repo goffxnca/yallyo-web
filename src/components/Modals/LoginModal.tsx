@@ -73,7 +73,7 @@ const LoginModal = ({ onCloseModal, onLoginSucceed }: Props) => {
 
           <div className="border border-gray-700 p-4 space-y-4 rounded-md group hover:shadow-2xl cursor-default">
             <div className=" text-gray-200 text-center">
-              <span className="text-accent1 font-semibold">Option 2:</span>
+              <span className="text-accent1 font-semibold">Option 2: </span>
               <span className="group-hover:font-semibold">
                 Generate a Temporary Account
               </span>

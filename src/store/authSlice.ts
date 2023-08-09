@@ -60,7 +60,7 @@ export const generateTempUserAsync = createAsyncThunk(
           } catch (error) {
             reject(error); // Reject the Promise if an error occurs
           }
-        }, 5000);
+        }, 10000);
       } catch (error) {
         reject(error); // Reject the Promise if an error occurs
       }
