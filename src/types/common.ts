@@ -160,3 +160,9 @@ export enum AdminGatewayEventCode {
   USER_LEAVE_ROOM = "leave_room",
   USER_SEND_LOBBY_MESSAGE = "send_lobby_message",
 }
+
+export enum UserType1Enum {
+  TEMP_USER = "t",
+  FAKE_USER = "f",
+  PERM_USER = "p",
+}

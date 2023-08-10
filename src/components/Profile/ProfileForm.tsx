@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  InformationCircleIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import {
   extractOnlyDirtiedField,
@@ -15,6 +18,7 @@ import Notification from "@/components/UIs/Notification";
 import ProfileImageInput from "./ProfileImageInput";
 import { uploadFileToStorage } from "@/utils/file-utils";
 import { useRouter } from "next/router";
+import { UserType1Enum } from "@/types/common";
 
 const ProfileForm = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -79,9 +83,9 @@ const ProfileForm = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <form
-        className="lg:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-14"
+        className="relative lg:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-14"
         onSubmit={handleSubmit(onFormSubmit)}
       >
         <div className="space-y-6 ">
@@ -98,6 +102,7 @@ const ProfileForm = () => {
                 <h3 className="mt-6 text-2xl font-semibold leading-7 tracking-tight text-accent2">
                   {profile.dname}
                 </h3>
+
                 <p className="text-sm leading-6 text-gray-200">
                   [Bio] {profile.bio}
                 </p>
@@ -116,6 +121,22 @@ const ProfileForm = () => {
                     Following
                   </p>
                 </div>
+
+                {profile.type1 === UserType1Enum.TEMP_USER && (
+                  <div className="">
+                    <div className="flex items-center justify-center">
+                      <p className="text-sm leading-6 text-red-400 font-bold">
+                        Temporary Account
+                      </p>
+                      <InformationCircleIcon
+                        className="w-6 h-6 text-white ml-1 hover:scale-110 cursor-pointer"
+                        onClick={() => {
+                          alert("Your account is temporary account");
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

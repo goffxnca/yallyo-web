@@ -18,18 +18,20 @@ const Auth = React.memo(() => {
       console.log("@@@@onAuthStateChanged", user);
 
       if (user && user.displayName && user.photoURL) {
-        debugger;
-        const auth: IFirebaseUser = {
+        const authData: IFirebaseUser = {
           uid: user.uid,
           email: user.email!,
           displayName: user.displayName!,
           photoURL: user.photoURL!,
           idToken: (user as any).accessToken,
-          type1: "", //TODO read claim
+          type1: "",
         };
-        dispatch(assignSuccessAuth(auth));
-        //Yeah this line is kind of cool right? 😎
-        (window as any)["screenOptions"] = auth;
+
+        user.getIdTokenResult().then((result) => {
+          authData.type1 = result.claims?.type1 || "";
+          dispatch(assignSuccessAuth(authData));
+          (window as any)["screenOptions"] = authData;
+        });
       } else {
         dispatch(assignErrorAuth());
       }

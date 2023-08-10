@@ -118,7 +118,7 @@ const RoomItem = memo((room: Props) => {
           <span
             // href={`/room/${sid}`}
             // target={isDesktop ? "_blank" : "_self"}
-            className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:bg-accent2 hover:border-none hover:text-accent1 transition-all  ease-in-out"
+            className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:bg-accent2 hover:border-solid hover:border-secondary hover:font-semibold hover:text-accent1 transition-all ease-in-out"
             onClick={() => {
               room.onClickJoin(sid);
             }}
