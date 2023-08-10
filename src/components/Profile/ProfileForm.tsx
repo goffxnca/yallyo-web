@@ -18,7 +18,7 @@ import Notification from "@/components/UIs/Notification";
 import ProfileImageInput from "./ProfileImageInput";
 import { uploadFileToStorage } from "@/utils/file-utils";
 import { useRouter } from "next/router";
-import { UserType1Enum } from "@/types/common";
+import { UserType1 } from "@/types/common";
 
 const ProfileForm = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -122,7 +122,7 @@ const ProfileForm = () => {
                   </p>
                 </div>
 
-                {profile.type1 === UserType1Enum.TEMP_USER && (
+                {profile.type1 === UserType1.TEMP_USER && (
                   <div className="">
                     <div className="flex items-center justify-center">
                       <p className="text-sm leading-6 text-red-400 font-bold">

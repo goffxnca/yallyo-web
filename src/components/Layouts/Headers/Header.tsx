@@ -52,6 +52,7 @@ const Header = () => {
               email={authState.user?.email}
               displayName={authState.user?.displayName}
               profileURL={authState.user?.photoURL!}
+              type1={authState.user?.type1}
             />
           )}
         </>

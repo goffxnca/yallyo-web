@@ -13,14 +13,16 @@ import DarkOverlay from "../Overlay";
 import { joinClasses } from "@/utils/jsx-utils";
 import Link from "next/link";
 import getConfig from "next/config";
+import { UserType1 } from "@/types/common";
 const { publicRuntimeConfig } = getConfig();
 interface Props {
   email: string;
   displayName: string;
   profileURL: string;
+  type1: string;
 }
 
-const AccountMenus = ({ email, displayName, profileURL }: Props) => {
+const AccountMenus = ({ email, displayName, profileURL, type1 }: Props) => {
   // console.log("AccountMenus");
   const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -120,28 +122,30 @@ const AccountMenus = ({ email, displayName, profileURL }: Props) => {
               )}
             </Menu.Item> */}
 
-            <Menu.Item>
-              {({ active }) => (
-                <div
-                  className={joinClasses(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm select-none cursor-pointer"
-                  )}
-                  onClick={() => {
-                    setLoading(true);
-                    setTimeout(() => {
-                      dispatch(signoutFromGoogle());
-                    }, 3000);
-                  }}
-                >
-                  <ArrowLeftOnRectangleIcon
-                    className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                  Sign Out
-                </div>
-              )}
-            </Menu.Item>
+            {type1 === UserType1.PERM_USER && (
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                    className={joinClasses(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "group flex items-center px-4 py-2 text-sm select-none cursor-pointer"
+                    )}
+                    onClick={() => {
+                      setLoading(true);
+                      setTimeout(() => {
+                        dispatch(signoutFromGoogle());
+                      }, 3000);
+                    }}
+                  >
+                    <ArrowLeftOnRectangleIcon
+                      className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                    Sign Out
+                  </div>
+                )}
+              </Menu.Item>
+            )}
 
             <div className="block lg:hidden text-xs text-center p-2 text-gray-300">
               v{publicRuntimeConfig.version}:

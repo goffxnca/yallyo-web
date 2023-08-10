@@ -33,7 +33,10 @@ export interface IFollow {
   createdAt: string;
 }
 
-export type TMinimalUser = Pick<IUser, "_id" | "dname" | "photoURL" | "color">;
+export type TMinimalUser = Pick<
+  IUser,
+  "_id" | "dname" | "photoURL" | "color" | "type1"
+>;
 
 export interface IRoomFeatures {
   chat: boolean;
@@ -161,7 +164,7 @@ export enum AdminGatewayEventCode {
   USER_SEND_LOBBY_MESSAGE = "send_lobby_message",
 }
 
-export enum UserType1Enum {
+export enum UserType1 {
   TEMP_USER = "t",
   FAKE_USER = "f",
   PERM_USER = "p",
