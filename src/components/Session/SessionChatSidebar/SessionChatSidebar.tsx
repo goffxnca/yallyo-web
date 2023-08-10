@@ -37,6 +37,7 @@ const SessionChatSidebar = ({ sessionsSocket }: Props) => {
                 color: "",
                 dname: user.displayName,
                 photoURL: user.photoURL,
+                type1: user.type1,
               },
               message: message,
               isMe: false,
