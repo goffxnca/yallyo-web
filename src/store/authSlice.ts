@@ -13,13 +13,15 @@ import { generateRandomAlphaNumeric } from "@/utils/string-utils";
 interface AuthState extends IAsyncState {
   user: IFirebaseUser | null;
   isGeneratingTempUser: boolean;
+  userStateVerified: boolean;
 }
 
 const initialState: AuthState = {
-  status: "idle",
-  error: "",
   user: null,
   isGeneratingTempUser: false,
+  userStateVerified: false,
+  status: "idle",
+  error: "",
 };
 
 export const signinWithGoogle = createAsyncThunk(
@@ -75,10 +77,12 @@ const sessionSlice = createSlice({
     assignSuccessAuth(state, action: PayloadAction<IFirebaseUser>) {
       state.user = action.payload;
       state.status = "success";
+      state.userStateVerified = true;
     },
     assignErrorAuth(state) {
       // return { ...initialState, status: "error" };
       state.user = null;
+      state.userStateVerified = true;
     },
   },
   extraReducers(builder) {

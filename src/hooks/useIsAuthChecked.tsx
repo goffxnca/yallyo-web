@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
 const useIsAuthChecked = () => {
-  const { status } = useSelector((state: RootState) => state.auth);
+  const { userStateVerified } = useSelector((state: RootState) => state.auth);
   // return status === "success" || status === "error";
-  return true;
+  return userStateVerified;
 };
 
 export default useIsAuthChecked;

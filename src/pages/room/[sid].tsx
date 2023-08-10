@@ -19,7 +19,6 @@ import {
 } from "@/types/common";
 
 import StaticLoadingScreen from "@/components/Session/StaticLoadingScreen";
-import AuthRequired from "@/components/Session/Errors/AuthRequired";
 import RoomNotFound from "@/components/Session/Errors/RoomNotFound";
 import SessionContainer from "@/components/Session/SessionContainer";
 import RoomInactive from "@/components/Session/Errors/RoomInactive";
@@ -28,6 +27,7 @@ import TroubleshootingContent from "@/components/Session/TroubleshootingContent"
 import { CustomError2, PermissionNotAllowed } from "@/types/errors";
 import InputDevicesSettings from "@/components/Session/InputDevicesSettings";
 import Head from "next/head";
+import AuthGuardShowLoginModal from "@/components/Auths/AuthGuardShowLoginModal";
 
 let p2p: Peer2Peer;
 let sessionsSocket: Socket;
@@ -210,9 +210,7 @@ const RoomSessionPage = () => {
   }
 
   if (!user) {
-    return (
-      <AuthRequired message="🔒 You need to login with Google Account to join this room." />
-    );
+    return <AuthGuardShowLoginModal />;
   }
 
   if (!room) {

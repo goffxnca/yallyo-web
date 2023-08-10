@@ -1,14 +1,14 @@
 import PageContainer from "@/components/Layouts/PageContainer";
 import ProfileContainer from "@/components/Profile/ProfileContainer";
-import AuthGuard from "@/components/UIs/AuthGuard";
+import AuthGuardRedirectHome from "@/components/Auths/AuthGuardRedirectHome";
 
 const ProfilePage = () => {
   return (
-    <AuthGuard redirectToHome={false}>
+    <AuthGuardRedirectHome>
       <PageContainer>
         <ProfileContainer />
       </PageContainer>
-    </AuthGuard>
+    </AuthGuardRedirectHome>
   );
 };
 
