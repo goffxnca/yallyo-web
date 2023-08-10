@@ -50,7 +50,7 @@ const Blog2Page = () => {
 
       <BlogSection
         title="Insights from a Linguistic Luminary"
-        paragraph1={`Enter Dr.Antonella Wong, a distinguished linguist whose expertise sheds light on the profound impact of language exchange. Dr.Antonella's voice resonates strongly within Yallyo's community, as she articulates the significance of language as a vessel for cultural insights. "Language holds the key to unlocking profound cultural insights," she emphasizes. Her words echo in the experiences of countless Yallyo users who have ventured into cross-cultural conversations, gaining nuanced insights beyond the confines of textbooks.`}
+        paragraph1={`Enter Dr.Antonella Wong, a distinguished linguist from Massachusetts, USA whose expertise sheds light on the profound impact of language exchange. Dr.Antonella's voice resonates strongly within Yallyo's community, as she articulates the significance of language as a vessel for cultural insights. "Language holds the key to unlocking profound cultural insights," she emphasizes. Her words echo in the experiences of countless Yallyo users who have ventured into cross-cultural conversations, gaining nuanced insights beyond the confines of textbooks.`}
         imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdr_%20antonella_wong.png?alt=media"
         imageAlt="Dr.Antonella Wong, Linguist and Language Expert, shares insights on the transformative power of language exchange and its role in fostering cultural understanding"
       />
