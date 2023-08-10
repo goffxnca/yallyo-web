@@ -278,7 +278,7 @@ const BLOGS: IBlog[] = [
     id: "blog2",
     title: "Cultural Insights: Discover the Power of Language Exchange",
     intro:
-      "Explore Yallyo's language exchange, fostering cross-cultural connections, immersive conversations, friendships, and the transformative potential of authentic communication. Meet Sarah, Ahmed, and Dr.Elena Brenton.",
+      "Explore Yallyo's language exchange, fostering cross-cultural connections, immersive conversations, friendships, and the transformative potential of authentic communication. Meet Sarah, Ahmed, and Dr.Antonella Wong.",
     thumbnail:
       "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdiverse_cultural_gathering_yallyo.jpg?alt=media",
     slug: "/blog/cultural-insights-discover-the-power-of-language-exchange",

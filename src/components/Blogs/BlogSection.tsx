@@ -28,7 +28,11 @@ const BlogSection = ({
       {/* Section Image */}
       {imageUrl && imageAlt && (
         <div className="mt-10 flex justify-center">
-          <img src={imageUrl} alt={imageAlt} className="max-w-[500px]" />
+          <img
+            src={imageUrl}
+            alt={imageAlt}
+            className="w-full md:max-w-[500px]"
+          />
         </div>
       )}
 

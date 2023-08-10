@@ -10,7 +10,7 @@ const Blog2Page = () => {
     <BlogContainer>
       <BlogMeta
         title="Cultural Insights: Discover the Power of Language Exchange"
-        desc="Explore Yallyo's language exchange, fostering cross-cultural connections, immersive conversations, friendships, and the transformative potential of authentic communication. Meet Sarah, Ahmed, and Dr.Elena Brenton."
+        desc="Explore Yallyo's language exchange, fostering cross-cultural connections, immersive conversations, friendships, and the transformative potential of authentic communication. Meet Sarah, Ahmed, and Dr.Antonella Wong."
         imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdiverse_cultural_gathering_yallyo.jpg?alt=media"
       />
       <BlogHeader
@@ -50,9 +50,9 @@ const Blog2Page = () => {
 
       <BlogSection
         title="Insights from a Linguistic Luminary"
-        paragraph1={`Enter Dr. Elena Brenton, a distinguished linguist whose expertise sheds light on the profound impact of language exchange. Dr. Elena's voice resonates strongly within Yallyo's community, as she articulates the significance of language as a vessel for cultural insights. "Language holds the key to unlocking profound cultural insights," she emphasizes. Her words echo in the experiences of countless Yallyo users who have ventured into cross-cultural conversations, gaining nuanced insights beyond the confines of textbooks.`}
-        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdr_elena_brenton.png?alt=media"
-        imageAlt="Dr. Elena Brenton, Linguist and Language Expert, shares insights on the transformative power of language exchange and its role in fostering cultural understanding"
+        paragraph1={`Enter Dr.Antonella Wong, a distinguished linguist whose expertise sheds light on the profound impact of language exchange. Dr.Antonella's voice resonates strongly within Yallyo's community, as she articulates the significance of language as a vessel for cultural insights. "Language holds the key to unlocking profound cultural insights," she emphasizes. Her words echo in the experiences of countless Yallyo users who have ventured into cross-cultural conversations, gaining nuanced insights beyond the confines of textbooks.`}
+        imageUrl="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdr_%20antonella_wong.png?alt=media"
+        imageAlt="Dr.Antonella Wong, Linguist and Language Expert, shares insights on the transformative power of language exchange and its role in fostering cultural understanding"
       />
 
       <BlogSection
