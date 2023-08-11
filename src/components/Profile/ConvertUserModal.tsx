@@ -43,7 +43,7 @@ const ConvertUserModal = ({ onCloseModal, onConvertUser }: Props) => {
             </h3>
             <div className="ml-4 space-y-4 text-gray-200">
               <p>
-                Please note, logging out isn&apos;t available for temporary
+                Please note that, logging out isn&apos;t available for temporary
                 users. Accidentally logging out could lead to permanent loss, as
                 temporary accounts aren&apos;t tied to real emails. These
                 accounts have a unique login process with securely stored

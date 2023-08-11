@@ -8,6 +8,7 @@ import { RootState } from "@/store/store";
 import DarkOverlay from "../Layouts/Overlay";
 import { showAlert } from "@/store/alertSlice";
 import Loading from "../UIs/Loading";
+import { IFirebaseUser } from "@/types/frontend";
 
 interface Props {
   onCloseModal: Function;
@@ -23,12 +24,14 @@ const LoginModal = ({ onCloseModal, onLoginSucceed }: Props) => {
 
   const generateTempUserHandler = () => {
     dispatch(generateTempUserAsync()).then((generatedUser) => {
-      onLoginSucceed();
+      const { displayName } = generatedUser.payload as IFirebaseUser;
+
+      onLoginSucceed("t");
       dispatch(
         showAlert({
           mode: "success",
           title: "New temporarily user created successfully!",
-          message: `Now, you can use Yallyo with user name: ${generatedUser.payload}`,
+          message: `Now, you can use Yallyo with user name: ${displayName}`,
           buttonText: "",
           buttonLink: "",
         })
@@ -62,7 +65,7 @@ const LoginModal = ({ onCloseModal, onLoginSucceed }: Props) => {
                 responsive={false}
                 onClick={() => {
                   dispatch(signinWithGoogle()).then(() => {
-                    onLoginSucceed();
+                    onLoginSucceed("p");
                   });
                 }}
               />

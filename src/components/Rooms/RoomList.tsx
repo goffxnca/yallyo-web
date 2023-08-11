@@ -3,7 +3,7 @@ import RoomItemSkeleton from "../Skeletons/RoomItemSkeleton";
 import { createNArray } from "@/utils/array-utils";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import { IRoom } from "@/types/common";
+import { IRoom, UserType1 } from "@/types/common";
 import { useCallback, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 
@@ -76,9 +76,15 @@ const RoomList = ({ rooms, isLoading, showOnTop, showFullLobby }: Props) => {
           onCloseModal={() => {
             setShowLoginModal(false);
           }}
-          onLoginSucceed={() => {
+          onLoginSucceed={(type1: string) => {
             setShowLoginModal(false);
-            window.location.href = `/room/${selectedRoomSid}`;
+            if (type1 === UserType1.TEMP_USER) {
+              setTimeout(() => {
+                window.location.href = `/room/${selectedRoomSid}`;
+              }, 3000);
+            } else {
+              window.location.href = `/room/${selectedRoomSid}`;
+            }
           }}
         />
       )}

@@ -233,7 +233,6 @@ const SessionContainer = ({ sessionsSocket, p2p }: Props) => {
                   // });
                 }}
                 onToggleScreen={() => {
-                  alert("ehy");
                   p2p.shareScreen();
                 }}
               />

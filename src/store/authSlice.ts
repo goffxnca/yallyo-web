@@ -38,31 +38,80 @@ export const signoutFromGoogle = createAsyncThunk("auth/signOut", async () => {
 export const generateTempUserAsync = createAsyncThunk(
   "auth/generateTempUserAsync",
   async () => {
-    return new Promise<string>(async (resolve, reject) => {
+    return new Promise<IFirebaseUser>(async (resolve, reject) => {
       try {
-        const email = `${generateRandomAlphaNumeric(7)}@yallyo.com`;
-        const password = "123456789";
+        const tempEmail = `${generateRandomAlphaNumeric(7)}@yallyo.com`;
+        const tempPassword = "123456789";
 
         const generatedUser = await createUserWithEmailAndPassword(
           auth,
-          email,
-          password
+          tempEmail,
+          tempPassword
         );
 
         await signOut(auth);
 
-        setTimeout(async () => {
+        let tries = 0; // Initialize the number of tries
+        const delayOfEachTry = 3000;
+        const signInWithRetry = async () => {
           try {
             const signInResult = await signInWithEmailAndPassword(
               auth,
-              email,
-              password
+              tempEmail,
+              tempPassword
             );
-            resolve(signInResult.user.displayName!); // Resolve the Promise to indicate completion and return display name to show in alert
+            tries++;
+            console.log("try" + tries);
+
+            const { uid, email, displayName, photoURL } = signInResult.user;
+
+            if (displayName && photoURL) {
+              const authData: IFirebaseUser = {
+                uid,
+                email: email!,
+                displayName,
+                photoURL,
+                idToken: (signInResult.user as any).accessToken,
+                type1: "t",
+              };
+
+              resolve(authData); // Resolve the Promise to indicate completion and return display name to show in alert
+            } else {
+              if (tries === 3) {
+                const errorMessage =
+                  "Fetching for a temp user with ready state failed after 3 tries";
+                console.error(errorMessage);
+                reject(new Error(errorMessage));
+              } else {
+                setTimeout(signInWithRetry, delayOfEachTry); // Retry after 5 seconds
+              }
+            }
           } catch (error) {
             reject(error); // Reject the Promise if an error occurs
           }
-        }, 10000);
+        };
+
+        setTimeout(signInWithRetry, delayOfEachTry);
+
+        // setTimeout(async () => {
+        //   try {
+        //     const signInResult = await signInWithEmailAndPassword(
+        //       auth,
+        //       email,
+        //       password
+        //     );
+
+        //     const { displayName, photoURL } = signInResult.user;
+
+        //     if (displayName && photoURL) {
+        //       resolve(signInResult.user!); // Resolve the Promise to indicate completion and return display name to show in alert
+        //     }else{
+        //       //we can try more 2 times but each every 5 seconds until display&name available we stop trying and resolve
+        //     }
+        //   } catch (error) {
+        //     reject(error); // Reject the Promise if an error occurs
+        //   }
+        // }, 5000);
       } catch (error) {
         reject(error); // Reject the Promise if an error occurs
       }
