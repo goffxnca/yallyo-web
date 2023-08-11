@@ -77,7 +77,7 @@ export const generateTempUserAsync = createAsyncThunk(
 
               resolve(authData); // Resolve the Promise to indicate completion and return display name to show in alert
             } else {
-              if (tries === 3) {
+              if (tries === 5) {
                 const errorMessage =
                   "Fetching for a temp user with ready state failed after 3 tries";
                 console.error(errorMessage);

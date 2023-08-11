@@ -24,18 +24,21 @@ const LoginModal = ({ onCloseModal, onLoginSucceed }: Props) => {
 
   const generateTempUserHandler = () => {
     dispatch(generateTempUserAsync()).then((generatedUser) => {
-      const { displayName } = generatedUser.payload as IFirebaseUser;
-
-      onLoginSucceed("t");
-      dispatch(
-        showAlert({
-          mode: "success",
-          title: "Your temporary user is created successfully!",
-          message: `Now, you can use Yallyo with user name: ${displayName}`,
-          buttonText: "",
-          buttonLink: "",
-        })
-      );
+      if (generatedUser) {
+        const { displayName } = generatedUser.payload as IFirebaseUser;
+        if (displayName) {
+          onLoginSucceed("t");
+          dispatch(
+            showAlert({
+              mode: "success",
+              title: "Your temporary user is created successfully!",
+              message: `Now, you can use Yallyo with user name: ${displayName}`,
+              buttonText: "",
+              buttonLink: "",
+            })
+          );
+        }
+      }
     });
   };
 
