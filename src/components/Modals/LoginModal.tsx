@@ -30,7 +30,7 @@ const LoginModal = ({ onCloseModal, onLoginSucceed }: Props) => {
       dispatch(
         showAlert({
           mode: "success",
-          title: "New temporarily user created successfully!",
+          title: "Your temporary user is created successfully!",
           message: `Now, you can use Yallyo with user name: ${displayName}`,
           buttonText: "",
           buttonLink: "",
