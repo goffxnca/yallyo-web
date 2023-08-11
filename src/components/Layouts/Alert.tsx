@@ -18,7 +18,7 @@ const Alert = () => {
   }, [dispatch, visible]);
 
   return (
-    <div className="fixed bottom-0 left-[50%] transform translate-x-[-50%] w-[400px] z-50">
+    <div className="fixed bottom-4 left-[50%] transform translate-x-[-50%] w-[400px] z-50">
       <div className="relative">
         <Transition
           show={visible}
