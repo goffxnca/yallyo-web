@@ -19,6 +19,8 @@ import ProfileImageInput from "./ProfileImageInput";
 import { uploadFileToStorage } from "@/utils/file-utils";
 import { useRouter } from "next/router";
 import { UserType1 } from "@/types/common";
+import Modal from "../UIs/Modal";
+import ConvertUserModal from "./ConvertUserModal";
 
 const ProfileForm = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -27,6 +29,9 @@ const ProfileForm = () => {
     useState(false);
 
   const [uploadingImageToStorage, setUploadingImageToStorage] =
+    useState<boolean>(false);
+
+  const [showConvertUserModal, setShowConvertUserModal] =
     useState<boolean>(false);
 
   const defaultValues = {
@@ -123,17 +128,17 @@ const ProfileForm = () => {
                 </div>
 
                 {profile.type1 === UserType1.TEMP_USER && (
-                  <div className="">
-                    <div className="flex items-center justify-center">
-                      <p className="text-sm leading-6 text-red-400 font-bold">
+                  <div
+                    className=""
+                    onClick={() => {
+                      setShowConvertUserModal(true);
+                    }}
+                  >
+                    <div className="flex items-center justify-center group">
+                      <p className="text-sm leading-6 text-red-400 group-hover:text-red-500 font-bold cursor-pointer">
                         Temporary Account
                       </p>
-                      <InformationCircleIcon
-                        className="w-6 h-6 text-white ml-1 hover:scale-110 cursor-pointer"
-                        onClick={() => {
-                          alert("Your account is temporary account");
-                        }}
-                      />
+                      <InformationCircleIcon className="w-6 h-6 text-white ml-1 group-hover:scale-110 cursor-pointer" />
                     </div>
                   </div>
                 )}
@@ -351,6 +356,15 @@ const ProfileForm = () => {
           onFadedOut={() => {
             router.reload();
           }}
+        />
+      )}
+
+      {showConvertUserModal && (
+        <ConvertUserModal
+          onCloseModal={() => {
+            setShowConvertUserModal(false);
+          }}
+          onConvertUser={() => {}}
         />
       )}
     </div>
