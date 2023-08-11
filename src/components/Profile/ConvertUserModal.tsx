@@ -11,7 +11,7 @@ const ConvertUserModal = ({ onCloseModal, onConvertUser }: Props) => {
   return (
     <Modal emitClose={onCloseModal}>
       <div className="p-5 md:p-10 md:w-[600px] text-white">
-        <div className="h-96 md:h-[500px] overflow-scroll">
+        <div className="h-[600px] md:h-[600px] overflow-scroll">
           <h2 className="text-accent2 text-2xl md:text-3xl text-center mb-6">
             Convert to Permanent Account
           </h2>
