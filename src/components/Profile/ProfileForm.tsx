@@ -90,7 +90,7 @@ const ProfileForm = () => {
   return (
     <div className="">
       <form
-        className="relative lg:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-14 mb-10"
+        className="relative lg:w-1/2 mx-auto bg-secondary p-6 rounded-lg mt-14 pb-10"
         onSubmit={handleSubmit(onFormSubmit)}
       >
         <div className="space-y-6 ">
