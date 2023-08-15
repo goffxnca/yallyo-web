@@ -281,7 +281,7 @@ const HomePage = () => {
             {/* <div className="text-white">CurrentPage: {currentPage}</div> */}
 
             <div className="my-2"></div>
-            <h2 className="bg-primary select-none">Filters & Search</h2>
+            <h2 className="text-primary select-none">Filters & Search</h2>
             <div>
               <h3 className="text-white text-sm">Languages:</h3>
               <div className="flex flex-wrap items-center">
@@ -394,7 +394,7 @@ const HomePage = () => {
 
           <div className="my-2"></div>
 
-          <h2 className="bg-primar select-none">Room List</h2>
+          <h2 className="text-primary select-none">Room List</h2>
           <RoomList
             rooms={rooms}
             isLoading={status === "loading"}
