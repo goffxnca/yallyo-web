@@ -4,7 +4,7 @@ interface Props {
 
 const DarkOverlay = ({ text }: Props) => {
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-50">
+    <div className="sticky top-0 left-0 w-screen h-screen bg-black bg-opacity-50 z-50">
       <div className="loading-spinner">
         <div className="flex-row items-center justify-center content-center min-w-[100px]">
           <div className="loading-spinner__dot1 left-[10%]"></div>
