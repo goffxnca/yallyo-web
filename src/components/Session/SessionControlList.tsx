@@ -121,7 +121,9 @@ const SessionControlList = ({
         bgClasses="bg-red-500 ml-4 text-white"
         hoverTooltip="Hang Up"
         onClick={() => {
-          window.location.href = "/feedback/session-leave";
+          if (confirm("Are you sure to leave this room?")) {
+            window.location.href = "/feedback/session-leave";
+          }
         }}
       />
     </div>
