@@ -234,7 +234,9 @@ const HomePage = () => {
         />
       </Head>
 
-      <h1>Yallyo.com | Practice English Speaking with Strangers Worldwide!</h1>
+      <h1 className="h-0">
+        Yallyo.com | Practice English Speaking with Strangers Worldwide!
+      </h1>
 
       {/* LEFT */}
       <aside

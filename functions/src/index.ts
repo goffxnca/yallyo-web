@@ -38,7 +38,7 @@ const onUserCreated = functions
 
       if (isTempUser) {
         payload.dname = faker.internet.userName();
-        payload.photoURL = faker.image.avatarGitHub();
+        payload.photoURL = faker.image.urlPicsumPhotos();
       }
 
       const apiUrl = `${process.env.API_URL}/bo/users`;
