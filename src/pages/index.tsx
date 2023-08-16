@@ -370,7 +370,7 @@ const HomePage = () => {
 
           <div className="my-2"></div>
 
-          <h2 className="bg-primary select-none">Room List</h2>
+          <h2 className="bg-primary select-none hidden">Room List</h2>
           <RoomList
             rooms={rooms}
             isLoading={status === "loading"}
