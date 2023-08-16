@@ -59,7 +59,8 @@ const RoomItem = memo((room: Props) => {
       } ${createdByMe && "border border-accent2"} `}
     >
       <div className="flex justify-between text-white">
-        <div className="">
+        <div className="">{desc}</div>
+        {/* <div className="">
           {language} <span className="text-gray-500">{level}</span>
         </div>
 
@@ -71,7 +72,7 @@ const RoomItem = memo((room: Props) => {
       </div>
 
       <div className=" text-accent2 text-sm italic">
-        {topic ? (desc ? `(${topic}) ${desc}` : topic) : "Any Topics"}
+        {/* {topic ? (desc ? `(${topic}) ${desc}` : topic) : "Any Topics"} */}
       </div>
       <ul className="flex flex-wrap justify-center gap-2">
         {createNArray(size).map((item, index) => {
