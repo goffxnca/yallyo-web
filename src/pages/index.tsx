@@ -74,7 +74,7 @@ const HomePage = () => {
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
 
-  const [showLobby, setShowLobby] = useState(true);
+  const [showLobby, setShowLobby] = useState(false);
 
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
