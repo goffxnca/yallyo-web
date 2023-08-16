@@ -64,7 +64,7 @@ const RoomItem = memo((room: Props) => {
           {room && room.features && !room.features.video && (
             <SpeakerWaveIcon className="w-5 h-5 mr-2" />
           )}
-          {desc}
+          Room{order}
         </div>
         {/* <div className="">
           {language} <span className="text-gray-500">{level}</span>

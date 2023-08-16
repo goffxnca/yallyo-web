@@ -45,7 +45,7 @@ const RoomList = ({ rooms, isLoading, showOnTop, showFullLobby }: Props) => {
         {showOnTop &&
           isLoading &&
           createNArray(10).map((item) => <RoomItemSkeleton key={item} />)}
-        {rooms.map((room) => (
+        {rooms.map((room, index) => (
           <RoomItem
             key={room._id}
             _id={room._id}
@@ -57,7 +57,7 @@ const RoomList = ({ rooms, isLoading, showOnTop, showFullLobby }: Props) => {
             joiners={room.joiners}
             size={room.size}
             createdByMe={room.createdBy === user?.uid}
-            order={room.order}
+            order={(index + 1).toString()}
             features={room.features}
             active={room.active}
             createdAt={room.createdAt}
