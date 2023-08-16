@@ -106,7 +106,7 @@ const AccountMenus = ({ email, displayName, profileURL, type1 }: Props) => {
               )}
             </Menu.Item>
 
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href="/wallet"
@@ -122,7 +122,7 @@ const AccountMenus = ({ email, displayName, profileURL, type1 }: Props) => {
                   My Wallet
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
 
             {type1 === UserType1.PERM_USER && (
               <Menu.Item>
