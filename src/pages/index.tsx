@@ -239,7 +239,7 @@ const HomePage = () => {
       {/* LEFT */}
       <aside
         className={`hidden md:block fixed left-0 top-0 z-20 ${
-          showLobby ? "md:w-1/2 lg:w-1/4" : "w-14"
+          showLobby ? "md:w-1/2 lg:w-1/4" : "w-0 md:w-14"
         } `}
       >
         <LobbyChatList
