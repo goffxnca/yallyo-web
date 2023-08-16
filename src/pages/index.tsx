@@ -264,7 +264,7 @@ const HomePage = () => {
             showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-14"
           }`}
         >
-          <HeaderControls
+          {/* <HeaderControls
             onClickCreateRoom={() => {
               if (user) {
                 setShowNewRoomFormModal(true);
@@ -275,27 +275,14 @@ const HomePage = () => {
             onClickShowRules={() => {
               setShowRules(true);
             }}
-          />
+          /> */}
           {/* <hr /> */}
-          <div>
-            {/* <div className="text-white">CurrentPage: {currentPage}</div> */}
-
+          {/* <div>
             <div className="my-2"></div>
-            <h2 className="text-primary select-none">Filters & Search</h2>
+            <h2 className="bg-primary select-none">Filters & Search</h2>
             <div>
               <h3 className="text-white text-sm">Languages:</h3>
               <div className="flex flex-wrap items-center">
-                {/* {!showFullLangs && currentLang && (
-              <PillItem
-                title={currentLang}
-                count={
-                  roomsGroupedByLanguage.find((l) => l.language === currentLang)
-                    ?.count
-                }
-                active={true}
-                onEmitSelect={setCurrentLang}
-              />
-            )} */}
                 {roomsGroupedByLanguage
                   .filter((lang) => lang.count > 0)
                   .map((lang) => (
@@ -312,18 +299,7 @@ const HomePage = () => {
                   onClick={() => {
                     setShowFullLangs(!showFullLangs);
                   }}
-                >
-                  {/* <span className="text-xs">
-                {showFullLangs
-                  ? "Collapse"
-                  : `Show All ${roomsGroupedByLanguage.length - 6}+`}
-              </span> */}
-                  {/* {showFullLangs ? (
-                <ChevronUpIcon className=" h-5 w-5" />
-              ) : (
-                <ChevronDownIcon className=" h-5 w-5" />
-              )} */}
-                </div>
+                ></div>
               </div>
             </div>
 
@@ -385,7 +361,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* <hr /> */}
 
           {/* <div className="text-white" ref={firstRoomRef}>
@@ -394,7 +370,7 @@ const HomePage = () => {
 
           <div className="my-2"></div>
 
-          <h2 className="text-primary select-none">Room List</h2>
+          <h2 className="bg-primary select-none">Room List</h2>
           <RoomList
             rooms={rooms}
             isLoading={status === "loading"}
