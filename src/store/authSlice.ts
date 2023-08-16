@@ -52,7 +52,7 @@ export const generateTempUserAsync = createAsyncThunk(
         await signOut(auth);
 
         let tries = 0; // Initialize the number of tries
-        const delayOfEachTry = 3000;
+        const delayOfEachTry = 5000;
         const signInWithRetry = async () => {
           try {
             const signInResult = await signInWithEmailAndPassword(
