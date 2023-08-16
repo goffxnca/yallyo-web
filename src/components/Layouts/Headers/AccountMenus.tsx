@@ -3,7 +3,9 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
   ArrowLeftOnRectangleIcon,
+  CurrencyDollarIcon,
   UserIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 
 import { useDispatch } from "react-redux";
@@ -104,23 +106,23 @@ const AccountMenus = ({ email, displayName, profileURL, type1 }: Props) => {
               )}
             </Menu.Item>
 
-            {/* <Menu.Item>
+            <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/profile"
+                  href="/wallet"
                   className={joinClasses(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "group flex items-center px-4 py-2 text-sm"
                   )}
                 >
-                  <UserIcon
+                  <CurrencyDollarIcon
                     className="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
-                  Feature Request
+                  My Wallet
                 </Link>
               )}
-            </Menu.Item> */}
+            </Menu.Item>
 
             {type1 === UserType1.PERM_USER && (
               <Menu.Item>
