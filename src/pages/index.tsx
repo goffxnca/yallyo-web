@@ -261,7 +261,7 @@ const HomePage = () => {
       <PageContainer>
         <div
           className={`${
-            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full pl-14"
+            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full md:pl-14"
           }`}
         >
           {/* <HeaderControls
