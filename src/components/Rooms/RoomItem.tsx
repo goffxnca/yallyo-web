@@ -4,6 +4,7 @@ import { useEffect, memo, useState } from "react";
 import {
   MicrophoneIcon,
   NoSymbolIcon,
+  SpeakerWaveIcon,
   TrashIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
@@ -59,7 +60,12 @@ const RoomItem = memo((room: Props) => {
       } ${createdByMe && "border border-accent2"} `}
     >
       <div className="flex justify-between text-white">
-        <div className="">{desc}</div>
+        <div className="flex items-center text-gray-200">
+          {room && room.features && !room.features.video && (
+            <SpeakerWaveIcon className="w-5 h-5 mr-2" />
+          )}
+          {desc}
+        </div>
         {/* <div className="">
           {language} <span className="text-gray-500">{level}</span>
         </div>
@@ -132,7 +138,7 @@ const RoomItem = memo((room: Props) => {
           //   </div>
           // </Link>
         )}
-        <div className="absolute right-0 bottom-0 text-gray-500">
+        {/* <div className="absolute right-0 bottom-0 text-gray-500">
           <div className="flex space-x-1">
             {room && room.features && !room.features.video && (
               <MicrophoneIcon className="w-5 h-5" />
@@ -141,7 +147,7 @@ const RoomItem = memo((room: Props) => {
               <VideoCameraIcon className="w-5 h-5" />
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </li>
   );
