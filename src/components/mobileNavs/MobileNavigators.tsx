@@ -46,26 +46,25 @@ const MobileNavigators = () => {
               </div>
             </Link>
           </li>
-          {isSession && (
-            <li
-              className={`border-r border-gray-500 w-1/4 py-2  ${
+
+          <li
+            className={`border-r border-gray-500 w-1/4 py-2  ${
+              isSession ? "text-accent2" : "text-gray-500"
+            }`}
+          >
+            <div className="flex items-center justify-center">
+              <PhoneIcon className="w-6 h-6 " />
+            </div>
+            <div
+              className={`text-xs  ${
                 isSession ? "text-accent2" : "text-gray-500"
               }`}
             >
-              <div className="flex items-center justify-center">
-                <PhoneIcon className="w-6 h-6 " />
-              </div>
-              <div
-                className={`text-xs  ${
-                  isSession ? "text-accent2" : "text-gray-500"
-                }`}
-              >
-                Session
-              </div>
-            </li>
-          )}
+              Session
+            </div>
+          </li>
 
-          <li
+          {/* <li
             className={`border-r border-gray-500 w-1/4 py-2 ${
               isBlog && "text-accent2"
             }`}
@@ -76,7 +75,7 @@ const MobileNavigators = () => {
               </div>
               <div className={`text-xs ${isBlog && "text-accent2"}`}>Blog</div>
             </Link>
-          </li>
+          </li> */}
           <li className={`w-1/4 py-2 ${isProfile && "text-accent2"}`}>
             <Link href="/profile">
               <div className="flex items-center justify-center">

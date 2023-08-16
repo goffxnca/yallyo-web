@@ -55,7 +55,7 @@ const RoomItem = memo((room: Props) => {
 
   return (
     <li
-      className={`p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl ${
+      className={`p-4 rounded-md bg-secondary gap-y-4 grid transition-all hover:bg-gray-900 hover:shadow-2xl ${
         isAnimating && "animate-fadeIn"
       } ${createdByMe && "border border-accent2"} `}
     >
