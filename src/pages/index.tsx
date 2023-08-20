@@ -266,7 +266,7 @@ const HomePage = () => {
             showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full md:pl-14"
           }`}
         >
-          {/* <HeaderControls
+          <HeaderControls
             onClickCreateRoom={() => {
               if (user) {
                 setShowNewRoomFormModal(true);
@@ -277,9 +277,9 @@ const HomePage = () => {
             onClickShowRules={() => {
               setShowRules(true);
             }}
-          /> */}
+          />
           {/* <hr /> */}
-          {/* <div>
+          <div>
             <div className="my-2"></div>
             <h2 className="bg-primary select-none">Filters & Search</h2>
             <div>
@@ -363,12 +363,12 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-          </div> */}
-          {/* <hr /> */}
+          </div>
+          <hr />
 
           {/* <div className="text-white" ref={firstRoomRef}>
         {status} {rooms.length}
-      </div> */}
+      </div>
 
           <div className="my-2"></div>
 
