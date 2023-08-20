@@ -4,7 +4,6 @@ import { useEffect, memo, useState } from "react";
 import {
   MicrophoneIcon,
   NoSymbolIcon,
-  SpeakerWaveIcon,
   TrashIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/outline";
@@ -55,20 +54,14 @@ const RoomItem = memo((room: Props) => {
 
   return (
     <li
-      className={`p-4 rounded-md bg-secondary gap-y-4 grid transition-all hover:bg-gray-900 hover:shadow-2xl ${
+      className={`p-4 rounded-md bg-secondary gap-y-4 grid hover:shadow-2xl ${
         isAnimating && "animate-fadeIn"
       } ${createdByMe && "border border-accent2"} `}
     >
       <div className="flex justify-between text-white">
-        <div className="flex items-center text-gray-200">
-          {room && room.features && !room.features.video && (
-            <SpeakerWaveIcon className="w-5 h-5 mr-2" />
-          )}
-          Room{order}
-        </div>
-        {/* {/* <div className="">
+        <div className="">
           {language} <span className="text-gray-500">{level}</span>
-        </div> */}
+        </div>
 
         {/* < className="h-5 w-5" />yo */}
 
@@ -78,7 +71,7 @@ const RoomItem = memo((room: Props) => {
       </div>
 
       <div className=" text-accent2 text-sm italic">
-        {/* {topic ? (desc ? `(${topic}) ${desc}` : topic) : "Any Topics"} */}
+        {topic ? (desc ? `(${topic}) ${desc}` : topic) : "Any Topics"}
       </div>
       <ul className="flex flex-wrap justify-center gap-2">
         {createNArray(size).map((item, index) => {
@@ -138,7 +131,7 @@ const RoomItem = memo((room: Props) => {
           //   </div>
           // </Link>
         )}
-        {/* <div className="absolute right-0 bottom-0 text-gray-500">
+        <div className="absolute right-0 bottom-0 text-gray-500">
           <div className="flex space-x-1">
             {room && room.features && !room.features.video && (
               <MicrophoneIcon className="w-5 h-5" />
@@ -147,7 +140,7 @@ const RoomItem = memo((room: Props) => {
               <VideoCameraIcon className="w-5 h-5" />
             )}
           </div>
-        </div> */}
+        </div>
       </div>
     </li>
   );
