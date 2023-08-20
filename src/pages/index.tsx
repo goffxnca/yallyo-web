@@ -364,11 +364,11 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <hr />
+          {/* <hr /> */}
 
           {/* <div className="text-white" ref={firstRoomRef}>
         {status} {rooms.length}
-      </div>
+      </div> */}
 
           <div className="my-2"></div>
 
