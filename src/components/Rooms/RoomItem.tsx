@@ -66,9 +66,9 @@ const RoomItem = memo((room: Props) => {
           )}
           Room{order}
         </div>
-        {/* <div className="">
+        {/* {/* <div className="">
           {language} <span className="text-gray-500">{level}</span>
-        </div>
+        </div> */}
 
         {/* < className="h-5 w-5" />yo */}
 
