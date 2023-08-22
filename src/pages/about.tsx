@@ -14,12 +14,12 @@ const AboutMe = () => {
     <PageContainer>
       <Head>
         <title>
-          Meet the Founder of Yallyo | Goff Phattharawit | Language Learning
+          Meet the Founder of Yallyo | Dave Trenson | Language Learning
           Enthusiast
         </title>
         <meta
           name="description"
-          content="Discover the visionary behind Yallyo, Goff Phattharawit, a dedicated software developer and language learning enthusiast. Learn how his personal journey to master English led to the creation of Yallyo, a platform that fosters genuine connections and conversations with native speakers worldwide. Join our inclusive community and embark on a journey of growth and cultural understanding. Connect with like-minded language learners on our vibrant Facebook group, Yallyo - Language Exchange International Community."
+          content="Discover the visionary behind Yallyo, Dave Trenson, a dedicated software developer and language learning enthusiast. Learn how his personal journey to master English led to the creation of Yallyo, a platform that fosters genuine connections and conversations with native speakers worldwide. Join our inclusive community and embark on a journey of growth and cultural understanding. Connect with like-minded language learners on our vibrant Facebook group, Yallyo - Language Exchange International Community."
         />
       </Head>
 
@@ -38,11 +38,11 @@ const AboutMe = () => {
             </figcaption>
           </figure>
           <p>
-            👋 Hi there! My name is Goff Phattharawit, the Founder of Yallyo. As
-            a dedicated software developer, my passion lies in creating
-            impactful solutions that enrich people&apos;s lives. Language
-            learning has always been close to my heart, and I am thrilled to
-            introduce you to the world of Yallyo.
+            👋 Hi there! My name is Dave Trenson, the Founder of Yallyo. As a
+            dedicated software developer, my passion lies in creating impactful
+            solutions that enrich people&apos;s lives. Language learning has
+            always been close to my heart, and I am thrilled to introduce you to
+            the world of Yallyo.
           </p>
 
           <p>

@@ -26,7 +26,7 @@ const BlogHeader = ({
           <div>
             <Avatar
               userId={"admin"}
-              name="Goff Phattharawit"
+              name="Dave Trenson"
               size="sm"
               url="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media"
               color=""
@@ -38,7 +38,7 @@ const BlogHeader = ({
           <div className="md:flex items-center justify-between text-sm md:text-base w-full ml-4">
             <p className="">
               <span itemProp="author" className="font-semibold">
-                Goff Phattharawit
+                Dave Trenson
               </span>
             </p>
             <p className="pt-2 md:pt-0">
