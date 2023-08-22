@@ -40,9 +40,9 @@ const BlogList = () => {
                       <div className="flex items-center">
                         <Avatar
                           userId={"admin"}
-                          name="Goff Phattharawit"
+                          name="Dave Trenson"
                           size="xs"
-                          url="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media"
+                          url="https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F218.jpg?alt=media"
                           color=""
                           hilight={false}
                           clickable={false}

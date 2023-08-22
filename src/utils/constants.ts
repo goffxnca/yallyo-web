@@ -266,7 +266,7 @@ const BLOGS: IBlog[] = [
     author: {
       displayName: "Dave Trenson",
       photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
+        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F218.jpg?alt=media",
       email: "",
       uid: "",
       idToken: "",
@@ -285,7 +285,7 @@ const BLOGS: IBlog[] = [
     author: {
       displayName: "Dave Trenson",
       photoURL:
-        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
+        "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F218.jpg?alt=media",
       email: "",
       uid: "",
       idToken: "",

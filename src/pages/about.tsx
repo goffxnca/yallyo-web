@@ -29,7 +29,7 @@ const AboutMe = () => {
             <img
               className="mx-auto h-32 w-32  object-cover rounded-full"
               src={
-                "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media"
+                "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2F218.jpg?alt=media"
               }
               alt="Founder of Yallyo Platform"
             />
