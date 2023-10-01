@@ -36,7 +36,7 @@ const Layout = ({ children }: Props) => {
         </Link>
 
         <span className="text-xs">
-          v{publicRuntimeConfig.version}:
+          Developed by Goff Phattharawit - v{publicRuntimeConfig.version}:
           {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
         </span>
       </div>
