@@ -88,16 +88,7 @@ const AboutMe = () => {
 
           <p>
             Join us on our journey of language discovery and cultural
-            understanding. Our vibrant Facebook group,{" "}
-            <a
-              href="https://www.facebook.com/groups/yallyo.community"
-              target="_blank"
-              className="text-blue-400"
-            >
-              Yallyo - Language Exchange International Community
-            </a>{" "}
-            is the perfect place to connect with like-minded individuals. Your
-            support on the{" "}
+            understanding. Your support on the{" "}
             <a
               href="https://www.facebook.com/yallyo.official/"
               target="_blank"
