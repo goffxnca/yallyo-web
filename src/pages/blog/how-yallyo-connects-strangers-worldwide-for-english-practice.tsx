@@ -33,7 +33,7 @@ const Blog1Page = () => {
       />
       <BlogSection
         title="Creating Connections and Friendships"
-        paragraph1="Yallyo's vision is rooted in fostering connections and friendships beyond borders. Founded by Dave Trenson, an introverted software developer from Thailand, the platform is a testament to the power of building meaningful relationships across geographical boundaries. Through Yallyo, individuals who might have never crossed paths in real life now have the chance to form connections that transcend distance and cultural differences."
+        paragraph1="Yallyo's vision is rooted in fostering connections and friendships beyond borders. Founded by Goff Phattharawit, an introverted software developer from Phuket, Thailand, the platform is a testament to the power of building meaningful relationships across geographical boundaries. Through Yallyo, individuals who might have never crossed paths in real life now have the chance to form connections that transcend distance and cultural differences."
         paragraph2="According to the mentioned inc.com article earlier, our social anxiety often causes us to underestimate others' interest in connecting. However, by forcing ourselves to initiate conversations, we can discover the joy of making new friends and forming connections that positively impact our lives."
       />
       <BlogSection
