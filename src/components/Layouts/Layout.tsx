@@ -19,9 +19,9 @@ const Layout = ({ children }: Props) => {
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
 
       <div className="fixed bottom-0 right-0 text-xs space-x-4 text-gray-500 bg-secondary rounded-md px-2">
-        {/* <Link href="/about" className="hover:underline">
+        <Link href="/about" className="hover:underline">
           About Us
-        </Link> */}
+        </Link>
 
         <Link href="/blog" className="hover:underline">
           Blog
