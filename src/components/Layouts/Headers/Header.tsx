@@ -5,6 +5,8 @@ import AccountMenus from "./AccountMenus";
 import LogoSection from "./LogoSection";
 import useIsAuthChecked from "@/hooks/useIsAuthChecked";
 import LoginModal from "@/components/Modals/LoginModal";
+import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   // console.log("Header");
@@ -35,7 +37,7 @@ const Header = () => {
       )}
 
       {isAuthChecked && (
-        <>
+        <div className="flex items-center">
           {!authState.user && (
             <button
               className="text-white border border-gray-200 rounded-md px-4 py-2 hover:bg-accent1 hover:border-none"
@@ -55,7 +57,23 @@ const Header = () => {
               type1={authState.user?.type1}
             />
           )}
-        </>
+
+          <div className="block group">
+            <Link
+              href="https://github.com/goffxnca"
+              className="group-hover:underline flex items-center"
+              target="_blank"
+            >
+              <Image
+                src="/icons/github.svg"
+                alt="Goff Phattharawit Github account"
+                className="group-hover:scale-110 text-white"
+                width={24}
+                height={24}
+              />
+            </Link>
+          </div>
+        </div>
       )}
 
       {showLoginModal && (

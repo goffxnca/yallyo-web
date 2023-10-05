@@ -49,7 +49,7 @@ const Layout = ({ children }: Props) => {
             </span>
             <Image
               src="/icons/github.svg"
-              alt="My Icon"
+              alt="Goff Phattharawit Github account"
               className="group-hover:scale-110"
               width={16}
               height={16}

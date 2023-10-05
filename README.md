@@ -1,6 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Yallyo - Language Practice Platform
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Issues](https://img.shields.io/github/issues/goffxnca/yallyo-web)](https://github.com/goffxnca/yallyo-web/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/goffxnca/yallyo-web)](https://github.com/goffxnca/yallyo-web/pulls)
+
+Welcome to Yallyo, a language practice platform designed to connect people worldwide for language exchange and conversation practice. This README provides an overview of the project, its features, and how you can get involved as a contributor.
+
+## Table of Contents
+
+- [About Yallyo](#about-yallyo)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
+- [License](#license)
+- [How to Run Locally](#how-to-run-locally)
+
+## About Yallyo
+
+Yallyo is a web-based platform that allows users to engage in video and voice conversations with others to practice languages. Whether you're learning a new language or looking to improve your language skills, Yallyo provides a space for meaningful interactions with people from around the world.
+
+### Features
+
+- **No Login Required:** Easily join chat rooms and conversations with a single click. No need to create an account.
+- **Multi-Language Support:** Practice various languages with users of different proficiency levels.
+- **User-Friendly Interface:** Enjoy a seamless experience with a user-friendly interface built with modern technologies.
+- **Lobby Chat:** Chat with others in the lobby area before entering rooms.
+- **Responsive Design:** Yallyo is designed to work on desktop, tablets, and mobile devices.
+- **Open Source:** Yallyo is open-source, which means you can contribute to its development.
 
 ## Getting Started
+
+To get started with Yallyo, you can visit the [Yallyo website](https://yallyo.com). There's no need to install an app or create an account. Simply click to join a room and start practicing languages.
+
+## Contributing
+
+We welcome contributions from the community to help improve and expand Yallyo's features. If you're interested in contributing, please check out our [Contribution Guidelines](CONTRIBUTING.md) for more information.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## How to run locally
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
