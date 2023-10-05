@@ -13,6 +13,7 @@ Welcome to Yallyo, a language practice platform designed to connect people world
 - [Contributing](#contributing)
 - [License](#license)
 - [How to Run Locally](#how-to-run-locally)
+- [Contributors](#contributors)
 
 ## About Yallyo
 
@@ -63,7 +64,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+### Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -72,8 +73,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Contributors
+
+<a href="https://github.com/goffxnca/yallyo-web/graphs/contributors">
+	<img src="https://avatars.githubusercontent.com/u/71051032?v=4" width="60" class="rounded-full" />
+</a>
+
+--> It would be even more cool if you guys's avatars also show up here.
