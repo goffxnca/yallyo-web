@@ -3,6 +3,7 @@ import Header from "./Headers/Header";
 import getConfig from "next/config";
 import MobileNavigators from "../mobileNavs/MobileNavigators";
 import Link from "next/link";
+import Image from "next/image";
 const { publicRuntimeConfig } = getConfig();
 
 interface Props {
@@ -22,23 +23,39 @@ const Layout = ({ children }: Props) => {
         <Link href="/about" className="hover:underline">
           About Us
         </Link>
-
         <Link href="/blog" className="hover:underline">
           Blog
         </Link>
-
         <Link href="/terms-of-service" className="hover:underline">
           Terms of Service
         </Link>
-
         <Link href="/privacy-policy" className="hover:underline">
           Privacy Policy
         </Link>
-
         <span className="text-xs">
-          Developed by Goff Phattharawit - v{publicRuntimeConfig.version}:
+          v{publicRuntimeConfig.version}:
           {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.substring(0, 4)}
         </span>
+
+        <div className="inline-block group">
+          <Link
+            href="https://github.com/goffxnca"
+            className="group-hover:underline flex items-center"
+            target="_blank"
+          >
+            <span className="text-xs mr-2">
+              {" "}
+              Developed by Goff Phattharawit{" "}
+            </span>
+            <Image
+              src="/icons/github.svg"
+              alt="My Icon"
+              className="group-hover:scale-110"
+              width={16}
+              height={16}
+            />
+          </Link>
+        </div>
       </div>
 
       <div className="md:hidden">
