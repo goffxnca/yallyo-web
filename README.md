@@ -85,4 +85,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 	<img src="https://avatars.githubusercontent.com/u/71051032?v=4" width="60" class="rounded-full" />
 </a>
 
---> It would be even more cool if you guys's avatars also show up here.
+--> It would be even cooler if you guys's avatars also show up here 😃.

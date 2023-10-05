@@ -67,7 +67,7 @@ const Header = () => {
               <Image
                 src="/icons/github.svg"
                 alt="Goff Phattharawit Github account"
-                className="group-hover:scale-110 text-white"
+                className="group-hover:scale-110"
                 width={24}
                 height={24}
               />
