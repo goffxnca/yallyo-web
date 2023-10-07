@@ -12,7 +12,7 @@ If you encounter any bugs, issues, or have feature requests, please check the [G
 
 1. Fork the repository to your GitHub account.
 2. Clone your forked repository to your local machine.
-3. Set up the development environment following the instructions in the [Development Setup Guide](docs/development-setup.md).
+3. Set up the development environment following the instructions in the [README](README.md#how-to-run-locally).
 4. Create a new branch for your work:
 
    ```shell
@@ -46,6 +46,6 @@ By participating in this project, you agree to abide by our Code of Conduct.
 
 ### License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Thank you for contributing to Yallyo!
