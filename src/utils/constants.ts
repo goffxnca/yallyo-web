@@ -19,7 +19,7 @@ const LANGUAGES = [
   // "Malay",
   // "Telugu",
   // "Vietnamese",
-  // "Korean",
+  "Korean",
   // "French",
   // "Marathi",
   // "Tamil",
