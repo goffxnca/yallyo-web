@@ -11,7 +11,7 @@ const LANGUAGES = [
   // "Bengali",
   // "Portuguese",
   // "Russian",
-  // "Japanese",
+  "Japanese",
   // "Punjabi",
   // "German",
   // "Javanese",
