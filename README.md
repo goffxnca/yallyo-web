@@ -10,6 +10,7 @@ Welcome to Yallyo, a language practice platform designed to connect people world
 
 - [About Yallyo](#about-yallyo)
 - [Getting Started](#getting-started)
+- [Tech Stack](#)
 - [Contributing](#contributing)
 - [License](#license)
 - [How to Run Locally](#how-to-run-locally)
@@ -27,6 +28,27 @@ Yallyo is a web-based platform that allows users to engage in video and voice co
 - **Lobby Chat:** Chat with others in the lobby area before entering rooms.
 - **Responsive Design:** Yallyo is designed to work on desktop, tablets, and mobile devices.
 - **Open Source:** Yallyo is open-source, which means you can contribute to its development.
+
+### Tech Stack
+
+The key technology that make realtime communication over video/voice/text chat possible is WebRCT & WebSocket
+
+#### Frontend
+
+- NextJS
+- Redux Toolkit
+- Socket.io Client
+- PeerJS (Wrapper around low-level WebRCT)
+- TailwindCSS
+- TypeScript
+- Vercel (Hosting)
+
+#### Backend (Now is closed source, the source code will be open soon)
+
+- NestJS
+- WebSocket
+- MongoDB Atlas
+- Firebase (Temporary used for Authentication)
 
 ## Getting Started
 
