@@ -105,6 +105,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 <a href="https://github.com/goffxnca/yallyo-web/graphs/contributors">
 	<img src="https://avatars.githubusercontent.com/u/71051032?v=4" width="60" class="rounded-full" />
+	<img src="https://avatars.githubusercontent.com/u/116472903?s=96&v=4" width="60" class="rounded-full" />
+
 </a>
 
 --> It would be even cooler if you guys's avatars also show up here 😃.
