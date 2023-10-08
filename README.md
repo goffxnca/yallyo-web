@@ -6,9 +6,11 @@
 
 Welcome to [Yallyo](https://yallyo.com), a language practice platform designed to connect people worldwide for language exchange and conversation practice. This README provides an overview of the project, its features, and how you can get involved as a contributor.
 
-![ Screenshot1](https://yallyo.com/images/yallyo-mobile.png)
-![ Screenshot2](https://yallyo.com/images/yallyo-ipad.png)
-![ Screenshot3](https://yallyo.com/images/yallyo-desktop.png)
+<div style="float: left;">
+<img src="https://yallyo.com/images/yallyo-mobile.png" width="300" />
+<img src="https://yallyo.com/images/yallyo-ipad.png" width="300" />
+<img src="https://yallyo.com/images/yallyo-desktop.png" width="300" />
+</div>
 
 ## Table of Contents
 
