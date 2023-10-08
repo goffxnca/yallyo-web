@@ -78,15 +78,12 @@ const LobbyContainer = () => {
       <LobbyChatList
         lobbyChats={lobbyChats}
         isLoading={lobbyChatStatus === "loading"}
-        onLoadMore={() => {}}
+        onLoadMore={loadMoreLobbyChatMessages}
         canLoadMore={canLoadLobbyChatMore}
         onSendMessage={(message: string) => {
-          // dispatch(createLobbyChatAsync({ message, type: "message" }));
-        }}
-        onToggleLobby={() => {
-          // setShowLobby(!showLobby);
-        }}
-        showFullLobby={false}
+        dispatch(createLobbyChatAsync({ message, type: "message" }));
+      }}
+        lastAddedItemId={lastAddedItemId}
       />
     </div>
   );
