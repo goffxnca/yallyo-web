@@ -89,15 +89,6 @@ const HomePage = () => {
     setRoomCurrentPage(roomCurrentPage + 1);
   };
 
-  const loadMoreLobbyChatMessages = () => {
-    dispatch(
-      fetchLobbyChatAsync({
-        psize: 5,
-        cursor: lastFetchedItemId,
-      })
-    );
-  };
-
   useIntersectionObserver({
     targetRef: readMoreRef,
     onIntersecting: loadMoreRooms,
