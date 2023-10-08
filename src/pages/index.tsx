@@ -36,8 +36,6 @@ import {
 import LoginModal from "@/components/Modals/LoginModal";
 
 const HomePage = () => {
-  // console.log("HomePage");
-
   const { user } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -48,13 +46,6 @@ const HomePage = () => {
     canLoadMore: canLoadRoomMore,
     recentCreatedRoomSid,
   } = useSelector((state: RootState) => state.room);
-
-  const {
-    lobbyChats,
-    status: lobbyChatStatus,
-    canLoadMore: canLoadLobbyChatMore,
-    lastFetchedItemId,
-  } = useSelector((state: RootState) => state.lobbyChat);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -138,10 +129,8 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(fetchRoomsGroupedByLanguageAsync());
     const roomSocket = subscribeRoomsUpdates(dispatch);
-    const lobbyChatSocket = subscribeLobbyChatUpdates(dispatch);
     return () => {
       roomSocket.disconnect();
-      lobbyChatSocket.disconnect();
     };
   }, [dispatch]);
 
@@ -212,8 +201,7 @@ const HomePage = () => {
       <h1 className="h-0">
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
-
-      {/* RIGHT */}
+    
       <PageContainer>
         <div>
           <HeaderControls
