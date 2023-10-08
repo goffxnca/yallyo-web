@@ -33,11 +33,6 @@ import {
   addCreateRoomQuota,
   readCurrentCreateRoomQuotaCount,
 } from "@/utils/localstorage-utils";
-import LobbyChatList from "@/components/Lobby/LobbyChatList";
-import {
-  createLobbyChatAsync,
-  fetchLobbyChatAsync,
-} from "@/store/lobbyChatSlice";
 import LoginModal from "@/components/Modals/LoginModal";
 
 const HomePage = () => {
@@ -191,17 +186,6 @@ const HomePage = () => {
     };
   }, [dispatch, roomCurrentPage, currentLang, currentLevel, currentTopic]);
 
-  useEffect(() => {
-    if (dispatch) {
-      dispatch(
-        fetchLobbyChatAsync({
-          psize: 20,
-          cursor: "",
-        })
-      );
-    }
-  }, [dispatch]);
-
   const onFormSubmit = (data: FieldValues) => {
     if (readCurrentCreateRoomQuotaCount() === ENVS.CREATE_ROOM_QUOTA) {
       setShowNewRoomFormModal(false);
@@ -238,33 +222,14 @@ const HomePage = () => {
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
 
-      {/* LEFT */}
-      <aside
-        className={`hidden md:block fixed left-0 top-0 z-20 ${
-          showLobby ? "md:w-1/2 lg:w-1/4" : "w-0 md:w-14"
-        } `}
-      >
-        <LobbyChatList
-          lobbyChats={lobbyChats}
-          isLoading={lobbyChatStatus === "loading"}
-          onLoadMore={loadMoreLobbyChatMessages}
-          canLoadMore={canLoadLobbyChatMore}
-          onSendMessage={(message: string) => {
-            dispatch(createLobbyChatAsync({ message, type: "message" }));
-          }}
-          onToggleLobby={() => {
-            setShowLobby(!showLobby);
-          }}
-          showFullLobby={showLobby}
-        />
-      </aside>
-
       {/* RIGHT */}
       <PageContainer>
         <div
+          /*
           className={`${
             showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full md:pl-14"
           }`}
+          */
         >
           <HeaderControls
             onClickCreateRoom={() => {

@@ -26,17 +26,6 @@ const Header = () => {
       <LogoSection />
 
       {isAuthChecked && (
-        <div className="absolute left-[50%] transform translate-x-[-50%] text-center hidden md:block">
-          <div className="text-gray-100 font-semibold text-lg md:text-2xl">
-            Yallyo.com
-          </div>
-          <div className="text-gray-400 text-xs md:text-sm">
-            Practice English Speaking with Strangers Worldwide!
-          </div>
-        </div>
-      )}
-
-      {isAuthChecked && (
         <div className="flex items-center">
           {!authState.user && (
             <button
@@ -57,22 +46,6 @@ const Header = () => {
               type1={authState.user?.type1}
             />
           )}
-
-          <div className="block group">
-            <Link
-              href="https://github.com/goffxnca"
-              className="group-hover:underline flex items-center"
-              target="_blank"
-            >
-              <Image
-                src="/icons/github.svg"
-                alt="Goff Phattharawit Github account"
-                className="group-hover:scale-110"
-                width={24}
-                height={24}
-              />
-            </Link>
-          </div>
         </div>
       )}
 
