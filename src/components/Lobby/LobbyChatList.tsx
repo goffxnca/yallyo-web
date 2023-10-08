@@ -1,15 +1,16 @@
 import { ILobbyChat } from "@/types/common";
 
 import LobbyChatItem from "./LobbyChatItem";
-import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import {
+  PaperAirplaneIcon,
+  ArrowPathIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import {
-  ArrowPathIcon,
-  ChevronDoubleUpIcon,
-} from "@heroicons/react/24/outline";
+
 import { friendlyDate, isSameDate } from "@/utils/date-utils";
 
 interface Props {
