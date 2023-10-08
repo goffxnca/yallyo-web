@@ -4,7 +4,11 @@
 [![GitHub Issues](https://img.shields.io/github/issues/goffxnca/yallyo-web)](https://github.com/goffxnca/yallyo-web/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/goffxnca/yallyo-web)](https://github.com/goffxnca/yallyo-web/pulls)
 
-Welcome to Yallyo, a language practice platform designed to connect people worldwide for language exchange and conversation practice. This README provides an overview of the project, its features, and how you can get involved as a contributor.
+Welcome to [Yallyo](https://yallyo.com), a language practice platform designed to connect people worldwide for language exchange and conversation practice. This README provides an overview of the project, its features, and how you can get involved as a contributor.
+
+![ Screenshot1](https://yallyo.com/images/yallyo-mobile.png)
+![ Screenshot2](https://yallyo.com/images/yallyo-ipad.png)
+![ Screenshot3](https://yallyo.com/images/yallyo-desktop.png)
 
 ## Table of Contents
 
@@ -18,13 +22,13 @@ Welcome to Yallyo, a language practice platform designed to connect people world
 
 ## About Yallyo
 
-Yallyo is a web-based platform that allows users to engage in video and voice conversations with others to practice languages. Whether you're learning a new language or looking to improve your language skills, Yallyo provides a space for meaningful interactions with people from around the world.
+[Yallyo](https://yallyo.com) is a web-based platform that allows users to engage in video and voice conversations with others to practice languages. Whether you're learning a new language or looking to improve your language skills, Yallyo provides a space for meaningful interactions with people from around the world.
 
 ### Features
 
 - **Voice Chat:** Connect through real-time voice conversations.
 - **Video Chat:** Engage in face-to-face video+voice conversations.
-- **Text Chat:** Send text/emoji/GIF to people in the chat room ,
+- **Text Chat:** Send text/emoji/GIF to people in chat rooms.
 - **No Login Required:** choose to login with Google account or create fast temporary account.
 - **Multi-Language Support:** Practice various languages with users of different proficiency levels.
 - **User-Friendly Interface:** Enjoy a seamless experience with a user-friendly interface built with modern technologies.
@@ -62,6 +66,8 @@ The key technologies that we use to make realtime communication over video/voice
 ## Contributing
 
 We welcome contributions from the community to help improve and expand Yallyo's features. If you're interested in contributing, please check out our [Contribution Guidelines](CONTRIBUTING) for more information.
+
+Also you can join our dev team on [`Discord Server`](https://discord.gg/8DUHDk7s) as well.
 
 ## How to run locally
 
