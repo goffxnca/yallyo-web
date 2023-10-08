@@ -19,10 +19,7 @@ import {
 } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import {
-  subscribeLobbyChatUpdates,
-  subscribeRoomsUpdates,
-} from "@/libs/ws-subscriptions";
+import { subscribeRoomsUpdates } from "@/libs/ws-subscriptions";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -59,8 +56,6 @@ const HomePage = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
-
-  const [showLobby, setShowLobby] = useState(false);
 
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
@@ -201,7 +196,7 @@ const HomePage = () => {
       <h1 className="h-0">
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
-    
+
       <PageContainer>
         <div>
           <HeaderControls
@@ -318,7 +313,7 @@ const HomePage = () => {
               (!!currentLang || !!currentLevel || !!currentTopic) &&
               roomCurrentPage === 1
             }
-            showFullLobby={showLobby}
+            showFullLobby={false}
           ></RoomList>
 
           {showFriendPopup && (
