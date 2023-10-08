@@ -21,7 +21,7 @@ interface Props {
   lastAddedItemId: string;
 }
 
-const LobbyChatListMobile = ({
+const LobbyChatList = ({
   lobbyChats,
   isLoading,
   onLoadMore,
@@ -167,4 +167,4 @@ const LobbyChatListMobile = ({
   );
 };
 
-export default LobbyChatListMobile;
+export default LobbyChatList;
