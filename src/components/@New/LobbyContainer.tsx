@@ -50,14 +50,7 @@ const LobbyPage = () => {
   return (
     <PageContainer>
       <LobbyChatList
-        lobbyChats={lobbyChats}
-        isLoading={lobbyChatStatus === "loading"}
-        onLoadMore={loadMoreLobbyChatMessages}
-        canLoadMore={canLoadLobbyChatMore}
-        onSendMessage={(message: string) => {
-        dispatch(createLobbyChatAsync({ message, type: "message" }));
-      }}
-        lastAddedItemId={lastAddedItemId}
+      }
       />
     </PageContainer>
     );
