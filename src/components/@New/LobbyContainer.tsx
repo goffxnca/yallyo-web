@@ -83,10 +83,7 @@ const LobbyContainer = () => {
         onSendMessage={(message: string) => {
           // dispatch(createLobbyChatAsync({ message, type: "message" }));
         }}
-        onToggleLobby={() => {
-          // setShowLobby(!showLobby);
-        }}
-        showFullLobby={false}
+        lastAddedItemId=""
       />
     </div>
   );

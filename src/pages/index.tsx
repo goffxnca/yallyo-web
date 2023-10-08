@@ -19,10 +19,7 @@ import {
 } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import {
-  subscribeLobbyChatUpdates,
-  subscribeRoomsUpdates,
-} from "@/libs/ws-subscriptions";
+import { subscribeRoomsUpdates } from "@/libs/ws-subscriptions";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -33,16 +30,9 @@ import {
   addCreateRoomQuota,
   readCurrentCreateRoomQuotaCount,
 } from "@/utils/localstorage-utils";
-import LobbyChatList from "@/components/Lobby/LobbyChatList";
-import {
-  createLobbyChatAsync,
-  fetchLobbyChatAsync,
-} from "@/store/lobbyChatSlice";
 import LoginModal from "@/components/Modals/LoginModal";
 
 const HomePage = () => {
-  // console.log("HomePage");
-
   const { user } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -53,13 +43,6 @@ const HomePage = () => {
     canLoadMore: canLoadRoomMore,
     recentCreatedRoomSid,
   } = useSelector((state: RootState) => state.room);
-
-  const {
-    lobbyChats,
-    status: lobbyChatStatus,
-    canLoadMore: canLoadLobbyChatMore,
-    lastFetchedItemId,
-  } = useSelector((state: RootState) => state.lobbyChat);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -73,8 +56,6 @@ const HomePage = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
-
-  const [showLobby, setShowLobby] = useState(false);
 
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
@@ -92,15 +73,6 @@ const HomePage = () => {
 
   const loadMoreRooms = () => {
     setRoomCurrentPage(roomCurrentPage + 1);
-  };
-
-  const loadMoreLobbyChatMessages = () => {
-    dispatch(
-      fetchLobbyChatAsync({
-        psize: 5,
-        cursor: lastFetchedItemId,
-      })
-    );
   };
 
   useIntersectionObserver({
@@ -152,10 +124,8 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(fetchRoomsGroupedByLanguageAsync());
     const roomSocket = subscribeRoomsUpdates(dispatch);
-    const lobbyChatSocket = subscribeLobbyChatUpdates(dispatch);
     return () => {
       roomSocket.disconnect();
-      lobbyChatSocket.disconnect();
     };
   }, [dispatch]);
 
@@ -190,17 +160,6 @@ const HomePage = () => {
       prevTopic: currentTopic,
     };
   }, [dispatch, roomCurrentPage, currentLang, currentLevel, currentTopic]);
-
-  useEffect(() => {
-    if (dispatch) {
-      dispatch(
-        fetchLobbyChatAsync({
-          psize: 20,
-          cursor: "",
-        })
-      );
-    }
-  }, [dispatch]);
 
   const onFormSubmit = (data: FieldValues) => {
     if (readCurrentCreateRoomQuotaCount() === ENVS.CREATE_ROOM_QUOTA) {
@@ -238,34 +197,8 @@ const HomePage = () => {
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
 
-      {/* LEFT */}
-      <aside
-        className={`hidden md:block fixed left-0 top-0 z-20 ${
-          showLobby ? "md:w-1/2 lg:w-1/4" : "w-0 md:w-14"
-        } `}
-      >
-        <LobbyChatList
-          lobbyChats={lobbyChats}
-          isLoading={lobbyChatStatus === "loading"}
-          onLoadMore={loadMoreLobbyChatMessages}
-          canLoadMore={canLoadLobbyChatMore}
-          onSendMessage={(message: string) => {
-            dispatch(createLobbyChatAsync({ message, type: "message" }));
-          }}
-          onToggleLobby={() => {
-            setShowLobby(!showLobby);
-          }}
-          showFullLobby={showLobby}
-        />
-      </aside>
-
-      {/* RIGHT */}
       <PageContainer>
-        <div
-          className={`${
-            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full md:pl-14"
-          }`}
-        >
+        <div>
           <HeaderControls
             onClickCreateRoom={() => {
               if (user) {
@@ -380,7 +313,7 @@ const HomePage = () => {
               (!!currentLang || !!currentLevel || !!currentTopic) &&
               roomCurrentPage === 1
             }
-            showFullLobby={showLobby}
+            showFullLobby={false}
           ></RoomList>
 
           {showFriendPopup && (
