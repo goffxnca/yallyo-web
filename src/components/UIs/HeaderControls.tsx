@@ -35,7 +35,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
       </div>
 
     <Link href={'/lobby'}>
-      <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg">
+      <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg if-desktop">
         <ChatBubbleBottomCenterIcon className="h-7 w-7 m-1 group-hover:text-accent2" />
         <span className="group-hover:text-accent2">Lobby Chat</span>
       </div>
