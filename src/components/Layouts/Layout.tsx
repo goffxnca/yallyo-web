@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
       <main className="flex-grow">{children}</main>
       {/* <footer className="h-16 bg-gray-500">Footer</footer> */}
 
-      <div className="fixed bottom-0 right-0 text-xs space-x-4 text-gray-500 bg-secondary rounded-md px-2">
+      <div className="fixed bottom-0 right-0 text-xs space-x-4 text-gray-500 bg-secondary rounded-md m-2 p-2">
         <Link href="/about" className="hover:underline">
           About Us
         </Link>
@@ -39,21 +39,14 @@ const Layout = ({ children }: Props) => {
 
         <div className="inline-block group">
           <Link
-            href="https://github.com/goffxnca"
+            href="https://github.com/goffxnca/yallyo-web"
             className="group-hover:underline flex items-center"
             target="_blank"
           >
             <span className="text-xs mr-2">
               {" "}
-              Developed by Goff Phattharawit{" "}
+              Developed by Yallyo Team{" "}
             </span>
-            <Image
-              src="/icons/github.svg"
-              alt="Goff Phattharawit Github account"
-              className="group-hover:scale-110"
-              width={16}
-              height={16}
-            />
           </Link>
         </div>
       </div>

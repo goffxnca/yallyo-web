@@ -34,5 +34,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+<<<<<<< HEAD
 # ide
+=======
+# IDE
+>>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
 /.idea

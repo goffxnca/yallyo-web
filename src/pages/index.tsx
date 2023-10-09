@@ -19,10 +19,7 @@ import {
 } from "@/store/roomSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import {
-  subscribeLobbyChatUpdates,
-  subscribeRoomsUpdates,
-} from "@/libs/ws-subscriptions";
+import { subscribeRoomsUpdates } from "@/libs/ws-subscriptions";
 import * as _ from "lodash";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -36,8 +33,6 @@ import {
 import LoginModal from "@/components/Modals/LoginModal";
 
 const HomePage = () => {
-  // console.log("HomePage");
-
   const { user } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -48,13 +43,6 @@ const HomePage = () => {
     canLoadMore: canLoadRoomMore,
     recentCreatedRoomSid,
   } = useSelector((state: RootState) => state.room);
-
-  const {
-    lobbyChats,
-    status: lobbyChatStatus,
-    canLoadMore: canLoadLobbyChatMore,
-    lastFetchedItemId,
-  } = useSelector((state: RootState) => state.lobbyChat);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -68,8 +56,6 @@ const HomePage = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [currentTopic, setCurrentTopic] = useState("");
-
-  const [showLobby, setShowLobby] = useState(false);
 
   const [showFullLangs, setShowFullLangs] = useState(false);
   const [showFullTopics, setShowFullTopics] = useState(false);
@@ -87,15 +73,6 @@ const HomePage = () => {
 
   const loadMoreRooms = () => {
     setRoomCurrentPage(roomCurrentPage + 1);
-  };
-
-  const loadMoreLobbyChatMessages = () => {
-    dispatch(
-      fetchLobbyChatAsync({
-        psize: 5,
-        cursor: lastFetchedItemId,
-      })
-    );
   };
 
   useIntersectionObserver({
@@ -147,10 +124,8 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(fetchRoomsGroupedByLanguageAsync());
     const roomSocket = subscribeRoomsUpdates(dispatch);
-    const lobbyChatSocket = subscribeLobbyChatUpdates(dispatch);
     return () => {
       roomSocket.disconnect();
-      lobbyChatSocket.disconnect();
     };
   }, [dispatch]);
 
@@ -222,6 +197,7 @@ const HomePage = () => {
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
 
+<<<<<<< HEAD
       {/* RIGHT */}
       <PageContainer>
         <div
@@ -231,6 +207,10 @@ const HomePage = () => {
           }`}
           */
         >
+=======
+      <PageContainer>
+        <div>
+>>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
           <HeaderControls
             onClickCreateRoom={() => {
               if (user) {
@@ -345,7 +325,7 @@ const HomePage = () => {
               (!!currentLang || !!currentLevel || !!currentTopic) &&
               roomCurrentPage === 1
             }
-            showFullLobby={showLobby}
+            showFullLobby={false}
           ></RoomList>
 
           {showFriendPopup && (
