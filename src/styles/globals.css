@@ -6,8 +6,18 @@
   border: 1px solid red;
 } */
 
-html {
-  background-color: #101010;
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  height: 30%;
+  background: #ff037c;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #45ffff;
 }
 
 /* //Prevent mobile from zoom-in inputs */

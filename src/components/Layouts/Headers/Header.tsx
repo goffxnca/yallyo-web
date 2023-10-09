@@ -16,7 +16,7 @@ const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   return (
-    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 w-full border-b border-gray-600 bg-opacity-90 z-30">
+    <div className="flex items-center justify-between py-1 px-2 md:px-10 bg-secondary fixed top-0 w-full z-30">
       {/* <div className="text-white text-sm">{status}</div> */}
 
       {/* <div className="text-white text-sm absolute top-20 left-0 bg-black overflow-hidden">
@@ -26,21 +26,10 @@ const Header = () => {
       <LogoSection />
 
       {isAuthChecked && (
-        <div className="absolute left-[50%] transform translate-x-[-50%] text-center hidden md:block">
-          <div className="text-gray-100 font-semibold text-lg md:text-2xl">
-            Yallyo.com
-          </div>
-          <div className="text-gray-400 text-xs md:text-sm">
-            Practice English Speaking with Strangers Worldwide!
-          </div>
-        </div>
-      )}
-
-      {isAuthChecked && (
         <div className="flex items-center">
           {!authState.user && (
             <button
-              className="text-white border border-gray-200 rounded-md px-4 py-2 hover:bg-accent1 hover:border-none"
+              className="border border-gray-200 rounded-md px-4 py-2 hover:bg-accent1 hover:border-none"
               onClick={() => {
                 setShowLoginModal(true);
               }}

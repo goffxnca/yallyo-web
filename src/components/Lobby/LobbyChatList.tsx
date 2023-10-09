@@ -94,7 +94,7 @@ const LobbyChatList = ({
             return (
               <div key={message._id}>
                 {!iSameDateAsPrevMessage && (
-                  <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
+                  <div className="relative w-full mt-4 pb-4 text-center text-xs">
                     <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-28 bg-secondary text-gray-500 font-semibold">
                       {friendlyDate(message.createdAt)}
                     </div>

@@ -15,7 +15,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
   return (
     <div className="flex gap-x-2 justify-center md:justify-end">
       <div
-        className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg"
+        className="flex items-center group cursor-pointer select-none bg-secondary p-2 rounded-lg"
         onClick={() => {
           onClickCreateRoom();
         }}
@@ -25,7 +25,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
       </div>
 
       <div
-        className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg"
+        className="flex items-center group cursor-pointer select-none bg-secondary p-2 rounded-lg"
         onClick={() => {
           onClickShowRules();
         }}
@@ -35,7 +35,7 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
       </div>
 
       <Link href={"/lobby"} className="hidden md:block">
-        <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg">
+        <div className="flex items-center group cursor-pointer select-none bg-secondary p-2 rounded-lg">
           <ChatBubbleBottomCenterIcon className="h-8 w-8 group-hover:text-accent2" />
           <span className="group-hover:text-accent2">Lobby Chat</span>
         </div>

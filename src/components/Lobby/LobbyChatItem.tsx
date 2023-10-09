@@ -18,13 +18,13 @@ const LobbyChatItem = ({ message, type, sender, createdAt }: Props) => {
         />
       </div>
 
-      <div className={`px-3 py-1 break-words text-primary flex-1`}>
+      <div className={`px-3 py-1 break-words flex-1`}>
         <div className="">
           <span className={`text-sm font-bold`} style={{ color: sender.color }}>
             {sender.dname}
           </span>
-          <span className={`text-sm  text-white`}>:</span>
-          <span className={`text-sm  text-white ml-2`}>{message}</span>
+          <span className={`text-sm`}>:</span>
+          <span className={`text-sm ml-2`}>{message}</span>
         </div>
       </div>
 

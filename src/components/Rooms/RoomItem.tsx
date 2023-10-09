@@ -58,7 +58,7 @@ const RoomItem = memo((room: Props) => {
         isAnimating && "animate-fadeIn"
       } ${createdByMe && "border border-accent2"} `}
     >
-      <div className="flex justify-between text-white">
+      <div className="flex justify-between">
         <div className="">
           {language} <span className="text-gray-500">{level}</span>
         </div>
@@ -97,7 +97,7 @@ const RoomItem = memo((room: Props) => {
           />
         ))} */}
       </ul>
-      <div className="relative flex items-center text-white">
+      <div className="relative flex items-center">
         {currentLoggedInUserIsAdmin && (
           <div className="absolute left-0 bottom-0 text-gray-500">
             <TrashIcon
@@ -118,7 +118,7 @@ const RoomItem = memo((room: Props) => {
           <span
             // href={`/room/${sid}`}
             // target={isDesktop ? "_blank" : "_self"}
-            className="m-auto text-white border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer hover:bg-accent2 hover:border-solid hover:border-secondary hover:font-semibold hover:text-accent1 transition-all ease-in-out"
+            className="m-auto border border-dashed px-10 py-1 rounded-md border-gray-500 cursor-pointer transition-all ease-in-out"
             onClick={() => {
               room.onClickJoin(sid);
             }}

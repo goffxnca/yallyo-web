@@ -24,7 +24,7 @@ const AboutMe = () => {
       </Head>
 
       <div className="flex justify-center mb-10 md:mb-0">
-        <div className="text-gray-300 bg-secondary p-4 md:p-10 rounded-3xl lg:w-[1000px] space-y-6">
+        <div className="bg-secondary p-4 md:p-10 rounded-3xl lg:w-[1000px] space-y-6">
           <figure>
             <img
               className="mx-auto h-32 w-32  object-cover rounded-full"

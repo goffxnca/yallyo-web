@@ -20,7 +20,7 @@ const ConvertUserModal = ({ onCloseModal, onConvertUser }: Props) => {
             <h3 className="font-semibold">
               About Your Current Temporary Account:
             </h3>
-            <div className="ml-4 space-y-4 text-gray-200">
+            <div className="ml-4 space-y-4 text-accent2">
               <p>
                 Your temporary account allows 3 months of platform exploration,
                 experiencing Yallyo&apos;s initial features without commitment.
@@ -38,10 +38,10 @@ const ConvertUserModal = ({ onCloseModal, onConvertUser }: Props) => {
               </p>
             </div>
 
-            <h3 className="font-semibold pt-4">
+            <h3 className="font-semibold pt-4 text-accent2">
               Important Note Regarding Logging Out:
             </h3>
-            <div className="ml-4 space-y-4 text-gray-200">
+            <div className="ml-4 space-y-4 text-accent2">
               <p>
                 Please note that, logging out isn&apos;t available for temporary
                 users. Accidentally logging out could lead to permanent loss, as
@@ -62,7 +62,7 @@ const ConvertUserModal = ({ onCloseModal, onConvertUser }: Props) => {
           <div className="sticky bottom-0 flex justify-center bg-secondary pt-2">
             <button
               type="submit"
-              className={`flex rounded-md px-6 py-3 text-sm font-semibold shadow-sm select-none opacity-25 bg-accent1 text-white  cursor-not-allowed`}
+              className={`flex rounded-md px-6 py-3 text-sm font-semibold shadow-sm select-none opacity-25 bg-accent1 cursor-not-allowed`}
               disabled={true}
             >
               <div className="animate-pulse">
