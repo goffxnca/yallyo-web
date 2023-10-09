@@ -12,29 +12,12 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
   height: 30%;
-  background: #ff037c;
-  border-radius: 10px;
-}
-
-body::-webkit-scrollbar-track {
-  background: #45ffff;
-<<<<<<< HEAD
-}
-
-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-body::-webkit-scrollbar-thumb {
-  height: 30%;
   background: #217af4;
   border-radius: 10px;
 }
 
 body::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, .1);
-=======
->>>>>>> a664ba706277b65745f075c773f3b0ac91d7b046
+  background: rgba(33, 122, 244, 0.1);
 }
 
 /* //Prevent mobile from zoom-in inputs */

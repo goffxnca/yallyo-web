@@ -197,20 +197,8 @@ const HomePage = () => {
         Yallyo.com | Practice English Speaking with Strangers Worldwide!
       </h1>
 
-<<<<<<< HEAD
-      {/* RIGHT */}
-      <PageContainer>
-        <div
-          /*
-          className={`${
-            showLobby ? "w-full md:2/3 lg:w-3/4 ml-auto" : "w-full md:pl-14"
-          }`}
-          */
-        >
-=======
       <PageContainer>
         <div>
->>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
           <HeaderControls
             onClickCreateRoom={() => {
               if (user) {

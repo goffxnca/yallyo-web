@@ -1,27 +1,16 @@
 import { ILobbyChat } from "@/types/common";
 
 import LobbyChatItem from "./LobbyChatItem";
-<<<<<<< HEAD
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-=======
-import {
-  PaperAirplaneIcon,
-  ArrowPathIcon,
-  ChevronDoubleUpIcon,
-} from "@heroicons/react/24/solid";
->>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
 import { useEffect, useRef, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-<<<<<<< HEAD
 import {
   ArrowPathIcon,
   ChevronDoubleUpIcon,
 } from "@heroicons/react/24/outline";
-=======
 
->>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
 import { friendlyDate, isSameDate } from "@/utils/date-utils";
 
 interface Props {
@@ -71,11 +60,7 @@ const LobbyChatListMobile = ({
 
   return (
     <section className="relative w-full rounded-md bg-secondary">
-<<<<<<< HEAD
-      <div className={`h-full overflow-y-scroll pt-2`} ref={scrollContainerRef}>
-=======
       <div className={`h-full pt-2`} ref={scrollContainerRef}>
->>>>>>> 77fbc438db2db7c19592d465bdeaa19defd13230
         {canLoadMore && (
           <div className="flex justify-center">
             <button
