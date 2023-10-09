@@ -1,5 +1,5 @@
 import { FireIcon } from "@heroicons/react/20/solid";
-import Link from 'next/link'
+import Link from "next/link";
 import {
   InformationCircleIcon,
   PlusCircleIcon,
@@ -34,12 +34,12 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
         <span className="group-hover:text-accent2">Community Rules</span>
       </div>
 
-    <Link href={'/lobby'} className="if-desktop">
-      <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg">
-        <ChatBubbleBottomCenterIcon className="h-8 w-8 group-hover:text-accent2" />
-        <span className="group-hover:text-accent2">Lobby Chat</span>
-      </div>
-    </Link>
+      <Link href={"/lobby"} className="hidden md:block">
+        <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg">
+          <ChatBubbleBottomCenterIcon className="h-8 w-8 group-hover:text-accent2" />
+          <span className="group-hover:text-accent2">Lobby Chat</span>
+        </div>
+      </Link>
     </div>
   );
 };

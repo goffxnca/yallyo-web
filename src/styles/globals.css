@@ -10,20 +10,6 @@ html {
   background-color: #101010;
 }
 
-.if-mobile {
-  display: none;
-}
-
-@media screen and (max-width: 700px) {
-  .if-desktop {
-    display: none;
-  }
-
-  .if-mobile {
-    display: block;
-  }
-}
-
 /* //Prevent mobile from zoom-in inputs */
 input[type="text"],
 input[type="search"],
