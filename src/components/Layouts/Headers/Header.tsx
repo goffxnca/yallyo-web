@@ -57,22 +57,6 @@ const Header = () => {
               type1={authState.user?.type1}
             />
           )}
-
-          <div className="block group">
-            <Link
-              href="https://github.com/goffxnca"
-              className="group-hover:underline flex items-center"
-              target="_blank"
-            >
-              <Image
-                src="/icons/github.svg"
-                alt="Goff Phattharawit Github account"
-                className="group-hover:scale-110"
-                width={24}
-                height={24}
-              />
-            </Link>
-          </div>
         </div>
       )}
 
