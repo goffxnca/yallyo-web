@@ -13,10 +13,10 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: "#101010",
-        secondary: "#252525",
-        accent1: "#ff037c",
-        accent2: "#45ffff",
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF",
+        accent1: "#000000",
+        accent2: "#000000",
       },
       animation: {
         fadeIn: "fadeIn 1s ease-in-out",

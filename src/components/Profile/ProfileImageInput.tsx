@@ -104,7 +104,7 @@ const ProfileImageInput = ({
 
         <button
           type="button"
-          className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm h-auto"
+          className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold shadow-sm h-auto"
           onClick={() => {
             if (fileRef && fileRef.current) {
               fileRef.current.click();
