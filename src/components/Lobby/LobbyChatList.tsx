@@ -60,7 +60,7 @@ const LobbyChatList = ({
 
   return (
     <section className="relative w-full rounded-md bg-secondary">
-      <div className={`h-full overflow-y-scroll pt-2`} ref={scrollContainerRef}>
+      <div className={`h-full pt-2`} ref={scrollContainerRef}>
         {canLoadMore && (
           <div className="flex justify-center">
             <button
