@@ -13,14 +13,14 @@ interface Props {
 
 const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
   return (
-    <div className="flex gap-x-4 justify-center md:justify-end">
+    <div className="flex gap-x-2 justify-center md:justify-end">
       <div
         className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg"
         onClick={() => {
           onClickCreateRoom();
         }}
       >
-        <PlusCircleIcon className="h-7 w-7 m-1 group-hover:text-accent2" />
+        <PlusCircleIcon className="h-8 w-8 group-hover:text-accent2" />
         <span className="group-hover:text-accent2">New Room</span>
       </div>
 
@@ -30,13 +30,13 @@ const HeaderControls = ({ onClickCreateRoom, onClickShowRules }: Props) => {
           onClickShowRules();
         }}
       >
-        <InformationCircleIcon className="h-7 w-7 m-1 group-hover:text-accent2" />
+        <InformationCircleIcon className="h-8 w-8 group-hover:text-accent2" />
         <span className="group-hover:text-accent2">Community Rules</span>
       </div>
 
-    <Link href={'/lobby'}>
-      <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg if-desktop">
-        <ChatBubbleBottomCenterIcon className="h-7 w-7 m-1 group-hover:text-accent2" />
+    <Link href={'/lobby'} className="if-desktop">
+      <div className="flex items-center text-white group cursor-pointer select-none bg-secondary p-2 rounded-lg">
+        <ChatBubbleBottomCenterIcon className="h-8 w-8 group-hover:text-accent2" />
         <span className="group-hover:text-accent2">Lobby Chat</span>
       </div>
     </Link>
