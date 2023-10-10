@@ -36,8 +36,8 @@ const SessionControlItem = React.memo(
       // </div>
 
       <div
-        className={`relative p-4 rounded-md cursor-pointer lg:hover:bg-gray-400 group ${
-          bgClasses && bgClasses
+        className={`relative p-4 m-2 rounded-md cursor-pointer bg-gray-400 group ${
+          bgClasses && bgClasses 
         }`}
         onClick={() => {
           showMobileTooltip();

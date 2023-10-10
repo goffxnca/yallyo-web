@@ -10,7 +10,7 @@ const BaseInput = ({ id, label, error, children }: Props) => {
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-white"
+        className="block text-sm font-medium leading-6"
       >
         {label}
       </label>

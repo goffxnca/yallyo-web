@@ -19,7 +19,7 @@ const Modal = ({ emitClose, children }: Props) => {
           <div className="relative w-full md:w-auto">
             <div className="absolute right-4 top-1">
               <XMarkIcon
-                className="h-6 w-6 md:h-10 md:w-10 cursor-pointer hover:scale-110 text-white"
+                className="h-6 w-6 md:h-10 md:w-10 cursor-pointer hover:scale-110"
                 onClick={() => {
                   emitClose();
                 }}
