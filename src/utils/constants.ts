@@ -264,7 +264,7 @@ const BLOGS: IBlog[] = [
       "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fpractice_english_speaking_with_strangers_yallyo.jpg?alt=media",
     slug: "/blog/how-yallyo-connects-strangers-worldwide-for-english-practice",
     author: {
-      displayName: "Goff Phattharawit",
+      displayName: "Goff",
       photoURL:
         "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
       email: "",
@@ -283,7 +283,7 @@ const BLOGS: IBlog[] = [
       "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/bl%2Fdiverse_cultural_gathering_yallyo.jpg?alt=media",
     slug: "/blog/cultural-insights-discover-the-power-of-language-exchange",
     author: {
-      displayName: "Goff Phattharawit",
+      displayName: "Goff",
       photoURL:
         "https://firebasestorage.googleapis.com/v0/b/yallyo.appspot.com/o/us%2Fc9329070-3ea4-4533-be3e-dfa606000829.jpeg?alt=media",
       email: "",
