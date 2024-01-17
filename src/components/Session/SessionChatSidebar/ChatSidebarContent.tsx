@@ -30,7 +30,7 @@ const ChatSidebarContent = ({ messages }: Props) => {
   }
   return (
     <div
-      className="flex-1 overflow-y-auto bg-secondary text-white p-4"
+      className="flex-1 overflow-y-auto bg-secondary p-4"
       ref={messagesRef}
     >
       <ul className="space-y-2">

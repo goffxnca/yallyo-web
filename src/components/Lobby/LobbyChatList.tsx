@@ -1,15 +1,15 @@
 import { ILobbyChat } from "@/types/common";
 
 import LobbyChatItem from "./LobbyChatItem";
-import {
-  PaperAirplaneIcon,
-  ArrowPathIcon,
-  ChevronDoubleUpIcon,
-} from "@heroicons/react/24/solid";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useEffect, useRef, useState } from "react";
 import LoginModal from "../Modals/LoginModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import {
+  ArrowPathIcon,
+  ChevronDoubleUpIcon,
+} from "@heroicons/react/24/outline";
 
 import { friendlyDate, isSameDate } from "@/utils/date-utils";
 
@@ -22,7 +22,7 @@ interface Props {
   lastAddedItemId: string;
 }
 
-const LobbyChatList = ({
+const LobbyChatListMobile = ({
   lobbyChats,
   isLoading,
   onLoadMore,
@@ -94,7 +94,7 @@ const LobbyChatList = ({
             return (
               <div key={message._id}>
                 {!iSameDateAsPrevMessage && (
-                  <div className="relative text-white w-full mt-4 pb-4 text-center text-xs">
+                  <div className="relative w-full mt-4 pb-4 text-center text-xs">
                     <div className="absolute top-0 left-[50%] transform translate-x-[-50%] right-0 w-28 bg-secondary text-gray-500 font-semibold">
                       {friendlyDate(message.createdAt)}
                     </div>
@@ -168,4 +168,4 @@ const LobbyChatList = ({
   );
 };
 
-export default LobbyChatList;
+export default LobbyChatListMobile;

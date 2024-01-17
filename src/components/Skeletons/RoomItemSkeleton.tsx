@@ -10,8 +10,8 @@ const RoomItemSkeleton = () => {
       ref={elemRef}
     >
       <ContentLoader
-        backgroundColor="#252525"
-        foregroundColor="#101010"
+        backgroundColor="#FFFFFF"
+        foregroundColor="#adb5bd"
         height="100%"
         width="100%"
         viewBox="0 0 600 200"

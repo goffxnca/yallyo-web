@@ -37,7 +37,7 @@ const SessionChatSidebar = () => {
                 <ChevronRightIcon className="w-6 h-6 hidden lg:block" />
               </div>
 
-              <div className="text-white font-bold absolute flex justify-center w-full z-10">
+              <div className="font-bold absolute flex justify-center w-full z-10">
                 Chat Messages
               </div>
             </div>

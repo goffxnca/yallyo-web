@@ -21,7 +21,7 @@ const TextInput = React.forwardRef<HTMLInputElement, Props>(
           placeholder={placeholder}
           spellCheck={spellCheck}
           autoComplete="off"
-          className="w-full rounded-md py-2 text-gray-900 placeholder:text-gray-300 text-sm"
+          className="w-full rounded-md py-2 text-gray-900 placeholder:text-gray-500 text-sm"
           onChange={onChange}
           ref={ref}
         />

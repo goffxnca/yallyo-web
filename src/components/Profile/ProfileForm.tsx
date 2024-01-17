@@ -95,7 +95,7 @@ const ProfileForm = () => {
       >
         <div className="space-y-6 ">
           {/* Form Header */}
-          <div className="border-b border-white/10 pb-6">
+          <div className="border-b/10 pb-6">
             {/* Picture */}
             <div className="text-center -mt-20">
               <div className="rounded-2xl px-2 space-y-2">
@@ -114,13 +114,13 @@ const ProfileForm = () => {
 
                 <div className="flex justify-center gap-x-4">
                   <p className="text-sm text-gray-400">
-                    <span className="font-bold  text-white">
+                    <span className="font-bold">
                       {profile.followers}
                     </span>{" "}
                     Followers
                   </p>
                   <p className="text-sm text-gray-400">
-                    <span className="font-bold text-white">
+                    <span className="font-bold">
                       {profile.followings}
                     </span>{" "}
                     Following
@@ -138,7 +138,7 @@ const ProfileForm = () => {
                       <p className="text-sm leading-6 text-red-400 group-hover:text-red-500 font-bold cursor-pointer">
                         Temporary Account
                       </p>
-                      <InformationCircleIcon className="w-6 h-6 text-white ml-1 group-hover:scale-110 cursor-pointer" />
+                      <InformationCircleIcon className="w-6 h-6 ml-1 group-hover:scale-110 cursor-pointer" />
                     </div>
                   </div>
                 )}
@@ -148,7 +148,7 @@ const ProfileForm = () => {
 
           {/* Profile Section */}
           <div className="border-b border-white/10 pb-6">
-            <h2 className="text-base font-semibold leading-7 text-white">
+            <h2 className="text-base font-semibold leading-7">
               Profile
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
@@ -161,7 +161,7 @@ const ProfileForm = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="dname"
-                  className="block text-sm font-medium leading-6 text-white"
+                  className="block text-sm font-medium leading-6"
                 >
                   Display Name
                 </label>
@@ -169,7 +169,7 @@ const ProfileForm = () => {
                   <input
                     type="text"
                     id="dname"
-                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
                     {...register("dname", {
                       required: "This field is required",
                       minLength: { ...minLength(2) },
@@ -189,7 +189,7 @@ const ProfileForm = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-white"
+                  className="block text-sm font-medium leading-6"
                 >
                   Email address
                 </label>
@@ -210,7 +210,7 @@ const ProfileForm = () => {
               <div className="col-span-full">
                 <label
                   htmlFor="bio"
-                  className="block text-sm font-medium leading-6 text-white"
+                  className="block text-sm font-medium leading-6"
                 >
                   Bio
                 </label>
@@ -218,7 +218,7 @@ const ProfileForm = () => {
                   <textarea
                     id="bio"
                     rows={2}
-                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-white/5 py-1.5 shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-accent2 sm:text-sm sm:leading-6"
                     placeholder="Write a few sentences about yourself."
                     {...register("bio", {
                       required: "This field is required",
@@ -238,7 +238,7 @@ const ProfileForm = () => {
               <div className="col-span-full">
                 <label
                   htmlFor="photoURL"
-                  className="block text-sm font-medium leading-6 text-white"
+                  className="block text-sm font-medium leading-6"
                 >
                   Picture
                 </label>
@@ -260,7 +260,7 @@ const ProfileForm = () => {
 
           {/* Notification Section */}
           <div className="border-b border-white/10 pb-6">
-            <h2 className="text-base font-semibold leading-7 text-white">
+            <h2 className="text-base font-semibold leading-7">
               Notifications
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-400">
@@ -284,7 +284,7 @@ const ProfileForm = () => {
                     <div className="text-sm leading-6 select-none">
                       <label
                         htmlFor="notifyOnFollow"
-                        className="font-medium text-white"
+                        className="font-medium"
                       >
                         Account Following
                       </label>

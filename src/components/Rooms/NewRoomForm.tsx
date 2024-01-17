@@ -150,7 +150,7 @@ const NewRoomForm = ({ onSubmit }: Props) => {
             className={`flex w-full justify-center rounded-md px-3 py-3 text-sm font-semibold shadow-sm select-none ${
               loading
                 ? "bg-accent2 text-secondary pointer-events-none"
-                : "bg-accent1 text-white"
+                : "bg-accent1"
             }`}
             disabled={loading}
           >

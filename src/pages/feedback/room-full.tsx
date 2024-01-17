@@ -10,7 +10,7 @@ const RoomIsFull = () => {
   return (
     <div className="flex justify-center items-center h-screen p-10">
       <div className="">
-        <div className=" text-white text-center">
+        <div className="text-center">
           🤪 Sorry, the room is full. You cannot join at this time.
         </div>
         <div className="flex justify-center mt-4">
